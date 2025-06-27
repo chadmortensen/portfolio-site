@@ -1,5 +1,5 @@
 
-import { TrendingUp, Shield, Rocket, Star, Waves } from "lucide-react";
+import { TrendingUp, Shield, Rocket, Star } from "lucide-react";
 
 const Value = () => {
   const valueProps = [
@@ -26,34 +26,45 @@ const Value = () => {
   ];
 
   return (
-    <section id="value" className="py-20 bg-mist relative">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-5">
-        <Waves className="absolute top-20 left-1/4 text-forest-dark" size={44} />
-        <Waves className="absolute bottom-40 right-1/3 text-moss" size={40} />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+    <section id="value" className="py-20 mondrian-gray">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-forest-dark mb-6">Value I Bring</h2>
-          <p className="text-xl text-forest-medium max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-mondrian-black mb-6">Value I Bring</h2>
+          <p className="text-xl text-mondrian-black max-w-3xl mx-auto">
             Organizations partner with me to unlock their potential and achieve breakthrough results through strategic leadership and operational excellence.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="mondrian-grid" style={{
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateRows: 'repeat(2, 300px)',
+          gap: '4px'
+        }}>
           {valueProps.map((value, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-sage/20 hover:border-sage/40 group"
+              className={`mondrian-section p-8 flex flex-col justify-center transition-all duration-300 hover:shadow-xl ${
+                index === 0 ? 'mondrian-yellow' :
+                index === 1 ? 'mondrian-red' :
+                index === 2 ? 'mondrian-blue' :
+                'mondrian-white'
+              }`}
             >
               <div className="flex items-start space-x-4">
-                <div className="nature-accent p-3 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                  <value.icon className="text-white" size={24} />
+                <div className={`p-3 ${
+                  index === 1 || index === 2 ? 'bg-white' : 'bg-mondrian-black'
+                }`}>
+                  <value.icon className={`${
+                    index === 1 || index === 2 ? 'text-mondrian-black' : 'text-white'
+                  }`} size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-forest-dark mb-3">{value.title}</h3>
-                  <p className="text-forest-medium leading-relaxed">{value.description}</p>
+                  <h3 className={`text-xl font-bold mb-3 ${
+                    index === 1 || index === 2 ? 'text-white' : 'text-mondrian-black'
+                  }`}>{value.title}</h3>
+                  <p className={`leading-relaxed ${
+                    index === 1 || index === 2 ? 'text-white' : 'text-mondrian-black'
+                  }`}>{value.description}</p>
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
-import { Briefcase, Calendar, TreePine } from "lucide-react";
+
+import { Briefcase, Calendar } from "lucide-react";
 
 const Experience = () => {
   const experiences = [
@@ -39,82 +40,74 @@ const Experience = () => {
         "Spearheaded the re-platforming of the grocery pickup and delivery experience, improving usability",
         "Partnered with product and business leads on roadmap prioritization, resourcing, and long-term strategy"
       ]
-    },
-    {
-      title: "Practice Area Head - Routine Consumables & Fashion",
-      company: "Walmart",
-      period: "Oct 2016 - Feb 2020",
-      location: "Portland, OR",
-      description: "Led cross-functional design teams focused on high-frequency consumables, registry experiences, and fashion vertical transformation.",
-      achievements: [
-        "Conducted data-driven discovery and executed complete rebuild of Walmart's baby registry product",
-        "Directed design strategy for Walmart.com's fashion vertical, transforming customer discovery and shopping",
-        "Operated as lean startup within Walmart, using customer insights and rapid experimentation",
-        "Aligned user mental models with innovative design approaches to increase relevance and conversion"
-      ]
-    },
-    {
-      title: "Sr. Manager - Mobile Apps",
-      company: "Sam's Club",
-      period: "Oct 2013 - Oct 2016",
-      location: "Portland, OR",
-      description: "Managed UX for Sam's Club iOS/Android apps, in-store digital tools, and B2B features while building and scaling a multidisciplinary design team.",
-      achievements: [
-        "Built and scaled a multidisciplinary team of visual, UX, and content designers",
-        "Drove service design initiatives connecting physical retail with digital experiences across multiple channels",
-        "Advocated for and applied behavioral science, research, and design thinking methods to improve member experiences"
-      ]
     }
   ];
 
   return (
-    <section id="experience" className="py-20 bg-mist relative">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-5">
-        <TreePine className="absolute top-20 left-10 text-forest-dark" size={40} />
-        <TreePine className="absolute bottom-40 right-20 text-moss" size={36} />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+    <section id="experience" className="py-20 mondrian-gray">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-forest-dark mb-6">Experience</h2>
-          <p className="text-xl text-forest-medium max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-mondrian-black mb-6">Experience</h2>
+          <p className="text-xl text-mondrian-black max-w-3xl mx-auto">
             25+ years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
           </p>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           {experiences.map((experience, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-sage/20 hover:border-sage/40"
+              className={`mondrian-section p-8 transition-all duration-300 hover:shadow-xl ${
+                index % 3 === 0 ? 'mondrian-white' : 
+                index % 3 === 1 ? 'mondrian-yellow' : 'mondrian-blue'
+              }`}
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div className="flex items-start space-x-4 mb-4 md:mb-0">
-                  <div className="bg-sage/20 p-3 rounded-lg">
-                    <Briefcase className="text-forest-dark" size={24} />
+                  <div className={`p-3 ${
+                    index % 3 === 2 ? 'bg-white' : 'bg-mondrian-black'
+                  }`}>
+                    <Briefcase className={`${
+                      index % 3 === 2 ? 'text-mondrian-black' : 'text-white'
+                    }`} size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-forest-dark">{experience.title}</h3>
-                    <p className="text-lg text-moss font-medium">{experience.company}</p>
-                    <p className="text-sm text-forest-medium">{experience.location}</p>
+                    <h3 className={`text-xl font-bold ${
+                      index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
+                    }`}>{experience.title}</h3>
+                    <p className={`text-lg font-medium ${
+                      index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
+                    }`}>{experience.company}</p>
+                    <p className={`text-sm ${
+                      index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
+                    }`}>{experience.location}</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2 text-forest-medium">
+                <div className={`flex items-center space-x-2 ${
+                  index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
+                }`}>
                   <Calendar size={16} />
                   <span className="font-medium">{experience.period}</span>
                 </div>
               </div>
               
-              <p className="text-forest-medium mb-6 leading-relaxed">{experience.description}</p>
+              <p className={`mb-6 leading-relaxed ${
+                index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
+              }`}>{experience.description}</p>
               
               <div>
-                <h4 className="text-lg font-semibold text-forest-dark mb-3">Key Achievements</h4>
+                <h4 className={`text-lg font-semibold mb-3 ${
+                  index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
+                }`}>Key Achievements</h4>
                 <ul className="grid md:grid-cols-2 gap-2">
                   {experience.achievements.map((achievement, achievementIndex) => (
                     <li key={achievementIndex} className="flex items-start space-x-2">
-                      <div className="w-2 h-2 bg-sage rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-forest-medium">{achievement}</span>
+                      <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                        index % 3 === 2 ? 'bg-white' : 'bg-mondrian-red'
+                      }`}></div>
+                      <span className={`${
+                        index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
+                      }`}>{achievement}</span>
                     </li>
                   ))}
                 </ul>

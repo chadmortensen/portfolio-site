@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,7 +62,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Deep Forest Green palette
+				// Mondrian colors
+				mondrian: {
+					red: 'hsl(var(--mondrian-red))',
+					blue: 'hsl(var(--mondrian-blue))',
+					yellow: 'hsl(var(--mondrian-yellow))',
+					white: 'hsl(var(--mondrian-white))',
+					black: 'hsl(var(--mondrian-black))',
+					gray: 'hsl(var(--mondrian-gray))'
+				},
+				// Keep existing forest colors for navigation
 				forest: {
 					dark: 'hsl(var(--forest-dark))',
 					medium: 'hsl(var(--forest-medium))',
@@ -74,7 +82,6 @@ export default {
 				stone: 'hsl(var(--stone))',
 				mist: 'hsl(var(--mist))',
 				cedar: 'hsl(var(--cedar))',
-				// Accent colors that work with deep forest
 				emerald: {
 					dark: 'hsl(var(--emerald-dark))',
 					medium: 'hsl(var(--emerald-medium))',
@@ -117,13 +124,22 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
+				},
+				'slide-in': {
+					'0%': {
+						transform: 'translateX(-100%)'
+					},
+					'100%': {
+						transform: 'translateX(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 6s ease-in-out infinite',
-				'fade-in': 'fade-in 0.8s ease-out'
+				'fade-in': 'fade-in 0.8s ease-out',
+				'slide-in': 'slide-in 0.6s ease-out'
 			}
 		}
 	},

@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Deep Forest Green Design System */
+/* Mondrian-Inspired Design System */
 
 @layer base {
   :root {
@@ -46,7 +46,15 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Deep Forest Green Color Palette */
+    /* Mondrian Color Palette */
+    --mondrian-red: 0 85% 50%;
+    --mondrian-blue: 220 100% 45%;
+    --mondrian-yellow: 48 100% 55%;
+    --mondrian-white: 0 0% 98%;
+    --mondrian-black: 0 0% 8%;
+    --mondrian-gray: 0 0% 85%;
+
+    /* Keeping forest colors for navigation */
     --forest-dark: 158 85% 8%;
     --forest-medium: 158 75% 15%;
     --forest-light: 158 65% 25%;
@@ -104,7 +112,7 @@
   }
 }
 
-/* Deep Forest Green Animations */
+/* Mondrian-Inspired Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -121,6 +129,15 @@
   }
 }
 
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -129,7 +146,48 @@
   animation: fade-in 0.8s ease-out;
 }
 
-/* Deep forest gradient backgrounds */
+.animate-slide-in {
+  animation: slide-in 0.6s ease-out;
+}
+
+/* Mondrian Color Blocks */
+.mondrian-red {
+  background-color: hsl(var(--mondrian-red));
+}
+
+.mondrian-blue {
+  background-color: hsl(var(--mondrian-blue));
+}
+
+.mondrian-yellow {
+  background-color: hsl(var(--mondrian-yellow));
+}
+
+.mondrian-white {
+  background-color: hsl(var(--mondrian-white));
+}
+
+.mondrian-black {
+  background-color: hsl(var(--mondrian-black));
+  color: white;
+}
+
+.mondrian-gray {
+  background-color: hsl(var(--mondrian-gray));
+}
+
+/* Mondrian Grid Layouts */
+.mondrian-grid {
+  display: grid;
+  gap: 4px;
+  background-color: hsl(var(--mondrian-black));
+}
+
+.mondrian-section {
+  border: 4px solid hsl(var(--mondrian-black));
+}
+
+/* Keep existing gradients for buttons */
 .deep-forest-bg {
   background: linear-gradient(180deg, 
     hsl(var(--mist)) 0%, 

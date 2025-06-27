@@ -1,5 +1,5 @@
 
-import { Shield, TrendingUp, Users, Award, Mountain } from "lucide-react";
+import { Shield, TrendingUp, Users, Award } from "lucide-react";
 
 const Leadership = () => {
   const principles = [
@@ -26,34 +26,45 @@ const Leadership = () => {
   ];
 
   return (
-    <section id="leadership" className="py-20 bg-mist relative">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-5">
-        <Mountain className="absolute top-10 right-1/4 text-forest-dark" size={56} />
-        <Mountain className="absolute bottom-20 left-1/3 text-moss" size={48} />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+    <section id="leadership" className="py-20 mondrian-white">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-forest-dark mb-6">My Leadership Style</h2>
-          <p className="text-xl text-forest-medium max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-mondrian-black mb-6">My Leadership Style</h2>
+          <p className="text-xl text-mondrian-black max-w-3xl mx-auto">
             Leading design teams is about more than setting direction — it's about creating an environment where people can thrive, grow, and do their best work. Here's what I believe makes that possible:
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className="mondrian-grid" style={{
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateRows: 'repeat(2, 300px)',
+          gap: '4px'
+        }}>
           {principles.map((principle, index) => (
             <div
               key={index}
-              className="bg-white/80 backdrop-blur-sm rounded-xl p-8 hover:bg-white transition-all duration-300 shadow-lg border border-sage/20"
+              className={`mondrian-section p-8 flex flex-col justify-center transition-all duration-300 hover:shadow-xl ${
+                index === 0 ? 'mondrian-red' :
+                index === 1 ? 'mondrian-blue' :
+                index === 2 ? 'mondrian-yellow' :
+                'mondrian-gray'
+              }`}
             >
               <div className="flex items-start space-x-4">
-                <div className="bg-sage/30 p-3 rounded-lg">
-                  <principle.icon className="text-forest-dark" size={24} />
+                <div className={`p-3 ${
+                  index === 0 || index === 1 ? 'bg-white' : 'bg-mondrian-black'
+                }`}>
+                  <principle.icon className={`${
+                    index === 0 || index === 1 ? 'text-mondrian-black' : 'text-white'
+                  }`} size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-forest-dark mb-3">{principle.title}</h3>
-                  <p className="text-forest-medium leading-relaxed">{principle.description}</p>
+                  <h3 className={`text-xl font-bold mb-3 ${
+                    index === 0 || index === 1 ? 'text-white' : 'text-mondrian-black'
+                  }`}>{principle.title}</h3>
+                  <p className={`leading-relaxed ${
+                    index === 0 || index === 1 ? 'text-white' : 'text-mondrian-black'
+                  }`}>{principle.description}</p>
                 </div>
               </div>
             </div>
