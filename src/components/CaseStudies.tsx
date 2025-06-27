@@ -1,5 +1,5 @@
 
-import { ArrowRight, Calendar, Users, TrendingUp, TreeDeciduous } from "lucide-react";
+import { ArrowRight, Calendar, Users, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CaseStudies = () => {
@@ -175,44 +175,48 @@ const CaseStudies = () => {
   ];
 
   return (
-    <section id="case-studies" className="py-20 bg-mist relative">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-5">
-        <TreeDeciduous className="absolute top-10 left-10 text-forest-dark" size={52} />
-        <TreeDeciduous className="absolute bottom-20 right-20 text-moss" size={48} />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-forest-dark mb-6">Case Studies</h2>
-          <p className="text-xl text-forest-medium max-w-3xl mx-auto">
+    <section id="case-studies" className="section-divider">
+      <div className="w-full">
+        <div className="mondrian-navy py-16 px-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Case Studies</h2>
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Real challenges, strategic solutions, and measurable outcomes that demonstrate the impact of effective leadership.
           </p>
         </div>
 
-        <div className="space-y-16">
+        <div className="grid grid-cols-1">
           {caseStudies.map((study, index) => (
-            <div key={index} className="bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-sage/30">
-              <div className="grid md:grid-cols-5 gap-0">
-                <div className="md:col-span-2">
+            <div key={index}>
+              <div className="grid grid-cols-1 lg:grid-cols-12">
+                <div className="lg:col-span-5">
                   <img 
                     src={study.image} 
                     alt={study.title}
-                    className="w-full h-full object-cover min-h-[300px] md:min-h-[400px]"
+                    className="w-full h-full object-cover min-h-[400px]"
                   />
                 </div>
-                <div className="md:col-span-3 p-8 md:p-12">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                <div className={`lg:col-span-7 p-8 lg:p-16 ${
+                  index === 0 ? 'mondrian-white' : 'mondrian-blue'
+                }`}>
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
                     <div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-forest-dark mb-2">{study.title}</h3>
-                      <p className="text-lg text-moss font-medium">{study.company}</p>
+                      <h3 className={`text-2xl lg:text-3xl font-bold mb-2 ${
+                        index === 0 ? 'text-mondrian-black' : 'text-white'
+                      }`}>{study.title}</h3>
+                      <p className={`text-lg font-medium ${
+                        index === 0 ? 'text-mondrian-gray' : 'text-white/80'
+                      }`}>{study.company}</p>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-4 mt-4 md:mt-0">
-                      <div className="flex items-center space-x-2 text-forest-medium">
+                    <div className="flex flex-col sm:flex-row gap-4 mt-4 lg:mt-0">
+                      <div className={`flex items-center space-x-2 ${
+                        index === 0 ? 'text-mondrian-gray' : 'text-white/80'
+                      }`}>
                         <Calendar size={16} />
                         <span className="text-sm font-medium">{study.duration}</span>
                       </div>
-                      <div className="flex items-center space-x-2 text-forest-medium">
+                      <div className={`flex items-center space-x-2 ${
+                        index === 0 ? 'text-mondrian-gray' : 'text-white/80'
+                      }`}>
                         <Users size={16} />
                         <span className="text-sm font-medium">{study.teamSize}</span>
                       </div>
@@ -221,18 +225,28 @@ const CaseStudies = () => {
 
                   <div className="space-y-6 mb-8">
                     <div>
-                      <h4 className="text-xl font-bold text-forest-dark mb-4">The Challenge</h4>
-                      <p className="text-forest-medium leading-relaxed mb-6">{study.challenge}</p>
+                      <h4 className={`text-xl font-bold mb-4 ${
+                        index === 0 ? 'text-mondrian-black' : 'text-white'
+                      }`}>The Challenge</h4>
+                      <p className={`leading-relaxed mb-6 ${
+                        index === 0 ? 'text-mondrian-black' : 'text-white'
+                      }`}>{study.challenge}</p>
                     </div>
                     
                     {study.goals && (
                       <div>
-                        <h4 className="text-xl font-bold text-forest-dark mb-4">Goals & Success Metrics</h4>
+                        <h4 className={`text-xl font-bold mb-4 ${
+                          index === 0 ? 'text-mondrian-black' : 'text-white'
+                        }`}>Goals & Success Metrics</h4>
                         <ul className="space-y-3">
                           {study.goals.slice(0, 3).map((goal, goalIndex) => (
                             <li key={goalIndex} className="flex items-start space-x-3">
-                              <TrendingUp className="text-sage mt-1 flex-shrink-0" size={16} />
-                              <span className="text-forest-medium">{goal}</span>
+                              <TrendingUp className={`mt-1 flex-shrink-0 ${
+                                index === 0 ? 'text-mondrian-teal' : 'text-mondrian-orange'
+                              }`} size={16} />
+                              <span className={
+                                index === 0 ? 'text-mondrian-black' : 'text-white'
+                              }>{goal}</span>
                             </li>
                           ))}
                         </ul>
@@ -241,12 +255,18 @@ const CaseStudies = () => {
 
                     {study.results && !study.goals && (
                       <div>
-                        <h4 className="text-xl font-bold text-forest-dark mb-4">Results Achieved</h4>
+                        <h4 className={`text-xl font-bold mb-4 ${
+                          index === 0 ? 'text-mondrian-black' : 'text-white'
+                        }`}>Results Achieved</h4>
                         <ul className="space-y-3">
                           {study.results.slice(0, 3).map((result, resultIndex) => (
                             <li key={resultIndex} className="flex items-start space-x-3">
-                              <TrendingUp className="text-sage mt-1 flex-shrink-0" size={16} />
-                              <span className="text-forest-medium">{result}</span>
+                              <TrendingUp className={`mt-1 flex-shrink-0 ${
+                                index === 0 ? 'text-mondrian-teal' : 'text-mondrian-orange'
+                              }`} size={16} />
+                              <span className={
+                                index === 0 ? 'text-mondrian-black' : 'text-white'
+                              }>{result}</span>
                             </li>
                           ))}
                         </ul>
@@ -254,10 +274,14 @@ const CaseStudies = () => {
                     )}
                   </div>
 
-                  <div className="flex justify-end">
+                  <div className="flex justify-start">
                     <button
                       onClick={() => navigate(study.route)}
-                      className="inline-flex items-center space-x-2 px-6 py-3 bg-forest-dark text-white rounded-lg hover:bg-forest-medium transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                      className={`inline-flex items-center space-x-2 px-6 py-3 rounded-lg font-medium shadow-lg transition-all duration-300 transform hover:-translate-y-1 ${
+                        index === 0 
+                          ? 'bg-mondrian-teal text-white hover:bg-mondrian-navy' 
+                          : 'bg-mondrian-orange text-white hover:bg-mondrian-coral'
+                      }`}
                     >
                       <span>Read Full Case Study</span>
                       <ArrowRight size={18} />

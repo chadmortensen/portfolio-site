@@ -33,20 +33,12 @@ const Navigation = () => {
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled 
-        ? "bg-white/95 backdrop-blur-sm shadow-lg border-b border-sage/20" 
-        : "bg-transparent"
-    }`}>
+    <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b border-sage/20">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <TreePine className={`transition-colors duration-300 ${
-              isScrolled ? "text-forest-dark" : "text-white"
-            }`} size={24} />
-            <span className={`text-xl font-bold transition-colors duration-300 ${
-              isScrolled ? "text-forest-dark" : "text-white"
-            }`}>Chad Mortensen</span>
+            <TreePine className="text-forest-dark" size={24} />
+            <span className="text-xl font-bold text-forest-dark">Chad Mortensen</span>
           </div>
           
           {/* Desktop Navigation */}
@@ -55,25 +47,17 @@ const Navigation = () => {
               <button 
                 key={item.href} 
                 onClick={() => scrollToSection(item.href)} 
-                className={`font-medium relative group transition-colors duration-300 ${
-                  isScrolled 
-                    ? "text-forest-medium hover:text-forest-dark" 
-                    : "text-white hover:text-gray-200"
-                }`}
+                className="font-medium relative group text-forest-medium hover:text-forest-dark transition-colors duration-300"
               >
                 {item.label}
-                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                  isScrolled ? "bg-sage" : "bg-white"
-                }`}></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sage group-hover:w-full transition-all duration-300"></span>
               </button>
             ))}
           </div>
 
           {/* Mobile Menu Button */}
           <button 
-            className={`md:hidden p-2 transition-colors duration-300 ${
-              isScrolled ? "text-forest-dark" : "text-white"
-            }`} 
+            className="md:hidden p-2 text-forest-dark" 
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -88,11 +72,7 @@ const Navigation = () => {
                 <button 
                   key={item.href} 
                   onClick={() => scrollToSection(item.href)} 
-                  className={`text-left font-medium py-2 transition-colors duration-200 ${
-                    isScrolled 
-                      ? "text-forest-medium hover:text-forest-dark" 
-                      : "text-white hover:text-gray-200"
-                  }`}
+                  className="text-left font-medium py-2 text-forest-medium hover:text-forest-dark transition-colors duration-200"
                 >
                   {item.label}
                 </button>
