@@ -26,45 +26,43 @@ const Leadership = () => {
   ];
 
   return (
-    <section id="leadership" className="py-20 mondrian-white">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-mondrian-black mb-6">My Leadership Style</h2>
-          <p className="text-xl text-mondrian-black max-w-3xl mx-auto">
+    <section id="leadership" className="section-divider">
+      <div className="w-full">
+        <div className="mondrian-orange py-16 px-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">My Leadership Style</h2>
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Leading design teams is about more than setting direction — it's about creating an environment where people can thrive, grow, and do their best work. Here's what I believe makes that possible:
           </p>
         </div>
 
-        <div className="mondrian-grid" style={{
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gridTemplateRows: 'repeat(2, 300px)',
-          gap: '4px'
-        }}>
+        <div className="grid grid-cols-1 md:grid-cols-2">
           {principles.map((principle, index) => (
             <div
               key={index}
-              className={`mondrian-section p-8 flex flex-col justify-center transition-all duration-300 hover:shadow-xl ${
-                index === 0 ? 'mondrian-red' :
-                index === 1 ? 'mondrian-blue' :
-                index === 2 ? 'mondrian-yellow' :
-                'mondrian-gray'
+              className={`px-8 py-12 ${
+                index === 0 ? 'mondrian-teal' :
+                index === 1 ? 'mondrian-navy' :
+                index === 2 ? 'mondrian-coral' :
+                'mondrian-white'
               }`}
             >
-              <div className="flex items-start space-x-4">
-                <div className={`p-3 ${
-                  index === 0 || index === 1 ? 'bg-white' : 'bg-mondrian-black'
-                }`}>
-                  <principle.icon className={`${
-                    index === 0 || index === 1 ? 'text-mondrian-black' : 'text-white'
-                  }`} size={24} />
-                </div>
-                <div>
-                  <h3 className={`text-xl font-bold mb-3 ${
-                    index === 0 || index === 1 ? 'text-white' : 'text-mondrian-black'
-                  }`}>{principle.title}</h3>
-                  <p className={`leading-relaxed ${
-                    index === 0 || index === 1 ? 'text-white' : 'text-mondrian-black'
-                  }`}>{principle.description}</p>
+              <div className="max-w-lg mx-auto">
+                <div className="flex items-start space-x-4">
+                  <div className={`p-3 ${
+                    index === 0 || index === 1 || index === 2 ? 'bg-white' : 'bg-mondrian-black'
+                  }`}>
+                    <principle.icon className={`${
+                      index === 0 || index === 1 || index === 2 ? 'text-mondrian-black' : 'text-white'
+                    }`} size={24} />
+                  </div>
+                  <div>
+                    <h3 className={`text-xl font-bold mb-3 ${
+                      index === 0 || index === 1 || index === 2 ? 'text-white' : 'text-mondrian-black'
+                    }`}>{principle.title}</h3>
+                    <p className={`leading-relaxed ${
+                      index === 0 || index === 1 || index === 2 ? 'text-white' : 'text-mondrian-black'
+                    }`}>{principle.description}</p>
+                  </div>
                 </div>
               </div>
             </div>

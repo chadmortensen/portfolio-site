@@ -44,73 +44,75 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 mondrian-gray">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-mondrian-black mb-6">Experience</h2>
-          <p className="text-xl text-mondrian-black max-w-3xl mx-auto">
+    <section id="experience" className="section-divider">
+      <div className="w-full">
+        <div className="mondrian-blue py-16 px-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Experience</h2>
+          <p className="text-xl text-white max-w-3xl mx-auto">
             25+ years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div>
           {experiences.map((experience, index) => (
             <div
               key={index}
-              className={`mondrian-section p-8 transition-all duration-300 hover:shadow-xl ${
+              className={`w-full px-8 py-12 ${
                 index % 3 === 0 ? 'mondrian-white' : 
-                index % 3 === 1 ? 'mondrian-yellow' : 'mondrian-blue'
+                index % 3 === 1 ? 'mondrian-coral' : 'mondrian-navy'
               }`}
             >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                <div className="flex items-start space-x-4 mb-4 md:mb-0">
-                  <div className={`p-3 ${
-                    index % 3 === 2 ? 'bg-white' : 'bg-mondrian-black'
+              <div className="max-w-6xl mx-auto">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
+                  <div className="flex items-start space-x-4 mb-4 md:mb-0">
+                    <div className={`p-3 ${
+                      index % 3 === 2 ? 'bg-white' : 'bg-mondrian-black'
+                    }`}>
+                      <Briefcase className={`${
+                        index % 3 === 2 ? 'text-mondrian-black' : 'text-white'
+                      }`} size={24} />
+                    </div>
+                    <div>
+                      <h3 className={`text-2xl font-bold ${
+                        index % 3 === 0 ? 'text-mondrian-black' : 'text-white'
+                      }`}>{experience.title}</h3>
+                      <p className={`text-xl font-medium ${
+                        index % 3 === 0 ? 'text-mondrian-black' : 'text-white'
+                      }`}>{experience.company}</p>
+                      <p className={`text-sm ${
+                        index % 3 === 0 ? 'text-mondrian-black' : 'text-white'
+                      }`}>{experience.location}</p>
+                    </div>
+                  </div>
+                  <div className={`flex items-center space-x-2 ${
+                    index % 3 === 0 ? 'text-mondrian-black' : 'text-white'
                   }`}>
-                    <Briefcase className={`${
-                      index % 3 === 2 ? 'text-mondrian-black' : 'text-white'
-                    }`} size={24} />
-                  </div>
-                  <div>
-                    <h3 className={`text-xl font-bold ${
-                      index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
-                    }`}>{experience.title}</h3>
-                    <p className={`text-lg font-medium ${
-                      index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
-                    }`}>{experience.company}</p>
-                    <p className={`text-sm ${
-                      index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
-                    }`}>{experience.location}</p>
+                    <Calendar size={16} />
+                    <span className="font-medium">{experience.period}</span>
                   </div>
                 </div>
-                <div className={`flex items-center space-x-2 ${
-                  index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
-                }`}>
-                  <Calendar size={16} />
-                  <span className="font-medium">{experience.period}</span>
+                
+                <p className={`mb-6 leading-relaxed text-lg ${
+                  index % 3 === 0 ? 'text-mondrian-black' : 'text-white'
+                }`}>{experience.description}</p>
+                
+                <div>
+                  <h4 className={`text-lg font-semibold mb-4 ${
+                    index % 3 === 0 ? 'text-mondrian-black' : 'text-white'
+                  }`}>Key Achievements</h4>
+                  <ul className="grid md:grid-cols-2 gap-3">
+                    {experience.achievements.map((achievement, achievementIndex) => (
+                      <li key={achievementIndex} className="flex items-start space-x-3">
+                        <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                          index % 3 === 0 ? 'bg-mondrian-orange' : 'bg-white'
+                        }`}></div>
+                        <span className={`${
+                          index % 3 === 0 ? 'text-mondrian-black' : 'text-white'
+                        }`}>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-              
-              <p className={`mb-6 leading-relaxed ${
-                index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
-              }`}>{experience.description}</p>
-              
-              <div>
-                <h4 className={`text-lg font-semibold mb-3 ${
-                  index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
-                }`}>Key Achievements</h4>
-                <ul className="grid md:grid-cols-2 gap-2">
-                  {experience.achievements.map((achievement, achievementIndex) => (
-                    <li key={achievementIndex} className="flex items-start space-x-2">
-                      <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                        index % 3 === 2 ? 'bg-white' : 'bg-mondrian-red'
-                      }`}></div>
-                      <span className={`${
-                        index % 3 === 2 ? 'text-white' : 'text-mondrian-black'
-                      }`}>{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           ))}

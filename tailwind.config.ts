@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,11 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Mondrian colors
+				// Modern Mondrian colors
 				mondrian: {
-					red: 'hsl(var(--mondrian-red))',
+					navy: 'hsl(var(--mondrian-navy))',
 					blue: 'hsl(var(--mondrian-blue))',
-					yellow: 'hsl(var(--mondrian-yellow))',
+					teal: 'hsl(var(--mondrian-teal))',
+					orange: 'hsl(var(--mondrian-orange))',
+					coral: 'hsl(var(--mondrian-coral))',
 					white: 'hsl(var(--mondrian-white))',
 					black: 'hsl(var(--mondrian-black))',
 					gray: 'hsl(var(--mondrian-gray))'
