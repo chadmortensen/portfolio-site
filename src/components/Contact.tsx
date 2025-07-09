@@ -13,43 +13,51 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="col-span-12 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="text-center p-8 bg-surface-secondary border border-swiss-light hover:border-accent-blue/30 transition-colors duration-200">
-            <div className="p-4 bg-surface-primary border border-swiss-light mx-auto w-fit mb-6">
+        <div className="col-span-12 max-w-md mx-auto space-y-8">
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0">
               <Mail size={24} className="text-accent-blue" />
             </div>
-            <h3 className="text-body text-text-primary font-medium mb-2">Email</h3>
-            <a href="mailto:chadmor@gmail.com" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
-              chadmor@gmail.com
-            </a>
+            <div className="text-left">
+              <h3 className="text-body text-text-primary font-medium mb-1">Email</h3>
+              <a href="mailto:chadmor@gmail.com" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
+                chadmor@gmail.com
+              </a>
+            </div>
           </div>
 
-          <div className="text-center p-8 bg-surface-secondary border border-swiss-light hover:border-accent-teal/30 transition-colors duration-200">
-            <div className="p-4 bg-surface-primary border border-swiss-light mx-auto w-fit mb-6">
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0">
               <Linkedin size={24} className="text-accent-teal" />
             </div>
-            <h3 className="text-body text-text-primary font-medium mb-2">LinkedIn</h3>
-            <a href="https://linkedin.com/in/chadmortensen" className="text-body text-text-secondary hover:text-accent-teal transition-colors">
-              linkedin.com/in/chadmortensen
-            </a>
+            <div className="text-left">
+              <h3 className="text-body text-text-primary font-medium mb-1">LinkedIn</h3>
+              <a href="https://linkedin.com/in/chadmortensen" className="text-body text-text-secondary hover:text-accent-teal transition-colors">
+                linkedin.com/in/chadmortensen
+              </a>
+            </div>
           </div>
 
-          <div className="text-center p-8 bg-surface-secondary border border-swiss-light hover:border-accent-orange/30 transition-colors duration-200">
-            <div className="p-4 bg-surface-primary border border-swiss-light mx-auto w-fit mb-6">
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0">
               <Phone size={24} className="text-accent-orange" />
             </div>
-            <h3 className="text-body text-text-primary font-medium mb-2">Phone</h3>
-            <a href="tel:+15033470199" className="text-body text-text-secondary hover:text-accent-orange transition-colors">
-              (503) 347-0199
-            </a>
+            <div className="text-left">
+              <h3 className="text-body text-text-primary font-medium mb-1">Phone</h3>
+              <a href="tel:+15033470199" className="text-body text-text-secondary hover:text-accent-orange transition-colors">
+                (503) 347-0199
+              </a>
+            </div>
           </div>
 
-          <div className="text-center p-8 bg-surface-secondary border border-swiss-light hover:border-accent-aqua/30 transition-colors duration-200">
-            <div className="p-4 bg-surface-primary border border-swiss-light mx-auto w-fit mb-6">
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0">
               <MapPin size={24} className="text-accent-aqua" />
             </div>
-            <h3 className="text-body text-text-primary font-medium mb-2">Location</h3>
-            <p className="text-body text-text-secondary">Portland, Oregon</p>
+            <div className="text-left">
+              <h3 className="text-body text-text-primary font-medium mb-1">Location</h3>
+              <p className="text-body text-text-secondary">Portland, Oregon</p>
+            </div>
           </div>
         </div>
 
