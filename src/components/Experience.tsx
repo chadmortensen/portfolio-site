@@ -44,22 +44,22 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-24 bg-surface-primary">
+    <section id="experience" className="py-16 sm:py-24 bg-surface-primary">
       <div className="swiss-grid fade-in">
-        <div className="col-span-12 text-center mb-16">
+        <div className="col-span-12 text-center mb-12 sm:mb-16">
           <h2 className="text-headline text-text-primary mb-4">Experience</h2>
           <div className="w-16 h-px bg-accent-orange mx-auto mb-6"></div>
-          <p className="text-body text-text-secondary max-w-3xl mx-auto">
+          <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
             25+ years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
           </p>
         </div>
 
-        <div className="col-span-12 space-y-16">
+        <div className="col-span-12 space-y-12 sm:space-y-16">
           {experiences.map((experience, index) => (
-            <div key={index} className="border-l-2 border-swiss-light pl-8 relative">
+            <div key={index} className="border-l-2 border-swiss-light pl-6 sm:pl-8 relative">
               <div className="absolute -left-2 top-0 w-3 h-3 bg-accent-blue rounded-full"></div>
               
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                   <div>
                     <h3 className="text-title text-text-primary font-light">{experience.title}</h3>
@@ -78,11 +78,11 @@ const Experience = () => {
                 
                 <div>
                   <h4 className="text-body text-text-primary font-medium mb-4">Key Achievements</h4>
-                  <ul className="grid lg:grid-cols-2 gap-3">
+                  <ul className="grid gap-3">
                     {experience.achievements.map((achievement, achievementIndex) => (
                       <li key={achievementIndex} className="flex items-start space-x-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
-                        <span className="text-body text-text-secondary">{achievement}</span>
+                        <span className="text-body text-text-secondary leading-relaxed">{achievement}</span>
                       </li>
                     ))}
                   </ul>

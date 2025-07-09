@@ -15,26 +15,26 @@ const Hero = () => {
     <section id="home" className="min-h-screen flex items-center justify-center bg-surface-primary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
-          <div className="space-y-8">
-            <div className="space-y-6">
-              <h1 className="text-display text-text-primary">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-6">
+              <h1 className="text-display text-text-primary px-4">
                 Chad Mortensen
               </h1>
               <div className="w-16 h-px bg-accent-blue mx-auto"></div>
-              <p className="text-title font-light text-text-secondary max-w-4xl mx-auto">
+              <p className="text-title font-light text-text-secondary max-w-4xl mx-auto px-4">
                 Product design leader with 25+ years of experience turning complex problems into meaningful outcomes
               </p>
             </div>
             
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6 px-4">
               <p className="text-body text-text-tertiary max-w-3xl mx-auto leading-relaxed">
                 I guide teams, shape culture, and build thoughtful, scalable design solutions across eCommerce, health tech, and omnichannel platforms.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 sm:pt-8">
                 <button 
                   onClick={scrollToAbout} 
-                  className="px-8 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200"
                 >
                   Learn About Me
                 </button>
@@ -42,7 +42,7 @@ const Hero = () => {
                   onClick={() => document.querySelector("#case-studies")?.scrollIntoView({
                     behavior: "smooth"
                   })} 
-                  className="px-8 py-3 border border-swiss-light text-text-primary hover:bg-surface-secondary transition-all duration-200"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 border border-swiss-light text-text-primary hover:bg-surface-secondary transition-all duration-200"
                 >
                   View My Work
                 </button>
@@ -50,7 +50,7 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="pt-16">
+          <div className="pt-12 sm:pt-16">
             <button 
               onClick={scrollToAbout} 
               className="text-text-tertiary hover:text-accent-blue transition-colors duration-200"
