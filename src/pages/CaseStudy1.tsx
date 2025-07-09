@@ -141,8 +141,8 @@ const CaseStudy1 = () => {
     <div className="min-h-screen bg-surface-primary">
       {/* Navigation */}
       <nav className="bg-surface-primary border-b border-swiss-light">
-        <div className="swiss-grid py-4">
-          <div className="col-span-12 flex items-center justify-between">
+        <div className="max-width-container py-4 px-4 sm:px-8">
+          <div className="flex items-center justify-between">
             <button 
               onClick={() => navigate('/')}
               className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors"
@@ -156,13 +156,13 @@ const CaseStudy1 = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-16 bg-surface-secondary">
-        <div className="swiss-grid">
-          <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
+      <section className="py-12 sm:py-16 bg-surface-secondary">
+        <div className="max-width-container px-4 sm:px-8">
+          <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-display text-text-primary mb-6">A rapid revamp to the Walmart registry</h1>
             <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
             
-            <div className="flex justify-center items-center space-x-8 mb-8 text-text-secondary">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-8 mb-8 text-text-secondary">
               <div className="flex items-center space-x-2">
                 <Calendar size={16} />
                 <span className="text-caption">1 quarter</span>
@@ -177,7 +177,7 @@ const CaseStudy1 = () => {
               </div>
             </div>
 
-            <p className="text-body text-text-secondary leading-relaxed max-w-4xl mx-auto">
+            <p className="text-body text-text-secondary leading-relaxed max-w-3xl mx-auto">
               In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.
             </p>
           </div>
@@ -185,148 +185,140 @@ const CaseStudy1 = () => {
       </section>
 
       {/* Content Sections */}
-      <div className="py-16">
-        <div className="swiss-grid">
-          <div className="col-span-12 space-y-24">
+      <div className="py-12 sm:py-16">
+        <div className="max-width-container px-4 sm:px-8">
+          <div className="max-w-5xl mx-auto space-y-16 sm:space-y-24">
             {sections.map((section, index) => (
-              <div key={index} className="grid lg:grid-cols-12 gap-12 items-start">
-                {index % 2 === 0 ? (
-                  <>
-                    <div className="lg:col-span-7">
-                      <img 
-                        src={section.image} 
-                        alt={section.title}
-                        className="w-full h-80 object-cover border border-swiss-light"
-                      />
-                    </div>
-                    <div className="lg:col-span-5 space-y-6">
-                      <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
-                      <div className="w-12 h-px bg-accent-teal"></div>
-                      <p className="text-body text-text-secondary leading-relaxed">{section.content}</p>
-                      
-                      {section.goals && (
-                        <div>
-                          <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
-                          <ul className="space-y-2">
-                            {section.goals.map((goal, goalIndex) => (
-                              <li key={goalIndex} className="flex items-start space-x-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                                <span className="text-body text-text-secondary">{goal}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      
-                      {section.quotes && (
-                        <div>
-                          <h3 className="text-title text-text-primary font-light mb-4">User Feedback</h3>
-                          {section.quotes.map((quote, quoteIndex) => (
-                            <blockquote key={quoteIndex} className="border-l-2 border-accent-orange pl-4 mb-4">
-                              <p className="text-body text-text-secondary italic">"{quote}"</p>
-                            </blockquote>
-                          ))}
-                          {section.insight && (
-                            <div className="p-4 bg-surface-secondary border border-swiss-light mt-4">
-                              <p className="text-body text-text-primary font-medium">{section.insight}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      
-                      {section.stats && (
-                        <div>
-                          <h3 className="text-title text-text-primary font-light mb-4">Workshop Stats</h3>
-                          <ul className="space-y-2">
-                            {section.stats.map((stat, statIndex) => (
-                              <li key={statIndex} className="flex items-start space-x-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
-                                <span className="text-body text-text-secondary">{stat}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      
-                      {section.focusAreas && (
-                        <div>
-                          <h3 className="text-title text-text-primary font-light mb-4">Focus Areas</h3>
-                          <div className="space-y-4">
-                            {section.focusAreas.map((area, areaIndex) => (
-                              <div key={areaIndex} className="p-4 bg-surface-secondary border border-swiss-light">
-                                <h4 className="text-body text-text-primary font-medium mb-2">{area.area}</h4>
-                                <p className="text-body text-text-secondary">{area.details}</p>
-                              </div>
-                            ))}
+              <section key={index} className="space-y-8">
+                {/* Section Header */}
+                <div className="text-center pb-4 border-b border-swiss-light">
+                  <h2 className="text-headline text-text-primary font-light mb-4">{section.title}</h2>
+                  <div className="w-12 h-px bg-accent-teal mx-auto"></div>
+                </div>
+
+                {/* Image */}
+                <div className="w-full">
+                  <img 
+                    src={section.image} 
+                    alt={section.title}
+                    className="w-full h-64 sm:h-80 lg:h-96 object-cover border border-swiss-light"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="max-w-4xl mx-auto space-y-8">
+                  <p className="text-body text-text-secondary leading-relaxed text-center lg:text-left">
+                    {section.content}
+                  </p>
+                  
+                  {section.goals && (
+                    <div className="bg-surface-secondary p-6 sm:p-8 border border-swiss-light">
+                      <h3 className="text-title text-text-primary font-light mb-6 text-center">Project Goals</h3>
+                      <div className="grid gap-4 md:grid-cols-2">
+                        {section.goals.map((goal, goalIndex) => (
+                          <div key={goalIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{goal}</span>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {section.quotes && (
+                    <div className="space-y-6">
+                      <h3 className="text-title text-text-primary font-light text-center">User Feedback</h3>
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        {section.quotes.map((quote, quoteIndex) => (
+                          <blockquote key={quoteIndex} className="border-l-2 border-accent-orange pl-6 py-4 bg-surface-secondary">
+                            <p className="text-body text-text-secondary italic">"{quote}"</p>
+                          </blockquote>
+                        ))}
+                      </div>
+                      {section.insight && (
+                        <div className="p-6 bg-surface-secondary border border-swiss-light text-center">
+                          <p className="text-body text-text-primary font-medium">{section.insight}</p>
                         </div>
                       )}
-                      
-                      {section.schedule && (
-                        <div>
-                          <h3 className="text-title text-text-primary font-light mb-4">Schedule</h3>
-                          <ul className="space-y-2 mb-4">
-                            {section.schedule.map((item, itemIndex) => (
-                              <li key={itemIndex} className="flex items-start space-x-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2 flex-shrink-0"></div>
-                                <span className="text-body text-text-secondary">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                          {section.note && (
-                            <div className="p-4 bg-surface-secondary border border-swiss-light">
-                              <p className="text-body text-text-primary">{section.note}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      
-                      {section.results && (
-                        <div>
-                          <h3 className="text-title text-text-primary font-light mb-4">Results</h3>
-                          <div className="space-y-4">
-                            {section.results.map((result, resultIndex) => (
-                              <div key={resultIndex} className="p-4 bg-surface-secondary border border-swiss-light">
-                                <h4 className="text-body text-text-primary font-medium mb-2">{result.goal}</h4>
-                                <p className="text-body text-accent-blue font-medium">{result.result}</p>
-                              </div>
-                            ))}
+                    </div>
+                  )}
+                  
+                  {section.stats && (
+                    <div className="bg-surface-secondary p-6 sm:p-8 border border-swiss-light">
+                      <h3 className="text-title text-text-primary font-light mb-6 text-center">Workshop Overview</h3>
+                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {section.stats.map((stat, statIndex) => (
+                          <div key={statIndex} className="flex items-center space-x-3 justify-center sm:justify-start">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{stat}</span>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {section.focusAreas && (
+                    <div className="space-y-6">
+                      <h3 className="text-title text-text-primary font-light text-center">Strategic Focus Areas</h3>
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        {section.focusAreas.map((area, areaIndex) => (
+                          <div key={areaIndex} className="p-6 bg-surface-secondary border border-swiss-light">
+                            <h4 className="text-body text-text-primary font-medium mb-3">{area.area}</h4>
+                            <p className="text-body text-text-secondary leading-relaxed">{area.details}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {section.schedule && (
+                    <div className="bg-surface-secondary p-6 sm:p-8 border border-swiss-light">
+                      <h3 className="text-title text-text-primary font-light mb-6 text-center">Project Cadence</h3>
+                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
+                        {section.schedule.map((item, itemIndex) => (
+                          <div key={itemIndex} className="flex items-center space-x-3 justify-center sm:justify-start">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-orange flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {section.note && (
+                        <div className="p-4 bg-surface-primary border border-swiss-light text-center">
+                          <p className="text-body text-text-primary">{section.note}</p>
                         </div>
                       )}
-                      
-                      {section.learnings && (
-                        <div>
-                          <h3 className="text-title text-text-primary font-light mb-4">Key Learnings</h3>
-                          <ul className="space-y-2">
-                            {section.learnings.map((learning, learningIndex) => (
-                              <li key={learningIndex} className="flex items-start space-x-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
-                                <span className="text-body text-text-secondary">{learning}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
                     </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="lg:col-span-5 space-y-6">
-                      <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
-                      <div className="w-12 h-px bg-accent-orange"></div>
-                      <p className="text-body text-text-secondary leading-relaxed">{section.content}</p>
+                  )}
+                  
+                  {section.results && (
+                    <div className="space-y-6">
+                      <h3 className="text-title text-text-primary font-light text-center">Results Achieved</h3>
+                      <div className="grid gap-6">
+                        {section.results.map((result, resultIndex) => (
+                          <div key={resultIndex} className="p-6 bg-surface-secondary border border-swiss-light">
+                            <h4 className="text-body text-text-secondary mb-3 leading-relaxed">{result.goal}</h4>
+                            <p className="text-title text-accent-blue font-medium">{result.result}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div className="lg:col-span-7">
-                      <img 
-                        src={section.image} 
-                        alt={section.title}
-                        className="w-full h-80 object-cover border border-swiss-light"
-                      />
+                  )}
+                  
+                  {section.learnings && (
+                    <div className="bg-surface-secondary p-6 sm:p-8 border border-swiss-light">
+                      <h3 className="text-title text-text-primary font-light mb-6 text-center">Key Learnings</h3>
+                      <div className="grid gap-4 lg:grid-cols-2">
+                        {section.learnings.map((learning, learningIndex) => (
+                          <div key={learningIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{learning}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </>
-                )}
-              </div>
+                  )}
+                </div>
+              </section>
             ))}
           </div>
         </div>
@@ -334,8 +326,8 @@ const CaseStudy1 = () => {
 
       {/* Footer */}
       <footer className="py-12 bg-surface-secondary border-t border-swiss-light">
-        <div className="swiss-grid">
-          <div className="col-span-12 text-center">
+        <div className="max-width-container px-4 sm:px-8">
+          <div className="text-center">
             <button 
               onClick={() => navigate('/')}
               className="px-8 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray transition-colors duration-200"
