@@ -3,104 +3,92 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern Mondrian-Inspired Design System */
+/* Swiss-Inspired Minimal Design System */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 5%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 0% 5%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 5%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 5%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 5%;
 
-    --radius: 0.5rem;
+    --radius: 0rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-foreground: 0 0% 5%;
+    --sidebar-primary: 0 0% 5%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 5%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 5%;
 
-    /* Modern Mondrian Color Palette */
-    --mondrian-navy: 215 25% 27%;
-    --mondrian-blue: 208 70% 54%;
-    --mondrian-teal: 172 66% 50%;
-    --mondrian-orange: 24 95% 53%;
-    --mondrian-coral: 14 91% 71%;
-    --mondrian-white: 0 0% 98%;
-    --mondrian-black: 0 0% 8%;
-    --mondrian-gray: 218 11% 65%;
+    /* Swiss Minimal Color Palette */
+    --swiss-charcoal: 0 0% 8%;
+    --swiss-gray: 0 0% 15%;
+    --swiss-medium: 0 0% 45%;
+    --swiss-light: 0 0% 85%;
+    --swiss-paper: 0 0% 98%;
+    --swiss-pure: 0 0% 100%;
+    
+    /* Accent Colors - Subtle but Present */
+    --accent-blue: 210 80% 55%;
+    --accent-teal: 180 75% 45%;
+    --accent-orange: 25 85% 60%;
+    --accent-aqua: 195 85% 70%;
 
-    /* Keeping forest colors for navigation */
-    --forest-dark: 158 85% 8%;
-    --forest-medium: 158 75% 15%;
-    --forest-light: 158 65% 25%;
-    --sage: 120 25% 55%;
-    --moss: 100 40% 30%;
-    --stone: 30 8% 60%;
-    --mist: 200 25% 92%;
-    --cedar: 25 30% 40%;
-
-    /* Emerald accent colors */
-    --emerald-dark: 150 100% 20%;
-    --emerald-medium: 150 80% 35%;
-    --emerald-light: 150 60% 50%;
-    --cream: 45 50% 95%;
+    /* Functional Colors */
+    --text-primary: 0 0% 8%;
+    --text-secondary: 0 0% 45%;
+    --text-tertiary: 0 0% 65%;
+    --surface-primary: 0 0% 100%;
+    --surface-secondary: 0 0% 98%;
+    --surface-tertiary: 0 0% 96%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 98%;
   }
 }
 
@@ -110,106 +98,70 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-surface-primary text-text-primary;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 400;
   }
 }
 
-/* Modern Animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* Swiss Design Color Classes */
+.bg-swiss-charcoal { background-color: hsl(var(--swiss-charcoal)); }
+.bg-swiss-gray { background-color: hsl(var(--swiss-gray)); }
+.bg-swiss-medium { background-color: hsl(var(--swiss-medium)); }
+.bg-swiss-light { background-color: hsl(var(--swiss-light)); }
+.bg-swiss-paper { background-color: hsl(var(--swiss-paper)); }
+.bg-swiss-pure { background-color: hsl(var(--swiss-pure)); }
+
+.bg-accent-blue { background-color: hsl(var(--accent-blue)); }
+.bg-accent-teal { background-color: hsl(var(--accent-teal)); }
+.bg-accent-orange { background-color: hsl(var(--accent-orange)); }
+.bg-accent-aqua { background-color: hsl(var(--accent-aqua)); }
+
+.text-swiss-charcoal { color: hsl(var(--swiss-charcoal)); }
+.text-swiss-gray { color: hsl(var(--swiss-gray)); }
+.text-swiss-medium { color: hsl(var(--swiss-medium)); }
+.text-text-primary { color: hsl(var(--text-primary)); }
+.text-text-secondary { color: hsl(var(--text-secondary)); }
+.text-text-tertiary { color: hsl(var(--text-tertiary)); }
+
+.border-swiss-light { border-color: hsl(var(--swiss-light)); }
+
+/* Minimal animations */
+.fade-in {
+  animation: fade-in 0.6s ease-out;
 }
 
 @keyframes fade-in {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slide-in {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
+/* Grid system for Swiss layout */
+.swiss-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
+/* Typography scale */
+.text-display { font-size: 3.5rem; font-weight: 300; }
+.text-headline { font-size: 2.5rem; font-weight: 300; }
+.text-title { font-size: 1.75rem; font-weight: 400; }
+.text-body { font-size: 1rem; font-weight: 400; }
+.text-caption { font-size: 0.875rem; font-weight: 400; }
 
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out;
-}
-
-.animate-slide-in {
-  animation: slide-in 0.6s ease-out;
-}
-
-/* Modern Color Blocks */
-.mondrian-navy {
-  background-color: hsl(var(--mondrian-navy));
-}
-
-.mondrian-blue {
-  background-color: hsl(var(--mondrian-blue));
-}
-
-.mondrian-teal {
-  background-color: hsl(var(--mondrian-teal));
-}
-
-.mondrian-orange {
-  background-color: hsl(var(--mondrian-orange));
-}
-
-.mondrian-coral {
-  background-color: hsl(var(--mondrian-coral));
-}
-
-.mondrian-white {
-  background-color: hsl(var(--mondrian-white));
-}
-
-.mondrian-black {
-  background-color: hsl(var(--mondrian-black));
-  color: white;
-}
-
-.mondrian-gray {
-  background-color: hsl(var(--mondrian-gray));
-}
-
-/* Full-width sections with divider lines */
-.section-divider {
-  border-top: 8px solid hsl(var(--mondrian-black));
-}
-
-/* Keep existing gradients for buttons */
-.deep-forest-bg {
-  background: linear-gradient(180deg, 
-    hsl(var(--mist)) 0%, 
-    hsl(var(--sage)) 30%, 
-    hsl(var(--forest-light)) 60%, 
-    hsl(var(--forest-medium)) 85%, 
-    hsl(var(--forest-dark)) 100%);
-}
-
-.forest-gradient {
-  background: linear-gradient(135deg, 
-    hsl(var(--forest-dark)) 0%, 
-    hsl(var(--forest-medium)) 50%, 
-    hsl(var(--moss)) 100%);
-}
-
-.nature-accent {
-  background: linear-gradient(45deg, 
-    hsl(var(--emerald-medium)) 0%, 
-    hsl(var(--emerald-light)) 100%);
+@media (max-width: 768px) {
+  .text-display { font-size: 2.5rem; }
+  .text-headline { font-size: 2rem; }
+  .text-title { font-size: 1.5rem; }
 }

@@ -63,39 +63,39 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Modern Mondrian colors
-				mondrian: {
-					navy: 'hsl(var(--mondrian-navy))',
-					blue: 'hsl(var(--mondrian-blue))',
-					teal: 'hsl(var(--mondrian-teal))',
-					orange: 'hsl(var(--mondrian-orange))',
-					coral: 'hsl(var(--mondrian-coral))',
-					white: 'hsl(var(--mondrian-white))',
-					black: 'hsl(var(--mondrian-black))',
-					gray: 'hsl(var(--mondrian-gray))'
+				// Swiss Design Colors
+				swiss: {
+					charcoal: 'hsl(var(--swiss-charcoal))',
+					gray: 'hsl(var(--swiss-gray))',
+					medium: 'hsl(var(--swiss-medium))',
+					light: 'hsl(var(--swiss-light))',
+					paper: 'hsl(var(--swiss-paper))',
+					pure: 'hsl(var(--swiss-pure))'
 				},
-				// Keep existing forest colors for navigation
-				forest: {
-					dark: 'hsl(var(--forest-dark))',
-					medium: 'hsl(var(--forest-medium))',
-					light: 'hsl(var(--forest-light))'
-				},
-				sage: 'hsl(var(--sage))',
-				moss: 'hsl(var(--moss))',
-				stone: 'hsl(var(--stone))',
-				mist: 'hsl(var(--mist))',
-				cedar: 'hsl(var(--cedar))',
-				emerald: {
-					dark: 'hsl(var(--emerald-dark))',
-					medium: 'hsl(var(--emerald-medium))',
-					light: 'hsl(var(--emerald-light))'
-				},
-				cream: 'hsl(var(--cream))'
+				// Accent Colors
+				'accent-blue': 'hsl(var(--accent-blue))',
+				'accent-teal': 'hsl(var(--accent-teal))',
+				'accent-orange': 'hsl(var(--accent-orange))',
+				'accent-aqua': 'hsl(var(--accent-aqua))',
+				// Semantic Colors
+				'text-primary': 'hsl(var(--text-primary))',
+				'text-secondary': 'hsl(var(--text-secondary))',
+				'text-tertiary': 'hsl(var(--text-tertiary))',
+				'surface-primary': 'hsl(var(--surface-primary))',
+				'surface-secondary': 'hsl(var(--surface-secondary))',
+				'surface-tertiary': 'hsl(var(--surface-tertiary))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			fontFamily: {
+				'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+			},
+			spacing: {
+				'18': '4.5rem',
+				'22': '5.5rem',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -114,35 +114,21 @@ export default {
 						height: '0'
 					}
 				},
-				'float': {
-					'0%, 100%': { transform: 'translateY(0px)' },
-					'50%': { transform: 'translateY(-10px)' }
-				},
 				'fade-in': {
 					'0%': {
 						opacity: '0',
-						transform: 'translateY(20px)'
+						transform: 'translateY(10px)'
 					},
 					'100%': {
 						opacity: '1',
 						transform: 'translateY(0)'
-					}
-				},
-				'slide-in': {
-					'0%': {
-						transform: 'translateX(-100%)'
-					},
-					'100%': {
-						transform: 'translateX(0)'
 					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'float': 'float 6s ease-in-out infinite',
-				'fade-in': 'fade-in 0.8s ease-out',
-				'slide-in': 'slide-in 0.6s ease-out'
+				'fade-in': 'fade-in 0.6s ease-out'
 			}
 		}
 	},

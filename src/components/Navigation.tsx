@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Menu, X, TreePine } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +8,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -33,12 +33,13 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b border-sage/20">
-      <div className="max-w-6xl mx-auto px-6 py-4">
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-surface-primary/95 backdrop-blur-sm border-b border-swiss-light' : 'bg-surface-primary'
+    }`}>
+      <div className="max-width-container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <TreePine className="text-forest-dark" size={24} />
-            <span className="text-xl font-bold text-forest-dark">Chad Mortensen</span>
+          <div className="flex items-center">
+            <span className="text-title font-light text-text-primary">Chad Mortensen</span>
           </div>
           
           {/* Desktop Navigation */}
@@ -47,32 +48,32 @@ const Navigation = () => {
               <button 
                 key={item.href} 
                 onClick={() => scrollToSection(item.href)} 
-                className="font-medium relative group text-forest-medium hover:text-forest-dark transition-colors duration-300"
+                className="text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sage group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
               </button>
             ))}
           </div>
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden p-2 text-forest-dark" 
+            className="md:hidden p-2 text-text-primary" 
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-sage/30">
-            <div className="flex flex-col space-y-3 pt-4">
+          <div className="md:hidden mt-6 pb-6 border-t border-swiss-light">
+            <div className="flex flex-col space-y-4 pt-6">
               {navItems.map(item => (
                 <button 
                   key={item.href} 
                   onClick={() => scrollToSection(item.href)} 
-                  className="text-left font-medium py-2 text-forest-medium hover:text-forest-dark transition-colors duration-200"
+                  className="text-left text-body text-text-secondary hover:text-text-primary transition-colors duration-200"
                 >
                   {item.label}
                 </button>
