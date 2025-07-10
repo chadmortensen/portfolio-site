@@ -1,4 +1,3 @@
-
 import { ArrowLeft, Calendar, Users, Target } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +11,7 @@ const CaseStudy1 = () => {
       goals: [
         "Increase quality registry creations (creations that lead to a first curation action)",
         "Increase curation by 10%",
-        "Increase sharing by 20%",
+        "Increase sharing by 20%", 
         "Increase purchase conversion by 25%",
         "Helping new parents with this major moment in life"
       ],
@@ -186,16 +185,7 @@ const CaseStudy1 = () => {
           <div className="col-span-12 space-y-24">
             {sections.map((section, index) => (
               <div key={index} className="grid lg:grid-cols-12 gap-12 items-start">
-                {/* Image - Always on the left */}
-                <div className="lg:col-span-7">
-                  <img 
-                    src={section.image} 
-                    alt={section.title} 
-                    className="w-full h-80 object-cover border border-swiss-light" 
-                  />
-                </div>
-                
-                {/* Content - Always on the right */}
+                {/* Content - Now on the left */}
                 <div className="lg:col-span-5 space-y-6">
                   <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
                   <div className="w-12 h-px bg-accent-teal"></div>
@@ -305,6 +295,15 @@ const CaseStudy1 = () => {
                       </ul>
                     </div>
                   )}
+                </div>
+                
+                {/* Image - Now on the right */}
+                <div className="lg:col-span-7">
+                  <img 
+                    src={section.image} 
+                    alt={section.title} 
+                    className="w-full h-80 object-cover border border-swiss-light" 
+                  />
                 </div>
               </div>
             ))}
