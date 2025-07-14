@@ -194,18 +194,15 @@ const CaseStudy1 = () => {
                   {section.goals && (
                     <div>
                       <h3 className="text-title text-text-primary font-light mb-6">Goals</h3>
-                      <div className="grid gap-4">
+                      <div className="grid gap-6">
                         {section.goals.map((goal, goalIndex) => (
-                          <div key={goalIndex} className="group relative p-4 bg-surface-secondary border border-swiss-light hover:border-accent-blue transition-all duration-200 hover:shadow-sm">
-                            <div className="flex items-start space-x-4">
-                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent-blue flex items-center justify-center mt-0.5">
-                                <TrendingUp size={16} className="text-surface-primary" />
-                              </div>
-                              <div className="flex-1">
-                                <p className="text-body text-text-primary font-medium leading-relaxed">{goal}</p>
-                              </div>
+                          <div key={goalIndex} className="flex items-start space-x-4">
+                            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent-blue flex items-center justify-center">
+                              <TrendingUp size={20} className="text-surface-primary" />
                             </div>
-                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-blue opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                            <div className="flex-1 pt-2">
+                              <p className="text-body text-text-primary leading-relaxed">{goal}</p>
+                            </div>
                           </div>
                         ))}
                       </div>
