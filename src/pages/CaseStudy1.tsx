@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, Users, Target } from "lucide-react";
+import { ArrowLeft, Calendar, Users, Target, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CaseStudy1 = () => {
@@ -193,15 +193,22 @@ const CaseStudy1 = () => {
                   
                   {section.goals && (
                     <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
-                      <ul className="space-y-2">
+                      <h3 className="text-title text-text-primary font-light mb-6">Goals</h3>
+                      <div className="grid gap-4">
                         {section.goals.map((goal, goalIndex) => (
-                          <li key={goalIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                            <span className="text-body text-text-secondary">{goal}</span>
-                          </li>
+                          <div key={goalIndex} className="group relative p-4 bg-surface-secondary border border-swiss-light hover:border-accent-blue transition-all duration-200 hover:shadow-sm">
+                            <div className="flex items-start space-x-4">
+                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent-blue flex items-center justify-center mt-0.5">
+                                <TrendingUp size={16} className="text-surface-primary" />
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-body text-text-primary font-medium leading-relaxed">{goal}</p>
+                              </div>
+                            </div>
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-blue opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   )}
                   
