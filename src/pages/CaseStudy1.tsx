@@ -113,11 +113,11 @@ const CaseStudy1 = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Users size={16} />
-                <span className="text-caption">Myself and 5 designers</span>
+                <span className="text-caption">6 people</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Target size={16} />
-                <span className="text-caption">Walmart eCommerce</span>
+                <span className="text-caption">Walmart</span>
               </div>
             </div>
           </div>
