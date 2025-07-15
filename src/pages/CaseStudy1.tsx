@@ -1,5 +1,4 @@
-
-import { ArrowLeft, Calendar, Users, Target, TrendingUp } from "lucide-react";
+import { ArrowLeft, Calendar, Users, Target } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CaseStudy1 = () => {
@@ -194,18 +193,15 @@ const CaseStudy1 = () => {
                   
                   {section.goals && (
                     <div>
-                      <h3 className="text-title text-text-primary font-light mb-8">Goals</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
+                      <ul className="space-y-2">
                         {section.goals.map((goal, goalIndex) => (
-                          <div key={goalIndex} className="flex items-center justify-center">
-                            <div className="w-48 h-48 rounded-full bg-accent-blue flex items-center justify-center p-6">
-                              <p className="text-body text-surface-primary text-center leading-relaxed font-medium">
-                                {goal}
-                              </p>
-                            </div>
-                          </div>
+                          <li key={goalIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{goal}</span>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </div>
                   )}
                   
