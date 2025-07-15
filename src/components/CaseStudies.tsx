@@ -15,13 +15,13 @@ const CaseStudies = () => {
     route: "/case-study-1"
   }, {
     id: 2,
-    title: "Market Expansion Strategy",
-    company: "Growing SaaS Company",
-    duration: "12 months",
-    teamSize: "25+ people",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
-    challenge: "A successful domestic company wanted to expand into international markets but lacked the framework, processes, and cultural understanding to do so effectively.",
-    results: ["Successfully launched in 3 new markets", "Generated $2.5M in international revenue", "Built local teams in key regions", "Established strategic partnerships with 8+ vendors"],
+    title: "Long term vision for Fulfillment at Etsy",
+    company: "Etsy",
+    duration: "4 weeks",
+    teamSize: "5",
+    image: "https://images.unsplash.com/photo-1623652554515-91c833e3080e?auto=format&fit=crop&w=800&q=80",
+    challenge: "Teams had near term targets and roadmaps but they were missing something to help guide their decisions and align them to where the business was headed.",
+    results: ["Created a product vision for Fulfillment at Etsy", "Created design principles", "Aligned team leadership around a unified goal", "Provided needed guidance to supporting teams"],
     route: "/case-study-2"
   }];
 
