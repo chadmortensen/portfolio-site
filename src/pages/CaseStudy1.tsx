@@ -1,5 +1,6 @@
 import { ArrowLeft, Calendar, Users, Target } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Separator } from "@/components/ui/separator";
 
 const CaseStudy1 = () => {
   const navigate = useNavigate();
@@ -184,127 +185,136 @@ const CaseStudy1 = () => {
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
             {sections.map((section, index) => (
-              <div key={index} className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
-                {/* Content - Full width if no image, left column if image exists */}
-                <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
-                  <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
-                  <div className="w-12 h-px bg-accent-teal"></div>
-                  <p className="text-body text-text-secondary leading-relaxed">{section.content}</p>
-                  
-                  {section.goals && (
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
-                      <ul className="space-y-2">
-                        {section.goals.map((goal, goalIndex) => (
-                          <li key={goalIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                            <span className="text-body text-text-secondary">{goal}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {section.quotes && (
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">User Feedback</h3>
-                      {section.quotes.map((quote, quoteIndex) => (
-                        <blockquote key={quoteIndex} className="border-l-2 border-accent-orange pl-4 mb-4">
-                          <p className="text-body text-text-secondary italic">"{quote}"</p>
-                        </blockquote>
-                      ))}
-                      {section.insight && (
-                        <div className="p-4 bg-surface-secondary border border-swiss-light mt-4">
-                          <p className="text-body text-text-primary font-medium">{section.insight}</p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  
-                  {section.stats && (
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">Workshop Stats</h3>
-                      <ul className="space-y-2">
-                        {section.stats.map((stat, statIndex) => (
-                          <li key={statIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
-                            <span className="text-body text-text-secondary">{stat}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {section.focusAreas && (
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">Focus Areas</h3>
-                      <div className="space-y-4">
-                        {section.focusAreas.map((area, areaIndex) => (
-                          <div key={areaIndex} className="p-4 bg-surface-secondary border border-swiss-light">
-                            <h4 className="text-body text-text-primary font-medium mb-2">{area.area}</h4>
-                            <p className="text-body text-text-secondary">{area.details}</p>
-                          </div>
-                        ))}
+              <div key={index}>
+                <div className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
+                  {/* Content - Full width if no image, left column if image exists */}
+                  <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
+                    <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
+                    <div className="w-12 h-px bg-accent-teal"></div>
+                    <p className="text-body text-text-secondary leading-relaxed">{section.content}</p>
+                    
+                    {section.goals && (
+                      <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
+                        <ul className="space-y-2">
+                          {section.goals.map((goal, goalIndex) => (
+                            <li key={goalIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{goal}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    </div>
-                  )}
-                  
-                  {section.schedule && (
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">Schedule</h3>
-                      <ul className="space-y-2 mb-4">
-                        {section.schedule.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2 flex-shrink-0"></div>
-                            <span className="text-body text-text-secondary">{item}</span>
-                          </li>
+                    )}
+                    
+                    {section.quotes && (
+                      <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">User Feedback</h3>
+                        {section.quotes.map((quote, quoteIndex) => (
+                          <blockquote key={quoteIndex} className="border-l-2 border-accent-orange pl-4 mb-4">
+                            <p className="text-body text-text-secondary italic">"{quote}"</p>
+                          </blockquote>
                         ))}
-                      </ul>
-                      {section.note && (
-                        <div className="p-4 bg-surface-secondary border border-swiss-light">
-                          <p className="text-body text-text-primary">{section.note}</p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  
-                  {section.results && (
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">Results</h3>
-                      <div className="space-y-4">
-                        {section.results.map((result, resultIndex) => (
-                          <div key={resultIndex} className="p-4 bg-surface-secondary border border-swiss-light">
-                            <h4 className="text-body text-text-primary font-medium mb-2">{result.goal}</h4>
-                            <p className="text-body text-accent-blue font-medium">{result.result}</p>
+                        {section.insight && (
+                          <div className="p-4 bg-surface-secondary border border-swiss-light mt-4">
+                            <p className="text-body text-text-primary font-medium">{section.insight}</p>
                           </div>
-                        ))}
+                        )}
                       </div>
-                    </div>
-                  )}
+                    )}
+                    
+                    {section.stats && (
+                      <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">Workshop Stats</h3>
+                        <ul className="space-y-2">
+                          {section.stats.map((stat, statIndex) => (
+                            <li key={statIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{stat}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    {section.focusAreas && (
+                      <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">Focus Areas</h3>
+                        <div className="space-y-4">
+                          {section.focusAreas.map((area, areaIndex) => (
+                            <div key={areaIndex} className="p-4 bg-surface-secondary border border-swiss-light">
+                              <h4 className="text-body text-text-primary font-medium mb-2">{area.area}</h4>
+                              <p className="text-body text-text-secondary">{area.details}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {section.schedule && (
+                      <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">Schedule</h3>
+                        <ul className="space-y-2 mb-4">
+                          {section.schedule.map((item, itemIndex) => (
+                            <li key={itemIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        {section.note && (
+                          <div className="p-4 bg-surface-secondary border border-swiss-light">
+                            <p className="text-body text-text-primary">{section.note}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    {section.results && (
+                      <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">Results</h3>
+                        <div className="space-y-4">
+                          {section.results.map((result, resultIndex) => (
+                            <div key={resultIndex} className="p-4 bg-surface-secondary border border-swiss-light">
+                              <h4 className="text-body text-text-primary font-medium mb-2">{result.goal}</h4>
+                              <p className="text-body text-accent-blue font-medium">{result.result}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {section.learnings && (
+                      <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">Key Learnings</h3>
+                        <ul className="space-y-2">
+                          {section.learnings.map((learning, learningIndex) => (
+                            <li key={learningIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{learning}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                   
-                  {section.learnings && (
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-4">Key Learnings</h3>
-                      <ul className="space-y-2">
-                        {section.learnings.map((learning, learningIndex) => (
-                          <li key={learningIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
-                            <span className="text-body text-text-secondary">{learning}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  {/* Image - Only render if image exists */}
+                  {section.image && (
+                    <div className="lg:col-span-7">
+                      <img 
+                        src={section.image} 
+                        alt={section.title} 
+                        className="w-full h-80 object-cover border border-swiss-light" 
+                      />
                     </div>
                   )}
                 </div>
                 
-                {/* Image - Only render if image exists */}
-                {section.image && (
-                  <div className="lg:col-span-7">
-                    <img 
-                      src={section.image} 
-                      alt={section.title} 
-                      className="w-full h-80 object-cover border border-swiss-light" 
-                    />
+                {/* Add separator after each section except the last one */}
+                {index < sections.length - 1 && (
+                  <div className="mt-24">
+                    <Separator className="bg-swiss-light" />
                   </div>
                 )}
               </div>
