@@ -1,14 +1,15 @@
 import { ArrowRight, Calendar, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
 const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [{
     id: 1,
     title: "A rapid revamp to the Walmart registry",
-    company: "Walmart",
+    company: "Walmart", 
     duration: "1 quarter",
     teamSize: "6 people",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80",
     challenge: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
     goals: ["Increase quality registry creations (creations that lead to a first curation action)", "Increase curation by 10%", "Increase sharing by 20%", "Increase purchase conversion by 25%", "Helping new parents with this major moment in life"],
     route: "/case-study-1"
@@ -23,6 +24,7 @@ const CaseStudies = () => {
     results: ["Successfully launched in 3 new markets", "Generated $2.5M in international revenue", "Built local teams in key regions", "Established strategic partnerships with 8+ vendors"],
     route: "/case-study-2"
   }];
+
   return <section id="case-studies" className="py-16 sm:py-24 bg-surface-secondary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
@@ -88,4 +90,5 @@ const CaseStudies = () => {
       </div>
     </section>;
 };
+
 export default CaseStudies;
