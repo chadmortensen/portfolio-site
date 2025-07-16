@@ -19,7 +19,7 @@ const CaseStudies = () => {
     company: "Etsy",
     duration: "4 weeks",
     teamSize: "5",
-    image: "https://images.unsplash.com/photo-1623652554515-91c833e3080e?auto=format&fit=crop&w=800&q=80",
+    image: "/img/etsy-vision-cover.png?auto=format&fit=crop&w=800&q=80",
     challenge: "Teams had near term targets and roadmaps but they were missing something to help guide their decisions and align them to where the business was headed.",
     results: ["Created a product vision for Fulfillment at Etsy", "Created design principles", "Aligned team leadership around a unified goal", "Provided needed guidance to supporting teams"],
     route: "/case-study-2"
