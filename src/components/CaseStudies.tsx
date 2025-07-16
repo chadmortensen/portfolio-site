@@ -29,7 +29,7 @@ const CaseStudies = () => {
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
-    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80",
+    image: "/img/Brightside-vision-main.png?auto=format&fit=crop&w=800&q=80",
     challenge: "The Growth team needed a clear product vision to align cross-functional efforts and guide strategic decisions for scaling mental health services to underserved communities.",
     results: ["Developed comprehensive product vision for Growth initiatives", "Established clear success metrics and KPIs", "Aligned stakeholders across product, engineering, and business teams", "Created roadmap for sustainable growth strategies"],
     route: "/case-study-3"
