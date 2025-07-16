@@ -1,10 +1,18 @@
 
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +33,12 @@ const Navigation = () => {
     { href: "#contact", label: "Contact" }
   ];
 
+  const caseStudies = [
+    { title: "Walmart Registry Revamp", route: "/case-study-1" },
+    { title: "Etsy Fulfillment Vision", route: "/case-study-2" },
+    { title: "Brightside Growth Vision", route: "/case-study-3" }
+  ];
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -32,6 +46,11 @@ const Navigation = () => {
         behavior: "smooth"
       });
     }
+    setIsOpen(false);
+  };
+
+  const handleCaseStudyClick = (route: string) => {
+    navigate(route);
     setIsOpen(false);
   };
 
@@ -50,14 +69,41 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 lg:space-x-8">
             {navItems.map((item) => (
-              <button
-                key={item.href}
-                onClick={() => scrollToSection(item.href)}
-                className="text-caption sm:text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
-              </button>
+              item.label === "Case Studies" ? (
+                <DropdownMenu key={item.href}>
+                  <DropdownMenuTrigger className="text-caption sm:text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap flex items-center space-x-1">
+                    <span>{item.label}</span>
+                    <ChevronDown size={14} />
+                    <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-surface-primary border border-swiss-light shadow-lg">
+                    <DropdownMenuItem
+                      onClick={() => scrollToSection(item.href)}
+                      className="text-text-secondary hover:text-text-primary hover:bg-surface-secondary cursor-pointer"
+                    >
+                      View All Case Studies
+                    </DropdownMenuItem>
+                    {caseStudies.map((study) => (
+                      <DropdownMenuItem
+                        key={study.route}
+                        onClick={() => handleCaseStudyClick(study.route)}
+                        className="text-text-secondary hover:text-text-primary hover:bg-surface-secondary cursor-pointer"
+                      >
+                        {study.title}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <button
+                  key={item.href}
+                  onClick={() => scrollToSection(item.href)}
+                  className="text-caption sm:text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
+                </button>
+              )
             ))}
           </div>
 
@@ -75,13 +121,35 @@ const Navigation = () => {
           <div className="md:hidden mt-6 pb-6 border-t border-swiss-light">
             <div className="flex flex-col space-y-4 pt-6">
               {navItems.map((item) => (
-                <button
-                  key={item.href}
-                  onClick={() => scrollToSection(item.href)}
-                  className="text-left text-body text-text-secondary hover:text-text-primary transition-colors duration-200"
-                >
-                  {item.label}
-                </button>
+                item.label === "Case Studies" ? (
+                  <div key={item.href} className="space-y-2">
+                    <button
+                      onClick={() => scrollToSection(item.href)}
+                      className="text-left text-body text-text-secondary hover:text-text-primary transition-colors duration-200"
+                    >
+                      {item.label}
+                    </button>
+                    <div className="pl-4 space-y-2">
+                      {caseStudies.map((study) => (
+                        <button
+                          key={study.route}
+                          onClick={() => handleCaseStudyClick(study.route)}
+                          className="block text-left text-caption text-text-secondary hover:text-text-primary transition-colors duration-200"
+                        >
+                          {study.title}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    key={item.href}
+                    onClick={() => scrollToSection(item.href)}
+                    className="text-left text-body text-text-secondary hover:text-text-primary transition-colors duration-200"
+                  >
+                    {item.label}
+                  </button>
+                )
               ))}
             </div>
           </div>
