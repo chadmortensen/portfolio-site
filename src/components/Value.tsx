@@ -1,3 +1,4 @@
+
 import { Users, Target, TrendingUp, Heart, Building } from "lucide-react";
 
 const Value = () => {
@@ -32,7 +33,7 @@ const Value = () => {
   return (
     <section id="value" className="py-24 bg-surface-primary">
       <div className="swiss-grid fade-in">
-        <div className="col-span-12 text-center mb-16">
+        <div className="col-span-12 text-center mb-20">
           <h2 className="text-headline text-text-primary mb-4">Value I Bring</h2>
           <div className="w-16 h-px bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto">
@@ -40,15 +41,21 @@ const Value = () => {
           </p>
         </div>
 
-        <div className="col-span-12 grid lg:grid-cols-2 gap-12">
+        <div className="col-span-12 space-y-16">
           {valueProps.map((value, index) => (
-            <div key={index} className="flex items-start space-x-6 p-8 bg-surface-secondary border border-swiss-light hover:border-accent-blue/30 transition-colors duration-200">
-              <div className="p-3 bg-surface-primary border border-swiss-light flex-shrink-0">
-                <value.icon className="text-accent-teal" size={24} />
+            <div key={index} className="flex items-start space-x-8 group">
+              <div className="flex-shrink-0 mt-1">
+                <div className="w-12 h-12 border-2 border-swiss-light flex items-center justify-center group-hover:border-accent-teal transition-colors duration-300">
+                  <value.icon className="text-accent-teal group-hover:text-accent-blue transition-colors duration-300" size={20} />
+                </div>
               </div>
-              <div>
-                <h3 className="text-title text-text-primary font-light mb-4">{value.title}</h3>
-                <p className="text-body text-text-secondary leading-relaxed">{value.description}</p>
+              <div className="flex-1 border-b border-swiss-light pb-16 last:border-b-0 last:pb-0">
+                <h3 className="text-title text-text-primary font-light mb-4 group-hover:text-accent-blue transition-colors duration-300">
+                  {value.title}
+                </h3>
+                <p className="text-body text-text-secondary leading-relaxed max-w-4xl">
+                  {value.description}
+                </p>
               </div>
             </div>
           ))}
