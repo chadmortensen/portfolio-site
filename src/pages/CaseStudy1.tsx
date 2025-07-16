@@ -214,7 +214,7 @@ const CaseStudy1 = () => {
                   
                   {/* Image - Only render if image exists */}
                   {section.image && <div className="lg:col-span-7">
-                      <img src={section.image} alt={section.title} className="w-full h-80 object-cover border border-swiss-light" />
+                      <img src={section.image} alt={section.title} className="w-full h-80 object-cover object-top border border-swiss-light" />
                     </div>}
                 </div>
                 
