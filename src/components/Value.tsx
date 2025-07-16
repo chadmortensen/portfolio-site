@@ -1,27 +1,31 @@
-
-import { TrendingUp, Shield, Rocket, Star } from "lucide-react";
+import { Users, Target, TrendingUp, Heart, Building } from "lucide-react";
 
 const Value = () => {
   const valueProps = [
     {
+      icon: Users,
+      title: "Build trusted cross-functional partnerships",
+      description: "Strong collaboration with product, engineering, analytics, and research is foundational. I invest early and consistently in these relationships to ensure design is part of strategic decision-making — not an afterthought."
+    },
+    {
+      icon: Target,
+      title: "Connect design to company strategy",
+      description: "I help design teams zoom out. By aligning day-to-day efforts with broader business goals, I ensure we're focusing on what matters most — advocating for the right resourcing and investing in high-leverage work."
+    },
+    {
       icon: TrendingUp,
-      title: "Strategic Growth",
-      description: "I bring a proven track record of identifying opportunities, developing comprehensive strategies, and executing plans that drive sustainable growth and competitive advantage."
+      title: "Grow people and careers",
+      description: "Coaching is core to my leadership. I guide performance with empathy and clarity, give honest and useful feedback, and create opportunities for career progression. I strive to make growth conversations feel supportive, not evaluative."
     },
     {
-      icon: Shield,
-      title: "Risk Management",
-      description: "My approach balances innovation with prudent risk management, ensuring organizations can pursue ambitious goals while protecting against potential pitfalls."
+      icon: Heart,
+      title: "Design for team health and effectiveness",
+      description: "I keep a pulse on team morale and operational clarity — listening for signals and adjusting processes, rituals, or roles to support long-term health, cohesion, and effectiveness."
     },
     {
-      icon: Rocket,
-      title: "Operational Excellence",
-      description: "I excel at optimizing processes, implementing best practices, and creating systems that scale efficiently while maintaining quality and team satisfaction."
-    },
-    {
-      icon: Star,
-      title: "Culture Development",
-      description: "I specialize in building high-performance cultures where talent thrives, collaboration flourishes, and teams consistently exceed expectations."
+      icon: Building,
+      title: "Contribute to org-wide design culture",
+      description: "Beyond my direct team, I contribute to the broader design organization — leading or sponsoring initiatives around hiring, recognition, design thinking, and internal education that make the culture stronger and more inclusive."
     }
   ];
 
