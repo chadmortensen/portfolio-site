@@ -25,7 +25,7 @@ const CaseStudies = () => {
     route: "/case-study-2"
   }, {
     id: 3,
-    title: "Product Vision for Growth team at Brightside Health",
+    title: "Design Vision for Growth team at Brightside Health",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
