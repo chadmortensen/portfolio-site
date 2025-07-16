@@ -11,7 +11,8 @@ const CaseStudy1 = () => {
   }, {
     title: "Assembling the Team",
     content: "I had 1 staff designer available from my team but I knew in order to pull this off I would need to expand the team. 6 weeks total allocated to design, from discovery to final deliverables. Bulk of work would be in the latter half of the quarter and we had the holiday season to account for.",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80"
+    image: "/lovable-uploads/e36754b0-b1da-47b9-8e75-731620ea5cf1.png",
+    additionalImage: "/lovable-uploads/88b85ba6-6a79-47ac-9c76-cb60fb28f194.png"
   }, {
     title: "We Have a Team!",
     content: "After discussion and support from product and business partners I was able to convince design leadership to shift some designers to our team and suggested utilizing a couple contractors from our Columbian outsource team.",
@@ -211,8 +212,9 @@ const CaseStudy1 = () => {
                   </div>
                   
                   {/* Image - Only render if image exists */}
-                  {section.image && <div className="lg:col-span-7">
+                  {section.image && <div className="lg:col-span-7 space-y-4">
                       <img src={section.image} alt={section.title} className="w-full h-80 object-cover border border-swiss-light" />
+                      {section.additionalImage && <img src={section.additionalImage} alt={`${section.title} timeline`} className="w-full h-auto border border-swiss-light" />}
                     </div>}
                 </div>
                 
