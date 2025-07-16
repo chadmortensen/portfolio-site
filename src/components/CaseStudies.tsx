@@ -9,7 +9,7 @@ const CaseStudies = () => {
     company: "Walmart", 
     duration: "1 quarter",
     teamSize: "6 people",
-    image: "/img/baby-registry-walmart.png?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=800&q=80",
     challenge: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
     goals: ["Increase quality registry creations (creations that lead to a first curation action)", "Increase curation by 10%", "Increase sharing by 20%", "Increase purchase conversion by 25%", "Helping new parents with this major moment in life"],
     route: "/case-study-1"
@@ -23,6 +23,16 @@ const CaseStudies = () => {
     challenge: "Teams had near term targets and roadmaps but they were missing something to help guide their decisions and align them to where the business was headed.",
     results: ["Created a product vision for Fulfillment at Etsy", "Created design principles", "Aligned team leadership around a unified goal", "Provided needed guidance to supporting teams"],
     route: "/case-study-2"
+  }, {
+    id: 3,
+    title: "Product Vision for Growth team at Brightside Health",
+    company: "Brightside Health",
+    duration: "6 weeks",
+    teamSize: "8",
+    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=800&q=80",
+    challenge: "The Growth team needed a clear product vision to align cross-functional efforts and guide strategic decisions for scaling mental health services to underserved communities.",
+    results: ["Developed comprehensive product vision for Growth initiatives", "Established clear success metrics and KPIs", "Aligned stakeholders across product, engineering, and business teams", "Created roadmap for sustainable growth strategies"],
+    route: "/case-study-3"
   }];
 
   return <section id="case-studies" className="py-16 sm:py-24 bg-surface-secondary">
