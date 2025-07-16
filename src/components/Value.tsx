@@ -1,4 +1,5 @@
 
+
 import { Users, Target, TrendingUp, Heart, Building } from "lucide-react";
 
 const Value = () => {
@@ -45,7 +46,7 @@ const Value = () => {
           {valueProps.map((value, index) => (
             <div key={index} className="flex items-start space-x-8 group">
               <div className="flex-shrink-0 mt-1">
-                <div className="w-12 h-12 border-2 border-swiss-light flex items-center justify-center group-hover:border-accent-teal transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full border-2 border-swiss-light flex items-center justify-center group-hover:border-accent-teal group-hover:bg-accent-teal/10 transition-all duration-300">
                   <value.icon className="text-accent-teal group-hover:text-accent-blue transition-colors duration-300" size={20} />
                 </div>
               </div>
@@ -66,3 +67,4 @@ const Value = () => {
 };
 
 export default Value;
+
