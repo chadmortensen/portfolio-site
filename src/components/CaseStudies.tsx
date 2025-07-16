@@ -41,7 +41,7 @@ const CaseStudies = () => {
           <h2 className="text-headline text-text-primary mb-4">Case Studies</h2>
           <div className="w-16 h-px bg-accent-blue mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
-            Real challenges, strategic solutions, and measurable outcomes that demonstrate the impact of effective leadership.
+            Real challenges, strategic solutions, and measurable outcomes that demonstrate the impact of effective leadership at Fortune 1 companies as well as growing startups.
           </p>
         </div>
 
