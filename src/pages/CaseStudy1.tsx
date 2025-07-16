@@ -132,7 +132,9 @@ const CaseStudy1 = () => {
                   <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
                     <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
                     <div className="w-12 h-px bg-accent-teal"></div>
-                    <p className="text-body text-text-secondary leading-relaxed">{section.content}</p>
+                    {section.content.split('\n\n').map((paragraph, pIndex) => (
+                      <p key={pIndex} className="text-body text-text-secondary leading-relaxed">{paragraph}</p>
+                    ))}
                     
                     {section.goals && <div>
                         <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
