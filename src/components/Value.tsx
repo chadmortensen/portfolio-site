@@ -35,17 +35,15 @@ const Value = () => {
           </p>
         </div>
 
-        <div className="col-span-12 space-y-16">
+        <div className="col-span-12 grid lg:grid-cols-2 gap-12">
           {valueProps.map((value, index) => (
             <div key={index} className="group">
-              <div className="border-b border-swiss-light pb-16 last:border-b-0 last:pb-0">
-                <h3 className="text-title text-text-primary font-light mb-4 group-hover:text-accent-blue transition-colors duration-300">
-                  {value.title}
-                </h3>
-                <p className="text-body text-text-secondary leading-relaxed max-w-4xl">
-                  {value.description}
-                </p>
-              </div>
+              <h3 className="text-title text-text-primary font-light mb-4 group-hover:text-accent-blue transition-colors duration-300">
+                {value.title}
+              </h3>
+              <p className="text-body text-text-secondary leading-relaxed">
+                {value.description}
+              </p>
             </div>
           ))}
         </div>
