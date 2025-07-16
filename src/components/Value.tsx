@@ -31,7 +31,7 @@ const Value = () => {
           <h2 className="text-headline text-text-primary mb-4">Value I Bring</h2>
           <div className="w-16 h-px bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto">
-            Organizations partner with me to unlock their potential and achieve breakthrough results through strategic leadership and operational excellence.
+            As a product design leader, I wear many hats — and I focus on the work that drives clarity, alignment, and impact across the organization.
           </p>
         </div>
 
