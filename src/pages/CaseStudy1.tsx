@@ -12,7 +12,7 @@ const CaseStudy1 = () => {
     title: "Assembling the Team",
     content: "I had 1 staff designer available from my team but I knew in order to pull this off I would need to expand the team. 6 weeks total allocated to design, from discovery to final deliverables. Bulk of work would be in the latter half of the quarter and we had the holiday season to account for.",
     image: "/lovable-uploads/e36754b0-b1da-47b9-8e75-731620ea5cf1.png",
-    additionalImage: "/lovable-uploads/88b85ba6-6a79-47ac-9c76-cb60fb28f194.png"
+    fullWidthImage: "/lovable-uploads/88b85ba6-6a79-47ac-9c76-cb60fb28f194.png"
   }, {
     title: "We Have a Team!",
     content: "After discussion and support from product and business partners I was able to convince design leadership to shift some designers to our team and suggested utilizing a couple contractors from our Columbian outsource team.",
@@ -129,7 +129,8 @@ const CaseStudy1 = () => {
       <div className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
-            {sections.map((section, index) => <div key={index}>
+            {sections.map((section, index) => (
+              <div key={index}>
                 <div className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
                   {/* Content - Full width if no image, left column if image exists */}
                   <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
@@ -212,17 +213,22 @@ const CaseStudy1 = () => {
                   </div>
                   
                   {/* Image - Only render if image exists */}
-                  {section.image && <div className="lg:col-span-7 space-y-4">
+                  {section.image && <div className="lg:col-span-7">
                       <img src={section.image} alt={section.title} className="w-full h-80 object-cover border border-swiss-light" />
-                      {section.additionalImage && <img src={section.additionalImage} alt={`${section.title} timeline`} className="w-full h-auto border border-swiss-light" />}
                     </div>}
                 </div>
+                
+                {/* Full width image below main content */}
+                {section.fullWidthImage && <div className="mt-8">
+                    <img src={section.fullWidthImage} alt={`${section.title} timeline`} className="w-full h-auto border border-swiss-light" />
+                  </div>}
                 
                 {/* Add separator after each section except the last one */}
                 {index < sections.length - 1 && <div className="mt-24">
                     <Separator className="bg-swiss-light" />
                   </div>}
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </div>
