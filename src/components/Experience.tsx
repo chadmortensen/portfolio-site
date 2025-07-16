@@ -11,9 +11,9 @@ const Experience = () => {
       description: "Led product design for a fast-scaling mental health platform, defining strategy and processes for both member and clinician experiences in a regulated, high-complexity domain.",
       achievements: [
         "Introduced AI-assisted tools into clinical and design workflows, improving clinician efficiency and unlocking new opportunities for personalized care delivery",
-        "Partnered cross-functionally with product, engineering, and clinical leadership to align design strategy with care quality and business goals",
-        "Fostered a data-informed, human-centered design culture, integrating experimentation and outcomes tracking",
-        "Managed and mentored a team of senior designers, clarifying growth paths and elevating design leadership within squads"
+        "Partnered cross-functionally with product, engineering, and clinical leadership to align design strategy with care quality and business goals, contributing to funnel optimization and improved engagement metrics",
+        "Fostered a data-informed, human-centered design culture, integrating experimentation, outcomes tracking, and systems thinking to guide scalable design decisions",
+        "Managed and mentored a team of senior designers, clarifying growth paths, elevating design leadership within squads, and creating opportunities for impact beyond delivery"
       ]
     },
     {
@@ -21,12 +21,12 @@ const Experience = () => {
       company: "Etsy",
       period: "May 2021 - March 2023",
       location: "Portland, OR",
-      description: "Led a team of 3 senior managers and 13 designers across three mission-critical product groups, shaping experiences for millions of buyers and sellers.",
+      description: "Led a team of 3 senior managers and 13 designers across three mission-critical product groups, including Fulfillment, Search, and Ads — shaping experiences for millions of buyers and sellers.",
       achievements: [
-        "Defined and drove long-term design strategies aligned to company OKRs, directly contributing to improvements in seller performance and buyer satisfaction",
-        "Helped squads exceed GMV and revenue goals by aligning design outcomes with key business metrics",
-        "Built and scaled design leadership, hiring senior talent and implementing performance frameworks",
-        "Owned team budget and cultural initiatives, advocating for investment in collaboration and recognition"
+        "Defined and drove long-term design strategies aligned to company OKRs, directly contributing to improvements in seller performance, buyer satisfaction, and marketplace trust on the Fulfillment team",
+        "Helped squads exceed GMV and revenue goals by aligning design outcomes with key business metrics and collaborating deeply with product and engineering leadership",
+        "Built and scaled design leadership, hiring senior talent, coaching managers, and implementing performance and growth frameworks to support team development and retention",
+        "Owned team budget and cultural initiatives, advocating for investment in travel, collaboration, and recognition to strengthen distributed team cohesion and cross-functional alignment"
       ]
     },
     {
@@ -37,8 +37,42 @@ const Experience = () => {
       description: "Led product design for Walmart's fulfillment experiences across web and mobile, including grocery and general merchandise delivery and pickup.",
       achievements: [
         "Responded swiftly to COVID-era challenges, rapidly redesigning critical customer and store-facing workflows",
-        "Spearheaded the re-platforming of the grocery pickup and delivery experience, improving usability",
+        "Spearheaded the re-platforming of the grocery pickup and delivery experience, improving usability and alignment with company strategy",
         "Partnered with product and business leads on roadmap prioritization, resourcing, and long-term strategy"
+      ]
+    },
+    {
+      title: "Practice Area Head - Routine Consumables",
+      company: "Walmart",
+      period: "Oct 2016 - Feb 2020",
+      location: "Portland, OR",
+      description: "Led a cross-functional design team focused on high-frequency consumables and registry experiences.",
+      achievements: [
+        "Conducted data-driven discovery and executed a complete rebuild of Walmart's baby registry product, resulting in increased engagement and improved UX",
+        "Balanced rapid iteration with long-term vision to drive customer satisfaction and business growth"
+      ]
+    },
+    {
+      title: "Practice Area Head - Fashion",
+      company: "Walmart",
+      period: "Oct 2016 - Feb 2020",
+      location: "Portland, OR",
+      description: "Directed design strategy for Walmart.com's fashion vertical, transforming how customers discover and shop for apparel.",
+      achievements: [
+        "Operated as a lean startup within Walmart, using customer insights, rapid experimentation, and iterative design to shape a modern fashion experience",
+        "Aligned user mental models with innovative design approaches to increase relevance and conversion"
+      ]
+    },
+    {
+      title: "Sr. Manager - Mobile Apps",
+      company: "Sam's Club",
+      period: "Oct 2013 - Oct 2016",
+      location: "Portland, OR",
+      description: "Managed UX for Sam's Club iOS/Android apps, in-store digital tools, and B2B features.",
+      achievements: [
+        "Built and scaled a multidisciplinary team of visual, UX, and content designers",
+        "Drove service design initiatives connecting physical retail with digital experiences across multiple channels",
+        "Advocated for and applied behavioral science, research, and design thinking methods to improve member experiences"
       ]
     }
   ];
