@@ -256,7 +256,6 @@ const CaseStudy1 = () => {
                       </div>}
                     
                     {section.learnings && <div>
-                        <h3 className="text-title text-text-primary font-light mb-6">Key Learnings</h3>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
                           {section.learnings.map((learning, learningIndex) => {
                             const [header, ...contentParts] = learning.split(': ');
