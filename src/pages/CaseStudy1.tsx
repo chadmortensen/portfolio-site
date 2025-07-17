@@ -10,6 +10,7 @@ const CaseStudy1 = () => {
     // No image for this section
   }, {
     title: "Assembling the Team",
+    subheader: "Leadership alignment and persuasion",
     content: "With just six weeks to take this project from discovery through final deliverables — and much of that timeline landing squarely in the holiday-heavy back half of Q4 — I knew we needed to move quickly and assemble a team that could hit the ground running.\n\nAfter aligning with our business and product partners, I had enough clarity on the scope to start making staffing decisions. One of my staff designers was well-positioned to lead the work, but I also knew that expecting him to carry the full load would put both the team and the project at risk.\n\nRather than waiting for headcount or formal allocations, I looked for creative ways to build the right team. I'd heard that another group at Walmart — the wedding registry team — was entering a period of uncertainty due to pending org changes. That meant talented designers were available but underutilized. I made the case to design leadership to temporarily borrow a couple of their designers, and supplemented the rest of the team with strong contractors from our existing pool.\n\nThis approach allowed us to act fast, stay nimble, and build a cross-functional team that blended deep domain knowledge with fresh perspectives — all without missing a beat on our timeline.",
     image: "/lovable-uploads/e36754b0-b1da-47b9-8e75-731620ea5cf1.png",
     fullWidthImage: "/lovable-uploads/88b85ba6-6a79-47ac-9c76-cb60fb28f194.png"
@@ -131,6 +132,7 @@ const CaseStudy1 = () => {
                   {/* Content - Full width if no image, left column if image exists */}
                   <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
                     <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
+                    {section.subheader && <h3 className="text-title text-text-secondary font-light -mt-2">{section.subheader}</h3>}
                     <div className="w-12 h-px bg-accent-teal"></div>
                     {section.content.split('\n\n').map((paragraph, pIndex) => (
                       <p key={pIndex} className="text-body text-text-secondary leading-relaxed">{paragraph}</p>
