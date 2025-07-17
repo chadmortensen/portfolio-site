@@ -126,17 +126,14 @@ const CaseStudy1 = () => {
       <div className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
-            {sections.map((section, index) => (
-              <div key={index}>
+            {sections.map((section, index) => <div key={index}>
                 <div className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
                   {/* Content - Full width if no image, left column if image exists */}
                   <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
                     <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
-                    {section.subheader && <h3 className="text-title text-text-secondary font-light -mt-2">{section.subheader}</h3>}
+                    {section.subheader && <h3 className="text-title text-text-secondary font-light -mt-2 text-xl my-[12px]">{section.subheader}</h3>}
                     <div className="w-12 h-px bg-accent-teal"></div>
-                    {section.content.split('\n\n').map((paragraph, pIndex) => (
-                      <p key={pIndex} className="text-body text-text-secondary leading-relaxed">{paragraph}</p>
-                    ))}
+                    {section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">{paragraph}</p>)}
                     
                     {section.goals && <div>
                         <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
@@ -227,8 +224,7 @@ const CaseStudy1 = () => {
                 {index < sections.length - 1 && <div className="mt-24">
                     <Separator className="bg-swiss-light" />
                   </div>}
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </div>
