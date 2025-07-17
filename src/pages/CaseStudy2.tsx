@@ -20,17 +20,6 @@ const CaseStudy2 = () => {
           
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Market Expansion Strategy</h1>
           <p className="text-xl text-mist">Growing SaaS Company</p>
-          
-          <div className="flex flex-wrap gap-6 mt-6">
-            <div className="flex items-center space-x-2">
-              <Calendar size={16} />
-              <span>12 months</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Users size={16} />
-              <span>25+ people</span>
-            </div>
-          </div>
         </div>
       </div>
 

@@ -103,21 +103,6 @@ const CaseStudy1 = () => {
           <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
             <h1 className="text-display text-text-primary mb-6">A rapid revamp to the Walmart registry</h1>
             <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
-            
-            <div className="flex justify-center items-center space-x-8 mb-8 text-text-secondary">
-              <div className="flex items-center space-x-2">
-                <Calendar size={16} />
-                <span className="text-caption">1 quarter from design to delivery</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Users size={16} />
-                <span className="text-caption">6 people</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Target size={16} />
-                <span className="text-caption">Walmart</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
