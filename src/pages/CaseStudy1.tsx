@@ -114,7 +114,7 @@ const CaseStudy1 = () => {
   }, {
     title: "What We Learned",
     subheader: "Leading with Clarity, Empathy, and Focus",
-    content: "This project was a clear reminder that even with tight timelines, it's possible to deliver meaningful, customer-centered work — as long as you're intentional about how you lead, how you listen, and how you prioritize. Here are the key ingredients that made it successful:",
+    content: "This project was a clear reminder that even with tight timelines, it's possible to deliver meaningful, customer-centered work — as long as you're intentional about how you lead, how you listen, and how you prioritize.",
     learnings: [
       "Define the \"Why\" Early: Set clear goals and success metrics up front — so every team member understood what we were solving for and how we'd measure impact.",
       "Plan for Reality, Not Perfection: Sequenced the work with rough estimates to balance ambition with feasibility — helping the team stay focused without overcommitting.",
