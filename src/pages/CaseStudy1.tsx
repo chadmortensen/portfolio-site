@@ -16,7 +16,8 @@ const CaseStudy1 = () => {
     fullWidthImage: "/lovable-uploads/88b85ba6-6a79-47ac-9c76-cb60fb28f194.png"
   }, {
     title: "Ground the Team in Research and Insights",
-    content: "We had past research so let's not lose that in an effort to be efficient. Walmart registrant users have been asking for a greater level of control, guidance and trust within today's experience.",
+    subheader: "We had past research so let's not lose that in an effort to be efficient",
+    content: "Walmart registrant users have been asking for a greater level of control, guidance and trust within today's experience.",
     quotes: ["I became so frustrated in making the registry through the app, that I quit. It is not intuitive nor easy to navigate in order to add or change something.", "It's not as user friendly as other registries I've used. It would be better if the registry picks fell into the categories provided. That would make it much easier."],
     insight: "Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
