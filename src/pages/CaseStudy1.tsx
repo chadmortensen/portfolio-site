@@ -122,8 +122,7 @@ const CaseStudy1 = () => {
       "Lead with Empathy, Not Assumptions: Built on existing research and kept user needs front and center — creating space for insight to guide every decision.",
       "Make Space to Explore: Ideated and iterated quickly in low fidelity before polishing — ensuring feedback loops were short, inclusive, and grounded.",
       "Prioritize Ruthlessly, Together: Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight."
-    ],
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80"
+    ]
   }];
   return <div className="min-h-screen bg-surface-primary">
       {/* Navigation */}
@@ -257,13 +256,19 @@ const CaseStudy1 = () => {
                       </div>}
                     
                     {section.learnings && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Key Learnings</h3>
-                        <ul className="space-y-2">
-                          {section.learnings.map((learning, learningIndex) => <li key={learningIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{learning}</span>
-                            </li>)}
-                        </ul>
+                        <h3 className="text-title text-text-primary font-light mb-6">Key Learnings</h3>
+                        <div className="space-y-6">
+                          {section.learnings.map((learning, learningIndex) => {
+                            const [header, ...contentParts] = learning.split(': ');
+                            const content = contentParts.join(': ');
+                            return (
+                              <div key={learningIndex} className="space-y-2">
+                                <h4 className="text-lg text-text-primary font-medium">{header}</h4>
+                                <p className="text-body text-text-secondary leading-relaxed">{content}</p>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>}
                   </div>
                   
