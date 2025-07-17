@@ -81,15 +81,15 @@ const CaseStudy1 = () => {
     subheader: "Balancing Speed with Alignment",
     content: "With a tight timeline and a lean team, efficiency in our design process was critical. We started in low fidelity — wireframes gave us the flexibility to explore ideas quickly, iterate without friction, and align on the structure of the experience before investing in polished visuals.\n\nTo maintain momentum and ensure we were moving in the right direction, I established a focused cadence of reviews and standups that gave the team space for feedback, alignment, and unblockers:\n\nAs we progressed into higher fidelity, we expanded participation in our design reviews to include engineering partners. This reduced late-stage churn, strengthened cross-functional alignment, and helped the full team stay connected to design intent as implementation began.\n\nThis rhythm created a healthy pace — fast enough to keep the project on track, with just enough structure to build clarity and confidence along the way.",
     schedule: ["Weekly Design Cadence", "Mon / Wed / Fri – Leadership Reviews", "Tue / Thur – Team Critiques", "Daily – 15-minute standups to flag blockers and sync on progress"],
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80"
+    image: "/lovable-uploads/dc3e659d-a7ff-4523-95e2-9c460eb8a16a.png", // Get Started, Empty, and Filled states
+    additionalImages: [
+      "/lovable-uploads/1859e055-78bd-4a46-8bc4-96e40ba05ed6.png", // Inspire/Browse and Empty State wireframes
+      "/lovable-uploads/14b8d499-bca9-4168-9e49-66c0e7ebcf56.png"  // Current vs Enhancement comparison
+    ]
   }, {
     title: "Examples of Enhancements",
     content: "Key design improvements and feature enhancements implemented throughout the registry experience.",
-    image: "/lovable-uploads/14b8d499-bca9-4168-9e49-66c0e7ebcf56.png", // Current vs Enhancement comparison
-    additionalImages: [
-      "/lovable-uploads/1859e055-78bd-4a46-8bc4-96e40ba05ed6.png", // Inspire/Browse and Empty State wireframes
-      "/lovable-uploads/dc3e659d-a7ff-4523-95e2-9c460eb8a16a.png"  // Get Started, Empty, and Filled states
-    ]
+    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80"
   }, {
     title: "Constant Prioritization",
     content: "Partnered with my cross functional leaders (product, engineering) to constantly reassess the scope and timelines, aggressively cutting and prioritizing features to fit the time allocated for engineering. At times I needed to rally my partners and the teams to get them excited to build in features that we thought would add delight and an extra layer of polish that was needed to build trust with the customers of the product.",
