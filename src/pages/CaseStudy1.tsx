@@ -36,21 +36,45 @@ const CaseStudy1 = () => {
     sessionDetails: ["We generated more than 70 \"How Might We\" statements", "Clustered them into 11 thematic categories", "Used dot voting to identify the most promising directions", "Named and prioritized the top 3 opportunity areas to guide the next phase of design"],
     image: "/lovable-uploads/696d025f-a8e0-4a25-8255-da6c90c4a2cb.png"
   }, {
-    title: "Design + Product + Business Aligned on Our Areas of Focus",
-    content: "Cross-functional alignment on key improvement areas",
-    focusAreas: [{
-      area: "Improve Onboarding",
-      details: "Pivot away from pre-population and manually pruning the pre-built registry. Create a 3-tier strategy for customization (no help -> populated)"
-    }, {
-      area: "Improve Curation and Management",
-      details: "Continue to provide easy access for making my registry public and to share it with others. Provide additional guidance and control by offering relevant recommendations within the registry experience"
-    }, {
-      area: "Improve Gifting",
-      details: "Allow Gift Givers to easily find products that are available to purchase and apply ecommerce best practices"
-    }, {
-      area: "Improve Internal Processes",
-      details: "Remove dependencies on engineering to support changes to pre-curated inventory"
-    }],
+    title: "Aligning Across Design, Product, and Business",
+    content: "With research insights in hand and opportunity areas prioritized, the next step was alignment — not just within the design team, but across product, engineering, and the business. I led conversations that helped us distill a shared set of focus areas, ensuring that our design direction was grounded in user needs, technically feasible, and aligned with broader strategic goals.\n\nWe landed on four key areas of opportunity that met our goals and fit within our short timeline:",
+    focusAreas: [
+      {
+        title: "Improve Onboarding",
+        description: "Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry:",
+        points: [
+          "Full control for users who prefer to start from scratch",
+          "Guided setup for those who want help curating", 
+          "A quick-start option with a recommended, pre-filled registry"
+        ]
+      },
+      {
+        title: "Enhance Curation and Management",
+        description: "We focused on making the registry easier to manage, share, and personalize:",
+        points: [
+          "Simplified tools to make registries public and shareable",
+          "Contextual guidance and recommendations embedded within the experience",
+          "Clear visibility into what's been purchased — at both the item and category level"
+        ]
+      },
+      {
+        title: "Elevate the Gifting Experience", 
+        description: "We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce:",
+        points: [
+          "Made it easier to identify in-stock and available items",
+          "Created clear pathways for in-store shoppers to attribute purchases to a registry"
+        ]
+      },
+      {
+        title: "Streamline Internal Processes",
+        description: "Finally, we identified improvements that would increase agility and reduce operational friction:",
+        points: [
+          "Removed dependencies on engineering for updating curated inventory",
+          "Built tools for merchants to manage recommendations and track performance"
+        ]
+      }
+    ],
+    conclusion: "This alignment not only clarified what we were building — it empowered every team to move forward with confidence and shared purpose.",
     image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=800&q=80"
   }, {
     title: "Low to High Fidelity Design",
@@ -158,13 +182,21 @@ const CaseStudy1 = () => {
                     
                     
                     {section.focusAreas && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Focus Areas</h3>
-                        <div className="space-y-4">
-                          {section.focusAreas.map((area, areaIndex) => <div key={areaIndex} className="p-4 bg-surface-secondary border border-swiss-light">
-                              <h4 className="text-body text-text-primary font-medium mb-2">{area.area}</h4>
-                              <p className="text-body text-text-secondary">{area.details}</p>
+                        <div className="space-y-6">
+                          {section.focusAreas.map((area, areaIndex) => <div key={areaIndex}>
+                              <h4 className="text-title text-text-primary font-medium mb-2">{area.title}</h4>
+                              <p className="text-body text-text-secondary mb-3">{area.description}</p>
+                              <ul className="space-y-2">
+                                {area.points.map((point, pointIndex) => <li key={pointIndex} className="flex items-start space-x-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                                    <span className="text-body text-text-secondary">{point}</span>
+                                  </li>)}
+                              </ul>
                             </div>)}
                         </div>
+                        {section.conclusion && <div className="mt-6 p-4 bg-surface-secondary border border-swiss-light">
+                            <p className="text-body text-text-primary">{section.conclusion}</p>
+                          </div>}
                       </div>}
                     
                     {section.schedule && <div>
