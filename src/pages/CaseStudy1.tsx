@@ -22,8 +22,8 @@ const CaseStudy1 = () => {
     insight: "Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)",
     image: "/lovable-uploads/7ccb122a-dcc0-42aa-b708-2b4efed30bd9.png",
     additionalImages: [
-      "/lovable-uploads/34674288-e5b6-4941-953c-a17ddfabc474.png",
-      "/lovable-uploads/1268a6d5-7794-4290-89ec-54f8fec3cb8a.png"
+      "/lovable-uploads/1268a6d5-7794-4290-89ec-54f8fec3cb8a.png", // New Mom Journey
+      "/lovable-uploads/34674288-e5b6-4941-953c-a17ddfabc474.png"  // Customer Insights
     ]
   }, {
     title: "Create Design Principles",
@@ -202,19 +202,19 @@ const CaseStudy1 = () => {
                   {/* Image - Only render if image exists */}
                   {section.image && <div className="lg:col-span-7">
                       <img src={section.image} alt={section.title} className="w-full h-full min-h-80 object-cover object-top border border-swiss-light" />
+                      
+                      {/* Additional images below main image */}
+                      {section.additionalImages && <div className="mt-6 space-y-4">
+                          {section.additionalImages.map((imgSrc, imgIndex) => <div key={imgIndex}>
+                              <img src={imgSrc} alt={`${section.title} additional image ${imgIndex + 1}`} className="w-full h-auto border border-swiss-light" />
+                            </div>)}
+                        </div>}
                     </div>}
                 </div>
                 
                 {/* Full width image below main content */}
                 {section.fullWidthImage && <div className="mt-8">
                     <img src={section.fullWidthImage} alt={`${section.title} timeline`} className="w-full h-auto border border-swiss-light" />
-                  </div>}
-                
-                {/* Additional images below main content */}
-                {section.additionalImages && <div className="mt-8 space-y-6">
-                    {section.additionalImages.map((imgSrc, imgIndex) => <div key={imgIndex}>
-                        <img src={imgSrc} alt={`${section.title} additional image ${imgIndex + 1}`} className="w-full h-auto border border-swiss-light" />
-                      </div>)}
                   </div>}
                 
                 {/* Add separator after each section except the last one */}
