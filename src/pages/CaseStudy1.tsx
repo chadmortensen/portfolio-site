@@ -223,7 +223,7 @@ const CaseStudy1 = () => {
                             <thead className="bg-surface-secondary">
                               <tr>
                                 {section.table.headers.map((header, headerIndex) => (
-                                  <th key={headerIndex} className="px-6 py-4 text-left text-sm text-text-primary font-medium border-b border-swiss-light">
+                                  <th key={headerIndex} className="px-6 py-4 text-left text-body text-text-primary font-medium border-b border-swiss-light">
                                     {header}
                                   </th>
                                 ))}
