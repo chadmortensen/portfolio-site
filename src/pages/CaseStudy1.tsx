@@ -112,9 +112,17 @@ const CaseStudy1 = () => {
       ]
     }
   }, {
-    title: "Recap of Learnings",
-    content: "Key learnings and methodology from the project",
-    learnings: ["Established goals and how we will measure success", "High level estimates and sequencing the work", "Augment the team (1 design lead, 4 designers)", "Build empathy, learn from past research", "Ideate and iterate", "Constant partnership and prioritization to meet an aggressive timeline"],
+    title: "What We Learned",
+    subheader: "Leading with Clarity, Empathy, and Focus",
+    content: "This project was a clear reminder that even with tight timelines, it's possible to deliver meaningful, customer-centered work — as long as you're intentional about how you lead, how you listen, and how you prioritize. Here are the key ingredients that made it successful:",
+    learnings: [
+      "Define the \"Why\" Early: Set clear goals and success metrics up front — so every team member understood what we were solving for and how we'd measure impact.",
+      "Plan for Reality, Not Perfection: Sequenced the work with rough estimates to balance ambition with feasibility — helping the team stay focused without overcommitting.",
+      "Right-Size the Team for the Mission: Augmented the core team (1 design lead, 4 designers total) by tapping into adjacent talent and available contractor resources.",
+      "Lead with Empathy, Not Assumptions: Built on existing research and kept user needs front and center — creating space for insight to guide every decision.",
+      "Make Space to Explore: Ideated and iterated quickly in low fidelity before polishing — ensuring feedback loops were short, inclusive, and grounded.",
+      "Prioritize Ruthlessly, Together: Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight."
+    ],
     image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80"
   }];
   return <div className="min-h-screen bg-surface-primary">
