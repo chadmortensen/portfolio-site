@@ -152,7 +152,7 @@ const CaseStudy1 = () => {
                 {/* Header spans full width */}
                 <div className="mb-8">
                   <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
-                  {section.subheader && <h3 className="text-xl text-text-secondary font-light -mt-2 my-[12px]">{section.subheader}</h3>}
+                  {section.subheader && <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">{section.subheader}</h3>}
                   <div className="w-12 h-px bg-accent-teal"></div>
                 </div>
                 
