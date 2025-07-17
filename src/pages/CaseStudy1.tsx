@@ -74,8 +74,8 @@ const CaseStudy1 = () => {
         ]
       }
     ],
-    conclusion: "This alignment not only clarified what we were building — it empowered every team to move forward with confidence and shared purpose.",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=800&q=80"
+    conclusion: "This alignment not only clarified what we were building — it empowered every team to move forward with confidence and shared purpose."
+    // No image for this section - using full width layout
   }, {
     title: "Low to High Fidelity Design",
     content: "Establishing a cadence of standups, reviews and critiques helped the team to continuously receive direction and allowed me to help unblock moments of uncertainty.",
@@ -181,12 +181,12 @@ const CaseStudy1 = () => {
                       </div>}
                     
                     
-                    {section.focusAreas && <div>
-                        <div className="space-y-6">
-                          {section.focusAreas.map((area, areaIndex) => <div key={areaIndex}>
-                              <h4 className="text-title text-text-primary font-medium mb-2">{area.title}</h4>
-                              <p className="text-body text-text-secondary mb-3">{area.description}</p>
-                              <ul className="space-y-2">
+                    {section.focusAreas && <div className="mt-8">
+                        <div className="grid md:grid-cols-2 gap-8">
+                          {section.focusAreas.map((area, areaIndex) => <div key={areaIndex} className="space-y-4">
+                              <h4 className="text-title text-text-primary font-medium">{area.title}</h4>
+                              <p className="text-body text-text-secondary">{area.description}</p>
+                              <ul className="space-y-3">
                                 {area.points.map((point, pointIndex) => <li key={pointIndex} className="flex items-start space-x-3">
                                     <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
                                     <span className="text-body text-text-secondary">{point}</span>
@@ -194,7 +194,7 @@ const CaseStudy1 = () => {
                               </ul>
                             </div>)}
                         </div>
-                        {section.conclusion && <div className="mt-6 p-4 bg-surface-secondary border border-swiss-light">
+                        {section.conclusion && <div className="mt-8 p-6 bg-surface-secondary border border-swiss-light">
                             <p className="text-body text-text-primary">{section.conclusion}</p>
                           </div>}
                       </div>}
