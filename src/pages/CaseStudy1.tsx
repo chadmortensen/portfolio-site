@@ -107,7 +107,7 @@ const CaseStudy1 = () => {
       rows: [
         ["Increase quality registry creations (creations that lead to a first curation action)", "+28% vs. Last year"],
         ["Increase curation by 10%", "70% edited within 3-7 days. +20% increase"],
-        ["Increase sharing by 20%", "55% shared within 7 days. +8% increase"],
+        ["Increase sharing by 20%", "55% shared within 7 days +8% increase"],
         ["Increase purchase conversion by 25%", "GMV initially increased but then decreased starting in April possibly due to COVID"]
       ]
     }
