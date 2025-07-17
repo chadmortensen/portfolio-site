@@ -85,7 +85,11 @@ const CaseStudy1 = () => {
   }, {
     title: "Examples of Enhancements",
     content: "Key design improvements and feature enhancements implemented throughout the registry experience.",
-    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80"
+    additionalImages: [
+      "/lovable-uploads/14b8d499-bca9-4168-9e49-66c0e7ebcf56.png", // Current vs Enhancement comparison
+      "/lovable-uploads/1859e055-78bd-4a46-8bc4-96e40ba05ed6.png", // Inspire/Browse and Empty State wireframes
+      "/lovable-uploads/dc3e659d-a7ff-4523-95e2-9c460eb8a16a.png"  // Get Started, Empty, and Filled states
+    ]
   }, {
     title: "Constant Prioritization",
     content: "Partnered with my cross functional leaders (product, engineering) to constantly reassess the scope and timelines, aggressively cutting and prioritizing features to fit the time allocated for engineering. At times I needed to rally my partners and the teams to get them excited to build in features that we thought would add delight and an extra layer of polish that was needed to build trust with the customers of the product.",
