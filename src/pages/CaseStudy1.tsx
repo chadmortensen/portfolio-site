@@ -100,7 +100,8 @@ const CaseStudy1 = () => {
     image: "/lovable-uploads/90200b10-1ca7-46fe-b43a-422df927dde9.png"
   }, {
     title: "Results",
-    content: "Overall everyone was very proud of the accomplishment and the updated baby registry that was created. This version of the baby registry closer met the needs of the customer and ultimately met the business goals.",
+    subheader: "A Registry That Delivered",
+    content: "The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. More importantly, it was a product that truly reflected the needs of our customers. From onboarding to gift-giving, the experience was more thoughtful, intuitive, and trustworthy.\n\nOur business partners were thrilled with the outcome — the registry met key goals, aligned with strategic priorities, and positioned the team well for future growth. But just as meaningful was the internal response: the team was proud. After weeks of intense focus, fast-paced iteration, and tough prioritization, there was a shared sense of fulfillment — and a collective exhale.\n\nIt was hard work, no question. But it was the kind of work that reminds you why you do it — building something that matters, together.",
     results: [{
       goal: "Increase quality registry creations (creations that lead to a first curation action)",
       result: "+28% vs. Last year"
