@@ -105,10 +105,10 @@ const CaseStudy1 = () => {
     table: {
       headers: ["Goals", "Results"],
       rows: [
-        ["Launch on time despite tight constraints", "Successfully delivered within the fixed timeline"],
-        ["Create customer-focused experience", "Built a more thoughtful, intuitive, and trustworthy registry"],
-        ["Meet business objectives", "Aligned with strategic priorities and positioned team for future growth"],
-        ["Maintain team morale under pressure", "Team felt proud and fulfilled with the collective accomplishment"]
+        ["Increase quality registry creations (creations that lead to a first curation action)", "+28% vs. Last year"],
+        ["Increase curation by 10%", "70% edited within 3-7 days. +20% increase"],
+        ["Increase sharing by 20%", "55% shared within 7 days. +8% increase"],
+        ["Increase purchase conversion by 25%", "GMV initially increased but then decreased starting in April possibly due to COVID"]
       ]
     }
   }, {
