@@ -101,21 +101,16 @@ const CaseStudy1 = () => {
   }, {
     title: "Results",
     subheader: "A Registry That Delivered",
-    content: "The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. More importantly, it was a product that truly reflected the needs of our customers. From onboarding to gift-giving, the experience was more thoughtful, intuitive, and trustworthy.\n\nOur business partners were thrilled with the outcome — the registry met key goals, aligned with strategic priorities, and positioned the team well for future growth. But just as meaningful was the internal response: the team was proud. After weeks of intense focus, fast-paced iteration, and tough prioritization, there was a shared sense of fulfillment — and a collective exhale.\n\nIt was hard work, no question. But it was the kind of work that reminds you why you do it — building something that matters, together.",
-    results: [{
-      goal: "Increase quality registry creations (creations that lead to a first curation action)",
-      result: "+28% vs. Last year"
-    }, {
-      goal: "Increase curation by 10%",
-      result: "70% edited within 3-7 days. +20% increase"
-    }, {
-      goal: "Increase sharing by 20%",
-      result: "55% shared within 7 days. +8% increase"
-    }, {
-      goal: "Increase purchase conversion by 25%",
-      result: "GMV initially increased but then decreased starting in April possibly due to COVID"
-    }],
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80"
+    content: "The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. More importantly, it was a product that truly reflected the needs of our customers.",
+    table: {
+      headers: ["Goals", "Results"],
+      rows: [
+        ["Launch on time despite tight constraints", "Successfully delivered within the fixed timeline"],
+        ["Create customer-focused experience", "Built a more thoughtful, intuitive, and trustworthy registry"],
+        ["Meet business objectives", "Aligned with strategic priorities and positioned team for future growth"],
+        ["Maintain team morale under pressure", "Team felt proud and fulfilled with the collective accomplishment"]
+      ]
+    }
   }, {
     title: "Recap of Learnings",
     content: "Key learnings and methodology from the project",
@@ -222,13 +217,30 @@ const CaseStudy1 = () => {
                         </ul>
                       </div>}
                     
-                    {section.results && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Results</h3>
-                        <div className="space-y-4">
-                          {section.results.map((result, resultIndex) => <div key={resultIndex} className="p-4 bg-surface-secondary border border-swiss-light">
-                              <h4 className="text-body text-text-primary font-medium mb-2">{result.goal}</h4>
-                              <p className="text-body text-accent-blue font-medium">{result.result}</p>
-                            </div>)}
+                    {section.table && <div>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border border-swiss-light">
+                            <thead className="bg-surface-secondary">
+                              <tr>
+                                {section.table.headers.map((header, headerIndex) => (
+                                  <th key={headerIndex} className="px-6 py-4 text-left text-title text-text-primary font-medium border-b border-swiss-light">
+                                    {header}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {section.table.rows.map((row, rowIndex) => (
+                                <tr key={rowIndex} className="border-b border-swiss-light">
+                                  {row.map((cell, cellIndex) => (
+                                    <td key={cellIndex} className="px-6 py-4 text-body text-text-secondary">
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
                         </div>
                       </div>}
                     
