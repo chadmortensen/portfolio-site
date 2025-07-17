@@ -1,8 +1,11 @@
-import { ArrowLeft, Calendar, Users, Target } from "lucide-react";
+import { ArrowLeft, Calendar, Users, Target, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 const CaseStudy1 = () => {
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const sections = [{
     title: "The Challenge",
     content: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
@@ -236,12 +239,22 @@ const CaseStudy1 = () => {
                   
                   {/* Image - Only render if image exists */}
                   {section.image && <div className="lg:col-span-7">
-                      <img src={section.image} alt={section.title} className="w-full h-full min-h-80 object-cover object-top border border-swiss-light" />
+                      <img 
+                        src={section.image} 
+                        alt={section.title} 
+                        className="w-full h-full min-h-80 object-cover object-top border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
+                        onClick={() => setSelectedImage(section.image!)}
+                      />
                       
                       {/* Additional images below main image */}
                       {section.additionalImages && <div className="mt-6 space-y-4">
                           {section.additionalImages.map((imgSrc, imgIndex) => <div key={imgIndex}>
-                              <img src={imgSrc} alt={`${section.title} additional image ${imgIndex + 1}`} className="w-full h-auto border border-swiss-light" />
+                              <img 
+                                src={imgSrc} 
+                                alt={`${section.title} additional image ${imgIndex + 1}`} 
+                                className="w-full h-auto border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
+                                onClick={() => setSelectedImage(imgSrc)}
+                              />
                             </div>)}
                         </div>}
                     </div>}
@@ -249,7 +262,12 @@ const CaseStudy1 = () => {
                 
                 {/* Full width image below main content */}
                 {section.fullWidthImage && <div className="mt-8">
-                    <img src={section.fullWidthImage} alt={`${section.title} timeline`} className="w-full h-auto border border-swiss-light" />
+                    <img 
+                      src={section.fullWidthImage} 
+                      alt={`${section.title} timeline`} 
+                      className="w-full h-auto border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
+                      onClick={() => setSelectedImage(section.fullWidthImage!)}
+                    />
                   </div>}
                 
                 {/* Add separator after each section except the last one */}
@@ -271,6 +289,27 @@ const CaseStudy1 = () => {
           </div>
         </div>
       </footer>
+
+      {/* Image Overlay Dialog */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-7xl max-h-[90vh] p-0 border-0 bg-transparent">
+          <div className="relative">
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
+            >
+              <X size={24} />
+            </button>
+            {selectedImage && (
+              <img 
+                src={selectedImage} 
+                alt="Enlarged view" 
+                className="w-full h-auto max-h-[85vh] object-contain"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>;
 };
 export default CaseStudy1;
