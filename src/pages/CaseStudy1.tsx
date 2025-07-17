@@ -233,8 +233,12 @@ const CaseStudy1 = () => {
                               {section.table.rows.map((row, rowIndex) => (
                                 <tr key={rowIndex} className="border-b border-swiss-light">
                                   {row.map((cell, cellIndex) => (
-                                    <td key={cellIndex} className={`px-6 py-4 text-body ${cellIndex === 1 ? 'text-green-600 font-bold' : 'text-text-secondary'}`}>
-                                      {cell}
+                                    <td key={cellIndex} className={`px-6 py-4 text-body ${cellIndex === 0 ? 'text-text-secondary' : 'text-text-secondary'}`}>
+                                      {cellIndex === 1 ? (
+                                        <span dangerouslySetInnerHTML={{
+                                          __html: cell.replace(/([+\-]?\d+%)/g, '<span class="text-green-600 font-bold">$1</span>')
+                                        }} />
+                                      ) : cell}
                                     </td>
                                   ))}
                                 </tr>
