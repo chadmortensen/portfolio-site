@@ -85,8 +85,8 @@ const CaseStudy1 = () => {
   }, {
     title: "Examples of Enhancements",
     content: "Key design improvements and feature enhancements implemented throughout the registry experience.",
+    image: "/lovable-uploads/14b8d499-bca9-4168-9e49-66c0e7ebcf56.png", // Current vs Enhancement comparison
     additionalImages: [
-      "/lovable-uploads/14b8d499-bca9-4168-9e49-66c0e7ebcf56.png", // Current vs Enhancement comparison
       "/lovable-uploads/1859e055-78bd-4a46-8bc4-96e40ba05ed6.png", // Inspire/Browse and Empty State wireframes
       "/lovable-uploads/dc3e659d-a7ff-4523-95e2-9c460eb8a16a.png"  // Get Started, Empty, and Filled states
     ]
