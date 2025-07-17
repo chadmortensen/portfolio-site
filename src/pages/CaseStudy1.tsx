@@ -116,7 +116,7 @@ const CaseStudy1 = () => {
                   {/* Content - Full width if no image, left column if image exists */}
                   <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
                     <h2 className="text-headline text-text-primary font-light">{section.title}</h2>
-                    {section.subheader && <h3 className="text-title text-text-secondary font-light -mt-2 text-xl my-[12px]">{section.subheader}</h3>}
+                    {section.subheader && <h3 className="text-xl text-text-secondary font-light -mt-2 my-[12px]">{section.subheader}</h3>}
                     <div className="w-12 h-px bg-accent-teal"></div>
                     {section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">{paragraph}</p>)}
                     
