@@ -293,21 +293,13 @@ const CaseStudy1 = () => {
       {/* Image Overlay Dialog */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
         <DialogContent className="max-w-7xl max-h-[90vh] p-0 border-0 bg-transparent">
-          <div className="relative">
-            <button 
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
-            >
-              <X size={24} />
-            </button>
-            {selectedImage && (
-              <img 
-                src={selectedImage} 
-                alt="Enlarged view" 
-                className="w-full h-auto max-h-[85vh] object-contain"
-              />
-            )}
-          </div>
+          {selectedImage && (
+            <img 
+              src={selectedImage} 
+              alt="Enlarged view" 
+              className="w-full h-auto max-h-[85vh] object-contain"
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>;
