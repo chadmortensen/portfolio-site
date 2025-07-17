@@ -223,7 +223,7 @@ const CaseStudy1 = () => {
                             <thead className="bg-surface-secondary">
                               <tr>
                                 {section.table.headers.map((header, headerIndex) => (
-                                  <th key={headerIndex} className="px-6 py-4 text-left text-title text-text-primary font-medium border-b border-swiss-light">
+                                  <th key={headerIndex} className="px-6 py-4 text-left text-sm text-text-primary font-medium border-b border-swiss-light">
                                     {header}
                                   </th>
                                 ))}
@@ -233,7 +233,7 @@ const CaseStudy1 = () => {
                               {section.table.rows.map((row, rowIndex) => (
                                 <tr key={rowIndex} className="border-b border-swiss-light">
                                   {row.map((cell, cellIndex) => (
-                                    <td key={cellIndex} className="px-6 py-4 text-body text-text-secondary">
+                                    <td key={cellIndex} className={`px-6 py-4 text-body ${cellIndex === 1 ? 'text-green-600 font-bold' : 'text-text-secondary'}`}>
                                       {cell}
                                     </td>
                                   ))}
