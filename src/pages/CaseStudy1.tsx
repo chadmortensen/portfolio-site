@@ -32,7 +32,8 @@ const CaseStudy1 = () => {
     image: "/lovable-uploads/b0a6356d-f821-42bf-9254-9434eeb0a7e9.png"
   }, {
     title: "Ideation Workshop - How Might We",
-    content: "To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.\n\nWe brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.\n\nOver the course of the session:\n• We generated more than 70 \"How Might We\" statements\n• Clustered them into 11 thematic categories\n• Used dot voting to identify the most promising directions\n• Named and prioritized the top 3 opportunity areas to guide the next phase of design\n\nThis collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.",
+    content: "To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.\n\nWe brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.\n\nThis collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.",
+    sessionDetails: ["We generated more than 70 \"How Might We\" statements", "Clustered them into 11 thematic categories", "Used dot voting to identify the most promising directions", "Named and prioritized the top 3 opportunity areas to guide the next phase of design"],
     image: "/lovable-uploads/696d025f-a8e0-4a25-8255-da6c90c4a2cb.png"
   }, {
     title: "Design + Product + Business Aligned on Our Areas of Focus",
@@ -143,6 +144,16 @@ const CaseStudy1 = () => {
                         {section.insight && <div className="p-4 bg-surface-secondary border border-swiss-light mt-4">
                             <p className="text-body text-text-primary font-medium">{section.insight}</p>
                           </div>}
+                      </div>}
+                    
+                    {section.sessionDetails && <div>
+                        <h3 className="text-title text-text-primary font-light mb-4">Over the course of the session:</h3>
+                        <ul className="space-y-2">
+                          {section.sessionDetails.map((detail, detailIndex) => <li key={detailIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{detail}</span>
+                            </li>)}
+                        </ul>
                       </div>}
                     
                     
