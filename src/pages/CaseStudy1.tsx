@@ -183,7 +183,7 @@ const CaseStudy1 = () => {
                     
                     {section.focusAreas && <div className="mt-8">
                         <div className="grid md:grid-cols-2 gap-8">
-                          {section.focusAreas.map((area, areaIndex) => <div key={areaIndex} className="space-y-4">
+                          {section.focusAreas.map((area, areaIndex) => <div key={areaIndex} className="space-y-4 p-6 bg-surface-secondary">
                               <h4 className="text-title text-text-primary font-medium">{area.title}</h4>
                               <p className="text-body text-text-secondary">{area.description}</p>
                               <ul className="space-y-3">
@@ -194,8 +194,8 @@ const CaseStudy1 = () => {
                               </ul>
                             </div>)}
                         </div>
-                        {section.conclusion && <div className="mt-8 p-6 bg-surface-secondary border border-swiss-light">
-                            <p className="text-body text-text-primary">{section.conclusion}</p>
+                        {section.conclusion && <div className="mt-8">
+                            <p className="text-body text-text-secondary">{section.conclusion}</p>
                           </div>}
                       </div>}
                     
