@@ -20,7 +20,11 @@ const CaseStudy1 = () => {
     content: "Walmart registrant users have been asking for a greater level of control, guidance and trust within today's experience.",
     quotes: ["I became so frustrated in making the registry through the app, that I quit. It is not intuitive nor easy to navigate in order to add or change something.", "It's not as user friendly as other registries I've used. It would be better if the registry picks fell into the categories provided. That would make it much easier."],
     insight: "Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+    image: "/lovable-uploads/7ccb122a-dcc0-42aa-b708-2b4efed30bd9.png",
+    additionalImages: [
+      "/lovable-uploads/34674288-e5b6-4941-953c-a17ddfabc474.png",
+      "/lovable-uploads/1268a6d5-7794-4290-89ec-54f8fec3cb8a.png"
+    ]
   }, {
     title: "Create Design Principles",
     content: "Research backed design principles helped to focus the team",
@@ -204,6 +208,13 @@ const CaseStudy1 = () => {
                 {/* Full width image below main content */}
                 {section.fullWidthImage && <div className="mt-8">
                     <img src={section.fullWidthImage} alt={`${section.title} timeline`} className="w-full h-auto border border-swiss-light" />
+                  </div>}
+                
+                {/* Additional images below main content */}
+                {section.additionalImages && <div className="mt-8 space-y-6">
+                    {section.additionalImages.map((imgSrc, imgIndex) => <div key={imgIndex}>
+                        <img src={imgSrc} alt={`${section.title} additional image ${imgIndex + 1}`} className="w-full h-auto border border-swiss-light" />
+                      </div>)}
                   </div>}
                 
                 {/* Add separator after each section except the last one */}
