@@ -79,9 +79,8 @@ const CaseStudy1 = () => {
   }, {
     title: "Low to High Fidelity Design",
     subheader: "Balancing Speed with Alignment",
-    content: "With a tight timeline and a lean team, efficiency in our design process was critical. We started in low fidelity — wireframes gave us the flexibility to explore ideas quickly, iterate without friction, and align on the structure of the experience before investing in polished visuals.\n\nTo maintain momentum and ensure we were moving in the right direction, I established a focused cadence of reviews and standups that gave the team space for feedback, alignment, and unblockers:",
+    content: "With a tight timeline and a lean team, efficiency in our design process was critical. We started in low fidelity — wireframes gave us the flexibility to explore ideas quickly, iterate without friction, and align on the structure of the experience before investing in polished visuals.\n\nTo maintain momentum and ensure we were moving in the right direction, I established a focused cadence of reviews and standups that gave the team space for feedback, alignment, and unblockers:\n\nAs we progressed into higher fidelity, we expanded participation in our design reviews to include engineering partners. This reduced late-stage churn, strengthened cross-functional alignment, and helped the full team stay connected to design intent as implementation began.\n\nThis rhythm created a healthy pace — fast enough to keep the project on track, with just enough structure to build clarity and confidence along the way.",
     schedule: ["Weekly Design Cadence", "Mon / Wed / Fri – Leadership Reviews", "Tue / Thur – Team Critiques", "Daily – 15-minute standups to flag blockers and sync on progress"],
-    note: "As we progressed into higher fidelity, we expanded participation in our design reviews to include engineering partners. This reduced late-stage churn, strengthened cross-functional alignment, and helped the full team stay connected to design intent as implementation began.\n\nThis rhythm created a healthy pace — fast enough to keep the project on track, with just enough structure to build clarity and confidence along the way.",
     image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80"
   }, {
     title: "Examples of Enhancements",
@@ -208,9 +207,6 @@ const CaseStudy1 = () => {
                               <span className="text-body text-text-secondary">{item}</span>
                             </li>)}
                         </ul>
-                        {section.note && <div className="p-4 bg-surface-secondary border border-swiss-light">
-                            <p className="text-body text-text-primary">{section.note}</p>
-                          </div>}
                       </div>}
                     
                     {section.results && <div>
