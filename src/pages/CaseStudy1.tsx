@@ -94,8 +94,8 @@ const CaseStudy1 = () => {
     content: "Key design improvements and feature enhancements implemented throughout the registry experience.",
     fullWidthImage: "/lovable-uploads/167b31ed-0f68-4044-9d07-fd3b2e8b30ff.png"
   }, {
-    title: "Constant Prioritization",
-    content: "Partnered with my cross functional leaders (product, engineering) to constantly reassess the scope and timelines, aggressively cutting and prioritizing features to fit the time allocated for engineering. At times I needed to rally my partners and the teams to get them excited to build in features that we thought would add delight and an extra layer of polish that was needed to build trust with the customers of the product.",
+    title: "Constant Prioritization: Staying Focused Without Losing the Spark",
+    content: "With a fixed timeline and no room for extension, staying aligned on what mattered most was critical. I partnered closely with our product and engineering directors to continuously reassess scope, timelines, and effort — making sure the team was focused on the highest-impact work at every stage.\n\nThis wasn't a one-time exercise. It was a constant, collaborative practice of cutting, refining, and reshaping the roadmap to fit within what was possible — without compromising on the quality of the experience.\n\nWhen the timeline demanded tough tradeoffs, I worked to keep the team motivated and connected to the \"why.\" That sometimes meant rallying partners around features that added delight or polish — small touches that might not have been strictly required, but were essential to earning user trust and elevating the overall experience.\n\nThis balance of discipline and inspiration helped us ship something we were proud of — on time, and grounded in the needs of the people we were designing for.",
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
   }, {
     title: "Results",
