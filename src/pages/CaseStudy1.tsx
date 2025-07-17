@@ -27,8 +27,9 @@ const CaseStudy1 = () => {
     ]
   }, {
     title: "Create Design Principles",
-    content: "Research backed design principles helped to focus the team",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
+    subheader: "Research backed design principles helped to focus the team",
+    content: "One of the most effective ways to carry research forward — not just in spirit but in practice — is through clear, actionable design principles. After reviewing the insights as a team, we distilled what we heard into a focused set of principles that would guide our decision-making throughout the project.\n\nThese weren't abstract ideals — they were grounded in the real needs, emotions, and expectations of our registry users. Our goal was to create something that could be revisited easily and used as a north star by anyone on the team, from product to engineering to content.\n\nBy capturing the essence of what mattered most to our users, these principles helped us stay aligned, make faster decisions, and ensure that the experience we were creating stayed rooted in empathy and clarity.",
+    image: "/lovable-uploads/b0a6356d-f821-42bf-9254-9434eeb0a7e9.png"
   }, {
     title: "Ideation Workshop - How Might We",
     content: "After planning the workshop with our staff designer I facilitated the group in generating a list of potential areas of improvement within the experience.",
