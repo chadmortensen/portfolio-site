@@ -94,9 +94,10 @@ const CaseStudy1 = () => {
     content: "Key design improvements and feature enhancements implemented throughout the registry experience.",
     fullWidthImage: "/lovable-uploads/167b31ed-0f68-4044-9d07-fd3b2e8b30ff.png"
   }, {
-    title: "Constant Prioritization: Staying Focused Without Losing the Spark",
+    title: "Constant Prioritization",
+    subheader: "Staying Focused Without Losing the Spark",
     content: "With a fixed timeline and no room for extension, staying aligned on what mattered most was critical. I partnered closely with our product and engineering directors to continuously reassess scope, timelines, and effort — making sure the team was focused on the highest-impact work at every stage.\n\nThis wasn't a one-time exercise. It was a constant, collaborative practice of cutting, refining, and reshaping the roadmap to fit within what was possible — without compromising on the quality of the experience.\n\nWhen the timeline demanded tough tradeoffs, I worked to keep the team motivated and connected to the \"why.\" That sometimes meant rallying partners around features that added delight or polish — small touches that might not have been strictly required, but were essential to earning user trust and elevating the overall experience.\n\nThis balance of discipline and inspiration helped us ship something we were proud of — on time, and grounded in the needs of the people we were designing for.",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
+    image: "/lovable-uploads/90200b10-1ca7-46fe-b43a-422df927dde9.png"
   }, {
     title: "Results",
     content: "Overall everyone was very proud of the accomplishment and the updated baby registry that was created. This version of the baby registry closer met the needs of the customer and ultimately met the business goals.",
