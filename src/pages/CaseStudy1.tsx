@@ -32,9 +32,8 @@ const CaseStudy1 = () => {
     image: "/lovable-uploads/b0a6356d-f821-42bf-9254-9434eeb0a7e9.png"
   }, {
     title: "Ideation Workshop - How Might We",
-    content: "After planning the workshop with our staff designer I facilitated the group in generating a list of potential areas of improvement within the experience.",
-    stats: ["8 cross functional participants", "70+ ideas / HMWs", "11 categories", "Dot voting", "Name and rank top 3 categories"],
-    image: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c?auto=format&fit=crop&w=800&q=80"
+    content: "To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.\n\nWe brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.\n\nOver the course of the session:\n• We generated more than 70 \"How Might We\" statements\n• Clustered them into 11 thematic categories\n• Used dot voting to identify the most promising directions\n• Named and prioritized the top 3 opportunity areas to guide the next phase of design\n\nThis collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.",
+    image: "/lovable-uploads/696d025f-a8e0-4a25-8255-da6c90c4a2cb.png"
   }, {
     title: "Design + Product + Business Aligned on Our Areas of Focus",
     content: "Cross-functional alignment on key improvement areas",
@@ -146,15 +145,6 @@ const CaseStudy1 = () => {
                           </div>}
                       </div>}
                     
-                    {section.stats && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Workshop Stats</h3>
-                        <ul className="space-y-2">
-                          {section.stats.map((stat, statIndex) => <li key={statIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{stat}</span>
-                            </li>)}
-                        </ul>
-                      </div>}
                     
                     {section.focusAreas && <div>
                         <h3 className="text-title text-text-primary font-light mb-4">Focus Areas</h3>
