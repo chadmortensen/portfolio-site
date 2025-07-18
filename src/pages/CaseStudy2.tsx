@@ -11,13 +11,11 @@ const CaseStudy2 = () => {
     content: "This strategic alignment initiative focused on three key objectives:",
     goals: ["Create a team vision rooted in research and aligned with Etsy's business strategy", "Define strategic guideposts to shape yearly and quarterly planning", "Build consensus among cross-functional leaders that this alignment work was essential"]
   }, {
-    title: "My Role",
-    content: "I led the effort from the ground up:",
-    bullets: ["Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work", "Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers", "Synthesized the output into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution"]
-  }, {
-    title: "Who Was Involved",
-    content: "This was a deeply cross-functional effort. I partnered closely with research leadership and a Staff Designer (who facilitated the sessions). Participants included:",
-    bullets: ["GM/VP of Fulfillment", "Product, Engineering, and Research leaders", "Product Marketing, Analytics, and Finance leads", "Product Design Manager"]
+    title: "Participants",
+    myRoleContent: "I led the effort from the ground up:",
+    myRoleBullets: ["Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work", "Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers", "Synthesized the output into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution"],
+    whoInvolvedContent: "This was a deeply cross-functional effort. I partnered closely with research leadership and a Staff Designer (who facilitated the sessions). Participants included:",
+    whoInvolvedBullets: ["GM/VP of Fulfillment", "Product, Engineering, and Research leaders", "Product Marketing, Analytics, and Finance leads", "Product Design Manager"]
   }, {
     title: "Workshop Design",
     content: "The three-day workshop was designed to inspire alignment and co-create meaningful direction for the team. Key activities included:",
@@ -89,12 +87,26 @@ const CaseStudy2 = () => {
                       </ul>
                     </div>}
 
-                  {section.bullets && <ul className="space-y-2">
-                      {section.bullets.map((bullet, bulletIndex) => <li key={bulletIndex} className="flex items-start space-x-3">
-                          <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                          <span className="text-body text-text-secondary">{bullet}</span>
-                        </li>)}
-                    </ul>}
+                   {section.title === "Participants" && <div className="grid md:grid-cols-2 gap-8 mt-6">
+                      <div>
+                        <p className="text-body text-text-secondary leading-relaxed mb-4">{section.myRoleContent}</p>
+                        <ul className="space-y-2">
+                          {section.myRoleBullets?.map((bullet, bulletIndex) => <li key={bulletIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{bullet}</span>
+                            </li>)}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="text-body text-text-secondary leading-relaxed mb-4">{section.whoInvolvedContent}</p>
+                        <ul className="space-y-2">
+                          {section.whoInvolvedBullets?.map((bullet, bulletIndex) => <li key={bulletIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{bullet}</span>
+                            </li>)}
+                        </ul>
+                      </div>
+                    </div>}
 
                   {section.sessionDetails && <div>
                       <h3 className="text-title text-text-primary font-light mb-4">Over the course of the session:</h3>
