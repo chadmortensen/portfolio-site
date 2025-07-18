@@ -139,26 +139,6 @@ const CaseStudy2 = () => {
                         </div>
                       </div>
                     </div>}
-
-                  {section.sessionDetails && <div>
-                      <h3 className="text-lg text-text-primary font-light mb-4">Over the course of the session:</h3>
-                      <ul className="space-y-4">
-                        {section.sessionDetails.map((detail, detailIndex) => {
-                          const [title, description] = detail.split('\n');
-                          return (
-                            <li key={detailIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
-                              <div className="text-body text-text-secondary">
-                                <span className="font-semibold">{title}</span>
-                                <br />
-                                {description}
-                              </div>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>}
-
                   </div>
 
                   {/* Workshop Images - Right side */}
