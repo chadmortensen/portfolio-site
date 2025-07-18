@@ -22,7 +22,7 @@ const CaseStudy2 = () => {
     title: "Workshop Design",
     content: "The three-day workshop was designed to inspire alignment and co-create meaningful direction for the team. Key activities included:",
     sessionDetails: ["Grounding in research — analytics insights, market trends, brand positioning, and a reminder of Etsy's mission", "Thinking Hats exercise — using personas like the optimist, pessimist, and visionary to explore seller needs from different vantage points", "Future View — ideating what an ideal fulfillment experience could look like in 3–5 years", "Cover Story — imagining a future success story, which I then used as the basis for drafting our vision"],
-    workshopImages: ["/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.png", "/lovable-uploads/529ff8da-6628-48bc-b1e4-92282d2ee758.png", "/lovable-uploads/a88fb34f-163f-486d-b971-129c9d0e43e3.png"]
+    workshopImages: ["/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.png"]
   }, {
     title: "The Output",
     subheader: "Vision and Principles That Shaped Our Strategy",
