@@ -1,5 +1,6 @@
-import { ArrowLeft, Target, Users, Lightbulb, Calendar, Award, TrendingUp } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Separator } from "@/components/ui/separator";
 
 const CaseStudy2 = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const CaseStudy2 = () => {
     {
       title: "Goals",
       content: "This strategic alignment initiative focused on three key objectives:",
-      bullets: [
+      goals: [
         "Create a team vision rooted in research and aligned with Etsy's business strategy",
         "Define strategic guideposts to shape yearly and quarterly planning", 
         "Build consensus among cross-functional leaders that this alignment work was essential"
@@ -40,7 +41,7 @@ const CaseStudy2 = () => {
     {
       title: "Workshop Design",
       content: "The three-day workshop was designed to inspire alignment and co-create meaningful direction for the team. Key activities included:",
-      bullets: [
+      sessionDetails: [
         "Grounding in research — analytics insights, market trends, brand positioning, and a reminder of Etsy's mission",
         "Thinking Hats exercise — using personas like the optimist, pessimist, and visionary to explore seller needs from different vantage points",
         "Future View — ideating what an ideal fulfillment experience could look like in 3–5 years",
@@ -68,96 +69,129 @@ const CaseStudy2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-mist">
-      {/* Header */}
-      <div className="bg-forest-dark text-white py-8">
-        <div className="max-w-4xl mx-auto px-6">
-          <button
-            onClick={() => navigate("/")}
-            className="inline-flex items-center space-x-2 text-sage hover:text-white transition-colors mb-6"
-          >
-            <ArrowLeft size={20} />
-            <span>Back to Portfolio</span>
-          </button>
-          
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Fulfillment at Etsy: Crafting a Shared Vision and Guiding Principles</h1>
-          <p className="text-xl text-mist">Strategic Vision & Cross-Functional Alignment</p>
+    <div className="min-h-screen bg-surface-primary">
+      {/* Navigation */}
+      <nav className="bg-surface-primary border-b border-swiss-light">
+        <div className="swiss-grid py-4">
+          <div className="col-span-12 flex items-center justify-between">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors"
+            >
+              <ArrowLeft size={20} />
+              <span className="text-body">Back to Portfolio</span>
+            </button>
+            <span className="text-title text-text-primary text-xl font-bold">Chad Mortensen</span>
+          </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        {sections.map((section, index) => (
-          <section key={index} className="bg-white rounded-xl p-8 shadow-lg mb-12">
-            {section.title === "The Output" && (
-              <div className="flex items-center space-x-3 mb-6">
-                <Award className="text-sage" size={28} />
-                <div>
-                  <h2 className="text-3xl font-bold text-forest-dark">{section.title}</h2>
+      {/* Hero Section */}
+      <section className="py-16 bg-surface-secondary">
+        <div className="swiss-grid">
+          <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
+            <h1 className="text-display text-text-primary mb-6">Fulfillment at Etsy: Crafting a Shared Vision and Guiding Principles</h1>
+            <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Sections */}
+      <div className="py-16">
+        <div className="swiss-grid">
+          <div className="col-span-12 space-y-24">
+            {sections.map((section, index) => (
+              <div key={index}>
+                {/* Header spans full width */}
+                <div className="mb-8">
+                  <h2 className={`text-headline text-text-primary font-light ${section.subheader ? 'mb-0' : 'mb-6'}`}>
+                    {section.title}
+                  </h2>
                   {section.subheader && (
-                    <p className="text-lg text-forest-medium mt-1">{section.subheader}</p>
+                    <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">{section.subheader}</h3>
                   )}
+                  <div className="w-12 h-px bg-accent-teal"></div>
                 </div>
-              </div>
-            )}
-            
-            {section.title === "Reflections & Takeaways" && (
-              <div className="flex items-center space-x-3 mb-6">
-                <Lightbulb className="text-moss" size={28} />
-                <div>
-                  <h2 className="text-3xl font-bold text-forest-dark">{section.title}</h2>
-                  {section.subheader && (
-                    <p className="text-lg text-forest-medium mt-1">{section.subheader}</p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {section.title !== "The Output" && section.title !== "Reflections & Takeaways" && (
-              <h2 className="text-3xl font-bold text-forest-dark mb-6">{section.title}</h2>
-            )}
-
-            <div className="space-y-6 text-forest-medium">
-              <p className="text-lg leading-relaxed">{section.content}</p>
-              
-              {section.bullets && (
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  {section.bullets.map((bullet, bulletIndex) => (
-                    <li key={bulletIndex}>{bullet}</li>
+                
+                {/* Content */}
+                <div className="space-y-6">
+                  {section.content.split('\n\n').map((paragraph, pIndex) => (
+                    <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
+                      {paragraph}
+                    </p>
                   ))}
-                </ul>
-              )}
-
-              {section.title === "The Output" && (
-                <div className="space-y-8">
-                  <div className="bg-sage/10 rounded-lg p-6 border border-sage/20">
-                    <h3 className="text-xl font-bold text-forest-dark mb-4">Fulfillment Vision</h3>
-                    <p className="italic text-forest-medium leading-relaxed">{section.visionContent}</p>
-                  </div>
                   
-                  <div className="bg-moss/10 rounded-lg p-6 border border-moss/20">
-                    <h3 className="text-xl font-bold text-forest-dark mb-4">Fulfillment Principles</h3>
-                    <p className="text-forest-medium leading-relaxed">{section.principlesContent}</p>
-                  </div>
-                </div>
-              )}
+                  {section.goals && (
+                    <div>
+                      <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
+                      <ul className="space-y-2">
+                        {section.goals.map((goal, goalIndex) => (
+                          <li key={goalIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{goal}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-              {section.learnings && (
-                <div className="grid md:grid-cols-2 gap-6 mt-6">
-                  {section.learnings.map((learning, learningIndex) => {
-                    const [title, description] = learning.split(': ');
-                    return (
-                      <div key={learningIndex} className="bg-mist/50 rounded-lg p-6">
-                        <h3 className="font-bold text-forest-dark mb-2">{title}</h3>
-                        <p className="text-sm">{description}</p>
+                  {section.bullets && (
+                    <ul className="space-y-2">
+                      {section.bullets.map((bullet, bulletIndex) => (
+                        <li key={bulletIndex} className="flex items-start space-x-3">
+                          <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                          <span className="text-body text-text-secondary">{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {section.sessionDetails && (
+                    <div>
+                      <h3 className="text-title text-text-primary font-light mb-4">Over the course of the session:</h3>
+                      <ul className="space-y-2">
+                        {section.sessionDetails.map((detail, detailIndex) => (
+                          <li key={detailIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {section.title === "The Output" && (
+                    <div className="space-y-8">
+                      <div className="p-6 bg-surface-secondary border border-swiss-light">
+                        <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Vision</h3>
+                        <p className="text-body text-text-secondary italic leading-relaxed">{section.visionContent}</p>
                       </div>
-                    );
-                  })}
+                      
+                      <div className="p-6 bg-surface-secondary border border-swiss-light">
+                        <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Principles</h3>
+                        <p className="text-body text-text-secondary leading-relaxed">{section.principlesContent}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {section.learnings && (
+                    <div className="grid md:grid-cols-2 gap-6 mt-6">
+                      {section.learnings.map((learning, learningIndex) => {
+                        const [title, description] = learning.split(': ');
+                        return (
+                          <div key={learningIndex} className="space-y-4 p-6 bg-surface-secondary">
+                            <h4 className="text-title text-text-primary font-medium">{title}</h4>
+                            <p className="text-body text-text-secondary">{description}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </section>
-        ))}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
