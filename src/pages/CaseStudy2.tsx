@@ -25,7 +25,7 @@ const CaseStudy2 = () => {
   }, {
     title: "Output: Fulfillment Vision",
     content: "The resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.",
-    visionContent: "\"Commodity based ecommerce has put an emphasis on immediate delivery of items from a warehouse shelf to your door and has set this expectation with shoppers. Etsy's buyers shop directly from independent sellers who make handmade items and souce vintage goods. The unique nature of our marketplace and the items being sold introduces an unfamiliar fulfillment process. By providing a clear and trustworthy experience we can reset and establish meaningful expectations that are unique to Etsy. By doing this we can then redirect the focus on what matters most - the special\""
+    sectionImage: "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.png"
   }, {
     title: "Fulfillment Principles", 
     subheader: "Strategic Guideposts for Decision Making",
@@ -208,12 +208,6 @@ const CaseStudy2 = () => {
                     </div>}
                 </div>
                 
-                {section.title === "Output: Fulfillment Vision" && <div className="space-y-8">
-                    <div className="p-6 bg-surface-secondary border border-swiss-light">
-                      <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Vision</h3>
-                      <p className="text-body text-text-secondary italic leading-relaxed">{section.visionContent}</p>
-                    </div>
-                  </div>}
 
                 {section.learnings && <div className="grid md:grid-cols-2 gap-6 mt-6">
                     {section.learnings.map((learning, learningIndex) => {
