@@ -23,10 +23,9 @@ const CaseStudy2 = () => {
     sessionDetails: ["Grounding in research — analytics insights, market trends, brand positioning, and a reminder of Etsy's mission", "Thinking Hats exercise — using personas like the optimist, pessimist, and visionary to explore seller needs from different vantage points", "Future View — ideating what an ideal fulfillment experience could look like in 3–5 years", "Cover Story — imagining a future success story, which I then used as the basis for drafting our vision"],
     workshopImages: ["/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.png"]
   }, {
-    title: "The Output",
-    subheader: "Vision That Shaped Our Strategy",
-    content: "The workshop produced a key artifact that became the foundation for our team's strategic direction.",
-    visionContent: "\"Commodity based ecommerce has put an emphasis on immediate delivery of items from a warehouse shelf to your door and has set this expectation with shoppers. Etsy's buyers shop directly from independent sellers who make handmade items and source vintage goods. The unique nature of our marketplace and the items being sold introduces an unfamiliar fulfillment process. By providing a clear and trustworthy experience we can reset and establish meaningful expectations that are unique to Etsy. By doing this we can then redirect the focus on what matters most - the special.\""
+    title: "Output: Fulfillment Vision",
+    content: "The resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.",
+    visionContent: "\"Commodity based ecommerce has put an emphasis on immediate delivery of items from a warehouse shelf to your door and has set this expectation with shoppers. Etsy's buyers shop directly from independent sellers who make handmade items and souce vintage goods. The unique nature of our marketplace and the items being sold introduces an unfamiliar fulfillment process. By providing a clear and trustworthy experience we can reset and establish meaningful expectations that are unique to Etsy. By doing this we can then redirect the focus on what matters most - the special\""
   }, {
     title: "Fulfillment Principles", 
     subheader: "Strategic Guideposts for Decision Making",
@@ -209,7 +208,7 @@ const CaseStudy2 = () => {
                     </div>}
                 </div>
                 
-                {section.title === "The Output" && <div className="space-y-8">
+                {section.title === "Output: Fulfillment Vision" && <div className="space-y-8">
                     <div className="p-6 bg-surface-secondary border border-swiss-light">
                       <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Vision</h3>
                       <p className="text-body text-text-secondary italic leading-relaxed">{section.visionContent}</p>
