@@ -165,7 +165,7 @@ const CaseStudy2 = () => {
                               />
                             </div>
                           </DialogTrigger>
-                          <DialogContent className="max-w-4xl w-full p-0">
+                           <DialogContent className="max-w-6xl w-full p-0">
                             <DialogTitle className="sr-only">Workshop design image {imageIndex + 1}</DialogTitle>
                             <DialogDescription className="sr-only">
                               Enlarged view of workshop design image {imageIndex + 1}
@@ -193,7 +193,7 @@ const CaseStudy2 = () => {
                             />
                           </div>
                         </DialogTrigger>
-                        <DialogContent className="max-w-4xl w-full p-0">
+                        <DialogContent className="max-w-6xl w-full p-0">
                           <DialogTitle className="sr-only">{section.title} illustration</DialogTitle>
                           <DialogDescription className="sr-only">
                             Enlarged view of {section.title} illustration
@@ -217,6 +217,11 @@ const CaseStudy2 = () => {
                           <p className="text-body text-text-secondary">{description}</p>
                         </div>;
               })}
+                   </div>}
+                
+                {/* Add separator between sections, except for the last one */}
+                {index < sections.length - 1 && <div className="mt-16">
+                    <Separator className="w-full" />
                   </div>}
               </div>)}
           </div>
