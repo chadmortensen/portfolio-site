@@ -8,7 +8,8 @@ const CaseStudy2 = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const sections = [{
     title: "Why This, and Why Now?",
-    content: "Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission."
+    content: "Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission.",
+    sectionImage: "/lovable-uploads/27180526-d8f4-4adb-8cfe-dc0f70fd58a7.png"
   }, {
     title: "Goals",
     content: "This strategic alignment initiative focused on three key objectives:",
@@ -75,8 +76,8 @@ const CaseStudy2 = () => {
                 </div>
                 
                 {/* Content and image below header */}
-                <div className={section.workshopImages ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
-                  <div className={section.workshopImages ? "lg:col-span-6 space-y-6" : "space-y-6"}>
+                <div className={(section.workshopImages || section.sectionImage) ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
+                  <div className={(section.workshopImages || section.sectionImage) ? "lg:col-span-6 space-y-6" : "space-y-6"}>
                   {section.content && section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
                       {paragraph}
                     </p>)}
@@ -165,6 +166,32 @@ const CaseStudy2 = () => {
                           </DialogContent>
                         </Dialog>
                       ))}
+                    </div>}
+
+                  {/* Section Image - Right side */}
+                  {section.sectionImage && <div className="lg:col-span-6">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <div className="cursor-pointer hover:opacity-90 transition-opacity">
+                            <img 
+                              src={section.sectionImage} 
+                              alt={`${section.title} illustration`}
+                              className="w-full h-auto border border-swiss-light rounded-lg shadow-sm"
+                            />
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-4xl w-full p-0">
+                          <DialogTitle className="sr-only">{section.title} illustration</DialogTitle>
+                          <DialogDescription className="sr-only">
+                            Enlarged view of {section.title} illustration
+                          </DialogDescription>
+                          <img 
+                            src={section.sectionImage} 
+                            alt={`${section.title} illustration`}
+                            className="w-full h-auto"
+                          />
+                        </DialogContent>
+                      </Dialog>
                     </div>}
                 </div>
                 
