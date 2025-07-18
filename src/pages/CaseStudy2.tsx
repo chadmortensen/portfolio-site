@@ -9,7 +9,7 @@ const CaseStudy2 = () => {
   const sections = [{
     title: "Why This, and Why Now?",
     content: "Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission.",
-    sectionImage: "/lovable-uploads/27180526-d8f4-4adb-8cfe-dc0f70fd58a7.png"
+    sectionImage: "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.png"
   }, {
     title: "Goals",
     content: "This strategic alignment initiative focused on three key objectives:",
