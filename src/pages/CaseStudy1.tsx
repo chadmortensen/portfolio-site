@@ -127,7 +127,7 @@ const CaseStudy1 = () => {
   return <div className="min-h-screen bg-surface-primary">
       {/* Navigation */}
       <nav className="bg-surface-primary border-b border-swiss-light">
-        <div className="swiss-grid py-4">
+        <div className="swiss-grid py-6">
           <div className="col-span-12 flex items-center justify-between">
             <button onClick={() => navigate('/')} className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors">
               <ArrowLeft size={20} />
