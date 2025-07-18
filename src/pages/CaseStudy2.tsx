@@ -9,10 +9,8 @@ const CaseStudy2 = () => {
   const sections = [{
     title: "Why This, and Why Now?",
     content: "Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission.",
-    sectionImage: "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.png"
-  }, {
-    title: "Goals",
-    content: "This strategic alignment initiative focused on three key objectives:",
+    sectionImage: "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.png",
+    showGoalsBelow: true,
     goals: ["Create a team vision rooted in research and aligned with Etsy's business strategy", "Define strategic guideposts to shape yearly and quarterly planning", "Build consensus among cross-functional leaders that this alignment work was essential"]
   }, {
     title: "Participants",
@@ -86,7 +84,18 @@ const CaseStudy2 = () => {
                       {paragraph}
                     </p>)}
                   
-                  {section.goals && <div>
+                  {section.showGoalsBelow && <div className="mt-8">
+                      <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
+                      <p className="text-body text-text-secondary mb-4">This strategic alignment initiative focused on three key objectives:</p>
+                      <ul className="space-y-2">
+                        {section.goals?.map((goal, goalIndex) => <li key={goalIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary">{goal}</span>
+                          </li>)}
+                      </ul>
+                    </div>}
+                  
+                  {section.goals && !section.showGoalsBelow && <div>
                       
                       <ul className="space-y-2">
                         {section.goals.map((goal, goalIndex) => <li key={goalIndex} className="flex items-start space-x-3">
