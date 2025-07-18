@@ -12,10 +12,9 @@ const CaseStudy2 = () => {
     goals: ["Create a team vision rooted in research and aligned with Etsy's business strategy", "Define strategic guideposts to shape yearly and quarterly planning", "Build consensus among cross-functional leaders that this alignment work was essential"]
   }, {
     title: "Participants",
-    myRoleContent: "I led the effort from the ground up:",
-    myRoleBullets: ["Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work", "Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers", "Synthesized the output into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution"],
-    whoInvolvedContent: "This was a deeply cross-functional effort. I partnered closely with research leadership and a Staff Designer (who facilitated the sessions). Participants included:",
-    whoInvolvedBullets: ["GM/VP of Fulfillment", "Product, Engineering, and Research leaders", "Product Marketing, Analytics, and Finance leads", "Product Design Manager"]
+    myRole: ["Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work", "Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers", "Synthesized the output into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution"],
+    partneredWith: ["Research leadership", "Staff Designer (who facilitated the sessions)"],
+    participants: ["GM/VP of Fulfillment", "Product, Engineering, and Research leaders", "Product Marketing, Analytics, and Finance leads", "Product Design Manager"]
   }, {
     title: "Workshop Design",
     content: "The three-day workshop was designed to inspire alignment and co-create meaningful direction for the team. Key activities included:",
@@ -87,22 +86,36 @@ const CaseStudy2 = () => {
                       </ul>
                     </div>}
 
-                   {section.title === "Participants" && <div className="grid md:grid-cols-2 gap-8 mt-6">
+                   {section.title === "Participants" && <div className="space-y-8">
+                      {/* My role */}
                       <div>
-                        <p className="text-body text-text-secondary leading-relaxed mb-4">{section.myRoleContent}</p>
+                        <h3 className="text-title text-text-primary font-medium mb-4">My role:</h3>
                         <ul className="space-y-2">
-                          {section.myRoleBullets?.map((bullet, bulletIndex) => <li key={bulletIndex} className="flex items-start space-x-3">
+                          {section.myRole?.map((role, roleIndex) => <li key={roleIndex} className="flex items-start space-x-3">
                               <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{bullet}</span>
+                              <span className="text-body text-text-secondary">{role}</span>
                             </li>)}
                         </ul>
                       </div>
+
+                      {/* I partnered with */}
                       <div>
-                        <p className="text-body text-text-secondary leading-relaxed mb-4">{section.whoInvolvedContent}</p>
+                        <h3 className="text-title text-text-primary font-medium mb-4">I partnered with:</h3>
                         <ul className="space-y-2">
-                          {section.whoInvolvedBullets?.map((bullet, bulletIndex) => <li key={bulletIndex} className="flex items-start space-x-3">
+                          {section.partneredWith?.map((partner, partnerIndex) => <li key={partnerIndex} className="flex items-start space-x-3">
                               <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{bullet}</span>
+                              <span className="text-body text-text-secondary">{partner}</span>
+                            </li>)}
+                        </ul>
+                      </div>
+
+                      {/* Participants included */}
+                      <div>
+                        <h3 className="text-title text-text-primary font-medium mb-4">Participants included:</h3>
+                        <ul className="space-y-2">
+                          {section.participants?.map((participant, participantIndex) => <li key={participantIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                              <span className="text-body text-text-secondary">{participant}</span>
                             </li>)}
                         </ul>
                       </div>
