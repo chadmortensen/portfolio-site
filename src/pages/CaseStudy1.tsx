@@ -133,7 +133,7 @@ const CaseStudy1 = () => {
               <ArrowLeft size={20} />
               <span className="text-body">Back to Portfolio</span>
             </button>
-            <span className="text-title text-text-primary text-xl font-bold">Chad Mortensen</span>
+            <span className="text-body text-text-primary font-bold">Chad Mortensen</span>
           </div>
         </div>
       </nav>
