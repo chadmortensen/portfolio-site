@@ -24,7 +24,7 @@ const CaseStudy2 = () => {
     workshopImages: ["/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.png"]
   }, {
     title: "Output: Fulfillment Vision",
-    content: "By synthesizing the outputs from our workshop — particularly the Cover Story exercise and the Future View exercise — I was able to articulate a mission statement that captured the team’s collective thinking. This became our Fulfillment Vision: a unifying narrative that brought clarity, direction, and purpose to our work moving forward. \n\nThe resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.",
+    content: "By synthesizing the outputs from our workshop — particularly the cover story exercise — I was able to articulate a mission statement that captured the team’s collective thinking. This became our Fulfillment Vision: a unifying narrative that brought clarity, direction, and purpose to our work moving forward. \n\nThe resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.",
     sectionImage: "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.png"
   }, {
     title: "Output: Fulfillment Principles", 
@@ -139,6 +139,26 @@ const CaseStudy2 = () => {
                         </div>
                       </div>
                     </div>}
+
+                  {section.sessionDetails && <div>
+                      <h3 className="text-lg text-text-primary font-light mb-4">Over the course of the session:</h3>
+                      <ul className="space-y-4">
+                        {section.sessionDetails.map((detail, detailIndex) => {
+                          const [title, description] = detail.split('\n');
+                          return (
+                            <li key={detailIndex} className="flex items-start space-x-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
+                              <div className="text-body text-text-secondary">
+                                <span className="font-semibold">{title}</span>
+                                <br />
+                                {description}
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>}
+
                   </div>
 
                   {/* Workshop Images - Right side */}
