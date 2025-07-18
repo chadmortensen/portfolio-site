@@ -73,7 +73,7 @@ const CaseStudy2 = () => {
                 
                 {/* Content */}
                 <div className="space-y-6">
-                  {section.content && section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
+                  {section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
                       {paragraph}
                     </p>)}
                   
@@ -89,7 +89,7 @@ const CaseStudy2 = () => {
 
                    {section.title === "Participants" && <div className="grid md:grid-cols-2 gap-8 mt-6">
                       <div>
-                        <p className="text-body text-text-secondary leading-relaxed mb-4">{section.myRoleContent}</p>
+                        <p className="text-body text-text-secondary leading-relaxed mb-4 font-bold">{section.myRoleContent}</p>
                         <ul className="space-y-2">
                           {section.myRoleBullets?.map((bullet, bulletIndex) => <li key={bulletIndex} className="flex items-start space-x-3">
                               <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
