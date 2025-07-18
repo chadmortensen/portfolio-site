@@ -190,7 +190,7 @@ const CaseStudy2 = () => {
                               src={section.sectionImage} 
                               alt={`${section.title} illustration`}
                               className="w-full h-auto border border-swiss-light rounded-lg shadow-sm object-cover object-top"
-                              style={{ maxHeight: '400px' }}
+                              style={{ maxHeight: '600px' }}
                             />
                           </div>
                         </DialogTrigger>
