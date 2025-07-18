@@ -86,10 +86,10 @@ const CaseStudy2 = () => {
                       </ul>
                     </div>}
 
-                   {section.title === "Participants" && <div className="space-y-8">
-                      {/* My role */}
+                   {section.title === "Participants" && <div className="grid md:grid-cols-2 gap-8 mt-6">
+                      {/* My role - First column */}
                       <div>
-                        <h3 className="text-title text-text-primary font-medium mb-4">My role:</h3>
+                        <h3 className="text-lg text-text-primary font-medium mb-4">My role:</h3>
                         <ul className="space-y-2">
                           {section.myRole?.map((role, roleIndex) => <li key={roleIndex} className="flex items-start space-x-3">
                               <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
@@ -98,26 +98,27 @@ const CaseStudy2 = () => {
                         </ul>
                       </div>
 
-                      {/* I partnered with */}
-                      <div>
-                        <h3 className="text-title text-text-primary font-medium mb-4">I partnered with:</h3>
-                        <ul className="space-y-2">
-                          {section.partneredWith?.map((partner, partnerIndex) => <li key={partnerIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{partner}</span>
-                            </li>)}
-                        </ul>
-                      </div>
+                      {/* I partnered with & Participants - Second column */}
+                      <div className="space-y-8">
+                        <div>
+                          <h3 className="text-lg text-text-primary font-medium mb-4">I partnered with:</h3>
+                          <ul className="space-y-2">
+                            {section.partneredWith?.map((partner, partnerIndex) => <li key={partnerIndex} className="flex items-start space-x-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                                <span className="text-body text-text-secondary">{partner}</span>
+                              </li>)}
+                          </ul>
+                        </div>
 
-                      {/* Participants included */}
-                      <div>
-                        <h3 className="text-title text-text-primary font-medium mb-4">Participants included:</h3>
-                        <ul className="space-y-2">
-                          {section.participants?.map((participant, participantIndex) => <li key={participantIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{participant}</span>
-                            </li>)}
-                        </ul>
+                        <div>
+                          <h3 className="text-lg text-text-primary font-medium mb-4">Participants included:</h3>
+                          <ul className="space-y-2">
+                            {section.participants?.map((participant, participantIndex) => <li key={participantIndex} className="flex items-start space-x-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                                <span className="text-body text-text-secondary">{participant}</span>
+                              </li>)}
+                          </ul>
+                        </div>
                       </div>
                     </div>}
 
