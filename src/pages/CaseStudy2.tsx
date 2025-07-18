@@ -90,7 +90,8 @@ const CaseStudy2 = () => {
       <section className="py-16 bg-surface-secondary">
         <div className="swiss-grid">
           <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
-            <h1 className="text-display text-text-primary mb-6">Fulfillment at Etsy: Crafting a Shared Vision and Guiding Principles</h1>
+            <h1 className="text-display text-text-primary mb-4">Fulfillment at Etsy</h1>
+            <p className="text-xl text-text-secondary mb-6">Crafting a Shared Vision and Guiding Principles</p>
             <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
           </div>
         </div>
