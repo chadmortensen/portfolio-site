@@ -73,7 +73,7 @@ const CaseStudy2 = () => {
                 
                 {/* Content */}
                 <div className="space-y-6">
-                  {section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
+                  {section.content && section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
                       {paragraph}
                     </p>)}
                   
