@@ -140,8 +140,7 @@ const CaseStudy2 = () => {
                       </div>
                     </div>}
 
-                  {section.sessionDetails && <div>
-                      <h3 className="text-lg text-text-primary font-light mb-4">Over the course of the session:</h3>
+                   {section.sessionDetails && <div>
                       <ul className="space-y-4">
                         {section.sessionDetails.map((detail, detailIndex) => {
                           const [title, description] = detail.split('\n');
