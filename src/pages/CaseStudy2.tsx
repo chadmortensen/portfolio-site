@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useState } from "react";
 const CaseStudy2 = () => {
   const navigate = useNavigate();
@@ -153,6 +153,10 @@ const CaseStudy2 = () => {
                             </div>
                           </DialogTrigger>
                           <DialogContent className="max-w-4xl w-full p-0">
+                            <DialogTitle className="sr-only">Workshop design image {imageIndex + 1}</DialogTitle>
+                            <DialogDescription className="sr-only">
+                              Enlarged view of workshop design image {imageIndex + 1}
+                            </DialogDescription>
                             <img 
                               src={image} 
                               alt={`Workshop design image ${imageIndex + 1}`}
