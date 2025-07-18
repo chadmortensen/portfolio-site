@@ -1,8 +1,11 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 const CaseStudy2 = () => {
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const sections = [{
     title: "Why This, and Why Now?",
     content: "Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission."
@@ -71,8 +74,9 @@ const CaseStudy2 = () => {
                   <div className="w-12 h-px bg-accent-teal"></div>
                 </div>
                 
-                {/* Content */}
-                <div className="space-y-6">
+                {/* Content and image below header */}
+                <div className={section.workshopImages ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
+                  <div className={section.workshopImages ? "lg:col-span-6 space-y-6" : "space-y-6"}>
                   {section.content && section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
                       {paragraph}
                     </p>)}
@@ -133,38 +137,54 @@ const CaseStudy2 = () => {
                       </ul>
                     </div>}
 
-                   {section.workshopImages && <div className="grid gap-6 mt-8">
-                       {section.workshopImages.map((image, imageIndex) => <div key={imageIndex} className="w-full">
-                           <img 
-                             src={image} 
-                             alt={`Workshop design image ${imageIndex + 1}`}
-                             className="w-full h-auto border border-swiss-light rounded-lg shadow-sm"
-                           />
-                         </div>)}
-                     </div>}
+                  </div>
 
-                  {section.title === "The Output" && <div className="space-y-8">
-                      <div className="p-6 bg-surface-secondary border border-swiss-light">
-                        <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Vision</h3>
-                        <p className="text-body text-text-secondary italic leading-relaxed">{section.visionContent}</p>
-                      </div>
-                      
-                      <div className="p-6 bg-surface-secondary border border-swiss-light">
-                        <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Principles</h3>
-                        <p className="text-body text-text-secondary leading-relaxed">{section.principlesContent}</p>
-                      </div>
-                    </div>}
-
-                  {section.learnings && <div className="grid md:grid-cols-2 gap-6 mt-6">
-                      {section.learnings.map((learning, learningIndex) => {
-                  const [title, description] = learning.split(': ');
-                  return <div key={learningIndex} className="space-y-4 p-6 bg-surface-secondary">
-                            <h4 className="text-title text-text-primary font-medium">{title}</h4>
-                            <p className="text-body text-text-secondary">{description}</p>
-                          </div>;
-                })}
+                  {/* Workshop Images - Right side */}
+                  {section.workshopImages && <div className="lg:col-span-6 space-y-4">
+                      {section.workshopImages.map((image, imageIndex) => (
+                        <Dialog key={imageIndex}>
+                          <DialogTrigger asChild>
+                            <div className="cursor-pointer hover:opacity-90 transition-opacity">
+                              <img 
+                                src={image} 
+                                alt={`Workshop design image ${imageIndex + 1}`}
+                                className="w-full h-auto border border-swiss-light rounded-lg shadow-sm"
+                              />
+                            </div>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl w-full p-0">
+                            <img 
+                              src={image} 
+                              alt={`Workshop design image ${imageIndex + 1}`}
+                              className="w-full h-auto"
+                            />
+                          </DialogContent>
+                        </Dialog>
+                      ))}
                     </div>}
                 </div>
+                
+                {section.title === "The Output" && <div className="space-y-8">
+                    <div className="p-6 bg-surface-secondary border border-swiss-light">
+                      <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Vision</h3>
+                      <p className="text-body text-text-secondary italic leading-relaxed">{section.visionContent}</p>
+                    </div>
+                    
+                    <div className="p-6 bg-surface-secondary border border-swiss-light">
+                      <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Principles</h3>
+                      <p className="text-body text-text-secondary leading-relaxed">{section.principlesContent}</p>
+                    </div>
+                  </div>}
+
+                {section.learnings && <div className="grid md:grid-cols-2 gap-6 mt-6">
+                    {section.learnings.map((learning, learningIndex) => {
+                const [title, description] = learning.split(': ');
+                return <div key={learningIndex} className="space-y-4 p-6 bg-surface-secondary">
+                          <h4 className="text-title text-text-primary font-medium">{title}</h4>
+                          <p className="text-body text-text-secondary">{description}</p>
+                        </div>;
+              })}
+                  </div>}
               </div>)}
           </div>
         </div>
