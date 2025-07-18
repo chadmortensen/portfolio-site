@@ -26,10 +26,14 @@ const CaseStudy2 = () => {
     workshopImages: ["/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.png"]
   }, {
     title: "The Output",
-    subheader: "Vision and Principles That Shaped Our Strategy",
-    content: "The workshop produced two key artifacts that became the foundation for our team's strategic direction.",
-    visionContent: "\"Commodity based ecommerce has put an emphasis on immediate delivery of items from a warehouse shelf to your door and has set this expectation with shoppers. Etsy's buyers shop directly from independent sellers who make handmade items and source vintage goods. The unique nature of our marketplace and the items being sold introduces an unfamiliar fulfillment process. By providing a clear and trustworthy experience we can reset and establish meaningful expectations that are unique to Etsy. By doing this we can then redirect the focus on what matters most - the special.\"",
-    principlesContent: "Our principles served as the scaffolding for roadmap planning. These weren't timelines or feature lists — they were evergreen beliefs that helped guide investment decisions and shaped how we evaluated success. They aligned our work around what truly mattered for Etsy sellers."
+    subheader: "Vision That Shaped Our Strategy",
+    content: "The workshop produced a key artifact that became the foundation for our team's strategic direction.",
+    visionContent: "\"Commodity based ecommerce has put an emphasis on immediate delivery of items from a warehouse shelf to your door and has set this expectation with shoppers. Etsy's buyers shop directly from independent sellers who make handmade items and source vintage goods. The unique nature of our marketplace and the items being sold introduces an unfamiliar fulfillment process. By providing a clear and trustworthy experience we can reset and establish meaningful expectations that are unique to Etsy. By doing this we can then redirect the focus on what matters most - the special.\""
+  }, {
+    title: "Fulfillment Principles", 
+    subheader: "Strategic Guideposts for Decision Making",
+    content: "Our principles served as the scaffolding for roadmap planning. These weren't timelines or feature lists — they were evergreen beliefs that helped guide investment decisions and shaped how we evaluated success. They aligned our work around what truly mattered for Etsy sellers.",
+    sectionImage: "/lovable-uploads/5994c658-34de-437e-853c-9be70a50c57b.png"
   }, {
     title: "Reflections & Takeaways",
     subheader: "Leading Strategic Alignment in Cross-Functional Teams",
@@ -199,11 +203,6 @@ const CaseStudy2 = () => {
                     <div className="p-6 bg-surface-secondary border border-swiss-light">
                       <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Vision</h3>
                       <p className="text-body text-text-secondary italic leading-relaxed">{section.visionContent}</p>
-                    </div>
-                    
-                    <div className="p-6 bg-surface-secondary border border-swiss-light">
-                      <h3 className="text-title text-text-primary font-medium mb-4">Fulfillment Principles</h3>
-                      <p className="text-body text-text-secondary leading-relaxed">{section.principlesContent}</p>
                     </div>
                   </div>}
 
