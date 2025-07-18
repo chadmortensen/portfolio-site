@@ -27,7 +27,7 @@ const CaseStudy2 = () => {
     content: "The resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.",
     sectionImage: "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.png"
   }, {
-    title: "Fulfillment Principles", 
+    title: "Output: Fulfillment Principles", 
     subheader: "Strategic Guideposts for Decision Making",
     content: "Our principles served as the scaffolding for roadmap planning. These weren't timelines or feature lists — they were evergreen beliefs that helped guide investment decisions and shaped how we evaluated success. They aligned our work around what truly mattered for Etsy sellers.",
     sectionImage: "/lovable-uploads/5994c658-34de-437e-853c-9be70a50c57b.png"
