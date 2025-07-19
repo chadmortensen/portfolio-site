@@ -61,11 +61,7 @@ const Navigation = () => {
         : 'bg-surface-primary'
     }`}>
       <div className="max-width-container mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            {/* Logo space if needed */}
-          </div>
-          
+        <div className="flex justify-center items-center">
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 lg:space-x-8">
             {navItems.map((item) => (
