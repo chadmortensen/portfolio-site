@@ -55,12 +55,12 @@ const Navigation = () => {
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 py-4 ${
       isScrolled 
         ? 'bg-surface-primary/95 backdrop-blur-sm border-b border-swiss-light' 
         : 'bg-surface-primary'
     }`}>
-      <div className="max-width-container mx-auto px-4 sm:px-6 py-4">
+      <div className="max-width-container mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             {/* Logo space if needed */}
