@@ -50,12 +50,14 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
   }, [currentSlide, isTransitioning]);
 
   const renderSlideContent = (section: any) => {
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    // Check if section has any images
+    const hasImages = section.image || section.sectionImage || section.fullWidthImage || 
+                     section.workshopImages || section.additionalImages;
 
     return (
       <div className="space-y-8">
         {/* Title */}
-        <div className="text-center">
+        <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-6xl font-light text-text-primary mb-4">
             {section.title}
           </h1>
@@ -67,281 +69,286 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           <div className="w-24 h-px bg-accent-teal mx-auto mt-8"></div>
         </div>
 
-        {/* Content */}
-        <div className="space-y-8">
-          {/* Text Content */}
-          {section.content && (
-            <div className="space-y-4">
-              {section.content.split('\n\n').map((paragraph: string, pIndex: number) => (
-                <p key={pIndex} className="text-xl lg:text-2xl text-text-secondary leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          )}
-
-          {/* Goals */}
-          {section.goals && (
-            <div className="space-y-4">
-              <h3 className="text-2xl text-text-primary font-light">
-                {section.showGoalsBelow ? "Goals" : "Goals"}
-              </h3>
-              {section.showGoalsBelow && (
-                <p className="text-lg text-text-secondary mb-4">
-                  This strategic alignment initiative focused on three key objectives:
-                </p>
-              )}
-              <ul className="space-y-3">
-                {section.goals.map((goal: string, goalIndex: number) => (
-                  <li key={goalIndex} className="flex items-start space-x-3">
-                    <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
-                    <span className="text-lg text-text-secondary">{goal}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* User Feedback Quotes */}
-          {section.quotes && (
-            <div className="space-y-4">
-              <h3 className="text-2xl text-text-primary font-light">User Feedback</h3>
-              {section.quotes.map((quote: string, quoteIndex: number) => (
-                <blockquote key={quoteIndex} className="border-l-4 border-accent-orange pl-6 mb-4">
-                  <p className="text-lg text-text-secondary italic">"{quote}"</p>
-                </blockquote>
-              ))}
-              {section.insight && (
-                <div className="p-6 bg-surface-secondary border border-swiss-light rounded-lg">
-                  <p className="text-lg text-text-primary font-medium">{section.insight}</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Participants Section */}
-          {section.title === "Participants" && (
-            <div className="space-y-8">
-              {section.myRole && (
-                <div>
-                  <h3 className="text-2xl text-text-primary font-light mb-4">My Role</h3>
-                  <ul className="space-y-3">
-                    {section.myRole.map((role: string, roleIndex: number) => (
-                      <li key={roleIndex} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
-                        <span className="text-lg text-text-secondary">{role}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              {section.partneredWith && (
-                <div>
-                  <h3 className="text-2xl text-text-primary font-light mb-4">I Partnered With</h3>
-                  <ul className="space-y-3">
-                    {section.partneredWith.map((partner: string, partnerIndex: number) => (
-                      <li key={partnerIndex} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-accent-teal mt-3 flex-shrink-0"></div>
-                        <span className="text-lg text-text-secondary">{partner}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {section.participants && (
-                <div>
-                  <h3 className="text-2xl text-text-primary font-light mb-4">Participants Included</h3>
-                  <ul className="space-y-3">
-                    {section.participants.map((participant: string, participantIndex: number) => (
-                      <li key={participantIndex} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
-                        <span className="text-lg text-text-secondary">{participant}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Session Details */}
-          {section.sessionDetails && (
-            <div className="space-y-6">
-              <h3 className="text-2xl text-text-primary font-light">Workshop Components</h3>
+        {/* Main Content Layout */}
+        <div className={`grid ${hasImages ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'} gap-12 items-start`}>
+          {/* Content Column */}
+          <div className="space-y-8">
+            {/* Text Content */}
+            {section.content && (
               <div className="space-y-4">
-                {section.sessionDetails.map((detail: string, detailIndex: number) => {
-                  const [title, description] = detail.split('\n');
-                  return (
-                    <div key={detailIndex} className="p-6 bg-surface-secondary rounded-lg">
-                      <h4 className="text-xl text-text-primary font-medium mb-3">{title}</h4>
-                      <p className="text-lg text-text-secondary">{description}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Schedule */}
-          {section.schedule && (
-            <div className="space-y-4">
-              <h3 className="text-2xl text-text-primary font-light">Schedule</h3>
-              <ul className="space-y-3">
-                {section.schedule.map((item: string, itemIndex: number) => (
-                  <li key={itemIndex} className="flex items-start space-x-3">
-                    <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
-                    <span className="text-lg text-text-secondary">{item}</span>
-                  </li>
+                {section.content.split('\n\n').map((paragraph: string, pIndex: number) => (
+                  <p key={pIndex} className="text-xl lg:text-2xl text-text-secondary leading-relaxed">
+                    {paragraph}
+                  </p>
                 ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Focus Areas */}
-          {section.focusAreas && (
-            <div className="space-y-6">
-              <h3 className="text-2xl text-text-primary font-light mb-6">Focus Areas</h3>
-              {section.focusAreas.map((area: any, areaIndex: number) => (
-                <div key={areaIndex} className="p-6 bg-surface-secondary rounded-lg">
-                  <h4 className="text-xl text-text-primary font-medium mb-3">{area.title}</h4>
-                  <p className="text-lg text-text-secondary mb-4">{area.description}</p>
-                  <ul className="space-y-2">
-                    {area.points.map((point: string, pointIndex: number) => (
-                      <li key={pointIndex} className="flex items-start space-x-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                        <span className="text-base text-text-secondary">{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-              {section.conclusion && (
-                <p className="text-lg text-text-secondary mt-6">{section.conclusion}</p>
-              )}
-            </div>
-          )}
-
-          {/* Learnings */}
-          {section.learnings && (
-            <div className="space-y-4">
-              <h3 className="text-2xl text-text-primary font-light">Key Learnings</h3>
-              <div className="grid md:grid-cols-1 gap-6 mt-6">
-                {section.learnings.map((learning: string, learningIndex: number) => {
-                  const [title, description] = learning.split(': ');
-                  return (
-                    <div key={learningIndex} className="p-6 bg-surface-secondary rounded-lg">
-                      <h4 className="text-xl text-text-primary font-medium mb-3">{title}</h4>
-                      <p className="text-lg text-text-secondary">{description}</p>
-                    </div>
-                  );
-                })}
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Table Results */}
-          {section.table && (
-            <div className="bg-surface-secondary rounded-lg p-6">
-              <h3 className="text-2xl text-text-primary font-light mb-6">Results</h3>
+            {/* Goals */}
+            {section.goals && (
               <div className="space-y-4">
-                {section.table.rows.map((row: string[], rowIndex: number) => (
-                  <div key={rowIndex} className="grid grid-cols-2 gap-4 p-4 bg-surface-primary rounded">
-                    <span className="text-lg text-text-primary font-medium">{row[0]}</span>
-                    <span className="text-lg text-accent-blue font-bold">{row[1]}</span>
+                <h3 className="text-2xl text-text-primary font-light">
+                  {section.showGoalsBelow ? "Goals" : "Goals"}
+                </h3>
+                {section.showGoalsBelow && (
+                  <p className="text-lg text-text-secondary mb-4">
+                    This strategic alignment initiative focused on three key objectives:
+                  </p>
+                )}
+                <ul className="space-y-3">
+                  {section.goals.map((goal: string, goalIndex: number) => (
+                    <li key={goalIndex} className="flex items-start space-x-3">
+                      <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
+                      <span className="text-lg text-text-secondary">{goal}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* User Feedback Quotes */}
+            {section.quotes && (
+              <div className="space-y-4">
+                <h3 className="text-2xl text-text-primary font-light">User Feedback</h3>
+                {section.quotes.map((quote: string, quoteIndex: number) => (
+                  <blockquote key={quoteIndex} className="border-l-4 border-accent-orange pl-6 mb-4">
+                    <p className="text-lg text-text-secondary italic">"{quote}"</p>
+                  </blockquote>
+                ))}
+                {section.insight && (
+                  <div className="p-6 bg-surface-secondary border border-swiss-light rounded-lg">
+                    <p className="text-lg text-text-primary font-medium">{section.insight}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Participants Section */}
+            {section.title === "Participants" && (
+              <div className="space-y-8">
+                {section.myRole && (
+                  <div>
+                    <h3 className="text-2xl text-text-primary font-light mb-4">My Role</h3>
+                    <ul className="space-y-3">
+                      {section.myRole.map((role: string, roleIndex: number) => (
+                        <li key={roleIndex} className="flex items-start space-x-3">
+                          <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
+                          <span className="text-lg text-text-secondary">{role}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                {section.partneredWith && (
+                  <div>
+                    <h3 className="text-2xl text-text-primary font-light mb-4">I Partnered With</h3>
+                    <ul className="space-y-3">
+                      {section.partneredWith.map((partner: string, partnerIndex: number) => (
+                        <li key={partnerIndex} className="flex items-start space-x-3">
+                          <div className="w-2 h-2 rounded-full bg-accent-teal mt-3 flex-shrink-0"></div>
+                          <span className="text-lg text-text-secondary">{partner}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {section.participants && (
+                  <div>
+                    <h3 className="text-2xl text-text-primary font-light mb-4">Participants Included</h3>
+                    <ul className="space-y-3">
+                      {section.participants.map((participant: string, participantIndex: number) => (
+                        <li key={participantIndex} className="flex items-start space-x-3">
+                          <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
+                          <span className="text-lg text-text-secondary">{participant}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Session Details */}
+            {section.sessionDetails && (
+              <div className="space-y-6">
+                <h3 className="text-2xl text-text-primary font-light">Workshop Components</h3>
+                <div className="space-y-4">
+                  {section.sessionDetails.map((detail: string, detailIndex: number) => {
+                    const [title, description] = detail.split('\n');
+                    return (
+                      <div key={detailIndex} className="p-6 bg-surface-secondary rounded-lg">
+                        <h4 className="text-xl text-text-primary font-medium mb-3">{title}</h4>
+                        <p className="text-lg text-text-secondary">{description}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Schedule */}
+            {section.schedule && (
+              <div className="space-y-4">
+                <h3 className="text-2xl text-text-primary font-light">Schedule</h3>
+                <ul className="space-y-3">
+                  {section.schedule.map((item: string, itemIndex: number) => (
+                    <li key={itemIndex} className="flex items-start space-x-3">
+                      <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
+                      <span className="text-lg text-text-secondary">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Focus Areas */}
+            {section.focusAreas && (
+              <div className="space-y-6">
+                <h3 className="text-2xl text-text-primary font-light mb-6">Focus Areas</h3>
+                {section.focusAreas.map((area: any, areaIndex: number) => (
+                  <div key={areaIndex} className="p-6 bg-surface-secondary rounded-lg">
+                    <h4 className="text-xl text-text-primary font-medium mb-3">{area.title}</h4>
+                    <p className="text-lg text-text-secondary mb-4">{area.description}</p>
+                    <ul className="space-y-2">
+                      {area.points.map((point: string, pointIndex: number) => (
+                        <li key={pointIndex} className="flex items-start space-x-3">
+                          <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                          <span className="text-base text-text-secondary">{point}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
+                {section.conclusion && (
+                  <p className="text-lg text-text-secondary mt-6">{section.conclusion}</p>
+                )}
               </div>
-            </div>
-          )}
-        </div>
+            )}
 
-        {/* Images - Full Width Below Content */}
-        <div className="space-y-6">
-          {/* Main Image */}
-          {(section.image || section.sectionImage || section.fullWidthImage) && (
-            <Dialog>
-              <DialogTrigger asChild>
-                <div className="cursor-pointer hover:opacity-90 transition-opacity">
-                  <img
-                    src={section.image || section.sectionImage || section.fullWidthImage}
-                    alt={`${section.title} illustration`}
-                    className="w-full h-auto rounded-lg shadow-lg"
-                  />
+            {/* Learnings */}
+            {section.learnings && (
+              <div className="space-y-4">
+                <h3 className="text-2xl text-text-primary font-light">Key Learnings</h3>
+                <div className="grid md:grid-cols-1 gap-6 mt-6">
+                  {section.learnings.map((learning: string, learningIndex: number) => {
+                    const [title, description] = learning.split(': ');
+                    return (
+                      <div key={learningIndex} className="p-6 bg-surface-secondary rounded-lg">
+                        <h4 className="text-xl text-text-primary font-medium mb-3">{title}</h4>
+                        <p className="text-lg text-text-secondary">{description}</p>
+                      </div>
+                    );
+                  })}
                 </div>
-              </DialogTrigger>
-              <DialogContent className="max-w-6xl w-full p-0">
-                <DialogTitle className="sr-only">{section.title} illustration</DialogTitle>
-                <DialogDescription className="sr-only">
-                  Enlarged view of {section.title} illustration
-                </DialogDescription>
-                <img
-                  src={section.image || section.sectionImage || section.fullWidthImage}
-                  alt={`${section.title} illustration`}
-                  className="w-full h-auto"
-                />
-              </DialogContent>
-            </Dialog>
-          )}
+              </div>
+            )}
 
-          {/* Workshop Images */}
-          {section.workshopImages && (
-            <div className="space-y-4">
-              {section.workshopImages.map((image: string, imageIndex: number) => (
-                <Dialog key={imageIndex}>
+            {/* Table Results */}
+            {section.table && (
+              <div className="bg-surface-secondary rounded-lg p-6">
+                <h3 className="text-2xl text-text-primary font-light mb-6">Results</h3>
+                <div className="space-y-4">
+                  {section.table.rows.map((row: string[], rowIndex: number) => (
+                    <div key={rowIndex} className="grid grid-cols-2 gap-4 p-4 bg-surface-primary rounded">
+                      <span className="text-lg text-text-primary font-medium">{row[0]}</span>
+                      <span className="text-lg text-accent-blue font-bold">{row[1]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Images Column - Right Side */}
+          {hasImages && (
+            <div className="space-y-6">
+              {/* Main Image */}
+              {(section.image || section.sectionImage || section.fullWidthImage) && (
+                <Dialog>
                   <DialogTrigger asChild>
                     <div className="cursor-pointer hover:opacity-90 transition-opacity">
                       <img
-                        src={image}
-                        alt={`Workshop image ${imageIndex + 1}`}
+                        src={section.image || section.sectionImage || section.fullWidthImage}
+                        alt={`${section.title} illustration`}
                         className="w-full h-auto rounded-lg shadow-lg"
                       />
                     </div>
                   </DialogTrigger>
                   <DialogContent className="max-w-6xl w-full p-0">
-                    <DialogTitle className="sr-only">Workshop image {imageIndex + 1}</DialogTitle>
+                    <DialogTitle className="sr-only">{section.title} illustration</DialogTitle>
                     <DialogDescription className="sr-only">
-                      Enlarged view of workshop image {imageIndex + 1}
+                      Enlarged view of {section.title} illustration
                     </DialogDescription>
                     <img
-                      src={image}
-                      alt={`Workshop image ${imageIndex + 1}`}
+                      src={section.image || section.sectionImage || section.fullWidthImage}
+                      alt={`${section.title} illustration`}
                       className="w-full h-auto"
                     />
                   </DialogContent>
                 </Dialog>
-              ))}
-            </div>
-          )}
+              )}
 
-          {/* Additional Images */}
-          {section.additionalImages && (
-            <div className="space-y-4">
-              {section.additionalImages.map((image: string, imageIndex: number) => (
-                <Dialog key={imageIndex}>
-                  <DialogTrigger asChild>
-                    <div className="cursor-pointer hover:opacity-90 transition-opacity">
-                      <img
-                        src={image}
-                        alt={`Additional image ${imageIndex + 1}`}
-                        className="w-full h-auto rounded-lg shadow-lg"
-                      />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-6xl w-full p-0">
-                    <DialogTitle className="sr-only">Additional image {imageIndex + 1}</DialogTitle>
-                    <DialogDescription className="sr-only">
-                      Enlarged view of additional image {imageIndex + 1}
-                    </DialogDescription>
-                    <img
-                      src={image}
-                      alt={`Additional image ${imageIndex + 1}`}
-                      className="w-full h-auto"
-                    />
-                  </DialogContent>
-                </Dialog>
-              ))}
+              {/* Workshop Images */}
+              {section.workshopImages && (
+                <div className="space-y-4">
+                  {section.workshopImages.map((image: string, imageIndex: number) => (
+                    <Dialog key={imageIndex}>
+                      <DialogTrigger asChild>
+                        <div className="cursor-pointer hover:opacity-90 transition-opacity">
+                          <img
+                            src={image}
+                            alt={`Workshop image ${imageIndex + 1}`}
+                            className="w-full h-auto rounded-lg shadow-lg"
+                          />
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-6xl w-full p-0">
+                        <DialogTitle className="sr-only">Workshop image {imageIndex + 1}</DialogTitle>
+                        <DialogDescription className="sr-only">
+                          Enlarged view of workshop image {imageIndex + 1}
+                        </DialogDescription>
+                        <img
+                          src={image}
+                          alt={`Workshop image ${imageIndex + 1}`}
+                          className="w-full h-auto"
+                        />
+                      </DialogContent>
+                    </Dialog>
+                  ))}
+                </div>
+              )}
+
+              {/* Additional Images */}
+              {section.additionalImages && (
+                <div className="space-y-4">
+                  {section.additionalImages.map((image: string, imageIndex: number) => (
+                    <Dialog key={imageIndex}>
+                      <DialogTrigger asChild>
+                        <div className="cursor-pointer hover:opacity-90 transition-opacity">
+                          <img
+                            src={image}
+                            alt={`Additional image ${imageIndex + 1}`}
+                            className="w-full h-auto rounded-lg shadow-lg"
+                          />
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-6xl w-full p-0">
+                        <DialogTitle className="sr-only">Additional image {imageIndex + 1}</DialogTitle>
+                        <DialogDescription className="sr-only">
+                          Enlarged view of additional image {imageIndex + 1}
+                        </DialogDescription>
+                        <img
+                          src={image}
+                          alt={`Additional image ${imageIndex + 1}`}
+                          className="w-full h-auto"
+                        />
+                      </DialogContent>
+                    </Dialog>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -393,7 +400,7 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
       </div>
 
       {/* Slide Container */}
-      <div className="h-full overflow-y-auto p-8 pt-24 pb-16">
+      <div className="h-full overflow-y-auto p-8 pt-32 pb-16">
         <div className="max-w-6xl mx-auto">
           <div
             className={`transition-all duration-700 ease-out transform ${
