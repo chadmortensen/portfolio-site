@@ -359,7 +359,7 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
   return (
     <div className="fixed inset-0 bg-surface-primary z-50 overflow-hidden">
       {/* Backdrop Bar with Gradient Fade */}
-      <div className="fixed top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-white/80 backdrop-blur-sm z-50"></div>
+      <div className="fixed top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/80 to-transparent backdrop-blur-sm z-50"></div>
       
       {/* Controls */}
       <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-[70]">
