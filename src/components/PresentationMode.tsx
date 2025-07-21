@@ -64,8 +64,8 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           <div className="w-24 h-px bg-accent-teal mx-auto mt-8"></div>
         </div>
 
-        {/* Content Grid */}
-        <div className={`grid gap-12 ${section.image || section.sectionImage || section.fullWidthImage || section.workshopImages ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} items-center min-h-[400px]`}>
+        {/* Content */}
+        <div className="space-y-12">
           {/* Text Content */}
           <div className="space-y-6">
             {section.content && (
@@ -195,14 +195,13 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
             )}
           </div>
 
-          {/* Image */}
+          {/* Images - Full Width Below Content */}
           {(section.image || section.sectionImage || section.fullWidthImage || section.workshopImages) && (
-            <div className="flex justify-center">
+            <div className="w-full">
               <img
                 src={section.image || section.sectionImage || section.fullWidthImage || section.workshopImages?.[0]}
                 alt={`${section.title} illustration`}
-                className="max-w-full h-auto rounded-lg shadow-lg"
-                style={{ maxHeight: '500px' }}
+                className="w-full h-auto rounded-lg shadow-lg"
               />
             </div>
           )}
@@ -255,7 +254,7 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
       </div>
 
       {/* Slide Container */}
-      <div className="h-full flex items-center justify-center p-8 pt-24 overflow-hidden">
+      <div className="h-full flex items-start justify-center p-8 pt-24 overflow-y-auto">
         <div className="max-w-7xl w-full relative">
           <div
             className={`transition-all duration-700 ease-out transform ${
