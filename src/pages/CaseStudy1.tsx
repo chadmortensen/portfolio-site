@@ -1,11 +1,14 @@
-import { ArrowLeft, Calendar, Users, Target, X } from "lucide-react";
+import { ArrowLeft, Calendar, Users, Target, X, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import PresentationMode from "@/components/PresentationMode";
 const CaseStudy1 = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isPresentationMode, setIsPresentationMode] = useState(false);
   const sections = [{
     title: "The Challenge",
     content: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
@@ -124,6 +127,15 @@ const CaseStudy1 = () => {
       "Prioritize Ruthlessly, Together: Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight."
     ]
   }];
+  if (isPresentationMode) {
+    return (
+      <PresentationMode
+        sections={sections}
+        onExit={() => setIsPresentationMode(false)}
+      />
+    );
+  }
+
   return <div className="min-h-screen bg-surface-primary">
       {/* Navigation */}
       <nav className="bg-surface-primary border-b border-swiss-light py-4">
@@ -133,7 +145,18 @@ const CaseStudy1 = () => {
               <ArrowLeft size={20} />
               <span className="text-body">Back to Portfolio</span>
             </button>
-            <span className="text-body text-text-primary font-bold">Chad Mortensen</span>
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsPresentationMode(true)}
+                className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
+              >
+                <Play size={16} />
+                <span className="text-sm">Presentation Mode</span>
+              </Button>
+              <span className="text-body text-text-primary font-bold">Chad Mortensen</span>
+            </div>
           </div>
         </div>
       </nav>

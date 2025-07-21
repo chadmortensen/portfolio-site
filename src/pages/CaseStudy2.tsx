@@ -1,11 +1,14 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import PresentationMode from "@/components/PresentationMode";
 const CaseStudy2 = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isPresentationMode, setIsPresentationMode] = useState(false);
   const sections = [{
     title: "Why This, and Why Now?",
     content: "Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission.",
@@ -37,6 +40,15 @@ const CaseStudy2 = () => {
     content: "This initiative demonstrated the power of bringing diverse perspectives together to create shared understanding and direction.",
     learnings: ["Workshop Format Creates Ownership: The collaborative format created high ownership and alignment across disciplines. Because leaders helped shape the output, they became advocates for it within their teams.", "Co-Creation Builds Trust: Co-creating in real time helped deepen trust and cohesion, especially in a distributed setting.", "Strategic Artifacts Drive Action: The resulting vision and principles weren't just artifacts — they directly informed our yearly planning and long-term strategy discussions.", "Preserve Time for Exploration: We had planned to explore \"big bets\" and create visual prototypes for our future vision, but time constraints forced us to leave that behind. Preserving space for that exploration would have been a powerful complement to our strategic framework."]
   }];
+  if (isPresentationMode) {
+    return (
+      <PresentationMode
+        sections={sections}
+        onExit={() => setIsPresentationMode(false)}
+      />
+    );
+  }
+
   return <div className="min-h-screen bg-surface-primary">
       {/* Navigation */}
       <nav className="bg-surface-primary border-b border-swiss-light py-4">
@@ -46,7 +58,18 @@ const CaseStudy2 = () => {
               <ArrowLeft size={20} />
               <span className="text-body">Back to Portfolio</span>
             </button>
-            <span className="text-body text-text-primary font-bold">Chad Mortensen</span>
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsPresentationMode(true)}
+                className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
+              >
+                <Play size={16} />
+                <span className="text-sm">Presentation Mode</span>
+              </Button>
+              <span className="text-body text-text-primary font-bold">Chad Mortensen</span>
+            </div>
           </div>
         </div>
       </nav>
