@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useCallback, useMemo } from 'react';
 
 interface PresentationModeProps {
   sections: any[];
@@ -85,11 +86,23 @@ const PasscodeDialog = ({ onSuccess, onCancel }: PasscodeDialogProps) => {
 const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps) => {
   const [editedSections, setEditedSections] = useState(sections);
 
-  const updateSection = (index: number, field: string, value: string) => {
-    const updated = [...editedSections];
-    updated[index] = { ...updated[index], [field]: value };
-    setEditedSections(updated);
-  };
+  const quillModules = useMemo(() => ({
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'color': [] }, { 'background': [] }],
+      ['clean']
+    ]
+  }), []);
+
+  const updateSection = useCallback((index: number, field: string, value: string) => {
+    setEditedSections(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  }, []);
 
   const updateArrayField = (sectionIndex: number, field: string, itemIndex: number, value: string) => {
     const updated = [...editedSections];
@@ -171,15 +184,7 @@ const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps)
                       <ReactQuill
                         value={section.content || ""}
                         onChange={(value) => updateSection(sectionIndex, "content", value)}
-                        modules={{
-                          toolbar: [
-                            [{ 'header': [1, 2, 3, false] }],
-                            ['bold', 'italic', 'underline'],
-                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                            [{ 'color': [] }, { 'background': [] }],
-                            ['clean']
-                          ]
-                        }}
+                        modules={quillModules}
                         className="bg-surface-primary"
                         style={{ minHeight: '120px' }}
                       />
@@ -295,15 +300,7 @@ const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps)
                       <ReactQuill
                         value={section.insight || ""}
                         onChange={(value) => updateSection(sectionIndex, "insight", value)}
-                        modules={{
-                          toolbar: [
-                            [{ 'header': [1, 2, 3, false] }],
-                            ['bold', 'italic', 'underline'],
-                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                            [{ 'color': [] }, { 'background': [] }],
-                            ['clean']
-                          ]
-                        }}
+                        modules={quillModules}
                         className="bg-surface-primary"
                       />
                     </div>
