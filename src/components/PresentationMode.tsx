@@ -5,6 +5,8 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 interface PresentationModeProps {
   sections: any[];
@@ -165,12 +167,23 @@ const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps)
                     <Label htmlFor={`content-${sectionIndex}`} className="text-sm font-medium text-text-secondary">
                       Content
                     </Label>
-                    <Textarea
-                      id={`content-${sectionIndex}`}
-                      value={section.content || ""}
-                      onChange={(e) => updateSection(sectionIndex, "content", e.target.value)}
-                      className="mt-1 min-h-[120px]"
-                    />
+                    <div className="mt-1">
+                      <ReactQuill
+                        value={section.content || ""}
+                        onChange={(value) => updateSection(sectionIndex, "content", value)}
+                        modules={{
+                          toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            ['clean']
+                          ]
+                        }}
+                        className="bg-surface-primary"
+                        style={{ minHeight: '120px' }}
+                      />
+                    </div>
                   </div>
                 )}
 
@@ -278,12 +291,22 @@ const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps)
                     <Label htmlFor={`insight-${sectionIndex}`} className="text-sm font-medium text-text-secondary">
                       Insight
                     </Label>
-                    <Textarea
-                      id={`insight-${sectionIndex}`}
-                      value={section.insight || ""}
-                      onChange={(e) => updateSection(sectionIndex, "insight", e.target.value)}
-                      className="mt-1"
-                    />
+                    <div className="mt-1">
+                      <ReactQuill
+                        value={section.insight || ""}
+                        onChange={(value) => updateSection(sectionIndex, "insight", value)}
+                        modules={{
+                          toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            ['clean']
+                          ]
+                        }}
+                        className="bg-surface-primary"
+                      />
+                    </div>
                   </div>
                 )}
               </div>
@@ -391,13 +414,10 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           <div className="space-y-8">
             {/* Text Content */}
             {section.content && (
-              <div className="space-y-4">
-                {section.content.split('\n\n').map((paragraph: string, pIndex: number) => (
-                  <p key={pIndex} className="text-xl lg:text-2xl text-text-secondary leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+              <div 
+                className="prose prose-lg max-w-none prose-headings:text-text-primary prose-p:text-text-secondary prose-p:text-xl prose-p:lg:text-2xl prose-p:leading-relaxed prose-strong:text-text-primary prose-ul:text-text-secondary prose-ol:text-text-secondary prose-li:text-lg prose-li:lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: section.content }}
+              />
             )}
 
             {/* Goals */}
@@ -433,7 +453,10 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
                 ))}
                 {section.insight && (
                   <div className="p-6 bg-surface-secondary border border-swiss-light rounded-lg">
-                    <p className="text-lg text-text-primary font-medium">{section.insight}</p>
+                    <div 
+                      className="prose prose-lg max-w-none prose-headings:text-text-primary prose-p:text-text-primary prose-p:font-medium prose-strong:text-text-primary prose-ul:text-text-primary prose-ol:text-text-primary"
+                      dangerouslySetInnerHTML={{ __html: section.insight }}
+                    />
                   </div>
                 )}
               </div>
