@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, X, Play, Edit3, Save } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Play, Edit3, Save, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +16,69 @@ interface CustomCopyEditorProps {
   onSave: (sections: any[]) => void;
   onCancel: () => void;
 }
+
+interface PasscodeDialogProps {
+  onSuccess: () => void;
+  onCancel: () => void;
+}
+
+const PasscodeDialog = ({ onSuccess, onCancel }: PasscodeDialogProps) => {
+  const [passcode, setPasscode] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passcode === "4455") {
+      onSuccess();
+    } else {
+      setError("Incorrect passcode");
+      setPasscode("");
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+      <div className="bg-surface-primary rounded-lg p-8 max-w-md w-full mx-4">
+        <div className="flex items-center space-x-3 mb-6">
+          <Lock className="w-6 h-6 text-accent-blue" />
+          <h2 className="text-2xl font-light text-text-primary">Enter Passcode</h2>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label htmlFor="passcode" className="text-sm font-medium text-text-secondary">
+              Passcode required to edit presentation copy
+            </Label>
+            <Input
+              id="passcode"
+              type="password"
+              value={passcode}
+              onChange={(e) => {
+                setPasscode(e.target.value);
+                setError("");
+              }}
+              className="mt-2"
+              placeholder="Enter passcode"
+              autoFocus
+            />
+            {error && (
+              <p className="text-red-500 text-sm mt-2">{error}</p>
+            )}
+          </div>
+          
+          <div className="flex items-center space-x-3 pt-4">
+            <Button type="button" variant="outline" onClick={onCancel} className="flex-1">
+              Cancel
+            </Button>
+            <Button type="submit" className="flex-1">
+              Unlock
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps) => {
   const [editedSections, setEditedSections] = useState(sections);
@@ -203,6 +266,7 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showCustomCopyEditor, setShowCustomCopyEditor] = useState(false);
+  const [showPasscodeDialog, setShowPasscodeDialog] = useState(false);
   const [customSections, setCustomSections] = useState(sections);
   const [isUsingCustomCopy, setIsUsingCustomCopy] = useState(false);
 
@@ -214,6 +278,19 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
 
   const handleCustomCopyCancel = () => {
     setShowCustomCopyEditor(false);
+  };
+
+  const handlePasscodeSuccess = () => {
+    setShowPasscodeDialog(false);
+    setShowCustomCopyEditor(true);
+  };
+
+  const handlePasscodeCancel = () => {
+    setShowPasscodeDialog(false);
+  };
+
+  const handleEditCopyClick = () => {
+    setShowPasscodeDialog(true);
   };
 
   const activeSections = isUsingCustomCopy ? customSections : sections;
@@ -599,7 +676,7 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setShowCustomCopyEditor(true)}
+            onClick={handleEditCopyClick}
             className="p-2 hover:bg-surface-primary text-text-secondary hover:text-text-primary"
           >
             <Edit3 size={16} />
@@ -652,6 +729,14 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           style={{ width: `${((currentSlide + 1) / activeSections.length) * 100}%` }}
         ></div>
       </div>
+
+      {/* Passcode Dialog */}
+      {showPasscodeDialog && (
+        <PasscodeDialog
+          onSuccess={handlePasscodeSuccess}
+          onCancel={handlePasscodeCancel}
+        />
+      )}
 
       {/* Custom Copy Editor Modal */}
       {showCustomCopyEditor && (
