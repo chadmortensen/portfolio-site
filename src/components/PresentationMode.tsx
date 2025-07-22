@@ -1,19 +1,225 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, X, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Play, Edit3, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface PresentationModeProps {
   sections: any[];
   onExit: () => void;
 }
 
+interface CustomCopyEditorProps {
+  sections: any[];
+  onSave: (sections: any[]) => void;
+  onCancel: () => void;
+}
+
+const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps) => {
+  const [editedSections, setEditedSections] = useState(sections);
+
+  const updateSection = (index: number, field: string, value: string) => {
+    const updated = [...editedSections];
+    updated[index] = { ...updated[index], [field]: value };
+    setEditedSections(updated);
+  };
+
+  const updateArrayField = (sectionIndex: number, field: string, itemIndex: number, value: string) => {
+    const updated = [...editedSections];
+    const newArray = [...(updated[sectionIndex][field] || [])];
+    newArray[itemIndex] = value;
+    updated[sectionIndex] = { ...updated[sectionIndex], [field]: newArray };
+    setEditedSections(updated);
+  };
+
+  const addArrayItem = (sectionIndex: number, field: string) => {
+    const updated = [...editedSections];
+    const newArray = [...(updated[sectionIndex][field] || []), ""];
+    updated[sectionIndex] = { ...updated[sectionIndex], [field]: newArray };
+    setEditedSections(updated);
+  };
+
+  const removeArrayItem = (sectionIndex: number, field: string, itemIndex: number) => {
+    const updated = [...editedSections];
+    const newArray = [...(updated[sectionIndex][field] || [])];
+    newArray.splice(itemIndex, 1);
+    updated[sectionIndex] = { ...updated[sectionIndex], [field]: newArray };
+    setEditedSections(updated);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-surface-primary z-50 overflow-y-auto">
+      <div className="max-w-4xl mx-auto p-8">
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-3xl font-light text-text-primary">Edit Presentation Copy</h2>
+          <div className="flex items-center space-x-4">
+            <Button onClick={onCancel} variant="outline">
+              Cancel
+            </Button>
+            <Button onClick={() => onSave(editedSections)} className="flex items-center space-x-2">
+              <Save size={16} />
+              <span>Save & Present</span>
+            </Button>
+          </div>
+        </div>
+
+        <div className="space-y-8">
+          {editedSections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="bg-surface-secondary rounded-lg p-6 border border-swiss-light">
+              <h3 className="text-xl font-medium text-text-primary mb-6">Slide {sectionIndex + 1}</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor={`title-${sectionIndex}`} className="text-sm font-medium text-text-secondary">
+                    Title
+                  </Label>
+                  <Input
+                    id={`title-${sectionIndex}`}
+                    value={section.title || ""}
+                    onChange={(e) => updateSection(sectionIndex, "title", e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+
+                {section.subheader !== undefined && (
+                  <div>
+                    <Label htmlFor={`subheader-${sectionIndex}`} className="text-sm font-medium text-text-secondary">
+                      Subheader
+                    </Label>
+                    <Input
+                      id={`subheader-${sectionIndex}`}
+                      value={section.subheader || ""}
+                      onChange={(e) => updateSection(sectionIndex, "subheader", e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
+                )}
+
+                {section.content !== undefined && (
+                  <div>
+                    <Label htmlFor={`content-${sectionIndex}`} className="text-sm font-medium text-text-secondary">
+                      Content
+                    </Label>
+                    <Textarea
+                      id={`content-${sectionIndex}`}
+                      value={section.content || ""}
+                      onChange={(e) => updateSection(sectionIndex, "content", e.target.value)}
+                      className="mt-1 min-h-[120px]"
+                    />
+                  </div>
+                )}
+
+                {section.goals && (
+                  <div>
+                    <Label className="text-sm font-medium text-text-secondary">Goals</Label>
+                    <div className="mt-2 space-y-2">
+                      {section.goals.map((goal: string, goalIndex: number) => (
+                        <div key={goalIndex} className="flex items-center space-x-2">
+                          <Input
+                            value={goal}
+                            onChange={(e) => updateArrayField(sectionIndex, "goals", goalIndex, e.target.value)}
+                            className="flex-1"
+                          />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeArrayItem(sectionIndex, "goals", goalIndex)}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            ×
+                          </Button>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addArrayItem(sectionIndex, "goals")}
+                        className="mt-2"
+                      >
+                        Add Goal
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {section.quotes && (
+                  <div>
+                    <Label className="text-sm font-medium text-text-secondary">User Feedback Quotes</Label>
+                    <div className="mt-2 space-y-2">
+                      {section.quotes.map((quote: string, quoteIndex: number) => (
+                        <div key={quoteIndex} className="flex items-center space-x-2">
+                          <Textarea
+                            value={quote}
+                            onChange={(e) => updateArrayField(sectionIndex, "quotes", quoteIndex, e.target.value)}
+                            className="flex-1"
+                          />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeArrayItem(sectionIndex, "quotes", quoteIndex)}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            ×
+                          </Button>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addArrayItem(sectionIndex, "quotes")}
+                        className="mt-2"
+                      >
+                        Add Quote
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {section.insight !== undefined && (
+                  <div>
+                    <Label htmlFor={`insight-${sectionIndex}`} className="text-sm font-medium text-text-secondary">
+                      Insight
+                    </Label>
+                    <Textarea
+                      id={`insight-${sectionIndex}`}
+                      value={section.insight || ""}
+                      onChange={(e) => updateSection(sectionIndex, "insight", e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showCustomCopyEditor, setShowCustomCopyEditor] = useState(false);
+  const [customSections, setCustomSections] = useState(sections);
+  const [isUsingCustomCopy, setIsUsingCustomCopy] = useState(false);
+
+  const handleCustomCopySave = (editedSections: any[]) => {
+    setCustomSections(editedSections);
+    setIsUsingCustomCopy(true);
+    setShowCustomCopyEditor(false);
+  };
+
+  const handleCustomCopyCancel = () => {
+    setShowCustomCopyEditor(false);
+  };
+
+  const activeSections = isUsingCustomCopy ? customSections : sections;
 
   const nextSlide = () => {
-    if (currentSlide < sections.length - 1 && !isTransitioning) {
+    if (currentSlide < activeSections.length - 1 && !isTransitioning) {
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentSlide(currentSlide + 1);
@@ -375,20 +581,30 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           </Button>
           
           <span className="text-sm text-text-secondary font-medium min-w-[80px] text-center">
-            {currentSlide + 1} / {sections.length}
+            {currentSlide + 1} / {activeSections.length}
           </span>
           
           <Button
             variant="ghost"
             size="sm"
             onClick={nextSlide}
-            disabled={currentSlide === sections.length - 1}
+            disabled={currentSlide === activeSections.length - 1}
             className="p-2 hover:bg-surface-primary"
           >
             <ChevronRight size={20} />
           </Button>
           
           <div className="w-px h-6 bg-swiss-light mx-2"></div>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowCustomCopyEditor(true)}
+            className="p-2 hover:bg-surface-primary text-text-secondary hover:text-text-primary"
+          >
+            <Edit3 size={16} />
+            <span className="ml-2 text-sm">Edit Copy</span>
+          </Button>
           
           <Button
             variant="ghost"
@@ -423,7 +639,7 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
             <div className={`
               ${isTransitioning ? 'animate-water-emerge-out' : 'animate-water-emerge-in'}
             `}>
-              {renderSlideContent(sections[currentSlide])}
+              {renderSlideContent(activeSections[currentSlide])}
             </div>
           </div>
         </div>
@@ -433,9 +649,18 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
       <div className="fixed bottom-0 left-0 w-full h-1 bg-surface-secondary">
         <div
           className="h-full bg-gradient-to-r from-accent-blue to-accent-teal transition-all duration-300"
-          style={{ width: `${((currentSlide + 1) / sections.length) * 100}%` }}
+          style={{ width: `${((currentSlide + 1) / activeSections.length) * 100}%` }}
         ></div>
       </div>
+
+      {/* Custom Copy Editor Modal */}
+      {showCustomCopyEditor && (
+        <CustomCopyEditor
+          sections={activeSections}
+          onSave={handleCustomCopySave}
+          onCancel={handleCustomCopyCancel}
+        />
+      )}
     </div>
   );
 };
