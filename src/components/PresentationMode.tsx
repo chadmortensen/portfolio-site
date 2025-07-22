@@ -240,6 +240,39 @@ const CustomCopyEditor = ({ sections, onSave, onCancel }: CustomCopyEditorProps)
                   </div>
                 )}
 
+                {section.schedule && (
+                  <div>
+                    <Label className="text-sm font-medium text-text-secondary">Schedule</Label>
+                    <div className="mt-2 space-y-2">
+                      {section.schedule.map((item: string, itemIndex: number) => (
+                        <div key={itemIndex} className="flex items-center space-x-2">
+                          <Input
+                            value={item}
+                            onChange={(e) => updateArrayField(sectionIndex, "schedule", itemIndex, e.target.value)}
+                            className="flex-1"
+                          />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeArrayItem(sectionIndex, "schedule", itemIndex)}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            ×
+                          </Button>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addArrayItem(sectionIndex, "schedule")}
+                        className="mt-2"
+                      >
+                        Add Schedule Item
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
                 {section.insight !== undefined && (
                   <div>
                     <Label htmlFor={`insight-${sectionIndex}`} className="text-sm font-medium text-text-secondary">
