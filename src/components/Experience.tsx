@@ -35,7 +35,7 @@ const Experience = () => {
     },
     {
       title: "Associate Director - Fulfillment & Grocery Delivery",
-      company: "Walmart",
+      company: "Walmart eCommerce",
       period: "Feb 2020 - April 2021",
       location: "Portland, OR",
       description: "Led product design for Walmart's fulfillment experiences across web and mobile, including grocery and general merchandise delivery and pickup.",
@@ -47,7 +47,7 @@ const Experience = () => {
     },
     {
       title: "Practice Area Head - Routine Consumables",
-      company: "Walmart",
+      company: "Walmart eCommerce",
       period: "Oct 2016 - Feb 2020",
       location: "Portland, OR",
       description: "Led a cross-functional design team focused on high-frequency consumables and registry experiences.",
@@ -58,7 +58,7 @@ const Experience = () => {
     },
     {
       title: "Practice Area Head - Fashion",
-      company: "Walmart",
+      company: "Walmart eCommerce",
       period: "Oct 2016 - Feb 2020",
       location: "Portland, OR",
       description: "Directed design strategy for Walmart.com's fashion vertical, transforming how customers discover and shop for apparel.",
