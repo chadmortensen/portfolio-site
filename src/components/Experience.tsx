@@ -1,4 +1,3 @@
-
 import { Briefcase, Calendar, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -34,37 +33,40 @@ const Experience = () => {
       ]
     },
     {
-      title: "Associate Director - Fulfillment & Grocery Delivery",
+      title: "Associate Director",
       company: "Walmart eCommerce",
-      period: "Feb 2020 - April 2021",
+      period: "Oct 2016 - April 2021",
       location: "Portland, OR",
-      description: "Led product design for Walmart's fulfillment experiences across web and mobile, including grocery and general merchandise delivery and pickup.",
-      achievements: [
-        "Responded swiftly to COVID-era challenges, rapidly redesigning critical customer and store-facing workflows",
-        "Spearheaded the re-platforming of the grocery pickup and delivery experience, improving usability and alignment with company strategy",
-        "Partnered with product and business leads on roadmap prioritization, resourcing, and long-term strategy"
-      ]
-    },
-    {
-      title: "Practice Area Head - Routine Consumables",
-      company: "Walmart eCommerce",
-      period: "Oct 2016 - Feb 2020",
-      location: "Portland, OR",
-      description: "Led a cross-functional design team focused on high-frequency consumables and registry experiences.",
-      achievements: [
-        "Conducted data-driven discovery and executed a complete rebuild of Walmart's baby registry product, resulting in increased engagement and improved UX",
-        "Balanced rapid iteration with long-term vision to drive customer satisfaction and business growth"
-      ]
-    },
-    {
-      title: "Practice Area Head - Fashion",
-      company: "Walmart eCommerce",
-      period: "Oct 2016 - Feb 2020",
-      location: "Portland, OR",
-      description: "Directed design strategy for Walmart.com's fashion vertical, transforming how customers discover and shop for apparel.",
-      achievements: [
-        "Operated as a lean startup within Walmart, using customer insights, rapid experimentation, and iterative design to shape a modern fashion experience",
-        "Aligned user mental models with innovative design approaches to increase relevance and conversion"
+      description: "Led product design across multiple verticals including fulfillment, grocery delivery, consumables, and fashion experiences.",
+      roles: [
+        {
+          title: "Associate Director - Fulfillment & Grocery Delivery",
+          period: "Feb 2020 - April 2021",
+          description: "Led product design for Walmart's fulfillment experiences across web and mobile, including grocery and general merchandise delivery and pickup.",
+          achievements: [
+            "Responded swiftly to COVID-era challenges, rapidly redesigning critical customer and store-facing workflows",
+            "Spearheaded the re-platforming of the grocery pickup and delivery experience, improving usability and alignment with company strategy",
+            "Partnered with product and business leads on roadmap prioritization, resourcing, and long-term strategy"
+          ]
+        },
+        {
+          title: "Practice Area Head - Routine Consumables",
+          period: "Oct 2016 - Feb 2020",
+          description: "Led a cross-functional design team focused on high-frequency consumables and registry experiences.",
+          achievements: [
+            "Conducted data-driven discovery and executed a complete rebuild of Walmart's baby registry product, resulting in increased engagement and improved UX",
+            "Balanced rapid iteration with long-term vision to drive customer satisfaction and business growth"
+          ]
+        },
+        {
+          title: "Practice Area Head - Fashion",
+          period: "Oct 2016 - Feb 2020",
+          description: "Directed design strategy for Walmart.com's fashion vertical, transforming how customers discover and shop for apparel.",
+          achievements: [
+            "Operated as a lean startup within Walmart, using customer insights, rapid experimentation, and iterative design to shape a modern fashion experience",
+            "Aligned user mental models with innovative design approaches to increase relevance and conversion"
+          ]
+        }
       ]
     },
     {
@@ -91,7 +93,7 @@ const Experience = () => {
             25+ years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
           </p>
           
-          <div className="mt-8">
+          <div className="mt-8 flex justify-center">
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
               variant="outline"
@@ -135,17 +137,53 @@ const Experience = () => {
                     {experience.description}
                   </p>
                   
-                  <div>
-                    <h4 className="text-body text-text-primary font-medium mb-4">Key Achievements</h4>
-                    <ul className="grid gap-3">
-                      {experience.achievements.map((achievement, achievementIndex) => (
-                        <li key={achievementIndex} className="flex items-start space-x-3">
-                          <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
-                          <span className="text-body text-text-secondary leading-relaxed">{achievement}</span>
-                        </li>
+                  {/* Render sub-roles if they exist */}
+                  {experience.roles ? (
+                    <div className="space-y-8">
+                      {experience.roles.map((role, roleIndex) => (
+                        <div key={roleIndex} className="border-l border-swiss-light pl-6 ml-2">
+                          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
+                            <div>
+                              <h4 className="text-body text-text-primary font-medium">{role.title}</h4>
+                            </div>
+                            <div className="flex items-center space-x-2 text-text-tertiary mt-1 lg:mt-0">
+                              <Calendar size={14} />
+                              <span className="text-caption">{role.period}</span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-body text-text-secondary leading-relaxed mb-4">
+                            {role.description}
+                          </p>
+                          
+                          <div>
+                            <h5 className="text-body text-text-primary font-medium mb-3">Key Achievements</h5>
+                            <ul className="grid gap-3">
+                              {role.achievements.map((achievement, achievementIndex) => (
+                                <li key={achievementIndex} className="flex items-start space-x-3">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
+                                  <span className="text-body text-text-secondary leading-relaxed">{achievement}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
                       ))}
-                    </ul>
-                  </div>
+                    </div>
+                  ) : (
+                    /* Regular achievements for positions without sub-roles */
+                    <div>
+                      <h4 className="text-body text-text-primary font-medium mb-4">Key Achievements</h4>
+                      <ul className="grid gap-3">
+                        {experience.achievements.map((achievement, achievementIndex) => (
+                          <li key={achievementIndex} className="flex items-start space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
+                            <span className="text-body text-text-secondary leading-relaxed">{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
