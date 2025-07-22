@@ -144,7 +144,7 @@ const Experience = () => {
                         <div key={roleIndex} className="border-l border-swiss-light pl-6 ml-2">
                           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                             <div>
-                              <h4 className="text-body text-text-primary font-medium">{role.title}</h4>
+                              <h4 className="text-body text-text-primary font-bold">{role.title}</h4>
                             </div>
                             <div className="flex items-center space-x-2 text-text-tertiary mt-1 lg:mt-0">
                               <Calendar size={14} />
