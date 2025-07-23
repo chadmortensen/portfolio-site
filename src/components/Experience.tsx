@@ -40,7 +40,7 @@ const Experience = () => {
       description: "Led product design across multiple verticals including fulfillment, grocery delivery, consumables, and fashion experiences.",
       roles: [
         {
-          title: "Senior Manager II - Fulfillment & Grocery Delivery",
+          title: "Fulfillment & Grocery Delivery",
           period: "Feb 2020 - April 2021",
           description: "Led product design for Walmart's fulfillment experiences across web and mobile, including grocery and general merchandise delivery and pickup.",
           achievements: [
@@ -50,7 +50,7 @@ const Experience = () => {
           ]
         },
         {
-          title: "Senior Manager II - Routine Consumables",
+          title: "Routine Consumables",
           period: "Oct 2016 - Feb 2020",
           description: "Led a cross-functional design team focused on high-frequency consumables and registry experiences.",
           achievements: [
@@ -59,7 +59,7 @@ const Experience = () => {
           ]
         },
         {
-          title: "Senior Manager II - Fashion",
+          title: "Fashion",
           period: "Oct 2016 - Feb 2020",
           description: "Directed design strategy for Walmart.com's fashion vertical, transforming how customers discover and shop for apparel.",
           achievements: [
