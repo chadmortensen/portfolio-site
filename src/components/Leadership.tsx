@@ -20,7 +20,7 @@ const Leadership = () => {
     },
     {
       icon: Award,
-      title: "Craft matters — and so does accountability",
+      title: "Craft matters",
       description: "I set a high bar for quality, while supporting accountability and growth. Our work should be effective, thoughtful — and something we're proud to stand behind."
     }
   ];

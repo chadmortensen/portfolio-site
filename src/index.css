@@ -109,10 +109,6 @@
     letter-spacing: -0.02em;
     font-weight: 400;
   }
-  h4 {
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
 }
 
 /* Swiss Design Color Classes */
@@ -184,3 +180,8 @@
   margin: 0 auto;
   width: 100%;
 }
+
+h4 {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
