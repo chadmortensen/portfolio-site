@@ -185,3 +185,7 @@ h4 {
     font-size: 1.2rem !important;
     font-weight: 500 !important;
   }
+
+.bg-surface-secondary {
+  background-image: linear-gradient(to bottom, hsl(31, 100%, 85%), hsl(0, 0%, 100%));
+}
