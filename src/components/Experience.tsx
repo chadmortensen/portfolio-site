@@ -7,7 +7,7 @@ const Experience = () => {
   
   const experiences = [
     {
-      title: "Director of Product Design",
+      title: "Head of Product Design",
       company: "Brightside Health",
       period: "Aug 2023 - June 2025",
       location: "Portland, OR",
