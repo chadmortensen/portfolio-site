@@ -173,7 +173,7 @@ const Experience = () => {
                   ) : (
                     /* Regular achievements for positions without sub-roles */
                     <div>
-                      <h4 className="text-body text-text-primary font-medium mb-4">Key Achievements</h4>
+                      <h5 className="text-body text-text-primary font-medium mb-4">Key Achievements</h5>
                       <ul className="grid gap-3">
                         {experience.achievements.map((achievement, achievementIndex) => (
                           <li key={achievementIndex} className="flex items-start space-x-3">
