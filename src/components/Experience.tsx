@@ -124,7 +124,7 @@ const Experience = () => {
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                     <div>
                       <h3 className="text-title text-text-primary font-light">{experience.title}</h3>
-                      <p className="text-body text-accent-blue font-medium">{experience.company}</p>
+                      <p className="text-body text-accent-orange font-medium">{experience.company}</p>
                       <p className="text-caption text-text-tertiary">{experience.location}</p>
                     </div>
                     <div className="flex items-center space-x-2 text-text-tertiary mt-2 lg:mt-0">
