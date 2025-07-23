@@ -33,14 +33,14 @@ const Experience = () => {
       ]
     },
     {
-      title: "Associate Director",
+      title: "Senior Manager II",
       company: "Walmart eCommerce",
       period: "Oct 2016 - April 2021",
       location: "Portland, OR",
       description: "Led product design across multiple verticals including fulfillment, grocery delivery, consumables, and fashion experiences.",
       roles: [
         {
-          title: "Associate Director - Fulfillment & Grocery Delivery",
+          title: "Senior Manager II - Fulfillment & Grocery Delivery",
           period: "Feb 2020 - April 2021",
           description: "Led product design for Walmart's fulfillment experiences across web and mobile, including grocery and general merchandise delivery and pickup.",
           achievements: [
@@ -50,7 +50,7 @@ const Experience = () => {
           ]
         },
         {
-          title: "Practice Area Head - Routine Consumables",
+          title: "Senior Manager II - Routine Consumables",
           period: "Oct 2016 - Feb 2020",
           description: "Led a cross-functional design team focused on high-frequency consumables and registry experiences.",
           achievements: [
@@ -59,7 +59,7 @@ const Experience = () => {
           ]
         },
         {
-          title: "Practice Area Head - Fashion",
+          title: "Senior Manager II - Fashion",
           period: "Oct 2016 - Feb 2020",
           description: "Directed design strategy for Walmart.com's fashion vertical, transforming how customers discover and shop for apparel.",
           achievements: [
