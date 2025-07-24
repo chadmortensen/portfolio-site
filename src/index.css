@@ -187,5 +187,5 @@ h4 {
   }
 
 .bg-surface-secondary {
-  background-image: linear-gradient(to bottom, hsl(32, 95%, 92%), hsl(0, 0%, 100%));
+  background-image: linear-gradient(to bottom, hsl(32, 100%, 93%), hsl(0, 0%, 100%));
 }
