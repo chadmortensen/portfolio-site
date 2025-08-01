@@ -24,8 +24,7 @@ const CaseStudy3 = () => {
     {
       title: "The Data",
       subheader: "Grounded decisions through analytics and insights",
-      content: "Our design decisions were grounded in both qualitative and quantitative inputs. These included customer survey feedback, funnel analytics, and a competitive audit.\n\nAnalytics showed that the most significant drop-offs occurred at high-friction moments, such as account creation and payment. Interestingly, the long series of personal and health-related questions did contribute to some attrition, but the impact was relatively minor.\n\nAs a side effort, I developed a GPT-based assistant to help designers and product managers generate analytics reports. This tool provided step-by-step instructions for using Brightside's data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.\n\nWe used these insights to identify opportunity areas. The brainstorm process helped us connect what users were telling us with what the data confirmed, allowing us to generate targeted design ideas that addressed both.",
-      image: "/public/img/Brightside-vision-main.png"
+      content: "Our design decisions were grounded in both qualitative and quantitative inputs. These included customer survey feedback, funnel analytics, and a competitive audit.\n\nAnalytics showed that the most significant drop-offs occurred at high-friction moments, such as account creation and payment. Interestingly, the long series of personal and health-related questions did contribute to some attrition, but the impact was relatively minor.\n\nAs a side effort, I developed a GPT-based assistant to help designers and product managers generate analytics reports. This tool provided step-by-step instructions for using Brightside's data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.\n\nWe used these insights to identify opportunity areas. The brainstorm process helped us connect what users were telling us with what the data confirmed, allowing us to generate targeted design ideas that addressed both."
     },
     {
       title: "Competitive Audit", 
@@ -149,8 +148,8 @@ const CaseStudy3 = () => {
                 </div>
                 
                 {/* Content and image below header */}
-                <div className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
-                  <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
+                <div className={('image' in section) ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
+                  <div className={('image' in section) ? "lg:col-span-5 space-y-6" : "space-y-6"}>
                     {section.content.split('\n\n').map((paragraph, pIndex) => (
                       <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
                         {paragraph}
@@ -231,20 +230,20 @@ const CaseStudy3 = () => {
                     )}
                   </div>
                   
-                  {section.image && (
+                   {('image' in section) && (
                     <div className="lg:col-span-7">
                       <Dialog>
                         <DialogTrigger asChild>
                           <img
-                            src={section.image}
+                            src={(section as any).image}
                             alt={`${section.title} visual`}
                             className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
-                            onClick={() => setSelectedImage(section.image)}
+                            onClick={() => setSelectedImage((section as any).image)}
                           />
                         </DialogTrigger>
                         <DialogContent className="max-w-6xl max-h-[90vh] overflow-auto bg-surface-primary">
                           <img
-                            src={section.image}
+                            src={(section as any).image}
                             alt={`${section.title} visual`}
                             className="w-full h-auto"
                           />
