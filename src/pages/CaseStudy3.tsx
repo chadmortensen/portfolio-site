@@ -242,13 +242,11 @@ const CaseStudy3 = () => {
         const firstImageColumns = parseInt(besideImages[0].content.columns || '6');
         const contentColumns = 12 - firstImageColumns;
 
-        const contentColumnClass = contentModules.length > 0 ? `lg:col-span-${contentColumns}` : '';
-        const imageColumnClass = contentModules.length > 0 ? `lg:col-span-${firstImageColumns}` : '';
-
-        result.push(
-          <div key={`layout-group-${i}`} className="grid grid-cols-12 gap-8 items-start">
-            {contentModules.length > 0 && (
-              <div className={`col-span-12 ${contentColumnClass} space-y-6`}>
+        if (contentModules.length > 0) {
+          // When there's content, create a side-by-side layout
+          result.push(
+            <div key={`layout-group-${i}`} className="grid grid-cols-12 gap-8 items-start">
+              <div className={`col-span-12 lg:col-span-${contentColumns} space-y-6`}>
                 {contentModules.map((contentModule) => (
                   <EditableModule
                     key={contentModule.id}
@@ -259,10 +257,28 @@ const CaseStudy3 = () => {
                   />
                 ))}
               </div>
-            )}
-            <div className={`col-span-12 ${imageColumnClass} space-y-6`}>
+              <div className={`col-span-12 lg:col-span-${firstImageColumns} space-y-6`}>
+                {besideImages.map((imageModule) => (
+                  <div key={imageModule.id} className={`grid grid-cols-${imageModule.content.columns || '12'}`}>
+                    <div className={`col-span-${imageModule.content.columns || '12'}`}>
+                      <EditableModule
+                        module={imageModule}
+                        isEditing={editing}
+                        onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+                        onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        } else {
+          // When there's no content, just display the images using their column settings
+          result.push(
+            <div key={`layout-group-${i}`} className="grid grid-cols-12 gap-8">
               {besideImages.map((imageModule) => (
-                <div key={imageModule.id} className="w-full">
+                <div key={imageModule.id} className={`col-span-12 lg:col-span-${imageModule.content.columns || '12'}`}>
                   <EditableModule
                     module={imageModule}
                     isEditing={editing}
@@ -272,8 +288,8 @@ const CaseStudy3 = () => {
                 </div>
               ))}
             </div>
-          </div>
-        );
+          );
+        }
       } else {
         // Regular module rendering for non-image or "below" positioned images
         result.push(
