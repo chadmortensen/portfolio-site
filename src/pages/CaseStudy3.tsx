@@ -1,15 +1,195 @@
-import { ArrowLeft, Calendar, Users, Target, X, Play } from "lucide-react";
+import { ArrowLeft, Calendar, Users, Target, X, Play, Edit3, Save, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { useState, useEffect } from "react";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import PresentationMode from "@/components/PresentationMode";
+import { EditableModule, Module } from "@/components/EditableModule";
+import { ModuleLibrary } from "@/components/ModuleLibrary";
 
 const CaseStudy3 = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editPassword, setEditPassword] = useState('');
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [showModuleLibrary, setShowModuleLibrary] = useState(false);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [editableSections, setEditableSections] = useState<Array<{
+    title: string;
+    subheader?: string;
+    modules: Module[];
+  }>>([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  // Convert static sections to editable format on first load
+  useEffect(() => {
+    if (editableSections.length === 0) {
+      const converted = sections.map((section) => {
+        const modules: Module[] = [];
+        
+        // Add main content as text module
+        if (section.content) {
+          modules.push({
+            id: `${section.title}-content-${Date.now()}`,
+            type: 'text',
+            content: { text: section.content }
+          });
+        }
+
+        // Add goals as bullets module
+        if (section.goals) {
+          modules.push({
+            id: `${section.title}-goals-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Goals', items: section.goals }
+          });
+        }
+
+        // Add key findings as bullets module
+        if (section.keyFindings) {
+          modules.push({
+            id: `${section.title}-findings-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Key Findings', items: section.keyFindings }
+          });
+        }
+
+        // Add insight as quote module
+        if (section.insight) {
+          modules.push({
+            id: `${section.title}-insight-${Date.now()}`,
+            type: 'quote',
+            content: { title: 'Key Insight', text: section.insight }
+          });
+        }
+
+        // Add standout ideas as bullets module
+        if (section.standoutIdeas) {
+          modules.push({
+            id: `${section.title}-ideas-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Two Standout Ideas', items: section.standoutIdeas }
+          });
+        }
+
+        // Add design principles as separate text modules
+        if (section.designPrinciples) {
+          section.designPrinciples.forEach((principle, index) => {
+            modules.push({
+              id: `${section.title}-principle-${index}-${Date.now()}`,
+              type: 'quote',
+              content: { title: principle.title, text: principle.description }
+            });
+          });
+        }
+
+        // Add tradeoffs as quote module
+        if (section.tradeoffs) {
+          modules.push({
+            id: `${section.title}-tradeoffs-${Date.now()}`,
+            type: 'quote',
+            content: { title: 'Trade-offs', text: section.tradeoffs }
+          });
+        }
+
+        // Add personal reflection as quote module
+        if (section.personalReflection) {
+          modules.push({
+            id: `${section.title}-reflection-${Date.now()}`,
+            type: 'quote',
+            content: { title: 'Personal Reflection', text: section.personalReflection }
+          });
+        }
+
+        // Add image module if present
+        if ('image' in section) {
+          modules.push({
+            id: `${section.title}-image-${Date.now()}`,
+            type: 'image',
+            content: { src: (section as any).image, alt: `${section.title} visual`, size: 'medium' }
+          });
+        }
+
+        return {
+          title: section.title,
+          subheader: section.subheader,
+          modules
+        };
+      });
+      setEditableSections(converted);
+    }
+  }, []);
+
+  const handlePasswordSubmit = () => {
+    if (editPassword === '4455') {
+      setIsEditing(true);
+      setShowPasswordPrompt(false);
+      setEditPassword('');
+    } else {
+      alert('Incorrect password');
+      setEditPassword('');
+    }
+  };
+
+  const handleSave = () => {
+    // Save to localStorage for persistence
+    localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
+    setIsEditing(false);
+    alert('Changes saved successfully!');
+  };
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const sectionIndex = currentSectionIndex;
+      const section = editableSections[sectionIndex];
+      const oldIndex = section.modules.findIndex((module) => module.id === active.id);
+      const newIndex = section.modules.findIndex((module) => module.id === over.id);
+
+      const newModules = arrayMove(section.modules, oldIndex, newIndex);
+      const newSections = [...editableSections];
+      newSections[sectionIndex] = { ...section, modules: newModules };
+      setEditableSections(newSections);
+    }
+  };
+
+  const handleUpdateModule = (sectionIndex: number, moduleId: string, content: any) => {
+    const newSections = [...editableSections];
+    const moduleIndex = newSections[sectionIndex].modules.findIndex(m => m.id === moduleId);
+    if (moduleIndex !== -1) {
+      newSections[sectionIndex].modules[moduleIndex].content = content;
+      setEditableSections(newSections);
+    }
+  };
+
+  const handleDeleteModule = (sectionIndex: number, moduleId: string) => {
+    const newSections = [...editableSections];
+    newSections[sectionIndex].modules = newSections[sectionIndex].modules.filter(m => m.id !== moduleId);
+    setEditableSections(newSections);
+  };
+
+  const handleAddModule = (sectionIndex: number, module: Omit<Module, 'id'>) => {
+    const newModule: Module = {
+      ...module,
+      id: `${Date.now()}-${Math.random()}`
+    };
+    const newSections = [...editableSections];
+    newSections[sectionIndex].modules.push(newModule);
+    setEditableSections(newSections);
+  };
 
   const sections = [
     {
@@ -102,6 +282,27 @@ const CaseStudy3 = () => {
               <span className="text-body">Back to Portfolio</span>
             </button>
             <div className="flex items-center space-x-4">
+              {isEditing ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleSave}
+                  className="flex items-center space-x-2 text-text-primary border-accent-blue"
+                >
+                  <Save size={16} />
+                  <span className="text-sm">Save Changes</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowPasswordPrompt(true)}
+                  className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
+                >
+                  <Edit3 size={16} />
+                  <span className="text-sm">Edit Mode</span>
+                </Button>
+              )}
               <Button
                 variant="ghost"
                 size="sm"
@@ -133,124 +334,71 @@ const CaseStudy3 = () => {
       <div className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
-            {sections.map((section, index) => (
-              <div key={index}>
+            {editableSections.map((section, sectionIndex) => (
+              <div key={sectionIndex}>
                 {/* Header spans full width */}
-                <div className="mb-8">
-                  <h2 className={`text-headline text-text-primary font-light ${section.subheader ? 'mb-0' : 'mb-6'}`}>
-                    {section.title}
-                  </h2>
-                  {section.subheader && (
-                    <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">
-                      {section.subheader}
-                    </h3>
-                  )}
-                  <div className="w-12 h-px bg-accent-teal"></div>
-                </div>
-                
-                {/* Content and image below header */}
-                <div className={('image' in section) ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
-                  <div className={('image' in section) ? "lg:col-span-8 space-y-6" : "space-y-6"}>
-                    {section.content.split('\n\n').map((paragraph, pIndex) => (
-                      <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
-                        {paragraph}
-                      </p>
-                    ))}
-                    
-                    {section.goals && (
-                      <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
-                        <ul className="space-y-2">
-                          {section.goals.map((goal, goalIndex) => (
-                            <li key={goalIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{goal}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                <div className="mb-8 flex items-end justify-between">
+                  <div>
+                    <h2 className={`text-headline text-text-primary font-light ${section.subheader ? 'mb-0' : 'mb-6'}`}>
+                      {section.title}
+                    </h2>
+                    {section.subheader && (
+                      <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">
+                        {section.subheader}
+                      </h3>
                     )}
-
-                    {section.keyFindings && (
-                      <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Key Findings</h3>
-                        <ul className="space-y-2">
-                          {section.keyFindings.map((finding, findingIndex) => (
-                            <li key={findingIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{finding}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        {section.insight && (
-                          <div className="p-4 bg-surface-secondary border border-swiss-light mt-4">
-                            <p className="text-body text-text-primary font-medium">{section.insight}</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {section.standoutIdeas && (
-                      <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Two Standout Ideas</h3>
-                        <ul className="space-y-2">
-                          {section.standoutIdeas.map((idea, ideaIndex) => (
-                            <li key={ideaIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{idea}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {section.designPrinciples && (
-                      <div>
-                        <div className="space-y-6">
-                          {section.designPrinciples.map((principle, principleIndex) => (
-                            <div key={principleIndex} className="p-6 bg-surface-secondary border border-swiss-light">
-                              <h4 className="text-title text-text-primary font-medium mb-3">{principle.title}</h4>
-                              <p className="text-body text-text-secondary">{principle.description}</p>
-                            </div>
-                          ))}
-                        </div>
-                        {section.tradeoffs && (
-                          <div className="mt-6 p-4 bg-surface-secondary border border-swiss-light">
-                            <h4 className="text-title text-text-primary font-medium mb-2">Trade-offs</h4>
-                            <p className="text-body text-text-secondary">{section.tradeoffs}</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {section.personalReflection && (
-                      <div className="p-4 bg-surface-secondary border border-swiss-light">
-                        <h4 className="text-title text-text-primary font-medium mb-2">Personal Reflection</h4>
-                        <p className="text-body text-text-secondary italic">{section.personalReflection}</p>
-                      </div>
-                    )}
+                    <div className="w-12 h-px bg-accent-teal"></div>
                   </div>
                   
-                    {('image' in section) && (
-                     <div className="lg:col-span-4">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <img
-                            src={(section as any).image}
-                            alt={`${section.title} visual`}
-                            className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
-                            onClick={() => setSelectedImage((section as any).image)}
+                  {isEditing && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setCurrentSectionIndex(sectionIndex);
+                        setShowModuleLibrary(true);
+                      }}
+                      className="flex items-center space-x-2"
+                    >
+                      <Plus size={16} />
+                      <span className="text-sm">Add Module</span>
+                    </Button>
+                  )}
+                </div>
+                
+                {/* Modules */}
+                <div className="space-y-6">
+                  {isEditing ? (
+                    <DndContext
+                      sensors={sensors}
+                      collisionDetection={closestCenter}
+                      onDragEnd={handleDragEnd}
+                    >
+                      <SortableContext
+                        items={section.modules.map(m => m.id)}
+                        strategy={verticalListSortingStrategy}
+                      >
+                        {section.modules.map((module) => (
+                          <EditableModule
+                            key={module.id}
+                            module={module}
+                            isEditing={isEditing}
+                            onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+                            onDelete={(id) => handleDeleteModule(sectionIndex, id)}
                           />
-                        </DialogTrigger>
-                        <DialogContent className="max-w-6xl max-h-[90vh] overflow-auto bg-surface-primary">
-                          <img
-                            src={(section as any).image}
-                            alt={`${section.title} visual`}
-                            className="w-full h-auto"
-                          />
-                        </DialogContent>
-                      </Dialog>
-                    </div>
+                        ))}
+                      </SortableContext>
+                    </DndContext>
+                  ) : (
+                    section.modules.map((module) => (
+                      <EditableModule
+                        key={module.id}
+                        module={module}
+                        isEditing={false}
+                        onUpdate={() => {}}
+                        onDelete={() => {}}
+                      />
+                    ))
                   )}
                 </div>
               </div>
@@ -258,6 +406,46 @@ const CaseStudy3 = () => {
           </div>
         </div>
       </div>
+
+      {/* Password Prompt Modal */}
+      {showPasswordPrompt && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+          <div className="bg-surface-primary border border-swiss-light rounded-lg p-6 max-w-sm w-full mx-4">
+            <h2 className="text-headline text-text-primary mb-4">Enter Edit Password</h2>
+            <div className="space-y-4">
+              <Input
+                type="password"
+                value={editPassword}
+                onChange={(e) => setEditPassword(e.target.value)}
+                placeholder="Password"
+                onKeyPress={(e) => e.key === 'Enter' && handlePasswordSubmit()}
+              />
+              <div className="flex space-x-2">
+                <Button onClick={handlePasswordSubmit} className="flex-1">
+                  Enter
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setShowPasswordPrompt(false);
+                    setEditPassword('');
+                  }}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Module Library */}
+      <ModuleLibrary
+        isOpen={showModuleLibrary}
+        onAddModule={(module) => handleAddModule(currentSectionIndex, module)}
+        onClose={() => setShowModuleLibrary(false)}
+      />
     </div>
   );
 };
