@@ -39,12 +39,17 @@ const CaseStudy3 = () => {
       const converted = sections.map((section) => {
         const modules: Module[] = [];
         
-        // Add main content as text module
+        // Add main content as text module (convert line breaks to HTML)
         if (section.content) {
+          const htmlContent = section.content
+            .split('\n\n')
+            .map(paragraph => `<p>${paragraph}</p>`)
+            .join('');
+          
           modules.push({
             id: `${section.title}-content-${Date.now()}`,
             type: 'text',
-            content: { text: section.content }
+            content: { text: htmlContent }
           });
         }
 

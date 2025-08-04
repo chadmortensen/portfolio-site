@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { GripVertical, Trash2, Plus } from "lucide-react";
+import { GripVertical, Trash2, Plus, Palette } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export interface Module {
   id: string;
@@ -36,6 +38,21 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
     opacity: isDragging ? 0.5 : 1,
   };
 
+  // Custom Quill toolbar configuration
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ 'background': [] }],
+      [{ 'color': [] }],
+      ['clean']
+    ],
+  };
+
+  const quillFormats = [
+    'header', 'bold', 'italic', 'underline', 'background', 'color'
+  ];
+
   const renderEditMode = () => {
     switch (module.type) {
       case 'text':
@@ -47,12 +64,17 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               placeholder="Title (optional)"
               className="font-medium"
             />
-            <Textarea
-              value={module.content.text || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, text: e.target.value })}
-              placeholder="Enter text content..."
-              rows={4}
-            />
+            <div className="rich-text-editor">
+              <ReactQuill
+                theme="snow"
+                value={module.content.text || ''}
+                onChange={(value) => onUpdate(module.id, { ...module.content, text: value })}
+                modules={quillModules}
+                formats={quillFormats}
+                placeholder="Enter text content..."
+                style={{ minHeight: '120px' }}
+              />
+            </div>
           </div>
         );
 
@@ -164,13 +186,10 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               <h3 className="text-title text-text-primary font-light">{module.content.title}</h3>
             )}
             {module.content.text && (
-              <div className="space-y-4">
-                {module.content.text.split('\n\n').map((paragraph: string, index: number) => (
-                  <p key={index} className="text-body text-text-secondary leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+              <div 
+                className="prose prose-slate max-w-none text-body text-text-secondary leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: module.content.text }}
+              />
             )}
           </div>
         );
