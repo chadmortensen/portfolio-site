@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, X, Play, Edit3, Save, Lock } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Play, Edit3, Save, Lock, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,6 +8,10 @@ import { Label } from "@/components/ui/label";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useCallback, useMemo } from 'react';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { EditableModule, Module } from "./EditableModule";
+import { ModuleLibrary } from "./ModuleLibrary";
 
 interface PresentationModeProps {
   sections: any[];
@@ -29,9 +33,18 @@ const PasscodeDialog = ({ onSuccess, onCancel }: PasscodeDialogProps) => {
   const [passcode, setPasscode] = useState("");
   const [error, setError] = useState("");
 
+  // Check for stored authentication on mount
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('presentation-edit-authenticated') === 'true';
+    if (isAuthenticated) {
+      onSuccess();
+    }
+  }, [onSuccess]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (passcode === "4455") {
+      localStorage.setItem('presentation-edit-authenticated', 'true');
       onSuccess();
     } else {
       setError("Incorrect passcode");
@@ -322,6 +335,20 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
   const [showPasscodeDialog, setShowPasscodeDialog] = useState(false);
   const [customSections, setCustomSections] = useState(sections);
   const [isUsingCustomCopy, setIsUsingCustomCopy] = useState(false);
+  const [showModuleLibrary, setShowModuleLibrary] = useState(false);
+  const [isModuleEditing, setIsModuleEditing] = useState(false);
+  const [editableSections, setEditableSections] = useState<Array<{
+    title: string;
+    subheader?: string;
+    modules: Module[];
+  }>>([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const handleCustomCopySave = (editedSections: any[]) => {
     setCustomSections(editedSections);
@@ -346,7 +373,94 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
     setShowPasscodeDialog(true);
   };
 
-  const activeSections = isUsingCustomCopy ? customSections : sections;
+  const handleModuleEditClick = () => {
+    if (editableSections.length === 0) {
+      // Convert sections to modular format
+      const converted = sections.map((section) => {
+        const modules: Module[] = [];
+        
+        if (section.content) {
+          modules.push({
+            id: `${section.title}-content-${Date.now()}`,
+            type: 'text',
+            content: { text: section.content }
+          });
+        }
+
+        if (section.goals) {
+          modules.push({
+            id: `${section.title}-goals-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Goals', items: section.goals }
+          });
+        }
+
+        if (section.quotes) {
+          modules.push({
+            id: `${section.title}-quotes-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'User Feedback', items: section.quotes }
+          });
+        }
+
+        if (section.insight) {
+          modules.push({
+            id: `${section.title}-insight-${Date.now()}`,
+            type: 'quote',
+            content: { title: 'Key Insight', text: section.insight }
+          });
+        }
+
+        return {
+          title: section.title,
+          subheader: section.subheader,
+          modules
+        };
+      });
+      setEditableSections(converted);
+    }
+    setIsModuleEditing(true);
+  };
+
+  const handleUpdateModule = (sectionIndex: number, moduleId: string, content: any) => {
+    const newSections = [...editableSections];
+    const moduleIndex = newSections[sectionIndex].modules.findIndex(m => m.id === moduleId);
+    if (moduleIndex !== -1) {
+      newSections[sectionIndex].modules[moduleIndex].content = content;
+      setEditableSections(newSections);
+    }
+  };
+
+  const handleDeleteModule = (sectionIndex: number, moduleId: string) => {
+    const newSections = [...editableSections];
+    newSections[sectionIndex].modules = newSections[sectionIndex].modules.filter(m => m.id !== moduleId);
+    setEditableSections(newSections);
+  };
+
+  const handleAddModule = (sectionIndex: number, module: Omit<Module, 'id'>) => {
+    const newModule: Module = {
+      ...module,
+      id: `${Date.now()}-${Math.random()}`
+    };
+    const newSections = [...editableSections];
+    newSections[sectionIndex].modules.push(newModule);
+    setEditableSections(newSections);
+  };
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      const section = editableSections[currentSlide];
+      const oldIndex = section.modules.findIndex((module) => module.id === active.id);
+      const newIndex = section.modules.findIndex((module) => module.id === over.id);
+      const newModules = arrayMove(section.modules, oldIndex, newIndex);
+      const newSections = [...editableSections];
+      newSections[currentSlide] = { ...section, modules: newModules };
+      setEditableSections(newSections);
+    }
+  };
+
+  const activeSections = isModuleEditing ? editableSections : (isUsingCustomCopy ? customSections : sections);
 
   const nextSlide = () => {
     if (currentSlide < activeSections.length - 1 && !isTransitioning) {
@@ -385,10 +499,141 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentSlide, isTransitioning]);
 
+  // Smart layout renderer for modular editing
+  const renderModulesWithLayout = (modules: Module[]) => {
+    const result: JSX.Element[] = [];
+    let processedIndices = new Set<number>();
+
+    for (let i = 0; i < modules.length; i++) {
+      if (processedIndices.has(i)) continue;
+
+      const module = modules[i];
+      
+      if (module.type === 'image' && module.content.position === 'beside') {
+        // Collect all content modules before this image
+        const contentModules = [];
+        for (let j = i - 1; j >= 0; j--) {
+          if (modules[j].type !== 'image' && !processedIndices.has(j)) {
+            contentModules.unshift(modules[j]);
+            processedIndices.add(j);
+          } else {
+            break;
+          }
+        }
+
+        // Collect all consecutive "beside" images starting from current position
+        const besideImages = [];
+        for (let k = i; k < modules.length; k++) {
+          if (modules[k].type === 'image' && modules[k].content.position === 'beside') {
+            besideImages.push(modules[k]);
+            processedIndices.add(k);
+          } else {
+            break;
+          }
+        }
+
+        const firstImageColumns = parseInt(besideImages[0].content.columns || '6');
+        const contentColumns = 12 - firstImageColumns;
+
+        result.push(
+          <div key={`layout-group-${i}`} className="grid grid-cols-12 gap-8 items-start">
+            {contentModules.length > 0 && (
+              <div className={`col-span-12 lg:col-span-${contentColumns} space-y-6`}>
+                {contentModules.map((contentModule) => (
+                  <EditableModule
+                    key={contentModule.id}
+                    module={contentModule}
+                    isEditing={isModuleEditing}
+                    onUpdate={(id, content) => handleUpdateModule(currentSlide, id, content)}
+                    onDelete={(id) => handleDeleteModule(currentSlide, id)}
+                  />
+                ))}
+              </div>
+            )}
+            <div className={`col-span-12 lg:col-span-${firstImageColumns} space-y-6`}>
+              {besideImages.map((imageModule) => (
+                <div key={imageModule.id} className="w-full">
+                  <EditableModule
+                    module={imageModule}
+                    isEditing={isModuleEditing}
+                    onUpdate={(id, content) => handleUpdateModule(currentSlide, id, content)}
+                    onDelete={(id) => handleDeleteModule(currentSlide, id)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      } else {
+        // Regular module rendering for non-image or "below" positioned images
+        result.push(
+          <EditableModule
+            key={module.id}
+            module={module}
+            isEditing={isModuleEditing}
+            onUpdate={(id, content) => handleUpdateModule(currentSlide, id, content)}
+            onDelete={(id) => handleDeleteModule(currentSlide, id)}
+          />
+        );
+        processedIndices.add(i);
+      }
+    }
+    
+    return result;
+  };
+
   const renderSlideContent = (section: any) => {
     // Check if section has any images
     const hasImages = section.image || section.sectionImage || section.fullWidthImage || 
                      section.workshopImages || section.additionalImages;
+
+    // If in module editing mode and section has modules, render with module layout
+    if (isModuleEditing && section.modules) {
+      return (
+        <div className="space-y-8">
+          {/* Title */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl lg:text-6xl font-light text-text-primary mb-4">
+              {section.title}
+            </h1>
+            {section.subheader && (
+              <h2 className="text-2xl lg:text-3xl text-text-secondary font-light">
+                {section.subheader}
+              </h2>
+            )}
+            <div className="w-24 h-px bg-accent-teal mx-auto mt-8"></div>
+          </div>
+
+          {/* Add Module Button */}
+          <div className="flex justify-center mb-8">
+            <Button
+              variant="outline"
+              onClick={() => setShowModuleLibrary(true)}
+              className="flex items-center space-x-2"
+            >
+              <Plus size={16} />
+              <span>Add Module</span>
+            </Button>
+          </div>
+
+          {/* Modules with smart layout */}
+          <div className="space-y-6">
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={section.modules.map((m: Module) => m.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                {renderModulesWithLayout(section.modules)}
+              </SortableContext>
+            </DndContext>
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div className="space-y-8">
@@ -735,6 +980,16 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
             <Edit3 size={16} />
             <span className="ml-2 text-sm">Edit Copy</span>
           </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleModuleEditClick}
+            className="p-2 hover:bg-surface-primary text-text-secondary hover:text-text-primary"
+          >
+            <Plus size={16} />
+            <span className="ml-2 text-sm">Modules</span>
+          </Button>
           
           <Button
             variant="ghost"
@@ -799,6 +1054,13 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           onCancel={handleCustomCopyCancel}
         />
       )}
+
+      {/* Module Library */}
+      <ModuleLibrary
+        isOpen={showModuleLibrary}
+        onAddModule={(module) => handleAddModule(currentSlide, module)}
+        onClose={() => setShowModuleLibrary(false)}
+      />
     </div>
   );
 };

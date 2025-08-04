@@ -137,11 +137,21 @@ const CaseStudy3 = () => {
     }
   }, []);
 
+  // Check for stored authentication on load
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('edit-authenticated') === 'true';
+    if (isAuthenticated) {
+      setIsEditing(true);
+    }
+  }, []);
+
   const handlePasswordSubmit = () => {
     if (editPassword === '4455') {
       setIsEditing(true);
       setShowPasswordPrompt(false);
       setEditPassword('');
+      // Store authentication state
+      localStorage.setItem('edit-authenticated', 'true');
     } else {
       alert('Incorrect password');
       setEditPassword('');
@@ -232,10 +242,13 @@ const CaseStudy3 = () => {
         const firstImageColumns = parseInt(besideImages[0].content.columns || '6');
         const contentColumns = 12 - firstImageColumns;
 
+        const contentColumnClass = contentModules.length > 0 ? `lg:col-span-${contentColumns}` : '';
+        const imageColumnClass = contentModules.length > 0 ? `lg:col-span-${firstImageColumns}` : '';
+
         result.push(
-          <div key={`layout-group-${i}`} className="grid lg:grid-cols-12 gap-8 items-start">
+          <div key={`layout-group-${i}`} className="grid grid-cols-12 gap-8 items-start">
             {contentModules.length > 0 && (
-              <div className={`col-span-12 lg:col-span-${contentColumns} space-y-6`}>
+              <div className={`col-span-12 ${contentColumnClass} space-y-6`}>
                 {contentModules.map((contentModule) => (
                   <EditableModule
                     key={contentModule.id}
@@ -247,29 +260,17 @@ const CaseStudy3 = () => {
                 ))}
               </div>
             )}
-            <div className={`col-span-12 ${contentModules.length > 0 ? `lg:col-span-${firstImageColumns}` : 'lg:col-span-12'} space-y-6`}>
-              {besideImages.map((imageModule) => {
-                const imageColumns = parseInt(imageModule.content.columns || '6');
-                const widthClass = contentModules.length > 0 ? 'w-full' : {
-                  3: 'w-1/4',
-                  4: 'w-1/3',
-                  6: 'w-1/2', 
-                  8: 'w-2/3',
-                  9: 'w-3/4',
-                  12: 'w-full'
-                }[imageColumns] || 'w-1/2';
-
-                return (
-                  <div key={imageModule.id} className={contentModules.length === 0 ? widthClass : ''}>
-                    <EditableModule
-                      module={imageModule}
-                      isEditing={editing}
-                      onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
-                      onDelete={(id) => handleDeleteModule(sectionIndex, id)}
-                    />
-                  </div>
-                );
-              })}
+            <div className={`col-span-12 ${imageColumnClass} space-y-6`}>
+              {besideImages.map((imageModule) => (
+                <div key={imageModule.id} className="w-full">
+                  <EditableModule
+                    module={imageModule}
+                    isEditing={editing}
+                    onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         );
