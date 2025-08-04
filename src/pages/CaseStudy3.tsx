@@ -238,7 +238,7 @@ const CaseStudy3 = () => {
                           <img
                             src={(section as any).image}
                             alt={`${section.title} visual`}
-                            className="w-1/3 h-auto cursor-pointer hover:opacity-90 transition-opacity"
+                            className="w-1/2 h-auto cursor-pointer hover:opacity-90 transition-opacity"
                             onClick={() => setSelectedImage((section as any).image)}
                           />
                         </DialogTrigger>
