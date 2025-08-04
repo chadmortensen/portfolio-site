@@ -192,7 +192,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
       case 'image':
         if (!module.content.src) return null;
         const heightStyle = module.content.heightPercent 
-          ? { height: `${module.content.heightPercent}vh` }
+          ? { height: `${module.content.heightPercent}vh`, objectFit: 'contain' as const }
           : {};
         return (
           <img
