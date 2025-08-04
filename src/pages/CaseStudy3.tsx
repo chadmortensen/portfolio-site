@@ -150,7 +150,7 @@ const CaseStudy3 = () => {
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('edit-authenticated') === 'true';
     if (isAuthenticated) {
-      setIsEditing(true);
+      setIsEditing(false); // Start in view mode even if authenticated
     }
   }, []);
 
