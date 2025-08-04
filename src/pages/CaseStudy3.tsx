@@ -49,7 +49,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-content-${Date.now()}`,
             type: 'text',
-            content: { text: htmlContent }
+            content: { text: htmlContent },
+            column: 'left'
           });
         }
 
@@ -58,7 +59,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-goals-${Date.now()}`,
             type: 'bullets',
-            content: { title: 'Goals', items: section.goals }
+            content: { title: 'Goals', items: section.goals },
+            column: 'left'
           });
         }
 
@@ -67,7 +69,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-findings-${Date.now()}`,
             type: 'bullets',
-            content: { title: 'Key Findings', items: section.keyFindings }
+            content: { title: 'Key Findings', items: section.keyFindings },
+            column: 'left'
           });
         }
 
@@ -76,7 +79,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-insight-${Date.now()}`,
             type: 'quote',
-            content: { title: 'Key Insight', text: section.insight }
+            content: { title: 'Key Insight', text: section.insight },
+            column: 'left'
           });
         }
 
@@ -85,7 +89,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-ideas-${Date.now()}`,
             type: 'bullets',
-            content: { title: 'Two Standout Ideas', items: section.standoutIdeas }
+            content: { title: 'Two Standout Ideas', items: section.standoutIdeas },
+            column: 'left'
           });
         }
 
@@ -95,7 +100,8 @@ const CaseStudy3 = () => {
             modules.push({
               id: `${section.title}-principle-${index}-${Date.now()}`,
               type: 'quote',
-              content: { title: principle.title, text: principle.description }
+              content: { title: principle.title, text: principle.description },
+              column: 'left'
             });
           });
         }
@@ -105,7 +111,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-tradeoffs-${Date.now()}`,
             type: 'quote',
-            content: { title: 'Trade-offs', text: section.tradeoffs }
+            content: { title: 'Trade-offs', text: section.tradeoffs },
+            column: 'left'
           });
         }
 
@@ -114,7 +121,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-reflection-${Date.now()}`,
             type: 'quote',
-            content: { title: 'Personal Reflection', text: section.personalReflection }
+            content: { title: 'Personal Reflection', text: section.personalReflection },
+            column: 'left'
           });
         }
 
@@ -123,7 +131,8 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-image-${Date.now()}`,
             type: 'image',
-            content: { src: (section as any).image, alt: `${section.title} visual`, position: 'beside', columns: '4' }
+            content: { src: (section as any).image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
+            column: 'right'
           });
         }
 
@@ -181,11 +190,47 @@ const CaseStudy3 = () => {
     }
   };
 
-  const handleUpdateModule = (sectionIndex: number, moduleId: string, content: any) => {
+  const handleColumnDragEnd = (event: any, sectionIndex: number, column: 'left' | 'right') => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const section = editableSections[sectionIndex];
+      const columnModules = section.modules.filter(m => m.column === column);
+      const oldIndex = columnModules.findIndex((module) => module.id === active.id);
+      const newIndex = columnModules.findIndex((module) => module.id === over.id);
+
+      const reorderedColumnModules = arrayMove(columnModules, oldIndex, newIndex);
+      
+      // Update the full modules array with the reordered column modules
+      const newModules = section.modules.map(module => {
+        if (module.column === column) {
+          const newOrder = reorderedColumnModules.findIndex(m => m.id === module.id);
+          return { ...module, order: newOrder };
+        }
+        return module;
+      });
+
+      // Sort modules to maintain column order
+      const sortedModules = [
+        ...newModules.filter(m => m.column === 'full'),
+        ...reorderedColumnModules,
+        ...newModules.filter(m => m.column !== column && m.column !== 'full')
+      ];
+
+      const newSections = [...editableSections];
+      newSections[sectionIndex] = { ...section, modules: sortedModules };
+      setEditableSections(newSections);
+    }
+  };
+
+  const handleUpdateModule = (sectionIndex: number, moduleId: string, content: any, column?: string) => {
     const newSections = [...editableSections];
     const moduleIndex = newSections[sectionIndex].modules.findIndex(m => m.id === moduleId);
     if (moduleIndex !== -1) {
       newSections[sectionIndex].modules[moduleIndex].content = content;
+      if (column !== undefined) {
+        newSections[sectionIndex].modules[moduleIndex].column = column as 'full' | 'left' | 'right';
+      }
       setEditableSections(newSections);
     }
   };
@@ -206,106 +251,106 @@ const CaseStudy3 = () => {
     setEditableSections(newSections);
   };
 
-  // Smart layout renderer that handles image positioning
+  // Column-based layout renderer for flexible module positioning
   const renderModulesWithLayout = (modules: Module[], sectionIndex: number, editing: boolean) => {
-    const result: JSX.Element[] = [];
-    let processedIndices = new Set<number>();
+    // Group modules by column
+    const fullWidthModules = modules.filter(m => m.column === 'full');
+    const leftColumnModules = modules.filter(m => m.column === 'left');
+    const rightColumnModules = modules.filter(m => m.column === 'right');
 
-    for (let i = 0; i < modules.length; i++) {
-      if (processedIndices.has(i)) continue;
+    const hasColumnModules = leftColumnModules.length > 0 || rightColumnModules.length > 0;
 
-      const module = modules[i];
-      
-      if (module.type === 'image' && module.content.position === 'beside') {
-        // Collect all content modules before this image
-        const contentModules = [];
-        for (let j = i - 1; j >= 0; j--) {
-          if (modules[j].type !== 'image' && !processedIndices.has(j)) {
-            contentModules.unshift(modules[j]);
-            processedIndices.add(j);
-          } else {
-            break;
-          }
-        }
-
-        // Collect all consecutive "beside" images starting from current position
-        const besideImages = [];
-        for (let k = i; k < modules.length; k++) {
-          if (modules[k].type === 'image' && modules[k].content.position === 'beside') {
-            besideImages.push(modules[k]);
-            processedIndices.add(k);
-          } else {
-            break;
-          }
-        }
-
-        const firstImageColumns = parseInt(besideImages[0].content.columns || '6');
-        const contentColumns = 12 - firstImageColumns;
-
-        if (contentModules.length > 0) {
-          // When there's content, create a side-by-side layout
-          result.push(
-            <div key={`layout-group-${i}`} className="grid grid-cols-12 gap-8 items-start">
-              <div className={`col-span-12 lg:col-span-${contentColumns} space-y-6`}>
-                {contentModules.map((contentModule) => (
-                  <EditableModule
-                    key={contentModule.id}
-                    module={contentModule}
-                    isEditing={editing}
-                    onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
-                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
-                  />
-                ))}
-              </div>
-              <div className={`col-span-12 lg:col-span-${firstImageColumns} space-y-6`}>
-                {besideImages.map((imageModule) => (
-                  <div key={imageModule.id} className={`grid grid-cols-${imageModule.content.columns || '12'}`}>
-                    <div className={`col-span-${imageModule.content.columns || '12'}`}>
-                      <EditableModule
-                        module={imageModule}
-                        isEditing={editing}
-                        onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
-                        onDelete={(id) => handleDeleteModule(sectionIndex, id)}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        } else {
-          // When there's no content, just display the images using their column settings
-          result.push(
-            <div key={`layout-group-${i}`} className="grid grid-cols-12 gap-8">
-              {besideImages.map((imageModule) => (
-                <div key={imageModule.id} className={`col-span-12 lg:col-span-${imageModule.content.columns || '12'}`}>
-                  <EditableModule
-                    module={imageModule}
-                    isEditing={editing}
-                    onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
-                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
-                  />
-                </div>
-              ))}
-            </div>
-          );
-        }
-      } else {
-        // Regular module rendering for non-image or "below" positioned images
-        result.push(
+    return (
+      <div className="space-y-8">
+        {/* Full width modules */}
+        {fullWidthModules.map((module) => (
           <EditableModule
             key={module.id}
             module={module}
             isEditing={editing}
-            onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+            onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
             onDelete={(id) => handleDeleteModule(sectionIndex, id)}
           />
-        );
-        processedIndices.add(i);
-      }
-    }
-    
-    return result;
+        ))}
+
+        {/* Column layout for left/right modules */}
+        {hasColumnModules && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left column */}
+            <div className="space-y-6">
+              {editing ? (
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={(event) => handleColumnDragEnd(event, sectionIndex, 'left')}
+                >
+                  <SortableContext
+                    items={leftColumnModules.map(m => m.id)}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {leftColumnModules.map((module) => (
+                      <EditableModule
+                        key={module.id}
+                        module={module}
+                        isEditing={editing}
+                        onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                        onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
+              ) : (
+                leftColumnModules.map((module) => (
+                  <EditableModule
+                    key={module.id}
+                    module={module}
+                    isEditing={editing}
+                    onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                  />
+                ))
+              )}
+            </div>
+
+            {/* Right column */}
+            <div className="space-y-6">
+              {editing ? (
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={(event) => handleColumnDragEnd(event, sectionIndex, 'right')}
+                >
+                  <SortableContext
+                    items={rightColumnModules.map(m => m.id)}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {rightColumnModules.map((module) => (
+                      <EditableModule
+                        key={module.id}
+                        module={module}
+                        isEditing={editing}
+                        onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                        onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
+              ) : (
+                rightColumnModules.map((module) => (
+                  <EditableModule
+                    key={module.id}
+                    module={module}
+                    isEditing={editing}
+                    onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   const sections = [
@@ -483,24 +528,9 @@ const CaseStudy3 = () => {
                   )}
                 </div>
                 
-                {/* Modules with smart layout */}
+                {/* Modules with column-based layout */}
                 <div className="space-y-6">
-                  {isEditing ? (
-                    <DndContext
-                      sensors={sensors}
-                      collisionDetection={closestCenter}
-                      onDragEnd={handleDragEnd}
-                    >
-                      <SortableContext
-                        items={section.modules.map(m => m.id)}
-                        strategy={verticalListSortingStrategy}
-                      >
-                        {renderModulesWithLayout(section.modules, sectionIndex, true)}
-                      </SortableContext>
-                    </DndContext>
-                  ) : (
-                    renderModulesWithLayout(section.modules, sectionIndex, false)
-                  )}
+                  {renderModulesWithLayout(section.modules, sectionIndex, isEditing)}
                 </div>
               </div>
             ))}

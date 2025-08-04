@@ -13,12 +13,13 @@ export interface Module {
   id: string;
   type: 'text' | 'image' | 'bullets' | 'goals' | 'findings' | 'principles' | 'quote';
   content: any;
+  column: 'full' | 'left' | 'right';
 }
 
 interface EditableModuleProps {
   module: Module;
   isEditing: boolean;
-  onUpdate: (id: string, content: any) => void;
+  onUpdate: (id: string, content: any, column?: string) => void;
   onDelete: (id: string) => void;
 }
 
@@ -91,42 +92,6 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               onChange={(e) => onUpdate(module.id, { ...module.content, alt: e.target.value })}
               placeholder="Alt text"
             />
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">Position</label>
-                <Select
-                  value={module.content.position || 'below'}
-                  onValueChange={(value) => onUpdate(module.id, { ...module.content, position: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Image position" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="below">Below content</SelectItem>
-                    <SelectItem value="beside">Beside content</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">Width</label>
-                <Select
-                  value={module.content.columns || '6'}
-                  onValueChange={(value) => onUpdate(module.id, { ...module.content, columns: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Image width" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="3">1/4 width (3 cols)</SelectItem>
-                    <SelectItem value="4">1/3 width (4 cols)</SelectItem>
-                    <SelectItem value="6">1/2 width (6 cols)</SelectItem>
-                    <SelectItem value="8">2/3 width (8 cols)</SelectItem>
-                    <SelectItem value="9">3/4 width (9 cols)</SelectItem>
-                    <SelectItem value="12">Full width (12 cols)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
           </div>
         );
 
@@ -267,30 +232,49 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
       className={`relative group ${isEditing ? 'border border-dashed border-accent-blue p-4 rounded-lg' : ''}`}
     >
       {isEditing && (
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-2">
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="cursor-grab active:cursor-grabbing"
+                {...attributes}
+                {...listeners}
+              >
+                <GripVertical size={16} />
+              </Button>
+              <span className="text-sm text-text-secondary font-medium">
+                {module.type.charAt(0).toUpperCase() + module.type.slice(1)} Module
+              </span>
+            </div>
             <Button
               variant="ghost"
               size="sm"
-              className="cursor-grab active:cursor-grabbing"
-              {...attributes}
-              {...listeners}
+              onClick={() => onDelete(module.id)}
+              className="text-red-500 hover:text-red-700"
             >
-              <GripVertical size={16} />
+              <Trash2 size={16} />
             </Button>
-            <span className="text-sm text-text-secondary font-medium">
-              {module.type.charAt(0).toUpperCase() + module.type.slice(1)} Module
-            </span>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onDelete(module.id)}
-            className="text-red-500 hover:text-red-700"
-          >
-            <Trash2 size={16} />
-          </Button>
-        </div>
+          
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-text-secondary mb-2">Column</label>
+            <Select
+              value={module.column}
+              onValueChange={(value) => onUpdate(module.id, module.content, value as 'full' | 'left' | 'right')}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select column" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="full">Full Width</SelectItem>
+                <SelectItem value="left">Left Column</SelectItem>
+                <SelectItem value="right">Right Column</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </>
       )}
       
       {isEditing ? renderEditMode() : renderViewMode()}

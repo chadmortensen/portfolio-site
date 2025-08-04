@@ -383,7 +383,8 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           modules.push({
             id: `${section.title}-content-${Date.now()}`,
             type: 'text',
-            content: { text: section.content }
+            content: { text: section.content },
+            column: 'full'
           });
         }
 
@@ -391,7 +392,8 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           modules.push({
             id: `${section.title}-goals-${Date.now()}`,
             type: 'bullets',
-            content: { title: 'Goals', items: section.goals }
+            content: { title: 'Goals', items: section.goals },
+            column: 'full'
           });
         }
 
@@ -399,7 +401,8 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           modules.push({
             id: `${section.title}-quotes-${Date.now()}`,
             type: 'bullets',
-            content: { title: 'User Feedback', items: section.quotes }
+            content: { title: 'User Feedback', items: section.quotes },
+            column: 'full'
           });
         }
 
@@ -407,7 +410,8 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
           modules.push({
             id: `${section.title}-insight-${Date.now()}`,
             type: 'quote',
-            content: { title: 'Key Insight', text: section.insight }
+            content: { title: 'Key Insight', text: section.insight },
+            column: 'full'
           });
         }
 

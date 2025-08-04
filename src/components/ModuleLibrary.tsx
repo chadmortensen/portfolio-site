@@ -59,7 +59,8 @@ export const ModuleLibrary = ({ isOpen, onAddModule, onClose }: ModuleLibraryPro
               onClick={() => {
                 onAddModule({
                   type: moduleType.type,
-                  content: moduleType.defaultContent
+                  content: moduleType.defaultContent,
+                  column: 'full'
                 });
                 onClose();
               }}
