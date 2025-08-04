@@ -92,6 +92,14 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               onChange={(e) => onUpdate(module.id, { ...module.content, alt: e.target.value })}
               placeholder="Alt text"
             />
+            <Input
+              type="number"
+              min="10"
+              max="100"
+              value={module.content.heightPercent || ''}
+              onChange={(e) => onUpdate(module.id, { ...module.content, heightPercent: e.target.value })}
+              placeholder="Height % (optional)"
+            />
           </div>
         );
 
@@ -183,11 +191,15 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
 
       case 'image':
         if (!module.content.src) return null;
+        const heightStyle = module.content.heightPercent 
+          ? { height: `${module.content.heightPercent}vh` }
+          : {};
         return (
           <img
             src={module.content.src}
             alt={module.content.alt || ''}
-            className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
+            className="w-full cursor-pointer hover:opacity-90 transition-opacity object-cover"
+            style={heightStyle}
           />
         );
 
