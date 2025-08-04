@@ -150,7 +150,7 @@ const CaseStudy3 = () => {
                 
                 {/* Content and image below header */}
                 <div className={('image' in section) ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
-                  <div className={('image' in section) ? "lg:col-span-5 space-y-6" : "space-y-6"}>
+                  <div className={('image' in section) ? "lg:col-span-8 space-y-6" : "space-y-6"}>
                     {section.content.split('\n\n').map((paragraph, pIndex) => (
                       <p key={pIndex} className="text-body text-text-secondary leading-relaxed">
                         {paragraph}
@@ -231,14 +231,14 @@ const CaseStudy3 = () => {
                     )}
                   </div>
                   
-                   {('image' in section) && (
-                    <div className="lg:col-span-7">
+                    {('image' in section) && (
+                     <div className="lg:col-span-4">
                       <Dialog>
                         <DialogTrigger asChild>
                           <img
                             src={(section as any).image}
                             alt={`${section.title} visual`}
-                            className="w-1/2 h-auto cursor-pointer hover:opacity-90 transition-opacity"
+                            className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
                             onClick={() => setSelectedImage((section as any).image)}
                           />
                         </DialogTrigger>
