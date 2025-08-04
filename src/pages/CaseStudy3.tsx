@@ -19,7 +19,8 @@ const CaseStudy3 = () => {
         "Increase conversion rate for prospective members signing up for Brightside Health",
         "Create a flexible solution for new marketing channels", 
         "Balance a concise signup process with capturing important customer health information that assists with treatment"
-      ]
+      ],
+      image: "/lovable-uploads/653ebb9d-20fb-4574-8a3e-ce19d02d793c.png"
     },
     {
       title: "The Data",
