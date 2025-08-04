@@ -199,58 +199,82 @@ const CaseStudy3 = () => {
   // Smart layout renderer that handles image positioning
   const renderModulesWithLayout = (modules: Module[], sectionIndex: number, editing: boolean) => {
     const result: JSX.Element[] = [];
-    let i = 0;
+    let processedIndices = new Set<number>();
 
-    while (i < modules.length) {
+    for (let i = 0; i < modules.length; i++) {
+      if (processedIndices.has(i)) continue;
+
       const module = modules[i];
       
-      // Check if this is an image with "beside" positioning
       if (module.type === 'image' && module.content.position === 'beside') {
-        // Find preceding content modules to group with this image
+        // Collect all content modules before this image
         const contentModules = [];
-        let j = i - 1;
-        
-        // Look back for content modules that can be grouped
-        while (j >= 0 && modules[j].type !== 'image') {
-          contentModules.unshift(modules[j]);
-          j--;
+        for (let j = i - 1; j >= 0; j--) {
+          if (modules[j].type !== 'image' && !processedIndices.has(j)) {
+            contentModules.unshift(modules[j]);
+            processedIndices.add(j);
+          } else {
+            break;
+          }
         }
-        
-        // Remove the content modules from previous renders if they exist
-        if (contentModules.length > 0) {
-          // Remove those content modules from result
-          result.splice(result.length - contentModules.length);
+
+        // Collect all consecutive "beside" images starting from current position
+        const besideImages = [];
+        for (let k = i; k < modules.length; k++) {
+          if (modules[k].type === 'image' && modules[k].content.position === 'beside') {
+            besideImages.push(modules[k]);
+            processedIndices.add(k);
+          } else {
+            break;
+          }
         }
-        
-        const imageColumns = module.content.columns || '6';
-        const contentColumns = 12 - parseInt(imageColumns);
-        
+
+        const firstImageColumns = parseInt(besideImages[0].content.columns || '6');
+        const contentColumns = 12 - firstImageColumns;
+
         result.push(
-          <div key={`layout-${module.id}`} className="grid lg:grid-cols-12 gap-8 items-start">
-            <div className={`lg:col-span-${contentColumns} space-y-6`}>
-              {contentModules.map((contentModule) => (
-                <EditableModule
-                  key={contentModule.id}
-                  module={contentModule}
-                  isEditing={editing}
-                  onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
-                  onDelete={(id) => handleDeleteModule(sectionIndex, id)}
-                />
-              ))}
-            </div>
-            <div className={`lg:col-span-${imageColumns}`}>
-              <EditableModule
-                key={module.id}
-                module={module}
-                isEditing={editing}
-                onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
-                onDelete={(id) => handleDeleteModule(sectionIndex, id)}
-              />
+          <div key={`layout-group-${i}`} className="grid lg:grid-cols-12 gap-8 items-start">
+            {contentModules.length > 0 && (
+              <div className={`col-span-12 lg:col-span-${contentColumns} space-y-6`}>
+                {contentModules.map((contentModule) => (
+                  <EditableModule
+                    key={contentModule.id}
+                    module={contentModule}
+                    isEditing={editing}
+                    onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                  />
+                ))}
+              </div>
+            )}
+            <div className={`col-span-12 ${contentModules.length > 0 ? `lg:col-span-${firstImageColumns}` : 'lg:col-span-12'} space-y-6`}>
+              {besideImages.map((imageModule) => {
+                const imageColumns = parseInt(imageModule.content.columns || '6');
+                const widthClass = contentModules.length > 0 ? 'w-full' : {
+                  3: 'w-1/4',
+                  4: 'w-1/3',
+                  6: 'w-1/2', 
+                  8: 'w-2/3',
+                  9: 'w-3/4',
+                  12: 'w-full'
+                }[imageColumns] || 'w-1/2';
+
+                return (
+                  <div key={imageModule.id} className={contentModules.length === 0 ? widthClass : ''}>
+                    <EditableModule
+                      module={imageModule}
+                      isEditing={editing}
+                      onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+                      onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         );
       } else {
-        // Regular module rendering
+        // Regular module rendering for non-image or "below" positioned images
         result.push(
           <EditableModule
             key={module.id}
@@ -260,9 +284,8 @@ const CaseStudy3 = () => {
             onDelete={(id) => handleDeleteModule(sectionIndex, id)}
           />
         );
+        processedIndices.add(i);
       }
-      
-      i++;
     }
     
     return result;

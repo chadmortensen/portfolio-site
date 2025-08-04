@@ -218,20 +218,11 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
 
       case 'image':
         if (!module.content.src) return null;
-        const columns = module.content.columns || '6';
-        const columnClasses = {
-          '3': 'w-1/4',
-          '4': 'w-1/3', 
-          '6': 'w-1/2',
-          '8': 'w-2/3',
-          '9': 'w-3/4',
-          '12': 'w-full'
-        };
         return (
           <img
             src={module.content.src}
             alt={module.content.alt || ''}
-            className={`${columnClasses[columns as keyof typeof columnClasses] || 'w-1/2'} h-auto cursor-pointer hover:opacity-90 transition-opacity`}
+            className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
           />
         );
 
