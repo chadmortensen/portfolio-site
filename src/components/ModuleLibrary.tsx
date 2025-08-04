@@ -23,8 +23,8 @@ export const ModuleLibrary = ({ isOpen, onAddModule, onClose }: ModuleLibraryPro
       type: 'image' as const,
       icon: Image,
       title: 'Image',
-      description: 'Add an image with caption',
-      defaultContent: { src: '', alt: '', size: 'medium' }
+      description: 'Add an image with positioning and sizing controls',
+      defaultContent: { src: '', alt: '', position: 'below', columns: '6' }
     },
     {
       type: 'bullets' as const,

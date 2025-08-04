@@ -123,7 +123,7 @@ const CaseStudy3 = () => {
           modules.push({
             id: `${section.title}-image-${Date.now()}`,
             type: 'image',
-            content: { src: (section as any).image, alt: `${section.title} visual`, size: 'medium' }
+            content: { src: (section as any).image, alt: `${section.title} visual`, position: 'beside', columns: '4' }
           });
         }
 
@@ -194,6 +194,78 @@ const CaseStudy3 = () => {
     const newSections = [...editableSections];
     newSections[sectionIndex].modules.push(newModule);
     setEditableSections(newSections);
+  };
+
+  // Smart layout renderer that handles image positioning
+  const renderModulesWithLayout = (modules: Module[], sectionIndex: number, editing: boolean) => {
+    const result: JSX.Element[] = [];
+    let i = 0;
+
+    while (i < modules.length) {
+      const module = modules[i];
+      
+      // Check if this is an image with "beside" positioning
+      if (module.type === 'image' && module.content.position === 'beside') {
+        // Find preceding content modules to group with this image
+        const contentModules = [];
+        let j = i - 1;
+        
+        // Look back for content modules that can be grouped
+        while (j >= 0 && modules[j].type !== 'image') {
+          contentModules.unshift(modules[j]);
+          j--;
+        }
+        
+        // Remove the content modules from previous renders if they exist
+        if (contentModules.length > 0) {
+          // Remove those content modules from result
+          result.splice(result.length - contentModules.length);
+        }
+        
+        const imageColumns = module.content.columns || '6';
+        const contentColumns = 12 - parseInt(imageColumns);
+        
+        result.push(
+          <div key={`layout-${module.id}`} className="grid lg:grid-cols-12 gap-8 items-start">
+            <div className={`lg:col-span-${contentColumns} space-y-6`}>
+              {contentModules.map((contentModule) => (
+                <EditableModule
+                  key={contentModule.id}
+                  module={contentModule}
+                  isEditing={editing}
+                  onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+                  onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                />
+              ))}
+            </div>
+            <div className={`lg:col-span-${imageColumns}`}>
+              <EditableModule
+                key={module.id}
+                module={module}
+                isEditing={editing}
+                onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+                onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+              />
+            </div>
+          </div>
+        );
+      } else {
+        // Regular module rendering
+        result.push(
+          <EditableModule
+            key={module.id}
+            module={module}
+            isEditing={editing}
+            onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
+            onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+          />
+        );
+      }
+      
+      i++;
+    }
+    
+    return result;
   };
 
   const sections = [
@@ -371,7 +443,7 @@ const CaseStudy3 = () => {
                   )}
                 </div>
                 
-                {/* Modules */}
+                {/* Modules with smart layout */}
                 <div className="space-y-6">
                   {isEditing ? (
                     <DndContext
@@ -383,27 +455,11 @@ const CaseStudy3 = () => {
                         items={section.modules.map(m => m.id)}
                         strategy={verticalListSortingStrategy}
                       >
-                        {section.modules.map((module) => (
-                          <EditableModule
-                            key={module.id}
-                            module={module}
-                            isEditing={isEditing}
-                            onUpdate={(id, content) => handleUpdateModule(sectionIndex, id, content)}
-                            onDelete={(id) => handleDeleteModule(sectionIndex, id)}
-                          />
-                        ))}
+                        {renderModulesWithLayout(section.modules, sectionIndex, true)}
                       </SortableContext>
                     </DndContext>
                   ) : (
-                    section.modules.map((module) => (
-                      <EditableModule
-                        key={module.id}
-                        module={module}
-                        isEditing={false}
-                        onUpdate={() => {}}
-                        onDelete={() => {}}
-                      />
-                    ))
+                    renderModulesWithLayout(section.modules, sectionIndex, false)
                   )}
                 </div>
               </div>

@@ -91,20 +91,42 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               onChange={(e) => onUpdate(module.id, { ...module.content, alt: e.target.value })}
               placeholder="Alt text"
             />
-            <Select
-              value={module.content.size || 'medium'}
-              onValueChange={(value) => onUpdate(module.id, { ...module.content, size: value })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Image size" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="small">Small (1/3)</SelectItem>
-                <SelectItem value="medium">Medium (1/2)</SelectItem>
-                <SelectItem value="large">Large (2/3)</SelectItem>
-                <SelectItem value="full">Full Width</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-text-secondary mb-2">Position</label>
+                <Select
+                  value={module.content.position || 'below'}
+                  onValueChange={(value) => onUpdate(module.id, { ...module.content, position: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Image position" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="below">Below content</SelectItem>
+                    <SelectItem value="beside">Beside content</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-text-secondary mb-2">Width</label>
+                <Select
+                  value={module.content.columns || '6'}
+                  onValueChange={(value) => onUpdate(module.id, { ...module.content, columns: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Image width" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="3">1/4 width (3 cols)</SelectItem>
+                    <SelectItem value="4">1/3 width (4 cols)</SelectItem>
+                    <SelectItem value="6">1/2 width (6 cols)</SelectItem>
+                    <SelectItem value="8">2/3 width (8 cols)</SelectItem>
+                    <SelectItem value="9">3/4 width (9 cols)</SelectItem>
+                    <SelectItem value="12">Full width (12 cols)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
         );
 
@@ -196,17 +218,20 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
 
       case 'image':
         if (!module.content.src) return null;
-        const sizeClasses = {
-          small: 'w-1/3',
-          medium: 'w-1/2',
-          large: 'w-2/3',
-          full: 'w-full'
+        const columns = module.content.columns || '6';
+        const columnClasses = {
+          '3': 'w-1/4',
+          '4': 'w-1/3', 
+          '6': 'w-1/2',
+          '8': 'w-2/3',
+          '9': 'w-3/4',
+          '12': 'w-full'
         };
         return (
           <img
             src={module.content.src}
             alt={module.content.alt || ''}
-            className={`${sizeClasses[module.content.size as keyof typeof sizeClasses] || 'w-1/2'} h-auto cursor-pointer hover:opacity-90 transition-opacity`}
+            className={`${columnClasses[columns as keyof typeof columnClasses] || 'w-1/2'} h-auto cursor-pointer hover:opacity-90 transition-opacity`}
           />
         );
 
