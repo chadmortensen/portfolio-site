@@ -438,6 +438,11 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
   const renderSlideContent = (section: any, sectionIndex: number) => {
     const activeSection = isEditing ? editableSections[sectionIndex] : section;
     
+    // Safety check - if section is undefined, return empty slide
+    if (!activeSection && !section) {
+      return <div className="text-center text-text-secondary">Loading...</div>;
+    }
+    
     // If in editing mode and section has modules, render with module layout
     if (isEditing && activeSection?.modules) {
       return (
@@ -574,6 +579,13 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
 
   const activeSections = isEditing ? editableSections : sections;
 
+  // Reset currentSlide if it's out of bounds when switching modes
+  useEffect(() => {
+    if (currentSlide >= activeSections.length && activeSections.length > 0) {
+      setCurrentSlide(0);
+    }
+  }, [activeSections.length, currentSlide]);
+
   const nextSlide = () => {
     if (currentSlide < activeSections.length - 1 && !isTransitioning) {
       setIsTransitioning(true);
@@ -700,7 +712,10 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
             <div className={`
               ${isTransitioning ? 'animate-water-emerge-out' : 'animate-water-emerge-in'}
             `}>
-              {renderSlideContent(activeSections[currentSlide], currentSlide)}
+              {activeSections.length > 0 && currentSlide < activeSections.length ? 
+                renderSlideContent(activeSections[currentSlide], currentSlide) :
+                <div className="text-center text-text-secondary">No slides available</div>
+              }
             </div>
           </div>
         </div>
