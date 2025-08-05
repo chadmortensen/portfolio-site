@@ -10,6 +10,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import PresentationMode from "@/components/PresentationMode";
 import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
+import { GitHubStorageService } from "@/services/githubStorage";
 
 const CaseStudy3 = () => {
   const navigate = useNavigate();
@@ -33,20 +34,32 @@ const CaseStudy3 = () => {
     })
   );
 
-  // Load saved content or convert static sections to editable format on first load
+  // Load content from GitHub or fallback to static content
   useEffect(() => {
-    const savedContent = localStorage.getItem('case-study-3-content');
-    if (savedContent) {
-      try {
-        const parsed = JSON.parse(savedContent);
-        setEditableSections(parsed);
+    const loadContent = async () => {
+      const githubService = new GitHubStorageService();
+      
+      // Try to load from GitHub first
+      const githubContent = await githubService.readFile('case-study-3.json');
+      if (githubContent) {
+        setEditableSections(githubContent);
         return;
-      } catch (e) {
-        console.error('Failed to parse saved content:', e);
       }
-    }
 
-    if (editableSections.length === 0) {
+      // Fallback to localStorage
+      const savedContent = localStorage.getItem('case-study-3-content');
+      if (savedContent) {
+        try {
+          const parsed = JSON.parse(savedContent);
+          setEditableSections(parsed);
+          return;
+        } catch (e) {
+          console.error('Failed to parse saved content:', e);
+        }
+      }
+
+      // Convert static sections as last resort
+      if (editableSections.length === 0) {
       const converted = sections.map((section) => {
         const modules: Module[] = [];
         
@@ -153,8 +166,11 @@ const CaseStudy3 = () => {
           modules
         };
       });
-      setEditableSections(converted);
-    }
+        setEditableSections(converted);
+      }
+    };
+
+    loadContent();
   }, []);
 
   // Check for stored authentication on load
@@ -178,14 +194,26 @@ const CaseStudy3 = () => {
     }
   };
 
-  const handleSave = () => {
-    // Save to localStorage for persistence
-    localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
-    setIsEditing(false);
-    alert('Changes saved successfully!');
+  const handleSave = async () => {
+    const githubService = new GitHubStorageService();
+    
+    // Save to GitHub
+    const success = await githubService.writeFile('case-study-3.json', editableSections);
+    
+    if (success) {
+      // Also save to localStorage as backup
+      localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
+      setIsEditing(false);
+      alert('Changes saved successfully to GitHub!');
+    } else {
+      // If GitHub fails, still save to localStorage
+      localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
+      setIsEditing(false);
+      alert('Saved locally (GitHub save failed - check config)');
+    }
   };
 
-  // Auto-save when editableSections change and in edit mode
+  // Auto-save to localStorage when editableSections change and in edit mode
   useEffect(() => {
     if (isEditing && editableSections.length > 0) {
       localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
