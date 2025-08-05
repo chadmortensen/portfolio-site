@@ -8,6 +8,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { EditableModule, Module } from "./EditableModule";
 import { ModuleLibrary } from "./ModuleLibrary";
+import { GitHubStorageService } from "../services/githubStorage";
 
 interface PresentationModeProps {
   sections: any[];
@@ -265,11 +266,22 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
     setShowPasscodeDialog(true);
   };
 
-  const handleSave = () => {
-    // Save to localStorage for persistence
-    localStorage.setItem('presentation-content', JSON.stringify(editableSections));
-    setIsEditing(false);
-    alert('Changes saved successfully!');
+  const handleSave = async () => {
+    try {
+      const githubService = new GitHubStorageService();
+      await githubService.writeFile('presentation-mode.json', editableSections);
+      
+      // Also save to localStorage as backup
+      localStorage.setItem('presentation-content', JSON.stringify(editableSections));
+      setIsEditing(false);
+      alert('Changes saved successfully to GitHub!');
+    } catch (error) {
+      console.error('Error saving to GitHub:', error);
+      // Fallback to localStorage only
+      localStorage.setItem('presentation-content', JSON.stringify(editableSections));
+      setIsEditing(false);
+      alert('Changes saved locally (GitHub save failed)');
+    }
   };
 
   const handleColumnDragEnd = (event: any, sectionIndex: number, column: 'left' | 'right') => {

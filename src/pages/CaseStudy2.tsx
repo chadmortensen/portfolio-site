@@ -10,6 +10,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import PresentationMode from "@/components/PresentationMode";
 import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
+import { GitHubStorageService } from "@/services/githubStorage";
 
 const CaseStudy2 = () => {
   const navigate = useNavigate();
@@ -136,10 +137,22 @@ const CaseStudy2 = () => {
     }
   };
 
-  const handleSave = () => {
-    localStorage.setItem('case-study-2-content', JSON.stringify(editableSections));
-    setIsEditing(false);
-    alert('Changes saved successfully!');
+  const handleSave = async () => {
+    try {
+      const githubService = new GitHubStorageService();
+      await githubService.writeFile('case-study-2.json', editableSections);
+      
+      // Also save to localStorage as backup
+      localStorage.setItem('case-study-2-content', JSON.stringify(editableSections));
+      setIsEditing(false);
+      alert('Changes saved successfully to GitHub!');
+    } catch (error) {
+      console.error('Error saving to GitHub:', error);
+      // Fallback to localStorage only
+      localStorage.setItem('case-study-2-content', JSON.stringify(editableSections));
+      setIsEditing(false);
+      alert('Changes saved locally (GitHub save failed)');
+    }
   };
 
   const handleUpdateModule = (sectionIndex: number, moduleId: string, content: any, column?: string) => {

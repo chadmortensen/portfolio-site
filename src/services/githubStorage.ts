@@ -36,7 +36,7 @@ export class GitHubStorageService {
       }
 
       const data = await response.json();
-      const content = atob(data.content); // Decode base64
+      const content = decodeURIComponent(escape(atob(data.content))); // Decode base64 with UTF-8 support
       return JSON.parse(content);
     } catch (error) {
       console.error('Error reading from GitHub:', error);
@@ -51,7 +51,7 @@ export class GitHubStorageService {
       
       const body: any = {
         message: `Update ${filename} - ${new Date().toISOString()}`,
-        content: btoa(JSON.stringify(content, null, 2)), // Encode to base64
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))), // Encode to base64 with UTF-8 support
         branch: GITHUB_CONFIG.branch,
       };
 
