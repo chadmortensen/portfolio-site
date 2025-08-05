@@ -608,7 +608,8 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === " ") {
+      // Don't allow spacebar navigation when in editing mode to avoid conflicts with typing
+      if (e.key === "ArrowRight" || (e.key === " " && !isEditing)) {
         e.preventDefault();
         nextSlide();
       } else if (e.key === "ArrowLeft") {
@@ -621,7 +622,7 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentSlide, isTransitioning]);
+  }, [currentSlide, isTransitioning, isEditing]);
 
   return (
     <div className="fixed inset-0 bg-surface-primary z-50 overflow-hidden">

@@ -1,14 +1,38 @@
-import { ArrowLeft, Calendar, Users, Target, X, Play } from "lucide-react";
+import { ArrowLeft, Calendar, Users, Target, X, Play, Edit3, Save, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { useState, useEffect } from "react";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import PresentationMode from "@/components/PresentationMode";
+import { EditableModule, Module } from "@/components/EditableModule";
+import { ModuleLibrary } from "@/components/ModuleLibrary";
+
 const CaseStudy1 = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editPassword, setEditPassword] = useState('');
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [showModuleLibrary, setShowModuleLibrary] = useState(false);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [editableSections, setEditableSections] = useState<Array<{
+    title: string;
+    subheader?: string;
+    modules: Module[];
+  }>>([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const sections = [{
     title: "The Challenge",
     content: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
@@ -127,6 +151,112 @@ const CaseStudy1 = () => {
       "Prioritize Ruthlessly, Together: Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight."
     ]
   }];
+
+  // Convert static sections to editable format on first load
+  useEffect(() => {
+    if (editableSections.length === 0) {
+      const converted = sections.map((section) => {
+        const modules: Module[] = [];
+        
+        // Add main content as text module
+        if (section.content) {
+          const htmlContent = section.content
+            .split('\n\n')
+            .map(paragraph => `<p>${paragraph}</p>`)
+            .join('');
+          
+          modules.push({
+            id: `${section.title}-content-${Date.now()}`,
+            type: 'text',
+            content: { text: htmlContent },
+            column: 'left'
+          });
+        }
+
+        // Add goals as bullets module
+        if (section.goals) {
+          modules.push({
+            id: `${section.title}-goals-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Goals', items: section.goals },
+            column: 'left'
+          });
+        }
+
+        // Add image if present
+        if (section.image) {
+          modules.push({
+            id: `${section.title}-image-${Date.now()}`,
+            type: 'image',
+            content: { src: section.image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
+            column: 'right'
+          });
+        }
+
+        return {
+          title: section.title,
+          subheader: section.subheader,
+          modules
+        };
+      });
+      setEditableSections(converted);
+    }
+  }, []);
+
+  // Check for stored authentication on load
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('edit-authenticated') === 'true';
+    if (isAuthenticated) {
+      setIsEditing(false); // Start in view mode even if authenticated
+    }
+  }, []);
+
+  const handlePasswordSubmit = () => {
+    if (editPassword === '4455') {
+      setIsEditing(true);
+      setShowPasswordPrompt(false);
+      setEditPassword('');
+      localStorage.setItem('edit-authenticated', 'true');
+    } else {
+      alert('Incorrect password');
+      setEditPassword('');
+    }
+  };
+
+  const handleSave = () => {
+    localStorage.setItem('case-study-1-content', JSON.stringify(editableSections));
+    setIsEditing(false);
+    alert('Changes saved successfully!');
+  };
+
+  const handleUpdateModule = (sectionIndex: number, moduleId: string, content: any, column?: string) => {
+    const newSections = [...editableSections];
+    const moduleIndex = newSections[sectionIndex].modules.findIndex(m => m.id === moduleId);
+    if (moduleIndex !== -1) {
+      newSections[sectionIndex].modules[moduleIndex].content = content;
+      if (column !== undefined) {
+        newSections[sectionIndex].modules[moduleIndex].column = column as 'full' | 'left' | 'right';
+      }
+      setEditableSections(newSections);
+    }
+  };
+
+  const handleDeleteModule = (sectionIndex: number, moduleId: string) => {
+    const newSections = [...editableSections];
+    newSections[sectionIndex].modules = newSections[sectionIndex].modules.filter(m => m.id !== moduleId);
+    setEditableSections(newSections);
+  };
+
+  const handleAddModule = (sectionIndex: number, module: Omit<Module, 'id'>) => {
+    const newModule: Module = {
+      ...module,
+      id: `${Date.now()}-${Math.random()}`
+    };
+    const newSections = [...editableSections];
+    newSections[sectionIndex].modules.push(newModule);
+    setEditableSections(newSections);
+  };
+
   if (isPresentationMode) {
     return (
       <PresentationMode
@@ -136,7 +266,41 @@ const CaseStudy1 = () => {
     );
   }
 
-  return <div className="min-h-screen bg-surface-primary">
+  return (
+    <div className="min-h-screen bg-surface-primary">
+      {/* Password prompt dialog */}
+      {showPasswordPrompt && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+          <div className="bg-surface-primary p-6 rounded-lg">
+            <h3 className="text-lg font-medium mb-4">Enter password to edit</h3>
+            <Input
+              type="password"
+              value={editPassword}
+              onChange={(e) => setEditPassword(e.target.value)}
+              placeholder="Password"
+              className="mb-4"
+              onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit()}
+            />
+            <div className="flex space-x-2">
+              <Button onClick={handlePasswordSubmit}>Submit</Button>
+              <Button variant="outline" onClick={() => setShowPasswordPrompt(false)}>Cancel</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Module Library */}
+      {showModuleLibrary && (
+        <ModuleLibrary
+          isOpen={showModuleLibrary}
+          onAddModule={(module) => {
+            handleAddModule(currentSectionIndex, module);
+            setShowModuleLibrary(false);
+          }}
+          onClose={() => setShowModuleLibrary(false)}
+        />
+      )}
+
       {/* Navigation */}
       <nav className="bg-surface-primary border-b border-swiss-light py-4">
         <div className="swiss-grid">
@@ -146,6 +310,12 @@ const CaseStudy1 = () => {
               <span className="text-body">Back to Portfolio</span>
             </button>
             <div className="flex items-center space-x-4">
+              {isEditing && (
+                <Button onClick={handleSave} size="sm" className="flex items-center space-x-2">
+                  <Save size={16} />
+                  <span className="text-sm">Save</span>
+                </Button>
+              )}
               <Button
                 variant="ghost"
                 size="sm"
@@ -154,6 +324,15 @@ const CaseStudy1 = () => {
               >
                 <Play size={16} />
                 <span className="text-sm">Presentation Mode</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowPasswordPrompt(true)}
+                className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
+              >
+                <Edit3 size={16} />
+                <span className="text-sm">Edit Mode</span>
               </Button>
               <span className="text-body text-text-primary font-bold">Chad Mortensen</span>
             </div>
@@ -175,163 +354,243 @@ const CaseStudy1 = () => {
       <div className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
-            {sections.map((section, index) => <div key={index}>
-                {/* Header spans full width */}
+            {(isEditing ? editableSections : sections).map((section, index) => (
+              <div key={index}>
+                {/* Section Header */}
                 <div className="mb-8">
-                  <h2 className={`text-headline text-text-primary font-light ${section.subheader ? 'mb-0' : 'mb-6'}`}>{section.title}</h2>
-                  {section.subheader && <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">{section.subheader}</h3>}
+                  <h2 className={`text-headline text-text-primary font-light ${section.subheader ? 'mb-0' : 'mb-6'}`}>
+                    {section.title}
+                  </h2>
+                  {section.subheader && (
+                    <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">{section.subheader}</h3>
+                  )}
                   <div className="w-12 h-px bg-accent-teal"></div>
+                  
+                  {/* Edit controls */}
+                  {isEditing && (
+                    <div className="mt-4">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setCurrentSectionIndex(index);
+                          setShowModuleLibrary(true);
+                        }}
+                        className="flex items-center space-x-2"
+                      >
+                        <Plus size={16} />
+                        <span>Add Module</span>
+                      </Button>
+                    </div>
+                  )}
                 </div>
-                
-                {/* Content and image below header */}
-                <div className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
-                  <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
-                    {section.content.split('\n\n').map((paragraph, pIndex) => <p key={pIndex} className="text-body text-text-secondary leading-relaxed">{paragraph}</p>)}
-                    
-                    {section.goals && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
-                        <ul className="space-y-2">
-                          {section.goals.map((goal, goalIndex) => <li key={goalIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{goal}</span>
-                            </li>)}
-                        </ul>
-                      </div>}
-                    
-                    {section.quotes && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">User Feedback</h3>
-                        {section.quotes.map((quote, quoteIndex) => <blockquote key={quoteIndex} className="border-l-2 border-accent-orange pl-4 mb-4">
-                            <p className="text-body text-text-secondary italic">"{quote}"</p>
-                          </blockquote>)}
-                        {section.insight && <div className="p-4 bg-surface-secondary border border-swiss-light mt-4">
-                            <p className="text-body text-text-primary font-medium">{section.insight}</p>
-                          </div>}
-                      </div>}
-                    
-                    {section.sessionDetails && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Over the course of the session:</h3>
-                        <ul className="space-y-2">
-                          {section.sessionDetails.map((detail, detailIndex) => <li key={detailIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{detail}</span>
-                            </li>)}
-                        </ul>
-                      </div>}
-                    
-                    
-                    {section.focusAreas && <div className="mt-8">
-                        <div className="grid md:grid-cols-2 gap-8">
-                          {section.focusAreas.map((area, areaIndex) => <div key={areaIndex} className="space-y-4 p-6 bg-surface-secondary">
-                              <h4 className="text-title text-text-primary font-medium">{area.title}</h4>
-                              <p className="text-body text-text-secondary">{area.description}</p>
-                              <ul className="space-y-3">
-                                {area.points.map((point, pointIndex) => <li key={pointIndex} className="flex items-start space-x-3">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                                    <span className="text-body text-text-secondary">{point}</span>
-                                  </li>)}
-                              </ul>
-                            </div>)}
+
+                {/* Section Content */}
+                {isEditing ? (
+                  // Editable module layout
+                  <div className="space-y-8">
+                    {section.modules?.map((module) => (
+                      <EditableModule
+                        key={module.id}
+                        module={module}
+                        isEditing={true}
+                        onUpdate={(id, content, column) => handleUpdateModule(index, id, content, column)}
+                        onDelete={(id) => handleDeleteModule(index, id)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  // Static layout (keep existing static rendering logic)
+                  <div className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>
+                    <div className={section.image ? "lg:col-span-5 space-y-6" : "space-y-6"}>
+                      {section.content && section.content.split('\n\n').map((paragraph, pIndex) => (
+                        <p key={pIndex} className="text-body text-text-secondary leading-relaxed">{paragraph}</p>
+                      ))}
+                      
+                      {section.goals && (
+                        <div>
+                          <h3 className="text-title text-text-primary font-light mb-4">Goals</h3>
+                          <ul className="space-y-2">
+                            {section.goals.map((goal, goalIndex) => (
+                              <li key={goalIndex} className="flex items-start space-x-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                                <span className="text-body text-text-secondary">{goal}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                        {section.conclusion && <div className="mt-8">
-                            <p className="text-body text-text-secondary">{section.conclusion}</p>
-                          </div>}
-                      </div>}
-                    
-                    {section.schedule && <div>
-                        <h3 className="text-title text-text-primary font-light mb-4">Schedule</h3>
-                        <ul className="space-y-2 mb-4">
-                          {section.schedule.map((item, itemIndex) => <li key={itemIndex} className="flex items-start space-x-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2 flex-shrink-0"></div>
-                              <span className="text-body text-text-secondary">{item}</span>
-                            </li>)}
-                        </ul>
-                      </div>}
-                    
-                    {section.table && <div>
-                        <div className="overflow-x-auto">
-                          <table className="w-full border border-swiss-light">
-                            <thead className="bg-surface-secondary">
-                              <tr>
-                                {section.table.headers.map((header, headerIndex) => (
-                                  <th key={headerIndex} className="px-6 py-4 text-left text-body text-text-primary font-medium border-b border-swiss-light">
-                                    {header}
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {section.table.rows.map((row, rowIndex) => (
-                                <tr key={rowIndex} className="border-b border-swiss-light">
-                                  {row.map((cell, cellIndex) => (
-                                    <td key={cellIndex} className={`px-6 py-4 text-body ${cellIndex === 0 ? 'text-text-secondary' : 'text-text-secondary'}`}>
-                                      {cellIndex === 1 ? (
-                                        <span dangerouslySetInnerHTML={{
-                                          __html: cell.replace(/([+\-]?\d+%)/g, '<span class="text-green-600 font-bold">$1</span>')
-                                        }} />
-                                      ) : cell}
-                                    </td>
+                      )}
+                      
+                      {section.quotes && (
+                        <div>
+                          <h3 className="text-title text-text-primary font-light mb-4">User Feedback</h3>
+                          {section.quotes.map((quote, quoteIndex) => (
+                            <blockquote key={quoteIndex} className="border-l-2 border-accent-orange pl-4 mb-4">
+                              <p className="text-body text-text-secondary italic">"{quote}"</p>
+                            </blockquote>
+                          ))}
+                          {section.insight && (
+                            <div className="p-4 bg-surface-secondary border border-swiss-light mt-4">
+                              <p className="text-body text-text-primary font-medium">{section.insight}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {section.sessionDetails && (
+                        <div>
+                          <h3 className="text-title text-text-primary font-light mb-4">Over the course of the session:</h3>
+                          <ul className="space-y-2">
+                            {section.sessionDetails.map((detail, detailIndex) => (
+                              <li key={detailIndex} className="flex items-start space-x-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent-aqua mt-2 flex-shrink-0"></div>
+                                <span className="text-body text-text-secondary">{detail}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {section.focusAreas && (
+                        <div className="mt-8">
+                          <div className="grid md:grid-cols-2 gap-8">
+                            {section.focusAreas.map((area, areaIndex) => (
+                              <div key={areaIndex} className="space-y-4 p-6 bg-surface-secondary">
+                                <h4 className="text-title text-text-primary font-medium">{area.title}</h4>
+                                <p className="text-body text-text-secondary">{area.description}</p>
+                                <ul className="space-y-3">
+                                  {area.points.map((point, pointIndex) => (
+                                    <li key={pointIndex} className="flex items-start space-x-3">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
+                                      <span className="text-body text-text-secondary">{point}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                          {section.conclusion && (
+                            <div className="mt-8">
+                              <p className="text-body text-text-secondary">{section.conclusion}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {section.schedule && (
+                        <div>
+                          <h3 className="text-title text-text-primary font-light mb-4">Schedule</h3>
+                          <ul className="space-y-2 mb-4">
+                            {section.schedule.map((item, itemIndex) => (
+                              <li key={itemIndex} className="flex items-start space-x-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2 flex-shrink-0"></div>
+                                <span className="text-body text-text-secondary">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {section.table && (
+                        <div>
+                          <div className="overflow-x-auto">
+                            <table className="w-full border border-swiss-light">
+                              <thead className="bg-surface-secondary">
+                                <tr>
+                                  {section.table.headers.map((header, headerIndex) => (
+                                    <th key={headerIndex} className="px-6 py-4 text-left text-body text-text-primary font-medium border-b border-swiss-light">
+                                      {header}
+                                    </th>
                                   ))}
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                              </thead>
+                              <tbody>
+                                {section.table.rows.map((row, rowIndex) => (
+                                  <tr key={rowIndex} className="border-b border-swiss-light">
+                                    {row.map((cell, cellIndex) => (
+                                      <td key={cellIndex} className={`px-6 py-4 text-body ${cellIndex === 0 ? 'text-text-secondary' : 'text-text-secondary'}`}>
+                                        {cellIndex === 1 ? (
+                                          <span dangerouslySetInnerHTML={{
+                                            __html: cell.replace(/([+\-]?\d+%)/g, '<span class="text-green-600 font-bold">$1</span>')
+                                          }} />
+                                        ) : cell}
+                                      </td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
-                      </div>}
-                    
-                    {section.learnings && <div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
-                          {section.learnings.map((learning, learningIndex) => {
-                            const [header, ...contentParts] = learning.split(': ');
-                            const content = contentParts.join(': ');
-                            return (
-                              <div key={learningIndex} className="space-y-2">
-                                <h4 className="text-lg text-text-primary font-medium">{header}</h4>
-                                <p className="text-body text-text-secondary leading-relaxed">{content}</p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>}
-                  </div>
-                  
-                  {/* Image - Only render if image exists */}
-                  {section.image && <div className="lg:col-span-7">
-                      <img 
-                        src={section.image} 
-                        alt={section.title} 
-                        className="w-full h-full min-h-80 object-cover object-top border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
-                        onClick={() => setSelectedImage(section.image!)}
-                      />
+                      )}
                       
-                      {/* Additional images below main image */}
-                      {section.additionalImages && <div className="mt-6 space-y-4">
-                          {section.additionalImages.map((imgSrc, imgIndex) => <div key={imgIndex}>
-                              <img 
-                                src={imgSrc} 
-                                alt={`${section.title} additional image ${imgIndex + 1}`} 
-                                className="w-full h-auto border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
-                                onClick={() => setSelectedImage(imgSrc)}
-                              />
-                            </div>)}
-                        </div>}
-                    </div>}
-                </div>
+                      {section.learnings && (
+                        <div>
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
+                            {section.learnings.map((learning, learningIndex) => {
+                              const [header, ...contentParts] = learning.split(': ');
+                              const content = contentParts.join(': ');
+                              return (
+                                <div key={learningIndex} className="space-y-2">
+                                  <h4 className="text-lg text-text-primary font-medium">{header}</h4>
+                                  <p className="text-body text-text-secondary leading-relaxed">{content}</p>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Image - Only render if image exists */}
+                    {section.image && (
+                      <div className="lg:col-span-7">
+                        <img 
+                          src={section.image} 
+                          alt={section.title} 
+                          className="w-full h-full min-h-80 object-cover object-top border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
+                          onClick={() => setSelectedImage(section.image!)}
+                        />
+                        
+                        {/* Additional images below main image */}
+                        {section.additionalImages && (
+                          <div className="mt-6 space-y-4">
+                            {section.additionalImages.map((imgSrc, imgIndex) => (
+                              <div key={imgIndex}>
+                                <img 
+                                  src={imgSrc} 
+                                  alt={`${section.title} additional image ${imgIndex + 1}`} 
+                                  className="w-full h-auto border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
+                                  onClick={() => setSelectedImage(imgSrc)}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
                 
                 {/* Full width image below main content */}
-                {section.fullWidthImage && <div className="mt-8">
+                {section.fullWidthImage && (
+                  <div className="mt-8">
                     <img 
                       src={section.fullWidthImage} 
                       alt={`${section.title} timeline`} 
                       className="w-full h-auto border border-swiss-light cursor-pointer hover:opacity-90 transition-opacity" 
                       onClick={() => setSelectedImage(section.fullWidthImage!)}
                     />
-                  </div>}
+                  </div>
+                )}
                 
                 {/* Add separator after each section except the last one */}
-                {index < sections.length - 1 && <div className="mt-24">
+                {index < sections.length - 1 && (
+                  <div className="mt-24">
                     <Separator className="bg-swiss-light" />
-                  </div>}
-              </div>)}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -359,6 +618,8 @@ const CaseStudy1 = () => {
           )}
         </DialogContent>
       </Dialog>
-    </div>;
+    </div>
+  );
 };
+
 export default CaseStudy1;
