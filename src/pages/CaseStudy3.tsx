@@ -33,8 +33,19 @@ const CaseStudy3 = () => {
     })
   );
 
-  // Convert static sections to editable format on first load
+  // Load saved content or convert static sections to editable format on first load
   useEffect(() => {
+    const savedContent = localStorage.getItem('case-study-3-content');
+    if (savedContent) {
+      try {
+        const parsed = JSON.parse(savedContent);
+        setEditableSections(parsed);
+        return;
+      } catch (e) {
+        console.error('Failed to parse saved content:', e);
+      }
+    }
+
     if (editableSections.length === 0) {
       const converted = sections.map((section) => {
         const modules: Module[] = [];
@@ -173,6 +184,13 @@ const CaseStudy3 = () => {
     setIsEditing(false);
     alert('Changes saved successfully!');
   };
+
+  // Auto-save when editableSections change and in edit mode
+  useEffect(() => {
+    if (isEditing && editableSections.length > 0) {
+      localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
+    }
+  }, [editableSections, isEditing]);
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
