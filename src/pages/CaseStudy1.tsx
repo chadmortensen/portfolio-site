@@ -153,7 +153,32 @@ const CaseStudy1 = () => {
     ]
   }];
 
-  // Convert static sections to editable format on first load
+  // Load content from GitHub or fallback to localStorage, else convert static sections
+  useEffect(() => {
+    const loadContent = async () => {
+      const githubService = new GitHubStorageService();
+      const githubContent = await githubService.readFile('case-study-1.json');
+      if (githubContent) {
+        setEditableSections(githubContent);
+        return;
+      }
+      const saved = localStorage.getItem('case-study-1-content');
+      if (saved) {
+        try {
+          setEditableSections(JSON.parse(saved));
+          return;
+        } catch (e) {
+          console.error('Failed to parse saved content:', e);
+        }
+      }
+      // If nothing loaded, convert static sections below
+    };
+    if (editableSections.length === 0) {
+      loadContent();
+    }
+  }, []);
+
+  // Convert static sections to editable format on first load (last resort)
   useEffect(() => {
     if (editableSections.length === 0) {
       const converted = sections.map((section) => {
@@ -270,6 +295,123 @@ const CaseStudy1 = () => {
     setEditableSections(newSections);
   };
 
+  // Reorder within a specific column (edit mode)
+  const handleColumnDragEnd = (event: any, sectionIndex: number, column: 'left' | 'right') => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const section = editableSections[sectionIndex];
+    const columnModules = section.modules.filter(m => m.column === column);
+    const oldIndex = columnModules.findIndex((m) => m.id === active.id);
+    const newIndex = columnModules.findIndex((m) => m.id === over.id);
+
+    const reordered = arrayMove(columnModules, oldIndex, newIndex);
+
+    // Merge back preserving other modules
+    const merged = section.modules.map(m => (
+      m.column === column ? { ...m, order: reordered.findIndex(x => x.id === m.id) } : m
+    ));
+
+    const sorted = [
+      ...merged.filter(m => m.column === 'full'),
+      ...reordered,
+      ...merged.filter(m => m.column !== column && m.column !== 'full')
+    ];
+
+    const newSections = [...editableSections];
+    newSections[sectionIndex] = { ...section, modules: sorted };
+    setEditableSections(newSections);
+  };
+
+  // Column-based layout renderer for both view and edit
+  const renderModulesWithLayout = (modules: Module[], sectionIndex: number, editing: boolean) => {
+    const full = modules.filter(m => m.column === 'full');
+    const left = modules.filter(m => m.column === 'left');
+    const right = modules.filter(m => m.column === 'right');
+    const hasColumns = left.length > 0 || right.length > 0;
+
+    return (
+      <div className="space-y-8">
+        {full.map((module) => (
+          <EditableModule
+            key={module.id}
+            module={module}
+            isEditing={editing}
+            onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+            onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+          />
+        ))}
+
+        {hasColumns && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              {editing ? (
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={(event) => handleColumnDragEnd(event, sectionIndex, 'left')}
+                >
+                  <SortableContext items={left.map(m => m.id)} strategy={verticalListSortingStrategy}>
+                    {left.map((module) => (
+                      <EditableModule
+                        key={module.id}
+                        module={module}
+                        isEditing={editing}
+                        onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                        onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
+              ) : (
+                left.map((module) => (
+                  <EditableModule
+                    key={module.id}
+                    module={module}
+                    isEditing={editing}
+                    onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                  />
+                ))
+              )}
+            </div>
+
+            <div className="space-y-6">
+              {editing ? (
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={(event) => handleColumnDragEnd(event, sectionIndex, 'right')}
+                >
+                  <SortableContext items={right.map(m => m.id)} strategy={verticalListSortingStrategy}>
+                    {right.map((module) => (
+                      <EditableModule
+                        key={module.id}
+                        module={module}
+                        isEditing={editing}
+                        onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                        onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
+              ) : (
+                right.map((module) => (
+                  <EditableModule
+                    key={module.id}
+                    module={module}
+                    isEditing={editing}
+                    onUpdate={(id, content, column) => handleUpdateModule(sectionIndex, id, content, column)}
+                    onDelete={(id) => handleDeleteModule(sectionIndex, id)}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
   if (isPresentationMode) {
     return (
       <PresentationMode
