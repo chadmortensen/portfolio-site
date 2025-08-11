@@ -3,7 +3,7 @@
     "title": "The Challenge",
     "modules": [
       {
-        "id": "The Challenge-content-1754933991907",
+        "id": "The Challenge-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.</p>"
@@ -11,7 +11,7 @@
         "column": "left"
       },
       {
-        "id": "The Challenge-goals-1754933991907",
+        "id": "The Challenge-goals-1754934017371",
         "type": "bullets",
         "content": {
           "title": "Goals",
@@ -32,7 +32,7 @@
     "subheader": "Leadership alignment and persuasion",
     "modules": [
       {
-        "id": "Assembling the Team-content-1754933991907",
+        "id": "Assembling the Team-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>With just six weeks to take this project from discovery through final deliverables — and much of that timeline landing squarely in the holiday-heavy back half of Q4 — I knew we needed to move quickly and assemble a team that could hit the ground running.</p><p>After aligning with our business and product partners, I had enough clarity on the scope to start making staffing decisions. One of my staff designers was well-positioned to lead the work, but I also knew that expecting him to carry the full load would put both the team and the project at risk.</p><p>Rather than waiting for headcount or formal allocations, I looked for creative ways to build the right team. I'd heard that another group at Walmart — the wedding registry team — was entering a period of uncertainty due to pending org changes. That meant talented designers were available but underutilized. I made the case to design leadership to temporarily borrow a couple of their designers, and supplemented the rest of the team with strong contractors from our existing pool.</p><p>This approach allowed us to act fast, stay nimble, and build a cross-functional team that blended deep domain knowledge with fresh perspectives — all without missing a beat on our timeline.</p>"
@@ -40,7 +40,7 @@
         "column": "left"
       },
       {
-        "id": "Assembling the Team-main-image-1754933991907",
+        "id": "Assembling the Team-main-image-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/e36754b0-b1da-47b9-8e75-731620ea5cf1.png",
@@ -55,7 +55,7 @@
     "subheader": "We had past research so let's not lose that in an effort to be efficient",
     "modules": [
       {
-        "id": "Ground the Team in Research and Insights-content-1754933991907",
+        "id": "Ground the Team in Research and Insights-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>The Routine Consumables team was responsible for the baby category at Walmart. The baby registry had received a design overhaul a couple of years prior; luckily, we had quite a bit of research to start with. Market research, customer feedback and customer interviews provide rich insights.</p><p>Understanding users' motivations, areas of friction as well as areas of delight is key to building human-centered products. I wanted to ensure that the team was grounded in insights.</p><p>We held an offsite at the beginning of this project to bring together the designers, understand the goals, and align on the initial outline of what we were building. We kicked off this offsite with a deep dive into the past research, presented by the team's UX Researcher.</p><p>The key insights gained from the research review were that Walmart registry users have been asking for a greater level of control, guidance, and needed to establish trust with the experience.</p>"
@@ -63,7 +63,7 @@
         "column": "left"
       },
       {
-        "id": "Ground the Team in Research and Insights-quotes-1754933991907",
+        "id": "Ground the Team in Research and Insights-quotes-1754934017371",
         "type": "bullets",
         "content": {
           "title": "User Feedback",
@@ -75,7 +75,7 @@
         "column": "left"
       },
       {
-        "id": "Ground the Team in Research and Insights-insight-1754933991907",
+        "id": "Ground the Team in Research and Insights-insight-1754934017371",
         "type": "quote",
         "content": {
           "title": "Key Insight",
@@ -84,7 +84,7 @@
         "column": "full"
       },
       {
-        "id": "Ground the Team in Research and Insights-main-image-1754933991907",
+        "id": "Ground the Team in Research and Insights-main-image-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/7ccb122a-dcc0-42aa-b708-2b4efed30bd9.png",
@@ -93,7 +93,7 @@
         "column": "right"
       },
       {
-        "id": "Ground the Team in Research and Insights-additional-0-1754933991907",
+        "id": "Ground the Team in Research and Insights-additional-0-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/1268a6d5-7794-4290-89ec-54f8fec3cb8a.png",
@@ -102,7 +102,7 @@
         "column": "right"
       },
       {
-        "id": "Ground the Team in Research and Insights-additional-1-1754933991907",
+        "id": "Ground the Team in Research and Insights-additional-1-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/34674288-e5b6-4941-953c-a17ddfabc474.png",
@@ -117,7 +117,7 @@
     "subheader": "Research backed design principles helped to focus the team",
     "modules": [
       {
-        "id": "Create Design Principles-content-1754933991907",
+        "id": "Create Design Principles-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>One of the most effective ways to carry research forward — not just in spirit but in practice — is through clear, actionable design principles. After reviewing the insights as a team, we distilled what we heard into a focused set of principles that would guide our decision-making throughout the project.</p><p>These weren't abstract ideals — they were grounded in the real needs, emotions, and expectations of our registry users. Our goal was to create something that could be revisited easily and used as a north star by anyone on the team, from product to engineering to content.</p><p>By capturing the essence of what mattered most to our users, these principles helped us stay aligned, make faster decisions, and ensure that the experience we were creating stayed rooted in empathy and clarity.</p>"
@@ -125,7 +125,7 @@
         "column": "left"
       },
       {
-        "id": "Create Design Principles-main-image-1754933991907",
+        "id": "Create Design Principles-main-image-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/b0a6356d-f821-42bf-9254-9434eeb0a7e9.png",
@@ -139,7 +139,7 @@
     "title": "Ideation Workshop - How Might We",
     "modules": [
       {
-        "id": "Ideation Workshop - How Might We-content-1754933991907",
+        "id": "Ideation Workshop - How Might We-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.</p><p>We brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.</p><p>This collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.</p>"
@@ -147,7 +147,7 @@
         "column": "left"
       },
       {
-        "id": "Ideation Workshop - How Might We-detail-0-1754933991907",
+        "id": "Ideation Workshop - How Might We-detail-0-1754934017371",
         "type": "quote",
         "content": {
           "title": "We generated more than 70 \"How Might We\" statements"
@@ -155,7 +155,7 @@
         "column": "full"
       },
       {
-        "id": "Ideation Workshop - How Might We-detail-1-1754933991907",
+        "id": "Ideation Workshop - How Might We-detail-1-1754934017371",
         "type": "quote",
         "content": {
           "title": "Clustered them into 11 thematic categories"
@@ -163,7 +163,7 @@
         "column": "full"
       },
       {
-        "id": "Ideation Workshop - How Might We-detail-2-1754933991907",
+        "id": "Ideation Workshop - How Might We-detail-2-1754934017371",
         "type": "quote",
         "content": {
           "title": "Used dot voting to identify the most promising directions"
@@ -171,7 +171,7 @@
         "column": "full"
       },
       {
-        "id": "Ideation Workshop - How Might We-detail-3-1754933991907",
+        "id": "Ideation Workshop - How Might We-detail-3-1754934017371",
         "type": "quote",
         "content": {
           "title": "Named and prioritized the top 3 opportunity areas to guide the next phase of design"
@@ -179,7 +179,7 @@
         "column": "full"
       },
       {
-        "id": "Ideation Workshop - How Might We-main-image-1754933991907",
+        "id": "Ideation Workshop - How Might We-main-image-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/696d025f-a8e0-4a25-8255-da6c90c4a2cb.png",
@@ -193,7 +193,7 @@
     "title": "Aligning Across Design, Product, and Business",
     "modules": [
       {
-        "id": "Aligning Across Design, Product, and Business-content-1754933991907",
+        "id": "Aligning Across Design, Product, and Business-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>With research insights in hand and opportunity areas prioritized, the next step was alignment — not just within the design team, but across product, engineering, and the business. I led conversations that helped us distill a shared set of focus areas, ensuring that our design direction was grounded in user needs, technically feasible, and aligned with broader strategic goals.</p><p>We landed on four key areas of opportunity that met our goals and fit within our short timeline:</p>"
@@ -201,7 +201,7 @@
         "column": "left"
       },
       {
-        "id": "Aligning Across Design, Product, and Business-focus-0-1754933991907",
+        "id": "Aligning Across Design, Product, and Business-focus-0-1754934017371",
         "type": "quote",
         "content": {
           "title": "Improve Onboarding",
@@ -210,7 +210,7 @@
         "column": "full"
       },
       {
-        "id": "Aligning Across Design, Product, and Business-focus-1-1754933991907",
+        "id": "Aligning Across Design, Product, and Business-focus-1-1754934017371",
         "type": "quote",
         "content": {
           "title": "Enhance Curation and Management",
@@ -219,7 +219,7 @@
         "column": "full"
       },
       {
-        "id": "Aligning Across Design, Product, and Business-focus-2-1754933991907",
+        "id": "Aligning Across Design, Product, and Business-focus-2-1754934017371",
         "type": "quote",
         "content": {
           "title": "Elevate the Gifting Experience",
@@ -228,7 +228,7 @@
         "column": "full"
       },
       {
-        "id": "Aligning Across Design, Product, and Business-focus-3-1754933991907",
+        "id": "Aligning Across Design, Product, and Business-focus-3-1754934017371",
         "type": "quote",
         "content": {
           "title": "Streamline Internal Processes",
@@ -243,7 +243,7 @@
     "subheader": "Balancing Speed with Alignment",
     "modules": [
       {
-        "id": "Low to High Fidelity Design-content-1754933991907",
+        "id": "Low to High Fidelity Design-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>With a tight timeline and a lean team, efficiency in our design process was critical. We started in low fidelity — wireframes gave us the flexibility to explore ideas quickly, iterate without friction, and align on the structure of the experience before investing in polished visuals.</p><p>To maintain momentum and ensure we were moving in the right direction, I established a focused cadence of reviews and standups that gave the team space for feedback, alignment, and unblockers:</p><p>As we progressed into higher fidelity, we expanded participation in our design reviews to include engineering partners. This reduced late-stage churn, strengthened cross-functional alignment, and helped the full team stay connected to design intent as implementation began.</p><p>This rhythm created a healthy pace — fast enough to keep the project on track, with just enough structure to build clarity and confidence along the way.</p>"
@@ -251,7 +251,7 @@
         "column": "left"
       },
       {
-        "id": "Low to High Fidelity Design-schedule-1754933991907",
+        "id": "Low to High Fidelity Design-schedule-1754934017371",
         "type": "bullets",
         "content": {
           "title": "Schedule",
@@ -265,7 +265,7 @@
         "column": "left"
       },
       {
-        "id": "Low to High Fidelity Design-main-image-1754933991907",
+        "id": "Low to High Fidelity Design-main-image-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/dc3e659d-a7ff-4523-95e2-9c460eb8a16a.png",
@@ -274,7 +274,7 @@
         "column": "right"
       },
       {
-        "id": "Low to High Fidelity Design-additional-0-1754933991907",
+        "id": "Low to High Fidelity Design-additional-0-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/1859e055-78bd-4a46-8bc4-96e40ba05ed6.png",
@@ -283,7 +283,7 @@
         "column": "right"
       },
       {
-        "id": "Low to High Fidelity Design-additional-1-1754933991907",
+        "id": "Low to High Fidelity Design-additional-1-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/14b8d499-bca9-4168-9e49-66c0e7ebcf56.png",
@@ -297,7 +297,7 @@
     "title": "Examples of Enhancements",
     "modules": [
       {
-        "id": "Examples of Enhancements-content-1754933991907",
+        "id": "Examples of Enhancements-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>Key design improvements and feature enhancements implemented throughout the registry experience.</p>"
@@ -305,7 +305,7 @@
         "column": "left"
       },
       {
-        "id": "Examples of Enhancements-main-image-1754933991907",
+        "id": "Examples of Enhancements-main-image-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/167b31ed-0f68-4044-9d07-fd3b2e8b30ff.png",
@@ -320,7 +320,7 @@
     "subheader": "Staying Focused Without Losing the Spark",
     "modules": [
       {
-        "id": "Constant Prioritization-content-1754933991907",
+        "id": "Constant Prioritization-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>With a fixed timeline and no room for extension, staying aligned on what mattered most was critical. I partnered closely with our product and engineering directors to continuously reassess scope, timelines, and effort — making sure the team was focused on the highest-impact work at every stage.</p><p>This wasn't a one-time exercise. It was a constant, collaborative practice of cutting, refining, and reshaping the roadmap to fit within what was possible — without compromising on the quality of the experience.</p><p>When the timeline demanded tough tradeoffs, I worked to keep the team motivated and connected to the \"why.\" That sometimes meant rallying partners around features that added delight or polish — small touches that might not have been strictly required, but were essential to earning user trust and elevating the overall experience.</p><p>This balance of discipline and inspiration helped us ship something we were proud of — on time, and grounded in the needs of the people we were designing for.</p>"
@@ -328,7 +328,7 @@
         "column": "left"
       },
       {
-        "id": "Constant Prioritization-main-image-1754933991907",
+        "id": "Constant Prioritization-main-image-1754934017371",
         "type": "image",
         "content": {
           "src": "/lovable-uploads/90200b10-1ca7-46fe-b43a-422df927dde9.png",
@@ -343,7 +343,7 @@
     "subheader": "A Registry That Delivered",
     "modules": [
       {
-        "id": "Results-content-1754933991907",
+        "id": "Results-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. More importantly, it was a product that truly reflected the needs of our customers.</p>"
@@ -357,7 +357,7 @@
     "subheader": "Leading with Clarity, Empathy, and Focus",
     "modules": [
       {
-        "id": "What We Learned-content-1754933991907",
+        "id": "What We Learned-content-1754934017371",
         "type": "text",
         "content": {
           "text": "<p>This project was a clear reminder that even with tight timelines, it's possible to deliver meaningful, customer-centered work — as long as you're intentional about how you lead, how you listen, and how you prioritize.</p>"
@@ -365,7 +365,7 @@
         "column": "left"
       },
       {
-        "id": "What We Learned-learning-0-1754933991907",
+        "id": "What We Learned-learning-0-1754934017371",
         "type": "quote",
         "content": {
           "title": "Define the \"Why\" Early",
@@ -374,7 +374,7 @@
         "column": "full"
       },
       {
-        "id": "What We Learned-learning-1-1754933991907",
+        "id": "What We Learned-learning-1-1754934017371",
         "type": "quote",
         "content": {
           "title": "Plan for Reality, Not Perfection",
@@ -383,7 +383,7 @@
         "column": "full"
       },
       {
-        "id": "What We Learned-learning-2-1754933991907",
+        "id": "What We Learned-learning-2-1754934017371",
         "type": "quote",
         "content": {
           "title": "Right-Size the Team for the Mission",
@@ -392,7 +392,7 @@
         "column": "full"
       },
       {
-        "id": "What We Learned-learning-3-1754933991907",
+        "id": "What We Learned-learning-3-1754934017371",
         "type": "quote",
         "content": {
           "title": "Lead with Empathy, Not Assumptions",
@@ -401,7 +401,7 @@
         "column": "full"
       },
       {
-        "id": "What We Learned-learning-4-1754933991907",
+        "id": "What We Learned-learning-4-1754934017371",
         "type": "quote",
         "content": {
           "title": "Make Space to Explore",
@@ -410,7 +410,7 @@
         "column": "full"
       },
       {
-        "id": "What We Learned-learning-5-1754933991907",
+        "id": "What We Learned-learning-5-1754934017371",
         "type": "quote",
         "content": {
           "title": "Prioritize Ruthlessly, Together",
