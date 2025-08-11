@@ -24,6 +24,15 @@
           ]
         },
         "column": "right"
+      },
+      {
+        "type": "text",
+        "content": {
+          "title": "",
+          "text": "<p>Sample right column</p>"
+        },
+        "column": "right",
+        "id": "1754935961240-0.27573044706126404"
       }
     ]
   },
