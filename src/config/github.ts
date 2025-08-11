@@ -3,7 +3,7 @@
 export const GITHUB_CONFIG = {
   token: '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', // Replace with your actual token
   owner: 'chadmortensen', // Replace with your GitHub username
-  repo: 'Hanabana99((7950!!', // Replace with your repository name
+  repo: 'chad-mortensen-portfolio-13', // Replace with your repository name
   branch: 'main', // or 'master' depending on your default branch
   contentPath: 'data/case-studies' // Path where case study data will be stored
 };
