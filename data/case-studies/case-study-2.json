@@ -1,0 +1,119 @@
+[
+  {
+    "title": "Why This, and Why Now?",
+    "modules": [
+      {
+        "id": "Why This, and Why Now?-content-1754933198782",
+        "type": "text",
+        "content": {
+          "text": "<p>Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission.</p>"
+        },
+        "column": "left"
+      },
+      {
+        "id": "Why This, and Why Now?-goals-1754933198782",
+        "type": "bullets",
+        "content": {
+          "title": "Goals",
+          "items": [
+            "Create a team vision rooted in research and aligned with Etsy's business strategy",
+            "Define strategic guideposts to shape yearly and quarterly planning",
+            "Build consensus among cross-functional leaders that this alignment work was essential"
+          ]
+        },
+        "column": "left"
+      },
+      {
+        "id": "Why This, and Why Now?-image-1754933198782",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.png",
+          "alt": "Why This, and Why Now? visual",
+          "position": "beside",
+          "columns": "4"
+        },
+        "column": "right"
+      }
+    ]
+  },
+  {
+    "title": "Participants",
+    "modules": []
+  },
+  {
+    "title": "Workshop Design",
+    "modules": [
+      {
+        "id": "Workshop Design-content-1754933198782",
+        "type": "text",
+        "content": {
+          "text": "<p>To build true alignment across disciplines, I designed a three-day workshop focused on co-creation, strategic thinking, and grounding our decisions in real user needs. The structure was intentional: each activity layered insight and perspective, ultimately enabling the team to converge on a shared direction.</p><p>Key components included:</p>"
+        },
+        "column": "left"
+      }
+    ]
+  },
+  {
+    "title": "Output: Fulfillment Vision",
+    "modules": [
+      {
+        "id": "Output: Fulfillment Vision-content-1754933198782",
+        "type": "text",
+        "content": {
+          "text": "<p>By synthesizing the outputs from our workshop — particularly the Cover Story exercise and the Future Vision exercise — I was able to articulate a mission statement that captured the team's collective thinking. This became our Fulfillment Vision: a unifying narrative that brought clarity, direction, and purpose to our work moving forward.</p><p>The resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.</p>"
+        },
+        "column": "left"
+      },
+      {
+        "id": "Output: Fulfillment Vision-image-1754933198782",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.png",
+          "alt": "Output: Fulfillment Vision visual",
+          "position": "beside",
+          "columns": "4"
+        },
+        "column": "right"
+      }
+    ]
+  },
+  {
+    "title": "Output: Fulfillment Principles",
+    "subheader": "Strategic Guideposts for Decision Making",
+    "modules": [
+      {
+        "id": "Output: Fulfillment Principles-content-1754933198782",
+        "type": "text",
+        "content": {
+          "text": "<p>Our principles served as the scaffolding for roadmap planning. These weren't timelines or feature lists — they were evergreen beliefs that helped guide investment decisions and shaped how we evaluated success. They aligned our work around what truly mattered for Etsy sellers.</p>"
+        },
+        "column": "left"
+      },
+      {
+        "id": "Output: Fulfillment Principles-image-1754933198782",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/5994c658-34de-437e-853c-9be70a50c57b.png",
+          "alt": "Output: Fulfillment Principles visual",
+          "position": "beside",
+          "columns": "4"
+        },
+        "column": "right"
+      }
+    ]
+  },
+  {
+    "title": "Reflections & Takeaways",
+    "subheader": "Leading Strategic Alignment in Cross-Functional Teams",
+    "modules": [
+      {
+        "id": "Reflections & Takeaways-content-1754933198782",
+        "type": "text",
+        "content": {
+          "text": "<p>This initiative demonstrated the power of bringing diverse perspectives together to create shared understanding and direction.</p>"
+        },
+        "column": "left"
+      }
+    ]
+  }
+]
