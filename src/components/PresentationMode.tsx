@@ -107,9 +107,33 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
     })
   );
 
-  // Convert static sections to editable format on first edit
+  // Load content from GitHub or localStorage on mount
   useEffect(() => {
-    if (isEditing && editableSections.length === 0) {
+    const loadContent = async () => {
+      const githubService = new GitHubStorageService();
+      const filename = storageFilename || 'presentation-mode.json';
+      
+      // Try to load from GitHub first
+      const githubContent = await githubService.readFile(filename);
+      if (githubContent) {
+        setEditableSections(githubContent);
+        return;
+      }
+
+      // Fallback to localStorage
+      const savedContent = localStorage.getItem(filename.replace('.json', ''));
+      if (savedContent) {
+        try {
+          const parsed = JSON.parse(savedContent);
+          setEditableSections(parsed);
+          return;
+        } catch (e) {
+          console.error('Failed to parse saved content:', e);
+        }
+      }
+
+      // Convert static sections as last resort
+      if (editableSections.length === 0) {
       const converted = sections.map((section) => {
         const modules: Module[] = [];
         
@@ -251,8 +275,11 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
         };
       });
       setEditableSections(converted);
-    }
-  }, [isEditing, sections, editableSections.length]);
+      }
+    };
+
+    loadContent();
+  }, []);
 
   const handlePasscodeSuccess = () => {
     setShowPasscodeDialog(false);
