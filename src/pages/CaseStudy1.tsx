@@ -415,8 +415,9 @@ const CaseStudy1 = () => {
   if (isPresentationMode) {
     return (
       <PresentationMode
-        sections={sections}
+        sections={isEditing ? editableSections : sections}
         onExit={() => setIsPresentationMode(false)}
+        storageFilename="case-study-1.json"
       />
     );
   }
@@ -541,18 +542,11 @@ const CaseStudy1 = () => {
 
                 {/* Section Content */}
                 {isEditing ? (
-                  // Editable module layout
-                  <div className="space-y-8">
-                    {section.modules?.map((module) => (
-                      <EditableModule
-                        key={module.id}
-                        module={module}
-                        isEditing={true}
-                        onUpdate={(id, content, column) => handleUpdateModule(index, id, content, column)}
-                        onDelete={(id) => handleDeleteModule(index, id)}
-                      />
-                    ))}
-                  </div>
+                  // Use dynamic layout with modules
+                  section.modules ? renderModulesWithLayout(section.modules, index, true) : null
+                ) : section.modules ? (
+                  // Use dynamic layout with modules in view mode
+                  renderModulesWithLayout(section.modules, index, false)
                 ) : (
                   // Static layout (keep existing static rendering logic)
                   <div className={section.image ? "grid lg:grid-cols-12 gap-12 items-start" : ""}>

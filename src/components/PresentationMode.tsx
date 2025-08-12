@@ -13,6 +13,7 @@ import { GitHubStorageService } from "../services/githubStorage";
 interface PresentationModeProps {
   sections: any[];
   onExit: () => void;
+  storageFilename?: string;
 }
 
 interface PasscodeDialogProps {
@@ -87,7 +88,7 @@ const PasscodeDialog = ({ onSuccess, onCancel }: PasscodeDialogProps) => {
   );
 };
 
-const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
+const PresentationMode = ({ sections, onExit, storageFilename }: PresentationModeProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showPasscodeDialog, setShowPasscodeDialog] = useState(false);
@@ -269,16 +270,18 @@ const PresentationMode = ({ sections, onExit }: PresentationModeProps) => {
   const handleSave = async () => {
     try {
       const githubService = new GitHubStorageService();
-      await githubService.writeFile('presentation-mode.json', editableSections);
+      const filename = storageFilename || 'presentation-mode.json';
+      await githubService.writeFile(filename, editableSections);
       
       // Also save to localStorage as backup
-      localStorage.setItem('presentation-content', JSON.stringify(editableSections));
+      localStorage.setItem(filename.replace('.json', ''), JSON.stringify(editableSections));
       setIsEditing(false);
       alert('Changes saved successfully to GitHub!');
     } catch (error) {
       console.error('Error saving to GitHub:', error);
       // Fallback to localStorage only
-      localStorage.setItem('presentation-content', JSON.stringify(editableSections));
+      const filename = storageFilename || 'presentation-mode.json';
+      localStorage.setItem(filename.replace('.json', ''), JSON.stringify(editableSections));
       setIsEditing(false);
       alert('Changes saved locally (GitHub save failed)');
     }
