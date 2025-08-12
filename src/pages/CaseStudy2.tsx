@@ -66,55 +66,81 @@ const CaseStudy2 = () => {
     learnings: ["Workshop Format Creates Ownership: The collaborative format created high ownership and alignment across disciplines. Because leaders helped shape the output, they became advocates for it within their teams.", "Co-Creation Builds Trust: Co-creating in real time helped deepen trust and cohesion, especially in a distributed setting.", "Strategic Artifacts Drive Action: The resulting vision and principles weren't just artifacts — they directly informed our yearly planning and long-term strategy discussions.", "Preserve Time for Exploration: We had planned to explore \"big bets\" and create visual prototypes for our future vision, but time constraints forced us to leave that behind. Preserving space for that exploration would have been a powerful complement to our strategic framework."]
   }];
 
-  // Convert static sections to editable format on first load
+  // Load content from GitHub or fallback to localStorage on mount
   useEffect(() => {
-    if (editableSections.length === 0) {
-      const converted = sections.map((section) => {
-        const modules: Module[] = [];
-        
-        // Add main content as text module
-        if (section.content) {
-          const htmlContent = section.content
-            .split('\n\n')
-            .map(paragraph => `<p>${paragraph}</p>`)
-            .join('');
+    const loadContent = async () => {
+      const githubService = new GitHubStorageService();
+      
+      // Try to load from GitHub first
+      const githubContent = await githubService.readFile('case-study-2.json');
+      if (githubContent) {
+        setEditableSections(githubContent);
+        return;
+      }
+
+      // Fallback to localStorage
+      const savedContent = localStorage.getItem('case-study-2-content');
+      if (savedContent) {
+        try {
+          const parsed = JSON.parse(savedContent);
+          setEditableSections(parsed);
+          return;
+        } catch (e) {
+          console.error('Failed to parse saved content:', e);
+        }
+      }
+
+      // Convert static sections as last resort
+      if (editableSections.length === 0) {
+        const converted = sections.map((section) => {
+          const modules: Module[] = [];
           
-          modules.push({
-            id: `${section.title}-content-${Date.now()}`,
-            type: 'text',
-            content: { text: htmlContent },
-            column: 'left'
-          });
-        }
+          // Add main content as text module
+          if (section.content) {
+            const htmlContent = section.content
+              .split('\n\n')
+              .map(paragraph => `<p>${paragraph}</p>`)
+              .join('');
+            
+            modules.push({
+              id: `${section.title}-content-${Date.now()}`,
+              type: 'text',
+              content: { text: htmlContent },
+              column: 'left'
+            });
+          }
 
-        // Add goals as bullets module
-        if (section.goals) {
-          modules.push({
-            id: `${section.title}-goals-${Date.now()}`,
-            type: 'bullets',
-            content: { title: 'Goals', items: section.goals },
-            column: 'left'
-          });
-        }
+          // Add goals as bullets module
+          if (section.goals) {
+            modules.push({
+              id: `${section.title}-goals-${Date.now()}`,
+              type: 'bullets',
+              content: { title: 'Goals', items: section.goals },
+              column: 'left'
+            });
+          }
 
-        // Add image if present
-        if (section.sectionImage) {
-          modules.push({
-            id: `${section.title}-image-${Date.now()}`,
-            type: 'image',
-            content: { src: section.sectionImage, alt: `${section.title} visual`, position: 'beside', columns: '4' },
-            column: 'right'
-          });
-        }
+          // Add image if present
+          if (section.sectionImage) {
+            modules.push({
+              id: `${section.title}-image-${Date.now()}`,
+              type: 'image',
+              content: { src: section.sectionImage, alt: `${section.title} visual`, position: 'beside', columns: '4' },
+              column: 'right'
+            });
+          }
 
-        return {
-          title: section.title,
-          subheader: section.subheader,
-          modules
-        };
-      });
-      setEditableSections(converted);
-    }
+          return {
+            title: section.title,
+            subheader: section.subheader,
+            modules
+          };
+        });
+        setEditableSections(converted);
+      }
+    };
+
+    loadContent();
   }, []);
 
   // Check for stored authentication on load

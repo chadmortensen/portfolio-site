@@ -153,81 +153,83 @@ const CaseStudy1 = () => {
     ]
   }];
 
-  // Load content from GitHub or fallback to localStorage, else convert static sections
+  // Load content from GitHub or fallback to localStorage on mount
   useEffect(() => {
     const loadContent = async () => {
       const githubService = new GitHubStorageService();
+      
+      // Try to load from GitHub first
       const githubContent = await githubService.readFile('case-study-1.json');
       if (githubContent) {
         setEditableSections(githubContent);
         return;
       }
-      const saved = localStorage.getItem('case-study-1-content');
-      if (saved) {
+
+      // Fallback to localStorage
+      const savedContent = localStorage.getItem('case-study-1-content');
+      if (savedContent) {
         try {
-          setEditableSections(JSON.parse(saved));
+          const parsed = JSON.parse(savedContent);
+          setEditableSections(parsed);
           return;
         } catch (e) {
           console.error('Failed to parse saved content:', e);
         }
       }
-      // If nothing loaded, convert static sections below
-    };
-    if (editableSections.length === 0) {
-      loadContent();
-    }
-  }, []);
 
-  // Convert static sections to editable format on first load (last resort)
-  useEffect(() => {
-    if (editableSections.length === 0) {
-      const converted = sections.map((section) => {
-        const modules: Module[] = [];
-        
-        // Add main content as text module
-        if (section.content) {
-          const htmlContent = section.content
-            .split('\n\n')
-            .map(paragraph => `<p>${paragraph}</p>`)
-            .join('');
+      // Convert static sections as last resort
+      if (editableSections.length === 0) {
+        const converted = sections.map((section) => {
+          const modules: Module[] = [];
           
-          modules.push({
-            id: `${section.title}-content-${Date.now()}`,
-            type: 'text',
-            content: { text: htmlContent },
-            column: 'left'
-          });
-        }
+          // Add main content as text module
+          if (section.content) {
+            const htmlContent = section.content
+              .split('\n\n')
+              .map(paragraph => `<p>${paragraph}</p>`)
+              .join('');
+            
+            modules.push({
+              id: `${section.title}-content-${Date.now()}`,
+              type: 'text',
+              content: { text: htmlContent },
+              column: 'left'
+            });
+          }
 
-        // Add goals as bullets module
-        if (section.goals) {
-          modules.push({
-            id: `${section.title}-goals-${Date.now()}`,
-            type: 'bullets',
-            content: { title: 'Goals', items: section.goals },
-            column: 'left'
-          });
-        }
+          // Add goals as bullets module
+          if (section.goals) {
+            modules.push({
+              id: `${section.title}-goals-${Date.now()}`,
+              type: 'bullets',
+              content: { title: 'Goals', items: section.goals },
+              column: 'left'
+            });
+          }
 
-        // Add image if present
-        if (section.image) {
-          modules.push({
-            id: `${section.title}-image-${Date.now()}`,
-            type: 'image',
-            content: { src: section.image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
-            column: 'right'
-          });
-        }
+          // Add image if present
+          if (section.image) {
+            modules.push({
+              id: `${section.title}-image-${Date.now()}`,
+              type: 'image',
+              content: { src: section.image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
+              column: 'right'
+            });
+          }
 
-        return {
-          title: section.title,
-          subheader: section.subheader,
-          modules
-        };
-      });
-      setEditableSections(converted);
-    }
+          return {
+            title: section.title,
+            subheader: section.subheader,
+            modules
+          };
+        });
+        setEditableSections(converted);
+      }
+    };
+
+    loadContent();
   }, []);
+
 
   // Check for stored authentication on load
   useEffect(() => {
