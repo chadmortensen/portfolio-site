@@ -8,7 +8,7 @@
         "content": {
           "text": "<p>In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.</p>"
         },
-        "column": "left"
+        "column": "full"
       },
       {
         "id": "The Challenge-goals-1754933907383",
@@ -23,16 +23,7 @@
             "Helping new parents with this major moment in life"
           ]
         },
-        "column": "right"
-      },
-      {
-        "type": "text",
-        "content": {
-          "title": "",
-          "text": "<p>Sample right column</p>"
-        },
-        "column": "right",
-        "id": "1754935961240-0.27573044706126404"
+        "column": "full"
       }
     ]
   },
