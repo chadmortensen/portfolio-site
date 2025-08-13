@@ -186,6 +186,20 @@
           "alt": "Ideation Workshop - How Might We visual"
         },
         "column": "right"
+      },
+      {
+        "type": "bullets",
+        "content": {
+          "title": "",
+          "items": [
+            "We generated more than 70 \"How Might We\" statements",
+            "Used dot voting to identify the most promising directions",
+            "Clustered them into 11 thematic categories",
+            "Named and prioritized the top 3 opportunity areas to guide the next phase of design"
+          ]
+        },
+        "column": "full",
+        "id": "1755107252491-0.5079648674674571"
       }
     ]
   },
