@@ -139,6 +139,14 @@
     "title": "Ideation Workshop - How Might We",
     "modules": [
       {
+        "id": "Ideation Workshop - How Might We-content-1755016105354",
+        "type": "text",
+        "content": {
+          "text": "<p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.</p><p>We brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.</p><p>This collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.</p>"
+        },
+        "column": "left"
+      },
+      {
         "type": "bullets",
         "content": {
           "title": "",
@@ -149,7 +157,7 @@
             "Named and prioritized the top 3 opportunity areas to guide the next phase of design"
           ]
         },
-        "column": "right",
+        "column": "left",
         "id": "1755107252491-0.5079648674674571"
       },
       {
@@ -160,14 +168,6 @@
           "alt": "Ideation Workshop - How Might We visual"
         },
         "column": "right"
-      },
-      {
-        "id": "Ideation Workshop - How Might We-content-1755016105354",
-        "type": "text",
-        "content": {
-          "text": "<p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.</p><p>We brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.</p><p>This collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.</p>"
-        },
-        "column": "left"
       }
     ]
   },
