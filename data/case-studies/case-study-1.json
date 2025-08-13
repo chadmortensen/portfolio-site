@@ -180,7 +180,7 @@
         "content": {
           "text": "<p>With research insights in hand and opportunity areas prioritized, the next step was alignment — not just within the design team, but across product, engineering, and the business. I led conversations that helped us distill a shared set of focus areas, ensuring that our design direction was grounded in user needs, technically feasible, and aligned with broader strategic goals.</p><p>We landed on four key areas of opportunity that met our goals and fit within our short timeline:</p>"
         },
-        "column": "left"
+        "column": "full"
       },
       {
         "id": "Aligning Across Design, Product, and Business-focus-0-1755016105354",
@@ -189,7 +189,7 @@
           "title": "Improve Onboarding",
           "text": "Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry:\n\n• Full control for users who prefer to start from scratch\n• Guided setup for those who want help curating\n• A quick-start option with a recommended, pre-filled registry"
         },
-        "column": "full"
+        "column": "right"
       },
       {
         "id": "Aligning Across Design, Product, and Business-focus-1-1755016105354",
@@ -198,7 +198,7 @@
           "title": "Enhance Curation and Management",
           "text": "We focused on making the registry easier to manage, share, and personalize:\n\n• Simplified tools to make registries public and shareable\n• Contextual guidance and recommendations embedded within the experience\n• Clear visibility into what's been purchased — at both the item and category level"
         },
-        "column": "full"
+        "column": "left"
       },
       {
         "id": "Aligning Across Design, Product, and Business-focus-2-1755016105354",
@@ -207,7 +207,7 @@
           "title": "Elevate the Gifting Experience",
           "text": "We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce:\n\n• Made it easier to identify in-stock and available items\n• Created clear pathways for in-store shoppers to attribute purchases to a registry"
         },
-        "column": "full"
+        "column": "left"
       },
       {
         "id": "Aligning Across Design, Product, and Business-focus-3-1755016105354",
@@ -216,7 +216,7 @@
           "title": "Streamline Internal Processes",
           "text": "Finally, we identified improvements that would increase agility and reduce operational friction:\n\n• Removed dependencies on engineering for updating curated inventory\n• Built tools for merchants to manage recommendations and track performance"
         },
-        "column": "full"
+        "column": "right"
       }
     ]
   },
