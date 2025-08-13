@@ -417,7 +417,7 @@ const CaseStudy1 = () => {
   if (isPresentationMode) {
     return (
       <PresentationMode
-        sections={isEditing ? editableSections : sections}
+        sections={editableSections}
         onExit={() => setIsPresentationMode(false)}
         storageFilename="case-study-1.json"
       />
