@@ -32,15 +32,6 @@
           "heightPercent": "50"
         },
         "column": "right"
-      },
-      {
-        "type": "text",
-        "content": {
-          "title": "",
-          "text": "<p>test info</p>"
-        },
-        "column": "right",
-        "id": "1755022018283-0.5183588586174596"
       }
     ]
   },
