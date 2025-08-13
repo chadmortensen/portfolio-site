@@ -189,7 +189,7 @@
           "title": "Improve Onboarding",
           "text": "Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry:\n\n• Full control for users who prefer to start from scratch\n• Guided setup for those who want help curating\n• A quick-start option with a recommended, pre-filled registry"
         },
-        "column": "right"
+        "column": "left"
       },
       {
         "id": "Aligning Across Design, Product, and Business-focus-1-1755016105354",
@@ -207,7 +207,7 @@
           "title": "Elevate the Gifting Experience",
           "text": "We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce:\n\n• Made it easier to identify in-stock and available items\n• Created clear pathways for in-store shoppers to attribute purchases to a registry"
         },
-        "column": "left"
+        "column": "right"
       },
       {
         "id": "Aligning Across Design, Product, and Business-focus-3-1755016105354",
