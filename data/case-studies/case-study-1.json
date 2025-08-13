@@ -139,44 +139,18 @@
     "title": "Ideation Workshop - How Might We",
     "modules": [
       {
-        "id": "Ideation Workshop - How Might We-content-1755016105354",
-        "type": "text",
+        "type": "bullets",
         "content": {
-          "text": "<p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.</p><p>We brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.</p><p>This collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.</p>"
+          "title": "",
+          "items": [
+            "We generated more than 70 \"How Might We\" statements",
+            "Used dot voting to identify the most promising directions",
+            "Clustered them into 11 thematic categories",
+            "Named and prioritized the top 3 opportunity areas to guide the next phase of design"
+          ]
         },
-        "column": "full"
-      },
-      {
-        "id": "Ideation Workshop - How Might We-detail-0-1755016105354",
-        "type": "quote",
-        "content": {
-          "title": "We generated more than 70 \"How Might We\" statements"
-        },
-        "column": "left"
-      },
-      {
-        "id": "Ideation Workshop - How Might We-detail-1-1755016105354",
-        "type": "quote",
-        "content": {
-          "title": "Clustered them into 11 thematic categories"
-        },
-        "column": "left"
-      },
-      {
-        "id": "Ideation Workshop - How Might We-detail-2-1755016105354",
-        "type": "quote",
-        "content": {
-          "title": "Used dot voting to identify the most promising directions"
-        },
-        "column": "right"
-      },
-      {
-        "id": "Ideation Workshop - How Might We-detail-3-1755016105354",
-        "type": "quote",
-        "content": {
-          "title": "Named and prioritized the top 3 opportunity areas to guide the next phase of design"
-        },
-        "column": "right"
+        "column": "right",
+        "id": "1755107252491-0.5079648674674571"
       },
       {
         "id": "Ideation Workshop - How Might We-main-image-1755016105354",
@@ -188,18 +162,12 @@
         "column": "right"
       },
       {
-        "type": "bullets",
+        "id": "Ideation Workshop - How Might We-content-1755016105354",
+        "type": "text",
         "content": {
-          "title": "",
-          "items": [
-            "We generated more than 70 \"How Might We\" statements",
-            "Used dot voting to identify the most promising directions",
-            "Clustered them into 11 thematic categories",
-            "Named and prioritized the top 3 opportunity areas to guide the next phase of design"
-          ]
+          "text": "<p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.</p><p>We brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.</p><p>This collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.</p>"
         },
-        "column": "full",
-        "id": "1755107252491-0.5079648674674571"
+        "column": "left"
       }
     ]
   },
