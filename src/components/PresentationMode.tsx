@@ -133,7 +133,6 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       }
 
       // Convert static sections as last resort
-      if (editableSections.length === 0) {
       const converted = sections.map((section) => {
         const modules: Module[] = [];
         
@@ -275,7 +274,6 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
         };
       });
       setEditableSections(converted);
-      }
     };
 
     loadContent();
