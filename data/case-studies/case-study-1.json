@@ -217,6 +217,19 @@
           "text": "Finally, we identified improvements that would increase agility and reduce operational friction:\n\n• Removed dependencies on engineering for updating curated inventory\n• Built tools for merchants to manage recommendations and track performance"
         },
         "column": "right"
+      },
+      {
+        "type": "bullets",
+        "content": {
+          "title": "Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry:  ",
+          "items": [
+            " Guided setup for those who want help curating",
+            "Full control for users who prefer to start from scratch",
+            " A quick-start option with a recommended, pre-filled registry"
+          ]
+        },
+        "column": "left",
+        "id": "1755107855479-0.7371915569962831"
       }
     ]
   },
