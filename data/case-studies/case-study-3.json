@@ -53,7 +53,8 @@
           "src": "/lovable-uploads/brightside-business-user.jpg",
           "alt": "",
           "position": "below",
-          "columns": "6"
+          "columns": "6",
+          "heightPercent": "80"
         },
         "column": "right",
         "id": "1755105648357-0.3467124497734382"
