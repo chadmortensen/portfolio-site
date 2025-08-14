@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -39,11 +40,12 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
     opacity: isDragging ? 0.5 : 1,
   };
 
-  // Custom Quill toolbar configuration
+  // Custom Quill toolbar configuration with lists
   const quillModules = {
     toolbar: [
       [{ 'header': [1, 2, 3, false] }],
       ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'background': [] }],
       [{ 'color': [] }],
       ['clean']
@@ -51,7 +53,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
   };
 
   const quillFormats = [
-    'header', 'bold', 'italic', 'underline', 'background', 'color'
+    'header', 'bold', 'italic', 'underline', 'list', 'bullet', 'background', 'color'
   ];
 
   const renderEditMode = () => {
@@ -195,12 +197,23 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
           ? { height: `${module.content.heightPercent}vh`, objectFit: 'contain' as const }
           : {};
         return (
-          <img
-            src={module.content.src}
-            alt={module.content.alt || ''}
-            className="w-full cursor-pointer hover:opacity-90 transition-opacity"
-            style={heightStyle}
-          />
+          <Dialog>
+            <DialogTrigger asChild>
+              <img
+                src={module.content.src}
+                alt={module.content.alt || ''}
+                className="w-full cursor-pointer hover:opacity-90 transition-opacity"
+                style={heightStyle}
+              />
+            </DialogTrigger>
+            <DialogContent className="max-w-6xl w-full p-0">
+              <img
+                src={module.content.src}
+                alt={module.content.alt || ''}
+                className="w-full h-auto"
+              />
+            </DialogContent>
+          </Dialog>
         );
 
       case 'bullets':

@@ -10,6 +10,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import PresentationMode from "@/components/PresentationMode";
 import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
+import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
 
 const CaseStudy3 = () => {
@@ -297,6 +298,10 @@ const CaseStudy3 = () => {
     setEditableSections(newSections);
   };
 
+  const handleUpdateSections = (newSections: Array<{title: string; subheader?: string; modules: Module[]}>) => {
+    setEditableSections(newSections);
+  };
+
   // Column-based layout renderer for flexible module positioning
   const renderModulesWithLayout = (modules: Module[], sectionIndex: number, editing: boolean) => {
     // Group modules by column
@@ -543,6 +548,13 @@ const CaseStudy3 = () => {
       <div className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
+            {/* Section Editor */}
+            <SectionEditor
+              sections={editableSections}
+              onUpdateSections={handleUpdateSections}
+              isEditing={isEditing}
+            />
+            
             {editableSections.map((section, sectionIndex) => (
               <div key={sectionIndex}>
                 {/* Header spans full width */}

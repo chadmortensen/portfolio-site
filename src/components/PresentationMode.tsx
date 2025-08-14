@@ -8,6 +8,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { EditableModule, Module } from "./EditableModule";
 import { ModuleLibrary } from "./ModuleLibrary";
+import { SectionEditor } from "./SectionEditor";
 import { GitHubStorageService } from "../services/githubStorage";
 
 interface PresentationModeProps {
@@ -208,6 +209,10 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
     setEditableSections(newSections);
   };
 
+  const handleUpdateSections = (newSections: Array<{title: string; subheader?: string; modules: Module[]}>) => {
+    setEditableSections(newSections);
+  };
+
   // Column-based layout renderer for flexible module positioning
   const renderModulesWithLayout = (modules: Module[], sectionIndex: number, editing: boolean) => {
     // Group modules by column
@@ -335,16 +340,24 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
             <div className="w-24 h-px bg-accent-teal mx-auto mt-8"></div>
           </div>
 
-          {/* Add Module Button */}
-          <div className="flex justify-center mb-8">
-            <Button
-              variant="outline"
-              onClick={() => setShowModuleLibrary(true)}
-              className="flex items-center space-x-2"
-            >
-              <Plus size={16} />
-              <span>Add Module</span>
-            </Button>
+          {/* Section Editor and Add Module Button */}
+          <div className="space-y-4">
+            <SectionEditor
+              sections={editableSections}
+              onUpdateSections={handleUpdateSections}
+              isEditing={isEditing}
+            />
+            
+            <div className="flex justify-center">
+              <Button
+                variant="outline"
+                onClick={() => setShowModuleLibrary(true)}
+                className="flex items-center space-x-2"
+              >
+                <Plus size={16} />
+                <span>Add Module</span>
+              </Button>
+            </div>
           </div>
 
           {/* Modules with column layout */}
