@@ -79,7 +79,7 @@
         "type": "quote",
         "content": {
           "title": "Key Insight",
-          "text": "Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)"
+          "text": "<p>Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)</p>"
         },
         "column": "left"
       },
@@ -187,7 +187,7 @@
         "type": "quote",
         "content": {
           "title": "Improve Onboarding",
-          "text": "Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry:\n\n• Full control for users who prefer to start from scratch\n• Guided setup for those who want help curating\n• A quick-start option with a recommended, pre-filled registry"
+          "text": "<p>Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry: </p><ul><li>Full control for users who prefer to start from scratch </li><li>Guided setup for those who want help curating </li><li>A quick-start option with a recommended, pre-filled registry</li></ul>"
         },
         "column": "left"
       },
@@ -196,7 +196,7 @@
         "type": "quote",
         "content": {
           "title": "Enhance Curation and Management",
-          "text": "We focused on making the registry easier to manage, share, and personalize:\n\n• Simplified tools to make registries public and shareable\n• Contextual guidance and recommendations embedded within the experience\n• Clear visibility into what's been purchased — at both the item and category level"
+          "text": "<p>We focused on making the registry easier to manage, share, and personalize: </p><ul><li>Simplified tools to make registries public and shareable </li><li>Contextual guidance and recommendations embedded within the experience </li><li>Clear visibility into what's been purchased — at both the item and category level</li></ul>"
         },
         "column": "left"
       },
@@ -205,7 +205,7 @@
         "type": "quote",
         "content": {
           "title": "Elevate the Gifting Experience",
-          "text": "We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce:\n\n• Made it easier to identify in-stock and available items\n• Created clear pathways for in-store shoppers to attribute purchases to a registry"
+          "text": "<p>We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce: </p><ul><li>Made it easier to identify in-stock and available items </li><li>Created clear pathways for in-store shoppers to attribute purchases to a registry</li></ul>"
         },
         "column": "right"
       },
@@ -214,7 +214,7 @@
         "type": "quote",
         "content": {
           "title": "Streamline Internal Processes",
-          "text": "Finally, we identified improvements that would increase agility and reduce operational friction:\n\n• Removed dependencies on engineering for updating curated inventory\n• Built tools for merchants to manage recommendations and track performance"
+          "text": "<p>Finally, we identified improvements that would increase agility and reduce operational friction: </p><ul><li>Removed dependencies on engineering for updating curated inventory </li><li>Built tools for merchants to manage recommendations and track performance</li></ul>"
         },
         "column": "right"
       }
@@ -351,7 +351,7 @@
         "type": "quote",
         "content": {
           "title": "Define the \"Why\" Early",
-          "text": "Set clear goals and success metrics up front — so every team member understood what we were solving for and how we'd measure impact."
+          "text": "<p>Set clear goals and success metrics up front — so every team member understood what we were solving for and how we'd measure impact.</p>"
         },
         "column": "full"
       },
@@ -360,7 +360,7 @@
         "type": "quote",
         "content": {
           "title": "Plan for Reality, Not Perfection",
-          "text": "Sequenced the work with rough estimates to balance ambition with feasibility — helping the team stay focused without overcommitting."
+          "text": "<p>Sequenced the work with rough estimates to balance ambition with feasibility — helping the team stay focused without overcommitting.</p>"
         },
         "column": "full"
       },
@@ -369,7 +369,7 @@
         "type": "quote",
         "content": {
           "title": "Right-Size the Team for the Mission",
-          "text": "Augmented the core team (1 design lead, 4 designers total) by tapping into adjacent talent and available contractor resources."
+          "text": "<p>Augmented the core team (1 design lead, 4 designers total) by tapping into adjacent talent and available contractor resources.</p>"
         },
         "column": "full"
       },
@@ -378,7 +378,7 @@
         "type": "quote",
         "content": {
           "title": "Lead with Empathy, Not Assumptions",
-          "text": "Built on existing research and kept user needs front and center — creating space for insight to guide every decision."
+          "text": "<p>Built on existing research and kept user needs front and center — creating space for insight to guide every decision.</p>"
         },
         "column": "full"
       },
@@ -387,7 +387,7 @@
         "type": "quote",
         "content": {
           "title": "Make Space to Explore",
-          "text": "Ideated and iterated quickly in low fidelity before polishing — ensuring feedback loops were short, inclusive, and grounded."
+          "text": "<p>Ideated and iterated quickly in low fidelity before polishing — ensuring feedback loops were short, inclusive, and grounded.</p>"
         },
         "column": "full"
       },
@@ -396,7 +396,7 @@
         "type": "quote",
         "content": {
           "title": "Prioritize Ruthlessly, Together",
-          "text": "Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight."
+          "text": "<p>Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight.</p>"
         },
         "column": "full"
       }
