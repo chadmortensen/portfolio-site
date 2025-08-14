@@ -323,8 +323,11 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       return <div className="text-center text-text-secondary">Loading...</div>;
     }
     
-    // If in editing mode and section has modules, render with module layout
-    if (isEditing && activeSection?.modules) {
+    // Check if we have modules to display (either in editing mode or view mode)
+    const hasModules = activeSection?.modules && activeSection.modules.length > 0;
+    
+    // If we have modules, render with module layout
+    if (hasModules) {
       return (
         <div className="space-y-8">
           {/* Title */}
@@ -341,24 +344,26 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
           </div>
 
           {/* Section Editor and Add Module Button */}
-          <div className="space-y-4">
-            <SectionEditor
-              sections={editableSections}
-              onUpdateSections={handleUpdateSections}
-              isEditing={isEditing}
-            />
-            
-            <div className="flex justify-center">
-              <Button
-                variant="outline"
-                onClick={() => setShowModuleLibrary(true)}
-                className="flex items-center space-x-2"
-              >
-                <Plus size={16} />
-                <span>Add Module</span>
-              </Button>
-            </div>
-          </div>
+            {isEditing && (
+              <div className="space-y-4">
+                <SectionEditor
+                  sections={editableSections}
+                  onUpdateSections={handleUpdateSections}
+                  isEditing={isEditing}
+                />
+                
+                <div className="flex justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowModuleLibrary(true)}
+                    className="flex items-center space-x-2"
+                  >
+                    <Plus size={16} />
+                    <span>Add Module</span>
+                  </Button>
+                </div>
+              </div>
+            )}
 
           {/* Modules with column layout */}
           {renderModulesWithLayout(activeSection.modules, sectionIndex, isEditing)}

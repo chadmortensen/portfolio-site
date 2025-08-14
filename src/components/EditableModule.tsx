@@ -160,12 +160,17 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               onChange={(e) => onUpdate(module.id, { ...module.content, title: e.target.value })}
               placeholder="Quote title (optional)"
             />
-            <Textarea
-              value={module.content.text || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, text: e.target.value })}
-              placeholder="Enter quote text..."
-              rows={3}
-            />
+            <div className="rich-text-editor">
+              <ReactQuill
+                theme="snow"
+                value={module.content.text || ''}
+                onChange={(value) => onUpdate(module.id, { ...module.content, text: value })}
+                modules={quillModules}
+                formats={quillFormats}
+                placeholder="Enter quote text..."
+                style={{ minHeight: '100px' }}
+              />
+            </div>
           </div>
         );
 
@@ -241,7 +246,10 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             {module.content.title && (
               <h4 className="text-title text-text-primary font-medium mb-2">{module.content.title}</h4>
             )}
-            <p className="text-body text-text-secondary italic">{module.content.text}</p>
+            <div 
+              className="prose prose-slate max-w-none text-body text-text-secondary italic"
+              dangerouslySetInnerHTML={{ __html: module.content.text }}
+            />
           </div>
         );
 
