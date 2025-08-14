@@ -77,9 +77,9 @@
         "type": "quote",
         "content": {
           "title": "Key Insight",
-          "text": "The main gap was clear. Brightside asked significantly more from users before they even created an account, which made the experience feel heavier and more intrusive than others in the space."
+          "text": "<p>The main gap was clear. Brightside asked significantly more from users before they even created an account, which made the experience feel heavier and more intrusive than others in the space.</p>"
         },
-        "column": "full"
+        "column": "right"
       }
     ]
   },
