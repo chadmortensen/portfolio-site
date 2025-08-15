@@ -187,7 +187,7 @@
         "type": "quote",
         "content": {
           "title": "Improve Onboarding",
-          "text": "<p>Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry: </p><ul><li>Full control for users who prefer to start from scratch </li><li>Guided setup for those who want help curating </li><li>A quick-start option with a recommended, pre-filled registry</li></ul>"
+          "text": "<p>Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced a flexible, empowering flows that empowered the users to build their registry:</p><ul><li>Full control for users who prefer to start from scratch</li><li>Guided setup for those who want help curating</li><li>A quick-start option with a recommended, pre-filled registry</li></ul>"
         },
         "column": "left"
       },
@@ -196,7 +196,7 @@
         "type": "quote",
         "content": {
           "title": "Enhance Curation and Management",
-          "text": "<p>We focused on making the registry easier to manage, share, and personalize: </p><ul><li>Simplified tools to make registries public and shareable </li><li>Contextual guidance and recommendations embedded within the experience </li><li>Clear visibility into what's been purchased — at both the item and category level</li></ul>"
+          "text": "<p>We focused on making the registry easier to manage, share, and personalize:</p><ul><li>Simplified tools to make registries public and shareable</li><li>Contextual guidance and recommendations embedded within the experience</li><li>Clear visibility into what's been purchased — at both the item and category level</li></ul>"
         },
         "column": "left"
       },
@@ -205,7 +205,7 @@
         "type": "quote",
         "content": {
           "title": "Elevate the Gifting Experience",
-          "text": "<p>We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce: </p><ul><li>Made it easier to identify in-stock and available items </li><li>Created clear pathways for in-store shoppers to attribute purchases to a registry</li></ul>"
+          "text": "<p>We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce:</p><ul><li>Made it easier to identify in-stock and available items</li><li>Created clear pathways for in-store shoppers to attribute purchases to a registry</li></ul>"
         },
         "column": "right"
       },
@@ -214,7 +214,7 @@
         "type": "quote",
         "content": {
           "title": "Streamline Internal Processes",
-          "text": "<p>Finally, we identified improvements that would increase agility and reduce operational friction: </p><ul><li>Removed dependencies on engineering for updating curated inventory </li><li>Built tools for merchants to manage recommendations and track performance</li></ul>"
+          "text": "<p>Finally, we identified improvements that would increase agility and reduce operational friction:</p><ul><li>Removed dependencies on engineering for updating curated inventory</li><li>Built tools for merchants to manage recommendations and track performance</li></ul>"
         },
         "column": "right"
       }
@@ -330,7 +330,18 @@
         "content": {
           "text": "<p>The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. More importantly, it was a product that truly reflected the needs of our customers.</p>"
         },
-        "column": "left"
+        "column": "full"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/registry-results.jpg",
+          "alt": "Results of the registry project presented in a table",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "full",
+        "id": "1755292729213-0.9558229852855136"
       }
     ]
   },
@@ -344,7 +355,7 @@
         "content": {
           "text": "<p>This project was a clear reminder that even with tight timelines, it's possible to deliver meaningful, customer-centered work — as long as you're intentional about how you lead, how you listen, and how you prioritize.</p>"
         },
-        "column": "left"
+        "column": "full"
       },
       {
         "id": "What We Learned-learning-0-1755016105354",
@@ -353,7 +364,7 @@
           "title": "Define the \"Why\" Early",
           "text": "<p>Set clear goals and success metrics up front — so every team member understood what we were solving for and how we'd measure impact.</p>"
         },
-        "column": "full"
+        "column": "right"
       },
       {
         "id": "What We Learned-learning-1-1755016105354",
@@ -362,7 +373,7 @@
           "title": "Plan for Reality, Not Perfection",
           "text": "<p>Sequenced the work with rough estimates to balance ambition with feasibility — helping the team stay focused without overcommitting.</p>"
         },
-        "column": "full"
+        "column": "left"
       },
       {
         "id": "What We Learned-learning-2-1755016105354",
@@ -371,7 +382,7 @@
           "title": "Right-Size the Team for the Mission",
           "text": "<p>Augmented the core team (1 design lead, 4 designers total) by tapping into adjacent talent and available contractor resources.</p>"
         },
-        "column": "full"
+        "column": "right"
       },
       {
         "id": "What We Learned-learning-3-1755016105354",
@@ -380,7 +391,7 @@
           "title": "Lead with Empathy, Not Assumptions",
           "text": "<p>Built on existing research and kept user needs front and center — creating space for insight to guide every decision.</p>"
         },
-        "column": "full"
+        "column": "left"
       },
       {
         "id": "What We Learned-learning-4-1755016105354",
@@ -389,7 +400,7 @@
           "title": "Make Space to Explore",
           "text": "<p>Ideated and iterated quickly in low fidelity before polishing — ensuring feedback loops were short, inclusive, and grounded.</p>"
         },
-        "column": "full"
+        "column": "right"
       },
       {
         "id": "What We Learned-learning-5-1755016105354",
@@ -398,7 +409,7 @@
           "title": "Prioritize Ruthlessly, Together",
           "text": "<p>Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight.</p>"
         },
-        "column": "full"
+        "column": "left"
       }
     ]
   }
