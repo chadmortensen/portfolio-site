@@ -43,12 +43,13 @@
     "title": "Workshop Design",
     "modules": [
       {
-        "id": "Workshop Design-content-1755016208610",
-        "type": "text",
+        "id": "Workshop Design-workshop-0-1755016208610",
+        "type": "image",
         "content": {
-          "text": "<p>To build true alignment across disciplines, I designed a three-day workshop focused on co-creation, strategic thinking, and grounding our decisions in real user needs. The structure was intentional: each activity layered insight and perspective, ultimately enabling the team to converge on a shared direction.</p><p>Key components included:</p>"
+          "src": "/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
+          "alt": "Workshop image 1"
         },
-        "column": "left"
+        "column": "right"
       },
       {
         "id": "Workshop Design-detail-0-1755016208610",
@@ -57,16 +58,7 @@
           "title": "Grounding in Research",
           "text": "<p>We began by immersing ourselves in key inputs — seller behavior data, industry trends, brand positioning, and a reminder of Etsy's broader mission — to ensure we were anchored in both user insight and business context.</p>"
         },
-        "column": "full"
-      },
-      {
-        "id": "Workshop Design-detail-1-1755016208610",
-        "type": "quote",
-        "content": {
-          "title": "Thinking Hats Exercise",
-          "text": "<p>To challenge assumptions and foster empathy, we explored seller opportunities through a set of creative mindsets — including the optimist, pessimist, and visionary — uncovering nuanced perspectives often missed in traditional brainstorming.</p>"
-        },
-        "column": "full"
+        "column": "right"
       },
       {
         "id": "Workshop Design-detail-2-1755016208610",
@@ -75,7 +67,7 @@
           "title": "Future View",
           "text": "<p>We envisioned what a best-in-class fulfillment experience could look like 3–5 years out, encouraging blue-sky thinking while staying tethered to seller and buyer realities.</p>"
         },
-        "column": "full"
+        "column": "right"
       },
       {
         "id": "Workshop Design-detail-3-1755016208610",
@@ -84,16 +76,24 @@
           "title": "Cover Story",
           "text": "<p>We closed with a storytelling exercise where teams imagined Etsy featured in a future success story. This narrative served as a powerful foundation for the Fulfillment Vision I later authored and refined.</p>"
         },
-        "column": "full"
+        "column": "left"
       },
       {
-        "id": "Workshop Design-workshop-0-1755016208610",
-        "type": "image",
+        "id": "Workshop Design-content-1755016208610",
+        "type": "text",
         "content": {
-          "src": "/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
-          "alt": "Workshop image 1"
+          "text": "<p>To build true alignment across disciplines, I designed a three-day workshop focused on co-creation, strategic thinking, and grounding our decisions in real user needs. The structure was intentional: each activity layered insight and perspective, ultimately enabling the team to converge on a shared direction.</p><p>Key components included:</p>"
         },
-        "column": "right"
+        "column": "left"
+      },
+      {
+        "id": "Workshop Design-detail-1-1755016208610",
+        "type": "quote",
+        "content": {
+          "title": "Thinking Hats Exercise",
+          "text": "<p>To challenge assumptions and foster empathy, we explored seller opportunities through a set of creative mindsets — including the optimist, pessimist, and visionary — uncovering nuanced perspectives often missed in traditional brainstorming.</p>"
+        },
+        "column": "left"
       }
     ]
   },
