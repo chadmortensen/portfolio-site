@@ -330,18 +330,18 @@
         "content": {
           "text": "<p>The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. More importantly, it was a product that truly reflected the needs of our customers.</p>"
         },
-        "column": "full"
+        "column": "left"
       },
       {
         "type": "image",
         "content": {
           "src": "/lovable-uploads/registry-results.jpg",
-          "alt": "Results of the registry project presented in a table",
+          "alt": "Results in a table",
           "position": "below",
           "columns": "6"
         },
-        "column": "full",
-        "id": "1755292729213-0.9558229852855136"
+        "column": "right",
+        "id": "1755293180539-0.006083686008033218"
       }
     ]
   },
