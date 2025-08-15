@@ -1,28 +1,5 @@
 [
   {
-    "title": "Assembling the Team",
-    "subheader": "Leadership alignment and persuasion",
-    "modules": [
-      {
-        "id": "Assembling the Team-content-1755016105354",
-        "type": "text",
-        "content": {
-          "text": "<p>With just six weeks to take this project from discovery through final deliverables — and much of that timeline landing squarely in the holiday-heavy back half of Q4 — I knew we needed to move quickly and assemble a team that could hit the ground running.</p><p>After aligning with our business and product partners, I had enough clarity on the scope to start making staffing decisions. One of my staff designers was well-positioned to lead the work, but I also knew that expecting him to carry the full load would put both the team and the project at risk.</p><p>Rather than waiting for headcount or formal allocations, I</p>"
-        },
-        "column": "left"
-      },
-      {
-        "id": "Assembling the Team-main-image-1755016105354",
-        "type": "image",
-        "content": {
-          "src": "/lovable-uploads/e36754b0-b1da-47b9-8e75-731620ea5cf1.jpeg",
-          "alt": "Assembling the Team visual"
-        },
-        "column": "right"
-      }
-    ]
-  },
-  {
     "title": "The Challenge",
     "modules": [
       {
@@ -47,6 +24,29 @@
           ]
         },
         "column": "full"
+      }
+    ]
+  },
+  {
+    "title": "Assembling the Team",
+    "subheader": "Leadership alignment and persuasion",
+    "modules": [
+      {
+        "id": "Assembling the Team-content-1755016105354",
+        "type": "text",
+        "content": {
+          "text": "<p>With just six weeks to take this project from discovery through final deliverables — and much of that timeline landing squarely in the holiday-heavy back half of Q4 — I knew we needed to move quickly and assemble a team that could hit the ground running.</p><p>After aligning with our business and product partners, I had enough clarity on the scope to start making staffing decisions. One of my staff designers was well-positioned to lead the work, but I also knew that expecting him to carry the full load would put both the team and the project at risk.</p><p>Rather than waiting for headcount or formal allocations, I</p>"
+        },
+        "column": "left"
+      },
+      {
+        "id": "Assembling the Team-main-image-1755016105354",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/e36754b0-b1da-47b9-8e75-731620ea5cf1.jpeg",
+          "alt": "Assembling the Team visual"
+        },
+        "column": "right"
       }
     ]
   },
