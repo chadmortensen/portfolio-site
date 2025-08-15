@@ -1,31 +1,5 @@
 [
   {
-    "title": "Business and User Goals",
-    "subheader": "Grounded decisions through analytics and insights",
-    "modules": [
-      {
-        "id": "The Data-content-1755016306393",
-        "type": "text",
-        "content": {
-          "text": "<p>Our design decisions were grounded in both qualitative and quantitative inputs. These included customer survey feedback, funnel analytics, and a competitive audit.</p><p>Analytics showed that the most significant drop-offs occurred at high-friction moments, such as account creation and payment. Interestingly, the long series of personal and health-related questions did contribute to some attrition, but the impact was relatively minor.</p><p>As a side effort, I developed a GPT-based assistant to help designers and product managers generate analytics reports. This tool provided step-by-step instructions for using Brightside's data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.</p>"
-        },
-        "column": "left"
-      },
-      {
-        "type": "image",
-        "content": {
-          "src": "/lovable-uploads/brightside-business-user.jpg",
-          "alt": "",
-          "position": "below",
-          "columns": "6",
-          "heightPercent": ""
-        },
-        "column": "right",
-        "id": "1755105648357-0.3467124497734382"
-      }
-    ]
-  },
-  {
     "title": "The Challenge",
     "modules": [
       {
@@ -58,6 +32,32 @@
           "heightPercent": "50"
         },
         "column": "right"
+      }
+    ]
+  },
+  {
+    "title": "Business and User Goals",
+    "subheader": "Grounded decisions through analytics and insights",
+    "modules": [
+      {
+        "id": "The Data-content-1755016306393",
+        "type": "text",
+        "content": {
+          "text": "<p>Our design decisions were grounded in both qualitative and quantitative inputs. These included customer survey feedback, funnel analytics, and a competitive audit.</p><p>Analytics showed that the most significant drop-offs occurred at high-friction moments, such as account creation and payment. Interestingly, the long series of personal and health-related questions did contribute to some attrition, but the impact was relatively minor.</p><p>As a side effort, I developed a GPT-based assistant to help designers and product managers generate analytics reports. This tool provided step-by-step instructions for using Brightside's data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.</p>"
+        },
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/brightside-business-user.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6",
+          "heightPercent": ""
+        },
+        "column": "right",
+        "id": "1755105648357-0.3467124497734382"
       }
     ]
   },
