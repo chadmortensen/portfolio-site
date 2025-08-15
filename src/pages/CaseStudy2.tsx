@@ -19,6 +19,9 @@ const CaseStudy2 = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editPassword, setEditPassword] = useState('');
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('casestudies_authenticated') === 'true';
+  });
   const [showModuleLibrary, setShowModuleLibrary] = useState(false);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [editableSections, setEditableSections] = useState<Array<{
@@ -143,13 +146,6 @@ const CaseStudy2 = () => {
     loadContent();
   }, []);
 
-  // Check for stored authentication on load
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('edit-authenticated') === 'true';
-    if (isAuthenticated) {
-      setIsEditing(false); // Start in view mode even if authenticated
-    }
-  }, []);
 
   const handlePasswordSubmit = () => {
     if (editPassword === '4455') {
@@ -416,7 +412,7 @@ const CaseStudy2 = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setShowPasswordPrompt(true)}
+                onClick={() => isAuthenticated ? setIsEditing(true) : setShowPasswordPrompt(true)}
                 className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
               >
                 <Edit3 size={16} />
