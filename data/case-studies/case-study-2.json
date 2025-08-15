@@ -75,7 +75,7 @@
           "src": "/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
           "alt": "Workshop image 1"
         },
-        "column": "left"
+        "column": "right"
       },
       {
         "id": "Workshop Design-detail-0-1755016208610",
@@ -93,7 +93,7 @@
           "title": "Future View",
           "text": "<p>We envisioned what a best-in-class fulfillment experience could look like 3–5 years out, encouraging blue-sky thinking while staying tethered to seller and buyer realities.</p>"
         },
-        "column": "right"
+        "column": "left"
       }
     ]
   },
