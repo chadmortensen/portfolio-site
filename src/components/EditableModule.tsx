@@ -7,12 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export interface Module {
   id: string;
-  type: 'text' | 'image' | 'bullets' | 'goals' | 'findings' | 'principles' | 'quote';
+  type: 'text' | 'image' | 'bullets' | 'goals' | 'findings' | 'principles' | 'quote' | 'table';
   content: any;
   column: 'full' | 'left' | 'right';
 }
@@ -174,6 +175,100 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
           </div>
         );
 
+      case 'table':
+        return (
+          <div className="space-y-4">
+            <Input
+              value={module.content.title || ''}
+              onChange={(e) => onUpdate(module.id, { ...module.content, title: e.target.value })}
+              placeholder="Table title (optional)"
+            />
+            
+            <div className="border border-swiss-light rounded-lg overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gray-50">
+                    {(module.content.headers || []).map((header: string, index: number) => (
+                      <TableHead key={index}>
+                        <Input
+                          value={header}
+                          onChange={(e) => {
+                            const newHeaders = [...(module.content.headers || [])];
+                            newHeaders[index] = e.target.value;
+                            onUpdate(module.id, { ...module.content, headers: newHeaders });
+                          }}
+                          className="bg-transparent border-none"
+                          placeholder={`Header ${index + 1}`}
+                        />
+                      </TableHead>
+                    ))}
+                    <TableHead className="w-12">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          const newHeaders = [...(module.content.headers || []), 'New Column'];
+                          const newRows = (module.content.rows || []).map((row: string[]) => [...row, '']);
+                          onUpdate(module.id, { ...module.content, headers: newHeaders, rows: newRows });
+                        }}
+                      >
+                        <Plus size={16} />
+                      </Button>
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {(module.content.rows || []).map((row: string[], rowIndex: number) => (
+                    <TableRow key={rowIndex}>
+                      {row.map((cell: string, cellIndex: number) => (
+                        <TableCell key={cellIndex}>
+                          <Input
+                            value={cell}
+                            onChange={(e) => {
+                              const newRows = [...(module.content.rows || [])];
+                              newRows[rowIndex][cellIndex] = e.target.value;
+                              onUpdate(module.id, { ...module.content, rows: newRows });
+                            }}
+                            className="bg-transparent border-none"
+                            placeholder={`Cell ${rowIndex + 1}-${cellIndex + 1}`}
+                          />
+                        </TableCell>
+                      ))}
+                      <TableCell className="w-12">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            const newRows = (module.content.rows || []).filter((_: any, index: number) => index !== rowIndex);
+                            onUpdate(module.id, { ...module.content, rows: newRows });
+                          }}
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              
+              <div className="p-2 border-t border-swiss-light bg-gray-50">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    const newRow = new Array(module.content.headers?.length || 2).fill('');
+                    const newRows = [...(module.content.rows || []), newRow];
+                    onUpdate(module.id, { ...module.content, rows: newRows });
+                  }}
+                >
+                  <Plus size={16} className="mr-2" />
+                  Add Row
+                </Button>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return <div>Editing not supported for this module type yet</div>;
     }
@@ -250,6 +345,45 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               className="prose prose-slate max-w-none text-body text-text-secondary italic"
               dangerouslySetInnerHTML={{ __html: module.content.text }}
             />
+          </div>
+        );
+
+      case 'table':
+        return (
+          <div className="space-y-4">
+            {module.content.title && (
+              <h3 className="text-title text-text-primary font-light">{module.content.title}</h3>
+            )}
+            {(module.content.headers || module.content.rows) && (
+              <div className="border border-gray-200 rounded-lg overflow-hidden">
+                <Table>
+                  {module.content.headers && (
+                    <TableHeader>
+                      <TableRow className="bg-gray-50 border-b border-gray-200">
+                        {module.content.headers.map((header: string, index: number) => (
+                          <TableHead key={index} className="font-semibold text-gray-900 py-4 px-6">
+                            {header}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    </TableHeader>
+                  )}
+                  {module.content.rows && (
+                    <TableBody>
+                      {module.content.rows.map((row: string[], rowIndex: number) => (
+                        <TableRow key={rowIndex} className="border-b border-gray-200 last:border-b-0">
+                          {row.map((cell: string, cellIndex: number) => (
+                            <TableCell key={cellIndex} className="py-4 px-6">
+                              {cell}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  )}
+                </Table>
+              </div>
+            )}
           </div>
         );
 

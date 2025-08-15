@@ -1,4 +1,4 @@
-import { Plus, Type, Image, List, Quote, Target, Lightbulb } from "lucide-react";
+import { Plus, Type, Image, List, Quote, Target, Lightbulb, Table } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Module } from "./EditableModule";
 
@@ -39,6 +39,17 @@ export const ModuleLibrary = ({ isOpen, onAddModule, onClose }: ModuleLibraryPro
       title: 'Quote Block',
       description: 'Add a highlighted quote or insight',
       defaultContent: { title: '', text: '' }
+    },
+    {
+      type: 'table' as const,
+      icon: Table,
+      title: 'Table',
+      description: 'Add a data table with headers and rows',
+      defaultContent: { 
+        title: '', 
+        headers: ['Column 1', 'Column 2'], 
+        rows: [['Row 1 Cell 1', 'Row 1 Cell 2']] 
+      }
     }
   ];
 
