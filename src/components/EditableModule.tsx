@@ -220,20 +220,25 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                 <TableBody>
                   {(module.content.rows || []).map((row: string[], rowIndex: number) => (
                     <TableRow key={rowIndex}>
-                      {row.map((cell: string, cellIndex: number) => (
-                        <TableCell key={cellIndex}>
-                          <Input
-                            value={cell}
-                            onChange={(e) => {
-                              const newRows = [...(module.content.rows || [])];
-                              newRows[rowIndex][cellIndex] = e.target.value;
-                              onUpdate(module.id, { ...module.content, rows: newRows });
-                            }}
-                            className="bg-transparent border-none"
-                            placeholder={`Cell ${rowIndex + 1}-${cellIndex + 1}`}
-                          />
-                        </TableCell>
-                      ))}
+                       {row.map((cell: string, cellIndex: number) => (
+                         <TableCell key={cellIndex}>
+                           <div className="rich-text-editor">
+                             <ReactQuill
+                               theme="snow"
+                               value={cell || ''}
+                               onChange={(value) => {
+                                 const newRows = [...(module.content.rows || [])];
+                                 newRows[rowIndex][cellIndex] = value;
+                                 onUpdate(module.id, { ...module.content, rows: newRows });
+                               }}
+                               modules={quillModules}
+                               formats={quillFormats}
+                               placeholder={`Cell ${rowIndex + 1}-${cellIndex + 1}`}
+                               style={{ minHeight: '60px' }}
+                             />
+                           </div>
+                         </TableCell>
+                       ))}
                       <TableCell className="w-12">
                         <Button
                           variant="ghost"
@@ -369,17 +374,20 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                     </TableHeader>
                   )}
                   {module.content.rows && (
-                    <TableBody>
-                      {module.content.rows.map((row: string[], rowIndex: number) => (
-                        <TableRow key={rowIndex} className="border-b border-gray-200 last:border-b-0">
-                          {row.map((cell: string, cellIndex: number) => (
-                            <TableCell key={cellIndex} className="py-4 px-6">
-                              {cell}
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      ))}
-                    </TableBody>
+                     <TableBody>
+                       {module.content.rows.map((row: string[], rowIndex: number) => (
+                         <TableRow key={rowIndex} className="border-b border-gray-200 last:border-b-0">
+                           {row.map((cell: string, cellIndex: number) => (
+                             <TableCell key={cellIndex} className="py-4 px-6">
+                               <div 
+                                 className="prose prose-slate max-w-none text-body text-text-secondary"
+                                 dangerouslySetInnerHTML={{ __html: cell }}
+                               />
+                             </TableCell>
+                           ))}
+                         </TableRow>
+                       ))}
+                     </TableBody>
                   )}
                 </Table>
               </div>

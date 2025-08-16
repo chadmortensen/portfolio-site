@@ -20,7 +20,7 @@ const CaseStudy2 = () => {
   const [editPassword, setEditPassword] = useState('');
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('casestudies_authenticated') === 'true';
+    return localStorage.getItem('edit-authenticated') === 'true';
   });
   const [showModuleLibrary, setShowModuleLibrary] = useState(false);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
