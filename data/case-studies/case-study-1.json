@@ -337,14 +337,10 @@
         "content": {
           "title": "",
           "headers": [
-            "Column 1",
-            "Column 2"
+            "Goals",
+            "Results"
           ],
           "rows": [
-            [
-              "Goals",
-              "Results"
-            ],
             [
               "Increase quality registry creations  (creations that lead to a first curation action)",
               "+28% vs. Last year"
