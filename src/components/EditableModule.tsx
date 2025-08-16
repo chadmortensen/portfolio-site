@@ -360,7 +360,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               <h3 className="text-title text-text-primary font-light">{module.content.title}</h3>
             )}
             {(module.content.headers || module.content.rows) && (
-              <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <div className="overflow-hidden">
                 <Table>
                   {module.content.headers && (
                     <TableHeader>
