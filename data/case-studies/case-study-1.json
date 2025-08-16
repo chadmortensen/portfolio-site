@@ -342,20 +342,20 @@
           ],
           "rows": [
             [
-              "Increase quality registry creations  (creations that lead to a first curation action)",
-              "+28% vs. Last year"
+              "<p>Increase quality registry creations (creations that lead to a first curation action)</p>",
+              "<p><strong style=\"color: rgb(0, 138, 0);\">+28%</strong> vs. Last year</p>"
             ],
             [
-              "Increase curation by 10%",
-              "70% edited within 3-7 days.  +20% increase"
+              "<p>Increase curation by 10%</p>",
+              "<p>70% edited within 3-7 days. </p><p><strong style=\"color: rgb(0, 138, 0);\">+20%</strong> increase</p>"
             ],
             [
-              "Increase sharing by 20%",
-              "55% shared within 7 days +8% increase"
+              "<p>Increase sharing by 20%</p>",
+              "<p>55% shared within 7 days </p><p><strong style=\"color: rgb(0, 138, 0);\">+8%</strong> increase</p>"
             ],
             [
-              "Increase purchase conversion by 25%",
-              "GMV initially increased but then decreased starting in April possibly due to COVID"
+              "<p>Increase purchase conversion by 25%</p>",
+              "<p>GMV initially increased but then decreased starting in April possibly due to COVID</p>"
             ]
           ]
         },
