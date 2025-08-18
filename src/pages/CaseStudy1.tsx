@@ -456,7 +456,7 @@ const CaseStudy1 = () => {
       )}
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-surface-primary border-b border-swiss-light py-4">
+      <nav className="sticky top-0 z-50 bg-surface-primary/80 backdrop-blur-md backdrop-saturate-150 border-b border-swiss-light py-4">
         <div className="swiss-grid">
           <div className="col-span-12 flex items-center justify-between">
             <button onClick={() => navigate('/')} className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors">
