@@ -15,7 +15,7 @@
         "id": "challenge-encouragement-1",
         "type": "text",
         "content": {
-          "text": "<h3><strong style=\"background-color: transparent; color: rgb(11, 83, 148);\">Encouragement to push the design explorations</strong></h3><p>I encouraged the designer on the growth squad to pause and consider a more expansive approach. What if we looked beyond the immediate constraints and imagined what a truly exceptional experience could be? I often use the analogy of mild, medium, and spicy to explore beyond the most immediate solution and consider what better or exceptional solutions might be.</p>"
+          "text": "<h3><span style=\"background-color: transparent;\">Encouragement to push the design explorations</span></h3><p>I encouraged the designer on the growth squad to pause and consider a more expansive approach. What if we looked beyond the immediate constraints and imagined what a truly exceptional experience could be? I often use the analogy of mild, medium, and spicy to explore beyond the most immediate solution and consider what better or exceptional solutions might be.</p>"
         },
         "column": "left"
       }
@@ -100,7 +100,7 @@
         "type": "text",
         "content": {
           "title": "",
-          "text": "<p><span style=\"color: rgb(67, 67, 67); background-color: transparent;\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.﻿</span></p>"
+          "text": "<p><span style=\"background-color: transparent; color: rgb(67, 67, 67);\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.﻿</span></p>"
         },
         "column": "full",
         "id": "1755543918558-0.04842676308756744"
