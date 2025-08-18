@@ -481,7 +481,7 @@ const CaseStudy3 = () => {
   return (
     <div className="min-h-screen bg-surface-primary">
       {/* Navigation */}
-      <nav className="bg-surface-primary border-b border-swiss-light py-4">
+      <nav className="sticky top-0 z-50 bg-surface-primary border-b border-swiss-light py-4">
         <div className="swiss-grid">
           <div className="col-span-12 flex items-center justify-between">
             <button
