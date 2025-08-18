@@ -25,48 +25,13 @@
     "title": "Goals",
     "modules": [
       {
-        "id": "goals-business-1",
-        "type": "bullets",
+        "type": "text",
         "content": {
-          "title": "Business",
-          "items": [
-            "Brightside needed an intake experience that could increase conversion rates while enabling more flexible marketing channels."
-          ]
+          "title": "",
+          "text": "<h3><span style=\"color: rgb(11, 83, 148); background-color: transparent;\">Business</span></h3><p><span style=\"color: rgb(67, 67, 67); background-color: transparent;\">Brightside needed an intake experience that could increase conversion rates while enabling more flexible marketing channels.</span></p><h3><span style=\"color: rgb(11, 83, 148); background-color: transparent;\">Users&nbsp;</span></h3><p><span style=\"color: rgb(67, 67, 67); background-color: transparent;\">For users, the experience had to inspire confidence — helping them feel secure in their decision to seek care and giving them clarity around the cost of services.</span></p><h3><span style=\"color: rgb(11, 83, 148); background-color: transparent;\">Squad</span></h3><p><span style=\"color: rgb(67, 67, 67); background-color: transparent;\">At the squad level, success meant designing a more adaptable flow that could support a variety of user journeys while reducing friction.</span></p><h3><span style=\"color: rgb(11, 83, 148); background-color: transparent;\">Leadership</span></h3><p><span style=\"color: rgb(67, 67, 67); background-color: transparent;\">For executives, it was equally important that the work signal a long-term plan, giving confidence that near-term improvements were part of a larger, coherent vision.</span></p><p><br></p>"
         },
-        "column": "left"
-      },
-      {
-        "id": "goals-users-1",
-        "type": "bullets",
-        "content": {
-          "title": "Users",
-          "items": [
-            "For users, the experience had to inspire confidence — helping them feel secure in their decision to seek care and giving them clarity around the cost of services."
-          ]
-        },
-        "column": "left"
-      },
-      {
-        "id": "goals-squad-1",
-        "type": "bullets",
-        "content": {
-          "title": "Squad",
-          "items": [
-            "At the squad level, success meant designing a more adaptable flow that could support a variety of user journeys while reducing friction."
-          ]
-        },
-        "column": "right"
-      },
-      {
-        "id": "goals-leadership-1",
-        "type": "bullets",
-        "content": {
-          "title": "Leadership",
-          "items": [
-            "For executives, it was equally important that the work signal a long-term plan, giving confidence that near-term improvements were part of a larger, coherent vision."
-          ]
-        },
-        "column": "right"
+        "column": "left",
+        "id": "1755544027673-0.26157148920207385"
       }
     ]
   },
@@ -100,7 +65,7 @@
         "type": "text",
         "content": {
           "title": "",
-          "text": "<p><span style=\"background-color: transparent; color: rgb(67, 67, 67);\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.﻿</span></p>"
+          "text": "<p><span style=\"color: rgb(67, 67, 67); background-color: transparent;\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.﻿</span></p>"
         },
         "column": "full",
         "id": "1755543918558-0.04842676308756744"
