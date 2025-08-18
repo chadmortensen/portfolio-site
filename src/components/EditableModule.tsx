@@ -347,7 +347,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               <h4 className="text-title text-text-primary font-medium mb-2">{module.content.title}</h4>
             )}
             <div 
-              className="prose prose-slate max-w-none text-body text-text-secondary italic"
+              className="prose prose-slate max-w-none text-body text-text-secondary italic [&_h3]:text-lg [&_h3]:mb-2 [&_h3]:text-foreground [&_h3]:font-semibold"
               dangerouslySetInnerHTML={{ __html: module.content.text }}
             />
           </div>
