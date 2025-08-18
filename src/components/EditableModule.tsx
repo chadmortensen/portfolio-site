@@ -325,7 +325,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
         return (
           <div className="space-y-4">
             {module.content.title && (
-              <h3 className="text-title text-text-primary font-light">{module.content.title}</h3>
+              <h3 className="text-lg mb-2 text-foreground font-semibold">{module.content.title}</h3>
             )}
             {module.content.items && module.content.items.length > 0 && (
               <ul className="space-y-2">
