@@ -213,7 +213,7 @@ const CaseStudy2 = () => {
 
         {/* Column layout for left/right modules */}
         {hasColumnModules && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Left column */}
             <div className="space-y-6">
               {editing ? (

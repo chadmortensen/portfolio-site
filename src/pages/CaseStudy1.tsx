@@ -341,7 +341,7 @@ const CaseStudy1 = () => {
         ))}
 
         {hasColumns && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="space-y-6">
               {editing ? (
                 <DndContext
@@ -374,7 +374,7 @@ const CaseStudy1 = () => {
               )}
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 items-start">
               {editing ? (
                 <DndContext
                   sensors={sensors}
