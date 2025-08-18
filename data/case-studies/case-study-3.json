@@ -94,6 +94,20 @@
     ]
   },
   {
+    "title": "Bonus: Custom GPT Side Project",
+    "modules": [
+      {
+        "type": "text",
+        "content": {
+          "title": "",
+          "text": "<p><span style=\"background-color: transparent; color: rgb(67, 67, 67);\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.<span class=\"ql-cursor\">﻿</span></span></p>"
+        },
+        "column": "full",
+        "id": "1755543918558-0.04842676308756744"
+      }
+    ]
+  },
+  {
     "title": "Competitive Analysis",
     "modules": [
       {
