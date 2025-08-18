@@ -307,7 +307,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               <img
                 src={module.content.src}
                 alt={module.content.alt || ''}
-                className="w-full cursor-pointer hover:opacity-90 transition-opacity"
+                className="w-full cursor-pointer hover:opacity-90 transition-opacity self-start"
                 style={heightStyle}
               />
             </DialogTrigger>
