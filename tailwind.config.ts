@@ -168,43 +168,45 @@ export default {
 						filter: 'blur(8px)'
 					}
 				},
-				'firework-burst': {
+				'water-ripple': {
 					'0%': { 
-						transform: 'scale(0) translate(0, 0)',
-						opacity: '0'
-					},
-					'15%': {
-						transform: 'scale(0.3) translate(0, 0)',
-						opacity: '1'
-					},
-					'30%': {
-						transform: 'scale(0.8) translate(var(--dx), var(--dy))',
-						opacity: '1'
-					},
-					'60%': {
-						transform: 'scale(1.2) translate(var(--dx), var(--dy))',
-						opacity: '0.8'
-					},
-					'100%': {
-						transform: 'scale(0.6) translate(var(--dx), var(--dy))',
-						opacity: '0'
-					}
-				},
-				'center-flash': {
-					'0%': { 
-						transform: 'scale(0)',
-						opacity: '0'
+						transform: 'scale(0.8)',
+						opacity: '0',
+						filter: 'blur(10px)'
 					},
 					'20%': {
-						transform: 'scale(3)',
-						opacity: '0.8'
+						transform: 'scale(0.95)',
+						opacity: '0.3',
+						filter: 'blur(5px)'
 					},
 					'40%': {
-						transform: 'scale(6)',
-						opacity: '0.4'
+						transform: 'scale(1.02)',
+						opacity: '0.7',
+						filter: 'blur(2px)'
+					},
+					'60%': {
+						transform: 'scale(0.98)',
+						opacity: '0.9',
+						filter: 'blur(1px)'
+					},
+					'80%': {
+						transform: 'scale(1.01)',
+						opacity: '0.95',
+						filter: 'blur(0.5px)'
 					},
 					'100%': {
-						transform: 'scale(12)',
+						transform: 'scale(1)',
+						opacity: '1',
+						filter: 'blur(0px)'
+					}
+				},
+				'ripple-overlay': {
+					'0%': {
+						transform: 'scale(0)',
+						opacity: '0.8'
+					},
+					'100%': {
+						transform: 'scale(4)',
 						opacity: '0'
 					}
 				}
@@ -215,8 +217,8 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'water-emerge-in': 'water-emerge-in 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
 				'water-emerge-out': 'water-emerge-out 0.4s cubic-bezier(0.7, 0, 0.84, 0)',
-				'firework-burst': 'firework-burst 1s ease-out',
-				'center-flash': 'center-flash 1s ease-out'
+				'water-ripple': 'water-ripple 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'ripple-overlay': 'ripple-overlay 1s ease-out'
 			}
 		}
 	},
