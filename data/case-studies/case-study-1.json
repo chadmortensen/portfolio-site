@@ -45,7 +45,7 @@
         "content": {
           "src": "/lovable-uploads/walmart-team.jpg",
           "alt": "Assembling the Team visual",
-          "heightPercent": "80"
+          "heightPercent": "20"
         },
         "column": "right"
       }
