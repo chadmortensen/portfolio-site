@@ -42,10 +42,21 @@
         "type": "text",
         "content": {
           "title": "",
-          "text": "<h3><strong style=\"color: rgb(67, 67, 67); background-color: transparent;\">My role&nbsp;</strong></h3><ul><li><strong style=\"background-color: transparent;\">Championed the need</strong><span style=\"background-color: transparent;\"> for strategic alignment with my partners, using past successes to make the case for investing time in this work</span></li><li><strong style=\"background-color: transparent;\">Designed and orchestrated a three-day workshop</strong><span style=\"background-color: transparent;\">, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers</span></li><li><strong style=\"background-color: transparent;\">Synthesized the output</strong><span style=\"background-color: transparent;\"> into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution</span></li></ul><h3><strong style=\"background-color: transparent; color: rgb(67, 67, 67);\">My partners were…</strong></h3><ul><li><strong style=\"background-color: transparent;\">Research leadership</strong></li><li><strong style=\"background-color: transparent;\">Staff Designer</strong><span style=\"background-color: transparent;\"> (who facilitated the sessions)</span></li></ul><h3><strong style=\"background-color: transparent; color: rgb(67, 67, 67);\">The participants were…</strong></h3><ul><li><span style=\"background-color: transparent;\">GM/VP of Fulfillment</span></li><li><span style=\"background-color: transparent;\">Product, Engineering, and Research leaders</span></li><li><span style=\"background-color: transparent;\">Product Marketing, Analytics, and Finance leads</span></li><li><span style=\"background-color: transparent;\">Product Design Manager</span></li></ul><p><br></p>"
+          "text": "<h3><strong style=\"background-color: transparent; color: rgb(67, 67, 67);\">My role&nbsp;</strong></h3><ul><li><strong style=\"background-color: transparent;\">Championed the need</strong><span style=\"background-color: transparent;\"> for strategic alignment with my partners, using past successes to make the case for investing time in this work</span></li><li><strong style=\"background-color: transparent;\">Designed and orchestrated a three-day workshop</strong><span style=\"background-color: transparent;\">, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers</span></li><li><strong style=\"background-color: transparent;\">Synthesized the output</strong><span style=\"background-color: transparent;\"> into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution</span></li></ul><h3><strong style=\"color: rgb(67, 67, 67); background-color: transparent;\">My partners were…</strong></h3><ul><li><strong style=\"background-color: transparent;\">Research leadership</strong></li><li><strong style=\"background-color: transparent;\">Staff Designer</strong><span style=\"background-color: transparent;\"> (who facilitated the sessions)</span></li></ul><h3><strong style=\"color: rgb(67, 67, 67); background-color: transparent;\">The participants were…</strong></h3><ul><li><span style=\"background-color: transparent;\">GM/VP of Fulfillment</span></li><li><span style=\"background-color: transparent;\">Product, Engineering, and Research leaders</span></li><li><span style=\"background-color: transparent;\">Product Marketing, Analytics, and Finance leads</span></li><li><span style=\"background-color: transparent;\">Product Design Manager</span></li></ul>"
         },
         "column": "left",
         "id": "1755626662675-0.4058292212751048"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/etsy-participants.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "right",
+        "id": "1755626981658-0.9599110006164928"
       }
     ]
   },
