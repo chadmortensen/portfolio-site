@@ -147,6 +147,17 @@
           "text": "<p>This initiative demonstrated the power of bringing diverse perspectives together to create shared understanding and direction.</p>"
         },
         "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/etsy-reflections.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "right",
+        "id": "1755631109762-0.4091583387097988"
       }
     ]
   }
