@@ -8,7 +8,7 @@
         "content": {
           "text": "<p>In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.</p>"
         },
-        "column": "full"
+        "column": "left"
       },
       {
         "id": "The Challenge-goals-1755016105354",
@@ -23,7 +23,18 @@
             "Helping new parents with this major moment in life"
           ]
         },
-        "column": "full"
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/walmart-intro.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "right",
+        "id": "1755632049229-0.03549038428057394"
       }
     ]
   },
