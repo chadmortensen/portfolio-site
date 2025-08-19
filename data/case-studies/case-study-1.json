@@ -31,7 +31,8 @@
           "src": "/lovable-uploads/walmart-intro.jpg",
           "alt": "",
           "position": "below",
-          "columns": "6"
+          "columns": "6",
+          "heightPercent": "30"
         },
         "column": "right",
         "id": "1755632049229-0.03549038428057394"
