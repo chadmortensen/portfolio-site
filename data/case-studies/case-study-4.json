@@ -1,0 +1,21 @@
+{
+  "title": "Other Projects",
+  "subtitle": "Collection of Additional Work",
+  "sections": [
+    {
+      "title": "Overview",
+      "subheader": "Additional projects and initiatives across various companies",
+      "modules": [
+        {
+          "id": "overview-1",
+          "type": "text",
+          "content": {
+            "title": "Project Portfolio",
+            "text": "This section showcases additional work and projects that demonstrate breadth of experience across different industries, challenges, and team structures."
+          },
+          "column": "full"
+        }
+      ]
+    }
+  ]
+}

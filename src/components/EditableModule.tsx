@@ -41,20 +41,19 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
     opacity: isDragging ? 0.5 : 1,
   };
 
-  // Custom Quill toolbar configuration with lists
+  // Custom Quill toolbar configuration with lists - color removal to prevent span styling
   const quillModules = {
     toolbar: [
       [{ 'header': [1, 2, 3, false] }],
       ['bold', 'italic', 'underline'],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'background': [] }],
-      [{ 'color': [] }],
       ['clean']
     ],
   };
 
   const quillFormats = [
-    'header', 'bold', 'italic', 'underline', 'list', 'bullet', 'background', 'color'
+    'header', 'bold', 'italic', 'underline', 'list', 'bullet', 'background'
   ];
 
   const renderEditMode = () => {

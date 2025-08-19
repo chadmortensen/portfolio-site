@@ -33,6 +33,16 @@ const CaseStudies = () => {
     challenge: "The Growth team needed a clear product vision to align cross-functional efforts and guide strategic decisions for scaling mental health services to underserved communities.",
     results: ["Developed comprehensive product vision for Growth initiatives", "Established clear success metrics and KPIs", "Aligned stakeholders across product, engineering, and business teams", "Created roadmap for sustainable growth strategies"],
     route: "/case-study-3"
+  }, {
+    id: 4,
+    title: "Other Projects",
+    company: "Various",
+    duration: "Ongoing",
+    teamSize: "Various",
+    image: "/img/placeholder-project.png?auto=format&fit=crop&w=800&q=80",
+    challenge: "Collection of additional product leadership work, research initiatives, and strategic consulting across different companies and industries.",
+    results: ["Multiple successful product launches", "Cross-functional team leadership", "Strategic planning and execution", "User research and insights"],
+    route: "/case-study-4"
   }];
 
   return <section id="case-studies" className="py-16 sm:py-24 bg-surface-secondary">
