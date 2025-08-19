@@ -132,48 +132,21 @@
     "subheader": "Leading Strategic Alignment in Cross-Functional Teams",
     "modules": [
       {
+        "type": "text",
+        "content": {
+          "title": "",
+          "text": "<h3>Workshop Format Creates Ownership</h3><p>The collaborative format created high ownership and alignment across disciplines. Because leaders helped shape the output, they became advocates for it within their teams.</p><h3>Co-Creation Builds Trust</h3><p>Co-creating in real time helped deepen trust and cohesion, especially in a distributed setting.</p><h3>Strategic Artifacts Drive Action</h3><p>The resulting vision and principles weren't just artifacts — they directly informed our yearly planning and long-term strategy discussions.</p><h3>Preserve Time for Exploration</h3><p>We had planned to explore \"big bets\" and create visual prototypes for our future vision, but time constraints forced us to leave that behind. Preserving space for that exploration would have been a powerful complement to our strategic framework.</p>"
+        },
+        "column": "left",
+        "id": "1755630055105-0.8922845160995245"
+      },
+      {
         "id": "Reflections & Takeaways-content-1755016208610",
         "type": "text",
         "content": {
           "text": "<p>This initiative demonstrated the power of bringing diverse perspectives together to create shared understanding and direction.</p>"
         },
         "column": "left"
-      },
-      {
-        "id": "Reflections & Takeaways-learning-0-1755016208610",
-        "type": "quote",
-        "content": {
-          "title": "Workshop Format Creates Ownership",
-          "text": "<p>The collaborative format created high ownership and alignment across disciplines. Because leaders helped shape the output, they became advocates for it within their teams.</p>"
-        },
-        "column": "full"
-      },
-      {
-        "id": "Reflections & Takeaways-learning-1-1755016208610",
-        "type": "quote",
-        "content": {
-          "title": "Co-Creation Builds Trust",
-          "text": "<p>Co-creating in real time helped deepen trust and cohesion, especially in a distributed setting.</p>"
-        },
-        "column": "full"
-      },
-      {
-        "id": "Reflections & Takeaways-learning-2-1755016208610",
-        "type": "quote",
-        "content": {
-          "title": "Strategic Artifacts Drive Action",
-          "text": "<p>The resulting vision and principles weren't just artifacts — they directly informed our yearly planning and long-term strategy discussions.</p>"
-        },
-        "column": "full"
-      },
-      {
-        "id": "Reflections & Takeaways-learning-3-1755016208610",
-        "type": "quote",
-        "content": {
-          "title": "Preserve Time for Exploration",
-          "text": "<p>We had planned to explore \"big bets\" and create visual prototypes for our future vision, but time constraints forced us to leave that behind. Preserving space for that exploration would have been a powerful complement to our strategic framework.</p>"
-        },
-        "column": "full"
       }
     ]
   }
