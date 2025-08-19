@@ -241,6 +241,7 @@ const CaseStudy1 = () => {
       setShowPasswordPrompt(false);
       setEditPassword('');
       localStorage.setItem('edit-authenticated', 'true');
+      setIsAuthenticated(true);
     } else {
       alert('Incorrect password');
       setEditPassword('');

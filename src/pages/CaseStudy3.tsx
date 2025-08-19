@@ -185,6 +185,7 @@ const CaseStudy3 = () => {
       setEditPassword('');
       // Store authentication state
       localStorage.setItem('edit-authenticated', 'true');
+      setIsAuthenticated(true);
     } else {
       alert('Incorrect password');
       setEditPassword('');
