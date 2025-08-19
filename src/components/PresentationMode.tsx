@@ -95,6 +95,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
   const [showPasscodeDialog, setShowPasscodeDialog] = useState(false);
   const [showModuleLibrary, setShowModuleLibrary] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [showSparkles, setShowSparkles] = useState(true);
   const [editableSections, setEditableSections] = useState<Array<{
     title: string;
     subheader?: string;
@@ -114,6 +115,14 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       setEditableSections(sections);
     }
   }, [sections]);
+
+  // Handle sparkle animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSparkles(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handlePasscodeSuccess = () => {
     setShowPasscodeDialog(false);
@@ -519,6 +528,48 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
 
   return (
     <div className="fixed inset-0 bg-surface-primary z-50 overflow-hidden">
+      {/* Sparkle Animation Overlay */}
+      {showSparkles && (
+        <div className="fixed inset-0 z-[60] pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-accent-blue rounded-full animate-sparkle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 0.8}s`,
+                animationDuration: '1s'
+              }}
+            />
+          ))}
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={`teal-${i}`}
+              className="absolute w-1.5 h-1.5 bg-accent-teal rounded-full animate-sparkle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 0.8}s`,
+                animationDuration: '1s'
+              }}
+            />
+          ))}
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={`orange-${i}`}
+              className="absolute w-1 h-1 bg-accent-orange rounded-full animate-sparkle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 0.8}s`,
+                animationDuration: '1s'
+              }}
+            />
+          ))}
+        </div>
+      )}
+      
       {/* Backdrop Bar with Gradient Fade */}
       <div className="fixed top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/80 to-transparent backdrop-blur-sm z-50"></div>
       
