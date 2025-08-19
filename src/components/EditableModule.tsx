@@ -341,7 +341,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
 
       case 'quote':
         return (
-          <div className="p-4 bg-surface-secondary border border-swiss-light">
+          <div className="p-4 bg-surface-secondary">
             {module.content.title && (
               <h4 className="text-title text-text-primary font-medium mb-2">{module.content.title}</h4>
             )}
