@@ -528,45 +528,60 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
 
   return (
     <div className="fixed inset-0 bg-surface-primary z-50 overflow-hidden">
-      {/* Sparkle Animation Overlay */}
+      {/* Firework Burst Animation Overlay */}
       {showSparkles && (
         <div className="fixed inset-0 z-[60] pointer-events-none">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-accent-blue rounded-full animate-sparkle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 0.8}s`,
-                animationDuration: '1s'
-              }}
-            />
-          ))}
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={`teal-${i}`}
-              className="absolute w-1.5 h-1.5 bg-accent-teal rounded-full animate-sparkle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 0.8}s`,
-                animationDuration: '1s'
-              }}
-            />
-          ))}
-          {[...Array(10)].map((_, i) => (
-            <div
-              key={`orange-${i}`}
-              className="absolute w-1 h-1 bg-accent-orange rounded-full animate-sparkle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 0.8}s`,
-                animationDuration: '1s'
-              }}
-            />
-          ))}
+          {/* Center flash effect */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="w-8 h-8 bg-gradient-to-r from-accent-blue via-accent-teal to-accent-orange rounded-full animate-center-flash opacity-70" />
+          </div>
+          
+          {/* Burst particles */}
+          {[...Array(40)].map((_, i) => {
+            const angle = (i / 40) * 2 * Math.PI;
+            const distance = 200 + Math.random() * 400;
+            const dx = Math.cos(angle) * distance;
+            const dy = Math.sin(angle) * distance;
+            const size = 8 + Math.random() * 8;
+            const colors = ['bg-accent-blue', 'bg-accent-teal', 'bg-accent-orange', 'bg-accent-aqua'];
+            const color = colors[i % colors.length];
+            
+            return (
+              <div
+                key={i}
+                className={`absolute top-1/2 left-1/2 w-${Math.floor(size/2)} h-${Math.floor(size/2)} ${color} rounded-full animate-firework-burst`}
+                style={{
+                  '--dx': `${dx}px`,
+                  '--dy': `${dy}px`,
+                  animationDelay: `${Math.random() * 0.3}s`,
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  transform: 'translate(-50%, -50%)'
+                } as React.CSSProperties}
+              />
+            );
+          })}
+          
+          {/* Additional sparkle layer for extra effect */}
+          {[...Array(20)].map((_, i) => {
+            const angle = (i / 20) * 2 * Math.PI;
+            const distance = 100 + Math.random() * 200;
+            const dx = Math.cos(angle) * distance;
+            const dy = Math.sin(angle) * distance;
+            
+            return (
+              <div
+                key={`extra-${i}`}
+                className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full animate-firework-burst opacity-80"
+                style={{
+                  '--dx': `${dx}px`,
+                  '--dy': `${dy}px`,
+                  animationDelay: `${0.2 + Math.random() * 0.3}s`,
+                  transform: 'translate(-50%, -50%)'
+                } as React.CSSProperties}
+              />
+            );
+          })}
         </div>
       )}
       
