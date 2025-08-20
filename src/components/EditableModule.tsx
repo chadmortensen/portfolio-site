@@ -327,12 +327,9 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               <h3 className="text-lg mb-2 text-foreground font-semibold">{module.content.title}</h3>
             )}
             {module.content.items && module.content.items.length > 0 && (
-              <ul className="space-y-2">
+              <ul className="list-disc list-inside space-y-2 ml-4">
                 {module.content.items.map((item: string, index: number) => (
-                  <li key={index} className="flex items-start space-x-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0"></div>
-                    <span className="text-body text-text-secondary">{item}</span>
-                  </li>
+                  <li key={index} className="text-body text-text-secondary" dangerouslySetInnerHTML={{ __html: item }} />
                 ))}
               </ul>
             )}
