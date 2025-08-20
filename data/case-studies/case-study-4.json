@@ -3,8 +3,8 @@
   "subtitle": "Strategic Design Leadership Across Multiple Verticals",
   "sections": [
     {
-      "title": "Walmart Fashion",
-      "subheader": "Design Principles",
+      "title": "Design Principles",
+      "subheader": "Walmart Fashion",
       "modules": [
         {
           "id": "fashion-overview",
@@ -27,8 +27,8 @@
       ]
     },
     {
-      "title": "Walmart Grocery Fulfillment",
-      "subheader": "Design Vision",
+      "title": "Design Vision",
+      "subheader": "Walmart Grocery Fulfillment",
       "modules": [
         {
           "id": "vision-overview",
@@ -51,8 +51,8 @@
       ]
     },
     {
-      "title": "Walmart Fulfillment ",
-      "subheader": "Building a healthy pipeline of customer-driven features",
+      "title": "Building a healthy pipeline of customer-driven features",
+      "subheader": "Walmart Grocery Fulfillment",
       "modules": [
         {
           "id": "ecommerce-overview",
@@ -75,8 +75,8 @@
       ]
     },
     {
-      "title": "Walmart Fulfillment",
-      "subheader": "Journey Maps",
+      "title": "Journey Maps",
+      "subheader": "Walmart eCommerce Fulfillment",
       "modules": [
         {
           "id": "journey-role",
