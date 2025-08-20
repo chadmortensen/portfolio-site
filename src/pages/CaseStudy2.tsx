@@ -80,10 +80,10 @@ const CaseStudy2 = () => {
         const githubService = new GitHubStorageService();
         const githubContent = await githubService.readFile('case-study-2.json');
         
-        if (githubContent) {
-          if (githubContent.title) setTitle(githubContent.title);
-          if (githubContent.subtitle) setSubtitle(githubContent.subtitle);
-          if (githubContent.sections) setEditableSections(githubContent.sections);
+        if (githubContent && githubContent.title && githubContent.subtitle && githubContent.sections) {
+          setTitle(githubContent.title);
+          setSubtitle(githubContent.subtitle);
+          setEditableSections(githubContent.sections);
           return;
         }
       } catch (error) {
@@ -93,12 +93,20 @@ const CaseStudy2 = () => {
       // Try localStorage
       const saved = localStorage.getItem('case-study-2-content');
       if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.title) setTitle(parsed.title);
-        if (parsed.subtitle) setSubtitle(parsed.subtitle);
-        if (parsed.sections) setEditableSections(parsed.sections);
-      } else {
-        // Convert static sections to editable format
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.title && parsed.subtitle && parsed.sections) {
+            setTitle(parsed.title);
+            setSubtitle(parsed.subtitle);
+            setEditableSections(parsed.sections);
+            return;
+          }
+        } catch (error) {
+          console.log('Error parsing saved content, using static content');
+        }
+      }
+
+      // Convert static sections to editable format
         const converted = sections.map(section => {
           const modules: Module[] = [];
           
@@ -139,7 +147,6 @@ const CaseStudy2 = () => {
           };
         });
         setEditableSections(converted);
-      }
     };
 
     loadContent();

@@ -47,10 +47,10 @@ const CaseStudy3 = () => {
         const githubService = new GitHubStorageService();
         const githubContent = await githubService.readFile('case-study-3.json');
         
-        if (githubContent) {
-          if (githubContent.title) setTitle(githubContent.title);
-          if (githubContent.subtitle) setSubtitle(githubContent.subtitle);
-          if (githubContent.sections) setEditableSections(githubContent.sections);
+        if (githubContent && githubContent.title && githubContent.subtitle && githubContent.sections) {
+          setTitle(githubContent.title);
+          setSubtitle(githubContent.subtitle);
+          setEditableSections(githubContent.sections);
           return;
         }
       } catch (error) {
@@ -60,13 +60,35 @@ const CaseStudy3 = () => {
       // Try localStorage
       const saved = localStorage.getItem('case-study-3-content');
       if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.title) setTitle(parsed.title);
-        if (parsed.subtitle) setSubtitle(parsed.subtitle);
-        if (parsed.sections) setEditableSections(parsed.sections);
-      } else {
-         // Convert static sections to editable format as fallback
-         const converted = sections.map(section => {
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.title && parsed.subtitle && parsed.sections) {
+            setTitle(parsed.title);
+            setSubtitle(parsed.subtitle);
+            setEditableSections(parsed.sections);
+            return;
+          }
+        } catch (error) {
+          console.log('Error parsing saved content, using static content');
+        }
+      }
+
+      // Convert static sections to editable format as fallback
+      const staticSections = [
+        {
+          title: "The Challenge",
+          subheader: "Unifying isolated efforts with a shared vision",
+          content: "At Brightside Health, several parallel efforts were in motion to improve the intake funnel. However, they were happening in isolation, each focused on short-term gains without a shared sense of direction. I encouraged the designer on the growth squad to pause and consider a more expansive approach. What if we looked beyond the immediate constraints and imagined what a truly exceptional experience could be?\n\nThe business needed to increase conversion rates and support a wider range of marketing channels. From the user's perspective, the goal was to feel confident in their decisions about seeking care and understanding the cost of services.\n\nSuccess was defined by the squad as improved conversion and the creation of a more adaptable intake flow that could support diverse user journeys. Executives wanted to know that the team had a long-term plan, and the squad needed a vision to unify their efforts and guide decision-making.",
+          goals: [
+            "Increase conversion rate for prospective members signing up for Brightside Health",
+            "Create a flexible solution for new marketing channels", 
+            "Balance a concise signup process with capturing important customer health information that assists with treatment"
+          ],
+          image: "/lovable-uploads/653ebb9d-20fb-4574-8a3e-ce19d02d793c.png"
+        }
+      ];
+      
+      const converted = staticSections.map(section => {
          const modules: Module[] = [];
          
          // Add main content as text module
@@ -89,68 +111,6 @@ const CaseStudy3 = () => {
            });
          }
 
-         // Add key findings as bullets module
-         if (section.keyFindings) {
-           modules.push({
-             id: `${section.title}-findings-${Date.now()}`,
-             type: 'bullets',
-             content: { title: 'Key Findings', items: section.keyFindings },
-             column: 'left'
-           });
-         }
-
-         // Add insight as quote module
-         if (section.insight) {
-           modules.push({
-             id: `${section.title}-insight-${Date.now()}`,
-             type: 'quote',
-             content: { title: 'Key Insight', text: section.insight },
-             column: 'left'
-           });
-         }
-
-         // Add standout ideas as bullets module
-         if (section.standoutIdeas) {
-           modules.push({
-             id: `${section.title}-ideas-${Date.now()}`,
-             type: 'bullets',
-             content: { title: 'Two Standout Ideas', items: section.standoutIdeas },
-             column: 'left'
-           });
-         }
-
-         // Add design principles as separate quote modules
-         if (section.designPrinciples) {
-           section.designPrinciples.forEach((principle, index) => {
-             modules.push({
-               id: `${section.title}-principle-${index}-${Date.now()}`,
-               type: 'quote',
-               content: { title: principle.title, text: principle.description },
-               column: 'left'
-             });
-           });
-         }
-
-         // Add tradeoffs as quote module
-         if (section.tradeoffs) {
-           modules.push({
-             id: `${section.title}-tradeoffs-${Date.now()}`,
-             type: 'quote',
-             content: { title: 'Trade-offs', text: section.tradeoffs },
-             column: 'left'
-           });
-         }
-
-         // Add personal reflection as quote module
-         if (section.personalReflection) {
-           modules.push({
-             id: `${section.title}-reflection-${Date.now()}`,
-             type: 'quote',
-             content: { title: 'Personal Reflection', text: section.personalReflection },
-             column: 'left'
-           });
-         }
-
          // Add image module if present
          if (section.image) {
            modules.push({
@@ -167,8 +127,7 @@ const CaseStudy3 = () => {
            modules
          };
        });
-         setEditableSections(converted);
-      }
+        setEditableSections(converted);
     };
 
     loadContent();
