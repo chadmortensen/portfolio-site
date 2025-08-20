@@ -10,6 +10,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import PresentationMode from "@/components/PresentationMode";
 import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
+import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
 
 const CaseStudy2 = () => {
@@ -29,6 +30,8 @@ const CaseStudy2 = () => {
     subheader?: string;
     modules: Module[];
   }>>([]);
+  const [title, setTitle] = useState('Fulfillment at Etsy');
+  const [subtitle, setSubtitle] = useState('Crafting a Shared Vision and Guiding Principles');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -429,8 +432,27 @@ const CaseStudy2 = () => {
       <section className="py-16 bg-surface-secondary">
         <div className="swiss-grid">
           <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
-            <h1 className="text-display text-text-primary mb-4">Fulfillment at Etsy</h1>
-            <p className="text-xl text-text-secondary mb-6">Crafting a Shared Vision and Guiding Principles</p>
+            {isEditing ? (
+              <div className="space-y-4 mb-6">
+                <Input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="text-display text-center bg-transparent border-none text-text-primary placeholder:text-text-secondary"
+                  placeholder="Case study title"
+                />
+                <Input
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
+                  className="text-lg text-center bg-transparent border-none text-text-secondary placeholder:text-text-secondary"
+                  placeholder="Subtitle"
+                />
+              </div>
+            ) : (
+              <div className="mb-6">
+                <h1 className="text-display text-text-primary">{title}</h1>
+                <p className="text-xl text-text-secondary mt-4">{subtitle}</p>
+              </div>
+            )}
             <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
           </div>
         </div>
@@ -440,6 +462,11 @@ const CaseStudy2 = () => {
       <div className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
+            <SectionEditor
+              sections={editableSections}
+              onUpdateSections={setEditableSections}
+              isEditing={isEditing}
+            />
             {editableSections.map((section, index) => (
               <div key={index}>
                 {/* Section Header */}
