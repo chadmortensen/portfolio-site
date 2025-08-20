@@ -107,46 +107,112 @@ const CaseStudy2 = () => {
       }
 
       // Convert static sections to editable format
-        const converted = sections.map(section => {
-          const modules: Module[] = [];
-          
-          // Add main content as text module
-          if (section.content) {
+      const converted = sections.map(section => {
+        const modules: Module[] = [];
+        
+        // Add main content as text module
+        if (section.content) {
+          modules.push({
+            id: `${section.title}-content-${Date.now()}`,
+            type: 'text',
+            content: section.content,
+            column: 'full'
+          });
+        }
+
+        // Add goals as bullets if present
+        if ('goals' in section) {
+          modules.push({
+            id: `${section.title}-goals-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Goals', items: (section as any).goals },
+            column: 'left'
+          });
+        }
+
+        // Add my role content if present
+        if ('myRole' in section) {
+          modules.push({
+            id: `${section.title}-role-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'My Role', items: (section as any).myRole },
+            column: 'left'
+          });
+        }
+
+        // Add partnered with content if present
+        if ('partneredWith' in section) {
+          modules.push({
+            id: `${section.title}-partners-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Partnered With', items: (section as any).partneredWith },
+            column: 'left'
+          });
+        }
+
+        // Add participants content if present
+        if ('participants' in section) {
+          modules.push({
+            id: `${section.title}-participants-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Participants', items: (section as any).participants },
+            column: 'right'
+          });
+        }
+
+        // Add session details if present
+        if ('sessionDetails' in section) {
+          const sessionDetails = (section as any).sessionDetails;
+          sessionDetails.forEach((detail: string, index: number) => {
             modules.push({
-              id: `${section.title}-content-${Date.now()}`,
+              id: `${section.title}-session-${index}-${Date.now()}`,
               type: 'text',
-              content: section.content,
+              content: detail,
               column: 'full'
             });
-          }
+          });
+        }
 
-          // Add image if present (for some sections)
-          if ('sectionImage' in section) {
+        // Add workshop images if present
+        if ('workshopImages' in section) {
+          const images = (section as any).workshopImages;
+          images.forEach((imageSrc: string, index: number) => {
             modules.push({
-              id: `${section.title}-image-${Date.now()}`,
+              id: `${section.title}-workshop-img-${index}-${Date.now()}`,
               type: 'image',
-              content: { src: (section as any).sectionImage, alt: `${section.title} visual` },
+              content: { src: imageSrc, alt: `${section.title} workshop image ${index + 1}` },
               column: 'full'
             });
-          }
+          });
+        }
 
-           // Add goals as bullets if present
-           if ('goals' in section) {
-             modules.push({
-               id: `${section.title}-goals-${Date.now()}`,
-               type: 'bullets',
-               content: { title: 'Goals', items: (section as any).goals },
-               column: 'left'
-             });
-           }
+        // Add section image if present
+        if ('sectionImage' in section) {
+          modules.push({
+            id: `${section.title}-image-${Date.now()}`,
+            type: 'image',
+            content: { src: (section as any).sectionImage, alt: `${section.title} visual` },
+            column: 'full'
+          });
+        }
 
-          return {
-            title: section.title,
-            subheader: section.subheader || '',
-            modules
-          };
-        });
-        setEditableSections(converted);
+        // Add learnings if present
+        if ('learnings' in section) {
+          modules.push({
+            id: `${section.title}-learnings-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Key Learnings', items: (section as any).learnings },
+            column: 'full'
+          });
+        }
+
+        return {
+          title: section.title,
+          subheader: section.subheader || '',
+          modules
+        };
+      });
+      setEditableSections(converted);
     };
 
     loadContent();
