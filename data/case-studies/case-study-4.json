@@ -3,8 +3,8 @@
   "subtitle": "Strategic Design Leadership Across Multiple Verticals",
   "sections": [
     {
-      "title": "Walmart Fashion — Head of Product Design",
-      "subheader": "Design leadership through principles",
+      "title": "Walmart Fashion",
+      "subheader": "Design Principles",
       "modules": [
         {
           "id": "fashion-overview",
@@ -27,8 +27,8 @@
       ]
     },
     {
-      "title": "Northstar Vision — Discovery and Alignment",
-      "subheader": "Creating clarity for near- and long-term goals",
+      "title": "Walmart Grocery Fulfillment",
+      "subheader": "Design Vision",
       "modules": [
         {
           "id": "vision-overview",
@@ -51,7 +51,7 @@
       ]
     },
     {
-      "title": "Walmart Grocery — Associate Director",
+      "title": "Walmart Grocery",
       "subheader": "Driving discovery into a design-led backlog",
       "modules": [
         {
@@ -75,7 +75,7 @@
       ]
     },
     {
-      "title": "Walmart eCommerce — Fulfillment, Associate Director",
+      "title": "Walmart Fulfillment ",
       "subheader": "Building a healthy pipeline of customer-driven features",
       "modules": [
         {
@@ -99,8 +99,8 @@
       ]
     },
     {
-      "title": "Journey Maps — Strategic Storytelling",
-      "subheader": "Conveying the direction through the customer's eyes",
+      "title": "Walmart Fulfillment",
+      "subheader": "Journey Maps",
       "modules": [
         {
           "id": "journey-overview",
