@@ -14,6 +14,17 @@
             "text": "<h3><span style=\"background-color: transparent;\">Design leadership through principles</span></h3><p><span style=\"background-color: transparent;\">For the fashion vertical, I led design by grounding the work in clear, research-backed design principles. These weren’t abstract ideas — they were aligned to Walmart’s brand promise and distilled from customer insights. By codifying what mattered most to shoppers, the principles helped our cross-functional teams stay focused on customer value even as priorities shifted.</span></p><p><strong style=\"background-color: transparent;\">My role: </strong><span style=\"background-color: transparent;\">I drove the creation and adoption of these principles, making sure they weren’t just a design artifact but a shared north star for product, engineering, and business partners. This elevated design’s voice in strategic conversations and ensured execution always tied back to customer needs.</span></p>"
           },
           "column": "left"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/fashion-principles.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "right",
+          "id": "1755730306443-0.3683720949786914"
         }
       ]
     },
@@ -29,6 +40,17 @@
             "text": "<h3><span style=\"background-color: transparent;\">Creating clarity for near- and long-term goals</span></h3><p><span style=\"background-color: transparent;\">One of the most effective ways to align teams is to paint a clear picture of the future. I facilitated design sprints and discovery projects that brought design, product, engineering, and business leaders together to imagine what our experience could look like beyond the next quarter.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I led the visioning process, ensuring we balanced imagination with feasibility. These efforts didn’t just create inspiring concepts — they gave executives and teams a tangible vision to rally around, clarifying how near-term roadmaps fit into a longer journey.</span></p>"
           },
           "column": "left"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/grocery-vision.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "right",
+          "id": "1755730342065-0.194717889099993"
         }
       ]
     },
@@ -44,6 +66,17 @@
             "text": "<h3><span style=\"background-color: transparent;\">Driving discovery into a design-led backlog</span></h3><p><span style=\"background-color: transparent;\">For a key discovery initiative in grocery, I guided the team through a structured process: defining our design target, articulating goals and customer problems, synthesizing past research alongside new co-creation studies, creating design principles, and facilitating cross-functional ideation. We tested concepts, validated assumptions, and ultimately built a backlog driven directly by customer insights.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I shaped the process end to end, making sure design played the connective role between research, ideation, and execution. The result was a backlog that reflected not just business needs, but a clear line of sight to customer value.</span></p>"
           },
           "column": "left"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/design-backlog.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "right",
+          "id": "1755730367236-0.4984568432232931"
         }
       ]
     },
@@ -59,6 +92,17 @@
           },
           "column": "left",
           "id": "1755729689298-0.3955697942264955"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/journey-map.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "right",
+          "id": "1755730424173-0.5933010399483203"
         }
       ]
     }
