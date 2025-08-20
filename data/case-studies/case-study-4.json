@@ -1,17 +1,122 @@
 {
-  "title": "Other Projects",
-  "subtitle": "Collection of Additional Work",
+  "title": "Walmart Leadership Portfolio",
+  "subtitle": "Strategic Design Leadership Across Multiple Verticals",
   "sections": [
     {
-      "title": "Overview",
-      "subheader": "Additional projects and initiatives across various companies",
+      "title": "Walmart Fashion — Head of Product Design",
+      "subheader": "Design leadership through principles",
       "modules": [
         {
-          "id": "overview-1",
+          "id": "fashion-overview",
           "type": "text",
           "content": {
-            "title": "Project Portfolio",
-            "text": "This section showcases additional work and projects that demonstrate breadth of experience across different industries, challenges, and team structures."
+            "title": "",
+            "text": "<p>For the fashion vertical, I led design by grounding the work in clear, research-backed design principles. These weren't abstract ideas — they were aligned to Walmart's brand promise and distilled from customer insights. By codifying what mattered most to shoppers, the principles helped our cross-functional teams stay focused on customer value even as priorities shifted.</p>"
+          },
+          "column": "full"
+        },
+        {
+          "id": "fashion-role",
+          "type": "quote",
+          "content": {
+            "text": "I drove the creation and adoption of these principles, making sure they weren't just a design artifact but a shared north star for product, engineering, and business partners. This elevated design's voice in strategic conversations and ensured execution always tied back to customer needs.",
+            "author": "My role"
+          },
+          "column": "full"
+        }
+      ]
+    },
+    {
+      "title": "Northstar Vision — Discovery and Alignment",
+      "subheader": "Creating clarity for near- and long-term goals",
+      "modules": [
+        {
+          "id": "vision-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<p>One of the most effective ways to align teams is to paint a clear picture of the future. I facilitated design sprints and discovery projects that brought design, product, engineering, and business leaders together to imagine what our experience could look like beyond the next quarter.</p>"
+          },
+          "column": "full"
+        },
+        {
+          "id": "vision-role",
+          "type": "quote",
+          "content": {
+            "text": "I led the visioning process, ensuring we balanced imagination with feasibility. These efforts didn't just create inspiring concepts — they gave executives and teams a tangible vision to rally around, clarifying how near-term roadmaps fit into a longer journey.",
+            "author": "My role"
+          },
+          "column": "full"
+        }
+      ]
+    },
+    {
+      "title": "Walmart Grocery — Associate Director",
+      "subheader": "Driving discovery into a design-led backlog",
+      "modules": [
+        {
+          "id": "grocery-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<p>For a key discovery initiative in grocery, I guided the team through a structured process: defining our design target, articulating goals and customer problems, synthesizing past research alongside new co-creation studies, creating design principles, and facilitating cross-functional ideation. We tested concepts, validated assumptions, and ultimately built a backlog driven directly by customer insights.</p>"
+          },
+          "column": "full"
+        },
+        {
+          "id": "grocery-role",
+          "type": "quote",
+          "content": {
+            "text": "I shaped the process end to end, making sure design played the connective role between research, ideation, and execution. The result was a backlog that reflected not just business needs, but a clear line of sight to customer value.",
+            "author": "My role"
+          },
+          "column": "full"
+        }
+      ]
+    },
+    {
+      "title": "Walmart eCommerce — Fulfillment, Associate Director",
+      "subheader": "Building a healthy pipeline of customer-driven features",
+      "modules": [
+        {
+          "id": "ecommerce-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<p>In eCommerce fulfillment, my focus was on ensuring the team had a steady supply of features and goals grounded in research and discovery. Rather than reacting to short-term demands, we invested in understanding customer journeys and unmet needs, which allowed us to prioritize work with confidence.</p>"
+          },
+          "column": "full"
+        },
+        {
+          "id": "ecommerce-role",
+          "type": "quote",
+          "content": {
+            "text": "I advocated for a balanced pipeline — ensuring design surfaced opportunities proactively while aligning with product and engineering on delivery. This made the roadmap more resilient and better tied to real customer impact.",
+            "author": "My role"
+          },
+          "column": "full"
+        }
+      ]
+    },
+    {
+      "title": "Journey Maps — Strategic Storytelling",
+      "subheader": "Conveying the direction through the customer's eyes",
+      "modules": [
+        {
+          "id": "journey-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<p>As part of my design leadership, I introduced journey maps as a way to connect strategy to real human experiences. These maps illustrated the customer journey end to end, making it clear how each initiative fit into a broader story.</p>"
+          },
+          "column": "full"
+        },
+        {
+          "id": "journey-role",
+          "type": "quote",
+          "content": {
+            "text": "I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only what we were building, but why it mattered to people in the real world.",
+            "author": "My role"
           },
           "column": "full"
         }
