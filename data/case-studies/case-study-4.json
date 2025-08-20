@@ -1,5 +1,5 @@
 {
-  "title": "Walmart Leadership Portfolio",
+  "title": "Additional work examples",
   "subtitle": "Strategic Design Leadership Across Multiple Verticals",
   "sections": [
     {
@@ -13,16 +13,16 @@
             "title": "",
             "text": "<p>For the fashion vertical, I led design by grounding the work in clear, research-backed design principles. These weren't abstract ideas — they were aligned to Walmart's brand promise and distilled from customer insights. By codifying what mattered most to shoppers, the principles helped our cross-functional teams stay focused on customer value even as priorities shifted.</p>"
           },
-          "column": "full"
+          "column": "left"
         },
         {
           "id": "fashion-role",
           "type": "quote",
           "content": {
-            "text": "I drove the creation and adoption of these principles, making sure they weren't just a design artifact but a shared north star for product, engineering, and business partners. This elevated design's voice in strategic conversations and ensured execution always tied back to customer needs.",
+            "text": "<p>I drove the creation and adoption of these principles, making sure they weren't just a design artifact but a shared north star for product, engineering, and business partners. This elevated design's voice in strategic conversations and ensured execution always tied back to customer needs.</p>",
             "author": "My role"
           },
-          "column": "full"
+          "column": "left"
         }
       ]
     },
@@ -43,7 +43,7 @@
           "id": "vision-role",
           "type": "quote",
           "content": {
-            "text": "I led the visioning process, ensuring we balanced imagination with feasibility. These efforts didn't just create inspiring concepts — they gave executives and teams a tangible vision to rally around, clarifying how near-term roadmaps fit into a longer journey.",
+            "text": "<p>I led the visioning process, ensuring we balanced imagination with feasibility. These efforts didn't just create inspiring concepts — they gave executives and teams a tangible vision to rally around, clarifying how near-term roadmaps fit into a longer journey.</p>",
             "author": "My role"
           },
           "column": "full"
@@ -67,7 +67,7 @@
           "id": "grocery-role",
           "type": "quote",
           "content": {
-            "text": "I shaped the process end to end, making sure design played the connective role between research, ideation, and execution. The result was a backlog that reflected not just business needs, but a clear line of sight to customer value.",
+            "text": "<p>I shaped the process end to end, making sure design played the connective role between research, ideation, and execution. The result was a backlog that reflected not just business needs, but a clear line of sight to customer value.</p>",
             "author": "My role"
           },
           "column": "full"
@@ -91,7 +91,7 @@
           "id": "ecommerce-role",
           "type": "quote",
           "content": {
-            "text": "I advocated for a balanced pipeline — ensuring design surfaced opportunities proactively while aligning with product and engineering on delivery. This made the roadmap more resilient and better tied to real customer impact.",
+            "text": "<p>I advocated for a balanced pipeline — ensuring design surfaced opportunities proactively while aligning with product and engineering on delivery. This made the roadmap more resilient and better tied to real customer impact.</p>",
             "author": "My role"
           },
           "column": "full"
@@ -115,7 +115,7 @@
           "id": "journey-role",
           "type": "quote",
           "content": {
-            "text": "I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only what we were building, but why it mattered to people in the real world.",
+            "text": "<p>I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only what we were building, but why it mattered to people in the real world.</p>",
             "author": "My role"
           },
           "column": "full"
