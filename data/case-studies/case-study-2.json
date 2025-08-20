@@ -481,43 +481,24 @@
       "subheader": "",
       "modules": [
         {
-          "id": "Participants-role-1755722042513",
-          "type": "bullets",
+          "type": "text",
           "content": {
-            "title": "My Role",
-            "items": [
-              "Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work",
-              "Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers",
-              "Synthesized the output into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution"
-            ]
+            "title": "",
+            "text": "<h3>My Role</h3><ul><li>Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work</li><li>Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers</li><li>Synthesized the output into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution</li></ul><h3>Partnered With</h3><ul><li>Research leadership</li><li>Staff Designer (who facilitated the sessions)</li></ul><h3>Participants</h3><ul><li>GM/VP of Fulfillment</li><li>Product, Engineering, and Research leaders</li><li>Product Marketing, Analytics, and Finance leads</li><li>Product Design Manager</li></ul>"
           },
-          "column": "left"
+          "column": "left",
+          "id": "1755725835527-0.4935839077782954"
         },
         {
-          "id": "Participants-partners-1755722042513",
-          "type": "bullets",
+          "type": "image",
           "content": {
-            "title": "Partnered With",
-            "items": [
-              "Research leadership",
-              "Staff Designer (who facilitated the sessions)"
-            ]
+            "src": "/lovable-uploads/etsy-participants",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
           },
-          "column": "left"
-        },
-        {
-          "id": "Participants-participants-1755722042513",
-          "type": "bullets",
-          "content": {
-            "title": "Participants",
-            "items": [
-              "GM/VP of Fulfillment",
-              "Product, Engineering, and Research leaders",
-              "Product Marketing, Analytics, and Finance leads",
-              "Product Design Manager"
-            ]
-          },
-          "column": "right"
+          "column": "right",
+          "id": "1755725874091-0.2040796268059083"
         }
       ]
     },
