@@ -155,23 +155,9 @@
         "id": "Ideation Workshop - How Might We-content-1755016105354",
         "type": "text",
         "content": {
-          "text": "<h3>Turning Insights into Opportunities</h3><p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional “How Might We” workshop.</p><h3>A Cross-Functional Session</h3><p>We brought together eight team members from design, product, engineering, and research to explore improvements to the registry experience — using our design principles as the foundation. This collaborative exercise created alignment on where to focus and built a sense of shared ownership across disciplines as we moved into solutioning.</p>"
+          "text": "<h3>Turning Insights into Opportunities</h3><p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional “How Might We” workshop.</p><h3>A Cross-Functional Session</h3><p>We brought together eight team members from design, product, engineering, and research to explore improvements to the registry experience — using our design principles as the foundation. This collaborative exercise created alignment on where to focus and built a sense of shared ownership across disciplines as we moved into solutioning.</p><h3>From Ideas to Priorities</h3><p>The workshop generated more than seventy <em>“How Might We”</em> statements, reflecting a wide range of possible directions. To narrow the field, the team used dot voting to highlight the most promising ideas, then clustered them into eleven thematic categories. From there, we named and prioritized the top three opportunity areas that would guide the next phase of design. This progression — from raw brainstorming to focused priorities — gave us both a broad exploration and a clear direction forward.</p>"
         },
         "column": "left"
-      },
-      {
-        "type": "bullets",
-        "content": {
-          "title": "",
-          "items": [
-            "We generated more than 70 \"How Might We\" statements",
-            "Used dot voting to identify the most promising directions",
-            "Clustered them into 11 thematic categories",
-            "Named and prioritized the top 3 opportunity areas to guide the next phase of design"
-          ]
-        },
-        "column": "left",
-        "id": "1755107252491-0.5079648674674571"
       },
       {
         "id": "Ideation Workshop - How Might We-main-image-1755016105354",
