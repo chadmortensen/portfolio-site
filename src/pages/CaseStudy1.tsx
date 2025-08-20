@@ -171,13 +171,22 @@ const CaseStudy1 = () => {
       // Try to load from GitHub first
       const githubContent = await githubService.readFile('case-study-1.json');
       if (githubContent) {
-        // Ensure subheaders are migrated from static sections
-        const migratedContent = githubContent.map((section: any, index: number) => ({
-          ...section,
-          subheader: section.subheader || sections[index]?.subheader
-        }));
-        setEditableSections(migratedContent);
-        return;
+        // Handle the correct data structure with title, subtitle, and sections
+        if (githubContent.title) {
+          setTitle(githubContent.title);
+        }
+        if (githubContent.subtitle) {
+          setSubtitle(githubContent.subtitle);
+        }
+        if (githubContent.sections) {
+          // Ensure subheaders are migrated from static sections
+          const migratedContent = githubContent.sections.map((section: any, index: number) => ({
+            ...section,
+            subheader: section.subheader || sections[index]?.subheader
+          }));
+          setEditableSections(migratedContent);
+          return;
+        }
       }
 
       // Fallback to localStorage
@@ -185,66 +194,73 @@ const CaseStudy1 = () => {
       if (savedContent) {
         try {
           const parsed = JSON.parse(savedContent);
-          // Ensure subheaders are migrated from static sections
-          const migratedContent = parsed.map((section: any, index: number) => ({
-            ...section,
-            subheader: section.subheader || sections[index]?.subheader
-          }));
-          setEditableSections(migratedContent);
-          return;
+          // Handle the correct data structure with title, subtitle, and sections
+          if (parsed.title) {
+            setTitle(parsed.title);
+          }
+          if (parsed.subtitle) {
+            setSubtitle(parsed.subtitle);
+          }
+          if (parsed.sections) {
+            // Ensure subheaders are migrated from static sections
+            const migratedContent = parsed.sections.map((section: any, index: number) => ({
+              ...section,
+              subheader: section.subheader || sections[index]?.subheader
+            }));
+            setEditableSections(migratedContent);
+            return;
+          }
         } catch (e) {
           console.error('Failed to parse saved content:', e);
         }
       }
 
-      // Convert static sections as last resort
-      if (editableSections.length === 0) {
-        const converted = sections.map((section) => {
-          const modules: Module[] = [];
+      // Convert static sections as fallback - always run if no saved content loaded
+      const converted = sections.map((section) => {
+        const modules: Module[] = [];
+        
+        // Add main content as text module
+        if (section.content) {
+          const htmlContent = section.content
+            .split('\n\n')
+            .map(paragraph => `<p>${paragraph}</p>`)
+            .join('');
           
-          // Add main content as text module
-          if (section.content) {
-            const htmlContent = section.content
-              .split('\n\n')
-              .map(paragraph => `<p>${paragraph}</p>`)
-              .join('');
-            
-            modules.push({
-              id: `${section.title}-content-${Date.now()}`,
-              type: 'text',
-              content: { text: htmlContent },
-              column: 'left'
-            });
-          }
+          modules.push({
+            id: `${section.title}-content-${Date.now()}`,
+            type: 'text',
+            content: { text: htmlContent },
+            column: 'left'
+          });
+        }
 
-          // Add goals as bullets module
-          if (section.goals) {
-            modules.push({
-              id: `${section.title}-goals-${Date.now()}`,
-              type: 'bullets',
-              content: { title: 'Goals', items: section.goals },
-              column: 'left'
-            });
-          }
+        // Add goals as bullets module
+        if (section.goals) {
+          modules.push({
+            id: `${section.title}-goals-${Date.now()}`,
+            type: 'bullets',
+            content: { title: 'Goals', items: section.goals },
+            column: 'left'
+          });
+        }
 
-          // Add image if present
-          if (section.image) {
-            modules.push({
-              id: `${section.title}-image-${Date.now()}`,
-              type: 'image',
-              content: { src: section.image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
-              column: 'right'
-            });
-          }
+        // Add image if present
+        if (section.image) {
+          modules.push({
+            id: `${section.title}-image-${Date.now()}`,
+            type: 'image',
+            content: { src: section.image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
+            column: 'right'
+          });
+        }
 
-          return {
-            title: section.title,
-            subheader: section.subheader,
-            modules
-          };
-        });
-        setEditableSections(converted);
-      }
+        return {
+          title: section.title,
+          subheader: section.subheader,
+          modules
+        };
+      });
+      setEditableSections(converted);
     };
 
     loadContent();
