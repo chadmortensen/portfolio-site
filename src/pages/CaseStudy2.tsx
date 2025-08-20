@@ -75,70 +75,66 @@ const CaseStudy2 = () => {
   // Load content from GitHub or fallback to localStorage on mount
   useEffect(() => {
     const loadContent = async () => {
-      const githubService = new GitHubStorageService();
-      
-      // Try to load from GitHub first
-      const githubContent = await githubService.readFile('case-study-2.json');
-      if (githubContent) {
-        setEditableSections(githubContent);
-        return;
-      }
-
-      // Fallback to localStorage
-      const savedContent = localStorage.getItem('case-study-2-content');
-      if (savedContent) {
-        try {
-          const parsed = JSON.parse(savedContent);
-          setEditableSections(parsed);
+      try {
+        // Try to load from GitHub first
+        const githubService = new GitHubStorageService();
+        const githubContent = await githubService.readFile('case-study-2.json');
+        
+        if (githubContent) {
+          if (githubContent.title) setTitle(githubContent.title);
+          if (githubContent.subtitle) setSubtitle(githubContent.subtitle);
+          if (githubContent.sections) setEditableSections(githubContent.sections);
           return;
-        } catch (e) {
-          console.error('Failed to parse saved content:', e);
         }
+      } catch (error) {
+        console.log('No GitHub content found, trying localStorage');
       }
 
-      // Convert static sections as last resort
-      if (editableSections.length === 0) {
-        const converted = sections.map((section) => {
+      // Try localStorage
+      const saved = localStorage.getItem('case-study-2-content');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.title) setTitle(parsed.title);
+        if (parsed.subtitle) setSubtitle(parsed.subtitle);
+        if (parsed.sections) setEditableSections(parsed.sections);
+      } else {
+        // Convert static sections to editable format
+        const converted = sections.map(section => {
           const modules: Module[] = [];
           
           // Add main content as text module
           if (section.content) {
-            const htmlContent = section.content
-              .split('\n\n')
-              .map(paragraph => `<p>${paragraph}</p>`)
-              .join('');
-            
             modules.push({
               id: `${section.title}-content-${Date.now()}`,
               type: 'text',
-              content: { text: htmlContent },
-              column: 'left'
+              content: section.content,
+              column: 'full'
             });
           }
 
-          // Add goals as bullets module
-          if (section.goals) {
-            modules.push({
-              id: `${section.title}-goals-${Date.now()}`,
-              type: 'bullets',
-              content: { title: 'Goals', items: section.goals },
-              column: 'left'
-            });
-          }
-
-          // Add image if present
-          if (section.sectionImage) {
+          // Add image if present (for some sections)
+          if ('sectionImage' in section) {
             modules.push({
               id: `${section.title}-image-${Date.now()}`,
               type: 'image',
-              content: { src: section.sectionImage, alt: `${section.title} visual`, position: 'beside', columns: '4' },
-              column: 'right'
+              content: { src: (section as any).sectionImage, alt: `${section.title} visual` },
+              column: 'full'
             });
           }
 
+           // Add goals as bullets if present
+           if ('goals' in section) {
+             modules.push({
+               id: `${section.title}-goals-${Date.now()}`,
+               type: 'bullets',
+               content: { title: 'Goals', items: (section as any).goals },
+               column: 'left'
+             });
+           }
+
           return {
             title: section.title,
-            subheader: section.subheader,
+            subheader: section.subheader || '',
             modules
           };
         });
@@ -165,17 +161,28 @@ const CaseStudy2 = () => {
 
   const handleSave = async () => {
     try {
+      const saveData = {
+        title,
+        subtitle,
+        sections: editableSections
+      };
+      
       const githubService = new GitHubStorageService();
-      await githubService.writeFile('case-study-2.json', editableSections);
+      await githubService.writeFile('case-study-2.json', saveData);
       
       // Also save to localStorage as backup
-      localStorage.setItem('case-study-2-content', JSON.stringify(editableSections));
+      localStorage.setItem('case-study-2-content', JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved successfully to GitHub!');
     } catch (error) {
       console.error('Error saving to GitHub:', error);
       // Fallback to localStorage only
-      localStorage.setItem('case-study-2-content', JSON.stringify(editableSections));
+      const saveData = {
+        title,
+        subtitle,
+        sections: editableSections
+      };
+      localStorage.setItem('case-study-2-content', JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved locally (GitHub save failed)');
     }

@@ -43,146 +43,131 @@ const CaseStudy3 = () => {
   // Load content from GitHub or fallback to static content
   useEffect(() => {
     const loadContent = async () => {
-      const githubService = new GitHubStorageService();
-      
-      // Try to load from GitHub first
-      const githubContent = await githubService.readFile('case-study-3.json');
-      if (githubContent) {
-        // Ensure subheaders are migrated from static sections
-        const migratedContent = githubContent.map((section: any, index: number) => ({
-          ...section,
-          subheader: section.subheader || sections[index]?.subheader
-        }));
-        setEditableSections(migratedContent);
-        return;
-      }
-
-      // Fallback to localStorage
-      const savedContent = localStorage.getItem('case-study-3-content');
-      if (savedContent) {
-        try {
-          const parsed = JSON.parse(savedContent);
-          // Ensure subheaders are migrated from static sections
-          const migratedContent = parsed.map((section: any, index: number) => ({
-            ...section,
-            subheader: section.subheader || sections[index]?.subheader
-          }));
-          setEditableSections(migratedContent);
-          return;
-        } catch (e) {
-          console.error('Failed to parse saved content:', e);
-        }
-      }
-
-      // Convert static sections as last resort
-      if (editableSections.length === 0) {
-      const converted = sections.map((section) => {
-        const modules: Module[] = [];
+      try {
+        const githubService = new GitHubStorageService();
+        const githubContent = await githubService.readFile('case-study-3.json');
         
-        // Add main content as text module (convert line breaks to HTML)
-        if (section.content) {
-          const htmlContent = section.content
-            .split('\n\n')
-            .map(paragraph => `<p>${paragraph}</p>`)
-            .join('');
-          
-          modules.push({
-            id: `${section.title}-content-${Date.now()}`,
-            type: 'text',
-            content: { text: htmlContent },
-            column: 'left'
-          });
+        if (githubContent) {
+          if (githubContent.title) setTitle(githubContent.title);
+          if (githubContent.subtitle) setSubtitle(githubContent.subtitle);
+          if (githubContent.sections) setEditableSections(githubContent.sections);
+          return;
         }
+      } catch (error) {
+        console.log('GitHub load failed, trying localStorage');
+      }
 
-        // Add goals as bullets module
-        if (section.goals) {
-          modules.push({
-            id: `${section.title}-goals-${Date.now()}`,
-            type: 'bullets',
-            content: { title: 'Goals', items: section.goals },
-            column: 'left'
-          });
-        }
+      // Try localStorage
+      const saved = localStorage.getItem('case-study-3-content');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.title) setTitle(parsed.title);
+        if (parsed.subtitle) setSubtitle(parsed.subtitle);
+        if (parsed.sections) setEditableSections(parsed.sections);
+      } else {
+         // Convert static sections to editable format as fallback
+         const converted = sections.map(section => {
+         const modules: Module[] = [];
+         
+         // Add main content as text module
+         if (section.content) {
+           modules.push({
+             id: `${section.title}-content-${Date.now()}`,
+             type: 'text',
+             content: section.content,
+             column: 'full'
+           });
+         }
 
-        // Add key findings as bullets module
-        if (section.keyFindings) {
-          modules.push({
-            id: `${section.title}-findings-${Date.now()}`,
-            type: 'bullets',
-            content: { title: 'Key Findings', items: section.keyFindings },
-            column: 'left'
-          });
-        }
+         // Add goals as bullets module
+         if (section.goals) {
+           modules.push({
+             id: `${section.title}-goals-${Date.now()}`,
+             type: 'bullets',
+             content: { title: 'Goals', items: section.goals },
+             column: 'left'
+           });
+         }
 
-        // Add insight as quote module
-        if (section.insight) {
-          modules.push({
-            id: `${section.title}-insight-${Date.now()}`,
-            type: 'quote',
-            content: { title: 'Key Insight', text: section.insight },
-            column: 'left'
-          });
-        }
+         // Add key findings as bullets module
+         if (section.keyFindings) {
+           modules.push({
+             id: `${section.title}-findings-${Date.now()}`,
+             type: 'bullets',
+             content: { title: 'Key Findings', items: section.keyFindings },
+             column: 'left'
+           });
+         }
 
-        // Add standout ideas as bullets module
-        if (section.standoutIdeas) {
-          modules.push({
-            id: `${section.title}-ideas-${Date.now()}`,
-            type: 'bullets',
-            content: { title: 'Two Standout Ideas', items: section.standoutIdeas },
-            column: 'left'
-          });
-        }
+         // Add insight as quote module
+         if (section.insight) {
+           modules.push({
+             id: `${section.title}-insight-${Date.now()}`,
+             type: 'quote',
+             content: { title: 'Key Insight', text: section.insight },
+             column: 'left'
+           });
+         }
 
-        // Add design principles as separate text modules
-        if (section.designPrinciples) {
-          section.designPrinciples.forEach((principle, index) => {
-            modules.push({
-              id: `${section.title}-principle-${index}-${Date.now()}`,
-              type: 'quote',
-              content: { title: principle.title, text: principle.description },
-              column: 'left'
-            });
-          });
-        }
+         // Add standout ideas as bullets module
+         if (section.standoutIdeas) {
+           modules.push({
+             id: `${section.title}-ideas-${Date.now()}`,
+             type: 'bullets',
+             content: { title: 'Two Standout Ideas', items: section.standoutIdeas },
+             column: 'left'
+           });
+         }
 
-        // Add tradeoffs as quote module
-        if (section.tradeoffs) {
-          modules.push({
-            id: `${section.title}-tradeoffs-${Date.now()}`,
-            type: 'quote',
-            content: { title: 'Trade-offs', text: section.tradeoffs },
-            column: 'left'
-          });
-        }
+         // Add design principles as separate quote modules
+         if (section.designPrinciples) {
+           section.designPrinciples.forEach((principle, index) => {
+             modules.push({
+               id: `${section.title}-principle-${index}-${Date.now()}`,
+               type: 'quote',
+               content: { title: principle.title, text: principle.description },
+               column: 'left'
+             });
+           });
+         }
 
-        // Add personal reflection as quote module
-        if (section.personalReflection) {
-          modules.push({
-            id: `${section.title}-reflection-${Date.now()}`,
-            type: 'quote',
-            content: { title: 'Personal Reflection', text: section.personalReflection },
-            column: 'left'
-          });
-        }
+         // Add tradeoffs as quote module
+         if (section.tradeoffs) {
+           modules.push({
+             id: `${section.title}-tradeoffs-${Date.now()}`,
+             type: 'quote',
+             content: { title: 'Trade-offs', text: section.tradeoffs },
+             column: 'left'
+           });
+         }
 
-        // Add image module if present
-        if ('image' in section) {
-          modules.push({
-            id: `${section.title}-image-${Date.now()}`,
-            type: 'image',
-            content: { src: (section as any).image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
-            column: 'right'
-          });
-        }
+         // Add personal reflection as quote module
+         if (section.personalReflection) {
+           modules.push({
+             id: `${section.title}-reflection-${Date.now()}`,
+             type: 'quote',
+             content: { title: 'Personal Reflection', text: section.personalReflection },
+             column: 'left'
+           });
+         }
 
-        return {
-          title: section.title,
-          subheader: section.subheader,
-          modules
-        };
-      });
-        setEditableSections(converted);
+         // Add image module if present
+         if (section.image) {
+           modules.push({
+             id: `${section.title}-image-${Date.now()}`,
+             type: 'image',
+             content: { src: section.image, alt: `${section.title} visual`, position: 'beside', columns: '4' },
+             column: 'right'
+           });
+         }
+
+         return {
+           title: section.title,
+           subheader: section.subheader,
+           modules
+         };
+       });
+         setEditableSections(converted);
       }
     };
 
@@ -205,30 +190,41 @@ const CaseStudy3 = () => {
   };
 
   const handleSave = async () => {
+    const saveData = {
+      title,
+      subtitle,
+      sections: editableSections
+    };
+    
     const githubService = new GitHubStorageService();
     
     // Save to GitHub
-    const success = await githubService.writeFile('case-study-3.json', editableSections);
+    const success = await githubService.writeFile('case-study-3.json', saveData);
     
     if (success) {
       // Also save to localStorage as backup
-      localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
+      localStorage.setItem('case-study-3-content', JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved successfully to GitHub!');
     } else {
       // If GitHub fails, still save to localStorage
-      localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
+      localStorage.setItem('case-study-3-content', JSON.stringify(saveData));
       setIsEditing(false);
       alert('Saved locally (GitHub save failed - check config)');
     }
   };
 
-  // Auto-save to localStorage when editableSections change and in edit mode
+  // Auto-save to localStorage when content changes and in edit mode
   useEffect(() => {
     if (isEditing && editableSections.length > 0) {
-      localStorage.setItem('case-study-3-content', JSON.stringify(editableSections));
+      const saveData = {
+        title,
+        subtitle,
+        sections: editableSections
+      };
+      localStorage.setItem('case-study-3-content', JSON.stringify(saveData));
     }
-  }, [editableSections, isEditing]);
+  }, [editableSections, title, subtitle, isEditing]);
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;

@@ -267,17 +267,28 @@ const CaseStudy1 = () => {
 
   const handleSave = async () => {
     try {
+      const saveData = {
+        title,
+        subtitle,
+        sections: editableSections
+      };
+      
       const githubService = new GitHubStorageService();
-      await githubService.writeFile('case-study-1.json', editableSections);
+      await githubService.writeFile('case-study-1.json', saveData);
       
       // Also save to localStorage as backup
-      localStorage.setItem('case-study-1-content', JSON.stringify(editableSections));
+      localStorage.setItem('case-study-1-content', JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved successfully to GitHub!');
     } catch (error) {
       console.error('Error saving to GitHub:', error);
       // Fallback to localStorage only
-      localStorage.setItem('case-study-1-content', JSON.stringify(editableSections));
+      const saveData = {
+        title,
+        subtitle,
+        sections: editableSections
+      };
+      localStorage.setItem('case-study-1-content', JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved locally (GitHub save failed)');
     }
