@@ -52,13 +52,13 @@
       "subheader": "Walmart eCommerce Fulfillment",
       "modules": [
         {
-          "id": "journey-role",
-          "type": "quote",
+          "type": "text",
           "content": {
-            "text": "<h3><span style=\"background-color: transparent;\">Conveying the direction through the customer’s eyes</span></h3><p><span style=\"background-color: transparent;\">As part of my design leadership, I introduced journey maps as a way to connect strategy to real human experiences. These maps illustrated the customer journey end to end, making it clear how each initiative fit into a broader story.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only </span><em style=\"background-color: transparent;\">what</em><span style=\"background-color: transparent;\"> we were building, but </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> it mattered to people in the real world.</span></p>",
-            "author": "My role"
+            "title": "",
+            "text": "<h3><span style=\"background-color: transparent;\">Conveying the direction through the customer’s eyes</span></h3><p><span style=\"background-color: transparent;\">As part of my design leadership, I introduced journey maps as a way to connect strategy to real human experiences. These maps illustrated the customer journey end to end, making it clear how each initiative fit into a broader story.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only </span><em style=\"background-color: transparent;\">what</em><span style=\"background-color: transparent;\"> we were building, but </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> it mattered to people in the real world.</span></p>"
           },
-          "column": "left"
+          "column": "left",
+          "id": "1755729689298-0.3955697942264955"
         }
       ]
     }
