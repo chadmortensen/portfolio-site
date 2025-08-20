@@ -42,6 +42,7 @@ const CaseStudy1 = () => {
 
   const sections = [{
     title: "The Challenge",
+    subheader: "Rapid transformation under tight constraints",
     content: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
     goals: ["Increase quality registry creations (creations that lead to a first curation action)", "Increase curation by 10%", "Increase sharing by 20%", "Increase purchase conversion by 25%", "Helping new parents with this major moment in life"]
     // No image for this section
@@ -69,11 +70,13 @@ const CaseStudy1 = () => {
     image: "/lovable-uploads/b0a6356d-f821-42bf-9254-9434eeb0a7e9.png"
   }, {
     title: "Ideation Workshop - How Might We",
+    subheader: "Cross-functional collaboration to prioritize opportunities",
     content: "To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional \"How Might We\" workshop.\n\nWe brought together eight team members from design, product, engineering, and research to explore potential improvements to the registry experience — using our design principles as a foundation.\n\nThis collaborative exercise helped the team align around where to focus, and created a sense of ownership across disciplines as we moved into solutioning.",
     sessionDetails: ["We generated more than 70 \"How Might We\" statements", "Clustered them into 11 thematic categories", "Used dot voting to identify the most promising directions", "Named and prioritized the top 3 opportunity areas to guide the next phase of design"],
     image: "/lovable-uploads/696d025f-a8e0-4a25-8255-da6c90c4a2cb.png"
   }, {
     title: "Aligning Across Design, Product, and Business",
+    subheader: "Strategic focus areas for maximum impact",
     content: "With research insights in hand and opportunity areas prioritized, the next step was alignment — not just within the design team, but across product, engineering, and the business. I led conversations that helped us distill a shared set of focus areas, ensuring that our design direction was grounded in user needs, technically feasible, and aligned with broader strategic goals.\n\nWe landed on four key areas of opportunity that met our goals and fit within our short timeline:",
     focusAreas: [
       {
@@ -125,6 +128,7 @@ const CaseStudy1 = () => {
     ]
   }, {
     title: "Examples of Enhancements",
+    subheader: "Key improvements and feature implementations",
     content: "Key design improvements and feature enhancements implemented throughout the registry experience.",
     fullWidthImage: "/lovable-uploads/167b31ed-0f68-4044-9d07-fd3b2e8b30ff.png"
   }, {

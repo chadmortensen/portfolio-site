@@ -95,7 +95,6 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
   const [showPasscodeDialog, setShowPasscodeDialog] = useState(false);
   const [showModuleLibrary, setShowModuleLibrary] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [showRipples, setShowRipples] = useState(true);
   const [editableSections, setEditableSections] = useState<Array<{
     title: string;
     subheader?: string;
@@ -116,13 +115,6 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
     }
   }, [sections]);
 
-  // Handle ripple animation on mount
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowRipples(false);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
 
   const handlePasscodeSuccess = () => {
     setShowPasscodeDialog(false);
@@ -528,42 +520,6 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
 
   return (
     <div className="fixed inset-0 bg-surface-primary z-50 overflow-hidden">
-      {/* Water Ripple Overlay Effects */}
-      {showRipples && (
-        <div className="fixed inset-0 z-[60] pointer-events-none">
-          {/* Multiple ripple rings for realistic effect */}
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >
-              <div 
-                className="w-32 h-32 border-2 border-accent-blue/30 rounded-full animate-ripple-overlay"
-                style={{
-                  animationDelay: `${i * 0.2}s`,
-                  animationDuration: '1.5s'
-                }}
-              />
-            </div>
-          ))}
-          {/* Secondary ripples with different colors */}
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={`teal-${i}`}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >
-              <div 
-                className="w-24 h-24 border border-accent-teal/40 rounded-full animate-ripple-overlay"
-                style={{
-                  animationDelay: `${0.3 + i * 0.25}s`,
-                  animationDuration: '1.2s'
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-      
       {/* Backdrop Bar with Gradient Fade */}
       <div className="fixed top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/80 to-transparent backdrop-blur-sm z-50"></div>
       
@@ -639,7 +595,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
               isTransitioning
                 ? 'opacity-0 translate-y-12 scale-95'
                 : 'opacity-100 translate-y-0 scale-100'
-            } ${showRipples ? 'animate-water-ripple' : ''}`}
+            }`}
             style={{
               filter: isTransitioning ? 'blur(8px)' : 'blur(0px)',
               transform: isTransitioning 
