@@ -48,7 +48,12 @@ const CaseStudy3 = () => {
       // Try to load from GitHub first
       const githubContent = await githubService.readFile('case-study-3.json');
       if (githubContent) {
-        setEditableSections(githubContent);
+        // Ensure subheaders are migrated from static sections
+        const migratedContent = githubContent.map((section: any, index: number) => ({
+          ...section,
+          subheader: section.subheader || sections[index]?.subheader
+        }));
+        setEditableSections(migratedContent);
         return;
       }
 
@@ -57,7 +62,12 @@ const CaseStudy3 = () => {
       if (savedContent) {
         try {
           const parsed = JSON.parse(savedContent);
-          setEditableSections(parsed);
+          // Ensure subheaders are migrated from static sections
+          const migratedContent = parsed.map((section: any, index: number) => ({
+            ...section,
+            subheader: section.subheader || sections[index]?.subheader
+          }));
+          setEditableSections(migratedContent);
           return;
         } catch (e) {
           console.error('Failed to parse saved content:', e);
