@@ -327,9 +327,39 @@
         "id": "Results-content-1755016105354",
         "type": "text",
         "content": {
-          "text": "<p>The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. Just as importantly, it was a product that better reflected the needs of new parents, shifting from a “done-for-you” model to one that provided guidance while preserving choice and control. The team was proud of what we shipped, and it quickly proved to be a win for both customers and the business.</p><h3>Impact in numbers:</h3><ul><li><strong>Quality registry creations:</strong> Registry creations increased by <strong>28% year-over-year</strong>, showing that more parents were not only starting a registry but also taking meaningful steps to curate it.</li><li><strong>Curation activity:</strong> Our goal was a 10% lift, but within a week of creation, <strong>70% of registries had been edited</strong>, resulting in a <strong>20% increase overall</strong> — double the original target.</li><li><strong>Sharing behavior:</strong> We aimed for a 20% increase, and while <strong>55% of registries were shared within 7 days</strong>, this translated to only an <strong>8% lift</strong>. The longer lifecycle of registry creation suggested that more gains would surface over time.</li><li><strong>Purchase conversion:</strong> We targeted a 25% increase, and <strong>GMV initially climbed after launch</strong>. However, the onset of COVID in early 2020 shifted consumer priorities toward essentials, dampening momentum in this area.</li></ul><p>Even with the challenges of the pandemic, the new experience drove significant growth in the core behaviors of creating, curating, and sharing registries. It strengthened Walmart’s connection with new parents and set a solid foundation for continued iteration.</p>"
+          "text": "<p>The updated baby registry launched on time — a major accomplishment given the ambitious scope and tight constraints. Just as importantly, it was a product that better reflected the needs of new parents, shifting from a “done-for-you” model to one that provided guidance while preserving choice and control. The team was proud of what we shipped, and it quickly proved to be a win for both customers and the business.</p><h3><br></h3><p>Even with the challenges of the pandemic, the new experience drove significant growth in the core behaviors of creating, curating, and sharing registries. It strengthened Walmart’s connection with new parents and set a solid foundation for continued iteration.</p>"
         },
         "column": "full"
+      },
+      {
+        "type": "table",
+        "content": {
+          "title": "Goals",
+          "headers": [
+            "Goals",
+            "Results"
+          ],
+          "rows": [
+            [
+              "<p><span style=\"background-color: transparent;\">Increase quality registry creations </span></p><p><span style=\"background-color: transparent;\">(creations that lead to a first curation action)</span></p>",
+              "<p><strong style=\"background-color: transparent;\">+28% vs. Last year</strong></p>"
+            ],
+            [
+              "<p><span style=\"background-color: transparent;\">Increase curation by 10%</span></p>",
+              "<p><strong style=\"background-color: transparent;\">70% edited within 3-7 days.&nbsp;</strong></p><p><strong style=\"background-color: transparent;\">+20% increase</strong></p>"
+            ],
+            [
+              "<p><span style=\"background-color: transparent;\">Increase sharing by 20% </span></p>",
+              "<p><strong style=\"background-color: transparent;\">55% shared within 7 days</strong></p><p><strong style=\"background-color: transparent;\">+8% increase</strong></p>"
+            ],
+            [
+              "<p><span style=\"background-color: transparent;\">Increase purchase conversion by 25%</span></p>",
+              "<p><span style=\"background-color: transparent;\">MV initially increased but then decreased starting in April possibly due to COVID</span></p>"
+            ]
+          ]
+        },
+        "column": "full",
+        "id": "1755709538060-0.1837029247426477"
       }
     ]
   },
