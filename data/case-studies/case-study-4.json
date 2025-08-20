@@ -11,7 +11,7 @@
           "type": "text",
           "content": {
             "title": "",
-            "text": "<p><span style=\"background-color: transparent;\">For the fashion vertical, I led design by grounding the work in clear, research-backed design principles. These weren’t abstract ideas — they were aligned to Walmart’s brand promise and distilled from customer insights. By codifying what mattered most to shoppers, the principles helped our cross-functional teams stay focused on customer value even as priorities shifted.</span></p><h3><strong style=\"background-color: transparent;\">My role</strong></h3><p><span style=\"background-color: transparent;\">I drove the creation and adoption of these principles, making sure they weren’t just a design artifact but a shared north star for product, engineering, and business partners. This elevated design’s voice in strategic conversations and ensured execution always tied back to customer needs.</span></p>"
+            "text": "<h3><span style=\"background-color: transparent;\">Design leadership through principles</span></h3><p><span style=\"background-color: transparent;\">For the fashion vertical, I led design by grounding the work in clear, research-backed design principles. These weren’t abstract ideas — they were aligned to Walmart’s brand promise and distilled from customer insights. By codifying what mattered most to shoppers, the principles helped our cross-functional teams stay focused on customer value even as priorities shifted.</span></p><p><strong style=\"background-color: transparent;\">My role: </strong><span style=\"background-color: transparent;\">I drove the creation and adoption of these principles, making sure they weren’t just a design artifact but a shared north star for product, engineering, and business partners. This elevated design’s voice in strategic conversations and ensured execution always tied back to customer needs.</span></p>"
           },
           "column": "left"
         }
@@ -41,16 +41,7 @@
           "type": "text",
           "content": {
             "title": "",
-            "text": "<p>In eCommerce fulfillment, my focus was on ensuring the team had a steady supply of features and goals grounded in research and discovery. Rather than reacting to short-term demands, we invested in understanding customer journeys and unmet needs, which allowed us to prioritize work with confidence.</p>"
-          },
-          "column": "left"
-        },
-        {
-          "id": "ecommerce-role",
-          "type": "quote",
-          "content": {
-            "text": "<p>I advocated for a balanced pipeline — ensuring design surfaced opportunities proactively while aligning with product and engineering on delivery. This made the roadmap more resilient and better tied to real customer impact.</p>",
-            "author": "My role"
+            "text": "<h3><span style=\"background-color: transparent;\">Driving discovery into a design-led backlog</span></h3><p><span style=\"background-color: transparent;\">For a key discovery initiative in grocery, I guided the team through a structured process: defining our design target, articulating goals and customer problems, synthesizing past research alongside new co-creation studies, creating design principles, and facilitating cross-functional ideation. We tested concepts, validated assumptions, and ultimately built a backlog driven directly by customer insights.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I shaped the process end to end, making sure design played the connective role between research, ideation, and execution. The result was a backlog that reflected not just business needs, but a clear line of sight to customer value.</span></p>"
           },
           "column": "left"
         }
@@ -64,7 +55,7 @@
           "id": "journey-role",
           "type": "quote",
           "content": {
-            "text": "<p>I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only what we were building, but why it mattered to people in the real world.</p>",
+            "text": "<h3><span style=\"background-color: transparent;\">Conveying the direction through the customer’s eyes</span></h3><p><span style=\"background-color: transparent;\">As part of my design leadership, I introduced journey maps as a way to connect strategy to real human experiences. These maps illustrated the customer journey end to end, making it clear how each initiative fit into a broader story.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only </span><em style=\"background-color: transparent;\">what</em><span style=\"background-color: transparent;\"> we were building, but </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> it mattered to people in the real world.</span></p>",
             "author": "My role"
           },
           "column": "left"
