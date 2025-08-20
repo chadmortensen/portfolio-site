@@ -21,6 +21,7 @@ const CaseStudy4 = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [title, setTitle] = useState('Other Projects');
   const [subtitle, setSubtitle] = useState('Collection of Additional Work');
   const [sections, setSections] = useState<Section[]>([]);
@@ -82,12 +83,18 @@ const CaseStudy4 = () => {
       setIsAuthenticated(true);
       localStorage.setItem('isAuthenticated', 'true');
       setPassword('');
+      setIsEditing(true);
+      setShowPasswordPrompt(false);
     } else {
       alert('Incorrect password');
     }
   };
 
   const handleEdit = () => {
+    if (!isAuthenticated) {
+      setShowPasswordPrompt(true);
+      return;
+    }
     setIsEditing(true);
   };
 
@@ -179,31 +186,35 @@ const CaseStudy4 = () => {
     );
   }
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-surface-primary flex items-center justify-center">
-        <div className="max-w-md w-full mx-4">
-          <form onSubmit={handlePasswordSubmit} className="bg-surface-secondary p-8 border border-swiss-light">
-            <h2 className="text-title text-text-primary mb-6 text-center">Enter Password to Edit</h2>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className="mb-4"
-            />
-            <Button type="submit" className="w-full">
-              Access Edit Mode
-            </Button>
-          </form>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-surface-primary">
       <Navigation />
+      
+      {showPasswordPrompt && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="max-w-md w-full mx-4">
+            <form onSubmit={handlePasswordSubmit} className="bg-surface-secondary p-8 border border-swiss-light rounded-lg">
+              <h2 className="text-title text-text-primary mb-6 text-center">Enter Password to Edit</h2>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className="mb-4"
+              />
+              <div className="flex gap-2">
+                <Button type="submit" className="flex-1">
+                  Access Edit Mode
+                </Button>
+                <Button type="button" variant="outline" onClick={() => setShowPasswordPrompt(false)}>
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       
       <main className="pt-20">
         <div className="swiss-grid py-8 sm:py-12">
