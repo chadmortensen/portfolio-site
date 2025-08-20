@@ -80,25 +80,13 @@
           "column": "left"
         },
         {
-          "id": "Ground the Team in Research and Insights-quotes-1755016105354",
-          "type": "bullets",
-          "content": {
-            "title": "User Feedback",
-            "items": [
-              "I became so frustrated in making the registry through the app, that I quit. It is not intuitive nor easy to navigate in order to add or change something.",
-              "It's not as user friendly as other registries I've used. It would be better if the registry picks fell into the categories provided. That would make it much easier."
-            ]
-          },
-          "column": "left"
-        },
-        {
-          "id": "Ground the Team in Research and Insights-insight-1755016105354",
           "type": "quote",
           "content": {
-            "title": "Key Insight",
-            "text": "<p>Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)</p>"
+            "title": "User Feedback",
+            "text": "<p>\"I became so frustrated in making the registry through the app, that I quit. It is not intuitive nor easy to navigate in order to add or change something.\"</p><p>\"It's not as user-friendly as other registries I've used. It would be better if the registry picks fell into the categories provided. That would make it much easier.\"</p>"
           },
-          "column": "left"
+          "column": "left",
+          "id": "1755725248494-0.0921760328731418"
         },
         {
           "id": "Ground the Team in Research and Insights-main-image-1755016105354",
@@ -126,6 +114,15 @@
             "alt": "Additional image 2"
           },
           "column": "right"
+        },
+        {
+          "type": "text",
+          "content": {
+            "title": "Key Insight",
+            "text": "<p>Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)</p>"
+          },
+          "column": "left",
+          "id": "1755725303970-0.4068849301587639"
         }
       ]
     },
