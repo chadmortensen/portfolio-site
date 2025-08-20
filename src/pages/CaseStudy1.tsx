@@ -31,7 +31,7 @@ const CaseStudy1 = () => {
     modules: Module[];
   }>>([]);
   const [title, setTitle] = useState('A rapid revamp to the Walmart registry');
-  const [subtitle, setSubtitle] = useState('');
+  const [subtitle, setSubtitle] = useState('Building a customer-centered registry experience under tight constraints');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -524,14 +524,12 @@ const CaseStudy1 = () => {
                   className="text-display text-center bg-transparent border-none text-text-primary placeholder:text-text-secondary"
                   placeholder="Case study title"
                 />
-                {subtitle && (
-                  <Input
-                    value={subtitle}
-                    onChange={(e) => setSubtitle(e.target.value)}
-                    className="text-lg text-center bg-transparent border-none text-text-secondary placeholder:text-text-secondary"
-                    placeholder="Subtitle (optional)"
-                  />
-                )}
+                <Input
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
+                  className="text-lg text-center bg-transparent border-none text-text-secondary placeholder:text-text-secondary"
+                  placeholder="Subtitle (optional)"
+                />
               </div>
             ) : (
               <div className="mb-6">

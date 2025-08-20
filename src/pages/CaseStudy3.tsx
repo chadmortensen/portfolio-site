@@ -31,7 +31,7 @@ const CaseStudy3 = () => {
     modules: Module[];
   }>>([]);
   const [title, setTitle] = useState('Brightside Health – Designing a Better Way In');
-  const [subtitle, setSubtitle] = useState('');
+  const [subtitle, setSubtitle] = useState('Creating a unified vision for mental health intake and conversion');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -555,14 +555,12 @@ const CaseStudy3 = () => {
                   className="text-display text-center bg-transparent border-none text-text-primary placeholder:text-text-secondary"
                   placeholder="Case study title"
                 />
-                {subtitle && (
-                  <Input
-                    value={subtitle}
-                    onChange={(e) => setSubtitle(e.target.value)}
-                    className="text-lg text-center bg-transparent border-none text-text-secondary placeholder:text-text-secondary"
-                    placeholder="Subtitle (optional)"
-                  />
-                )}
+                <Input
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
+                  className="text-lg text-center bg-transparent border-none text-text-secondary placeholder:text-text-secondary"
+                  placeholder="Subtitle (optional)"
+                />
               </div>
             ) : (
               <div className="mb-6">
