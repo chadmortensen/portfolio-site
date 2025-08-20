@@ -1,5 +1,198 @@
 {
   "title": "Etsy",
   "subtitle": "Crafting a Shared Vision and Guiding Principles for Fulfillment (2022)",
-  "sections": []
+  "sections": [
+    {
+      "title": "Why This, and Why Now?",
+      "subheader": "",
+      "modules": [
+        {
+          "id": "why-this-content-1",
+          "type": "text",
+          "content": "Our fulfillment teams had roadmaps and short-term goals, but something was missing: a unifying north star. Without shared strategic guideposts, it was difficult to make confident decisions or understand how each initiative fit into Etsy's broader business direction. I saw an opportunity to fill that gap — not with a rigid product plan, but with a shared vision and set of principles grounded in user needs, market realities, and our brand's mission.",
+          "column": "left"
+        },
+        {
+          "id": "why-this-goals-1",
+          "type": "bullets",
+          "content": {
+            "title": "Goals",
+            "items": [
+              "Create a team vision rooted in research and aligned with Etsy's business strategy",
+              "Define strategic guideposts to shape yearly and quarterly planning",
+              "Build consensus among cross-functional leaders that this alignment work was essential"
+            ]
+          },
+          "column": "left"
+        },
+        {
+          "id": "why-this-image-1",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.jpeg",
+            "alt": "Why This and Why Now visual"
+          },
+          "column": "right"
+        }
+      ]
+    },
+    {
+      "title": "Participants",
+      "subheader": "",
+      "modules": [
+        {
+          "id": "participants-role-1",
+          "type": "bullets",
+          "content": {
+            "title": "My Role",
+            "items": [
+              "Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work",
+              "Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers",
+              "Synthesized the output into enduring artifacts — a vision statement and set of fulfillment principles — that the team could carry forward into planning and execution"
+            ]
+          },
+          "column": "left"
+        },
+        {
+          "id": "participants-partners-1",
+          "type": "bullets",
+          "content": {
+            "title": "Partnered With",
+            "items": [
+              "Research leadership",
+              "Staff Designer (who facilitated the sessions)"
+            ]
+          },
+          "column": "left"
+        },
+        {
+          "id": "participants-list-1",
+          "type": "bullets",
+          "content": {
+            "title": "Participants",
+            "items": [
+              "GM/VP of Fulfillment",
+              "Product, Engineering, and Research leaders",
+              "Product Marketing, Analytics, and Finance leads",
+              "Product Design Manager"
+            ]
+          },
+          "column": "right"
+        }
+      ]
+    },
+    {
+      "title": "Workshop Design",
+      "subheader": "",
+      "modules": [
+        {
+          "id": "workshop-content-1",
+          "type": "text",
+          "content": "To build true alignment across disciplines, I designed a three-day workshop focused on co-creation, strategic thinking, and grounding our decisions in real user needs. The structure was intentional: each activity layered insight and perspective, ultimately enabling the team to converge on a shared direction.\n\nKey components included:",
+          "column": "left"
+        },
+        {
+          "id": "workshop-session-1",
+          "type": "text",
+          "content": "Grounding in Research\nWe began by immersing ourselves in key inputs — seller behavior data, industry trends, brand positioning, and a reminder of Etsy's broader mission — to ensure we were anchored in both user insight and business context.",
+          "column": "full"
+        },
+        {
+          "id": "workshop-session-2",
+          "type": "text",
+          "content": "Thinking Hats Exercise\nTo challenge assumptions and foster empathy, we explored seller opportunities through a set of creative mindsets — including the optimist, pessimist, and visionary — uncovering nuanced perspectives often missed in traditional brainstorming.",
+          "column": "full"
+        },
+        {
+          "id": "workshop-session-3",
+          "type": "text",
+          "content": "Future View\nWe envisioned what a best-in-class fulfillment experience could look like 3–5 years out, encouraging blue-sky thinking while staying tethered to seller and buyer realities.",
+          "column": "full"
+        },
+        {
+          "id": "workshop-session-4",
+          "type": "text",
+          "content": "Cover Story\nWe closed with a storytelling exercise where teams imagined Etsy featured in a future success story. This narrative served as a powerful foundation for the Fulfillment Vision I later authored and refined.",
+          "column": "full"
+        },
+        {
+          "id": "workshop-image-1",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
+            "alt": "Workshop Design image"
+          },
+          "column": "right"
+        }
+      ]
+    },
+    {
+      "title": "Output: Fulfillment Vision",
+      "subheader": "",
+      "modules": [
+        {
+          "id": "vision-content-1",
+          "type": "text",
+          "content": "By synthesizing the outputs from our workshop — particularly the Cover Story exercise and the Future Vision exercise — I was able to articulate a mission statement that captured the team's collective thinking. This became our Fulfillment Vision: a unifying narrative that brought clarity, direction, and purpose to our work moving forward.\n\nThe resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.",
+          "column": "left"
+        },
+        {
+          "id": "vision-image-1",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.jpeg",
+            "alt": "Fulfillment Vision visual"
+          },
+          "column": "right"
+        }
+      ]
+    },
+    {
+      "title": "Output: Fulfillment Principles",
+      "subheader": "Strategic Guideposts for Decision Making",
+      "modules": [
+        {
+          "id": "principles-content-1",
+          "type": "text",
+          "content": "Our principles served as the scaffolding for roadmap planning. These weren't timelines or feature lists — they were evergreen beliefs that helped guide investment decisions and shaped how we evaluated success. They aligned our work around what truly mattered for Etsy sellers.",
+          "column": "left"
+        },
+        {
+          "id": "principles-image-1",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/5994c658-34de-437e-853c-9be70a50c57b.jpeg",
+            "alt": "Fulfillment Principles visual"
+          },
+          "column": "right"
+        }
+      ]
+    },
+    {
+      "title": "Reflections & Takeaways",
+      "subheader": "Leading Strategic Alignment in Cross-Functional Teams",
+      "modules": [
+        {
+          "id": "reflections-content-1",
+          "type": "text",
+          "content": "This initiative demonstrated the power of bringing diverse perspectives together to create shared understanding and direction.",
+          "column": "left"
+        },
+        {
+          "id": "reflections-learnings-1",
+          "type": "bullets",
+          "content": {
+            "title": "Key Learnings",
+            "items": [
+              "Workshop Format Creates Ownership: The collaborative format created high ownership and alignment across disciplines. Because leaders helped shape the output, they became advocates for it within their teams.",
+              "Co-Creation Builds Trust: Co-creating in real time helped deepen trust and cohesion, especially in a distributed setting.",
+              "Strategic Artifacts Drive Action: The resulting vision and principles weren't just artifacts — they directly informed our yearly planning and long-term strategy discussions.",
+              "Preserve Time for Exploration: We had planned to explore \"big bets\" and create visual prototypes for our future vision, but time constraints forced us to leave that behind. Preserving space for that exploration would have been a powerful complement to our strategic framework."
+            ]
+          },
+          "column": "full"
+        }
+      ]
+    }
+  ]
 }
