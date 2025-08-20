@@ -233,6 +233,12 @@
   color: hsl(var(--accent-blue));
 }
 
+/* Quote module should use text-secondary color for list items */
+.bg-surface-secondary .prose ul li,
+.bg-surface-secondary .prose ul li::marker {
+  color: hsl(var(--text-secondary));
+}
+
 .prose ol {
   margin: 0;
   padding: 0;
