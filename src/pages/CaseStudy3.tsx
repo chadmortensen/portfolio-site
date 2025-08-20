@@ -73,10 +73,27 @@ const CaseStudy3 = () => {
         }
       }
 
-      // Use the complete static sections defined later in the file
-      const staticSections = sections;
+      // Load from the static JSON data file
+      try {
+        const response = await fetch('/data/case-studies/case-study-3.json');
+        if (response.ok) {
+          const jsonData = await response.json();
+          if (jsonData && Array.isArray(jsonData)) {
+            // Convert JSON sections to editable format
+            const convertedFromJson = jsonData.map(section => ({
+              title: section.title,
+              subheader: section.subheader || '',
+              modules: section.modules || []
+            }));
+            setEditableSections(convertedFromJson);
+            return;
+          }
+        }
+      } catch (error) {
+        console.log('Failed to load from JSON file, using static content');
+      }
       
-      const converted = staticSections.map(section => {
+      const converted = sections.map(section => {
          const modules: Module[] = [];
          
          // Add main content as text module

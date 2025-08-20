@@ -116,7 +116,7 @@ const CaseStudy2 = () => {
             id: `${section.title}-content-${Date.now()}`,
             type: 'text',
             content: section.content,
-            column: 'full'
+            column: 'left'
           });
         }
 
@@ -181,7 +181,7 @@ const CaseStudy2 = () => {
               id: `${section.title}-workshop-img-${index}-${Date.now()}`,
               type: 'image',
               content: { src: imageSrc, alt: `${section.title} workshop image ${index + 1}` },
-              column: 'full'
+              column: 'right'
             });
           });
         }
@@ -192,7 +192,7 @@ const CaseStudy2 = () => {
             id: `${section.title}-image-${Date.now()}`,
             type: 'image',
             content: { src: (section as any).sectionImage, alt: `${section.title} visual` },
-            column: 'full'
+            column: 'right'
           });
         }
 
