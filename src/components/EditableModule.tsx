@@ -327,7 +327,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               <h3 className="text-lg mb-2 text-foreground font-semibold">{module.content.title}</h3>
             )}
             {module.content.items && module.content.items.length > 0 && (
-              <ul className="list-disc list-inside space-y-2 ml-4">
+              <ul className="space-y-2">
                 {module.content.items.map((item: string, index: number) => (
                   <li key={index} className="text-body text-text-secondary" dangerouslySetInnerHTML={{ __html: item }} />
                 ))}
