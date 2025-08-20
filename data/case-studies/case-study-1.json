@@ -281,7 +281,7 @@
         "id": "Examples of Enhancements-content-1755016105354",
         "type": "text",
         "content": {
-          "text": "<p>Key design improvements and feature enhancements implemented throughout the registry experience.</p>"
+          "text": "<h3>Revisiting the Research</h3><p>When we zoomed into specific enhancements, many of the most impactful updates came down to basic usability improvements and putting more control into the hands of parents-to-be. The key shift wasn’t just in the UI — it was in how we interpreted the research.</p><h3>Where the Previous Design Fell Short</h3><p>The earlier team had heard parents say, <em>“I’d like help,”</em> and interpreted that as a desire for the system to do the work for them. Their solution was a chatbot-driven experience that auto-generated a fully stocked registry after answering a few questions.</p><h3>What Parents Actually Wanted</h3><p>When we revisited the original research — even sitting down with the researcher who had conducted the interviews — we uncovered a different truth. Parents welcomed guidance in unfamiliar areas like diapers or bottles, but building a registry was a deeply personal process. They wanted to weigh advice from loved ones, make their own choices, and ultimately stay in control.</p><h3>Our Pivot</h3><p>Armed with this deeper understanding, we moved away from pre-populated registries. Instead, we focused on guiding parents with smart cues and applying strong usability practices to make adding items effortless. The shift supported parents through the process, rather than doing it for them.</p>"
         },
         "column": "left"
       },
