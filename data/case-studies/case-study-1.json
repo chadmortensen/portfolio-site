@@ -75,7 +75,7 @@
           "id": "Ground the Team in Research and Insights-content-1755016105354",
           "type": "text",
           "content": {
-            "text": "<h3>Leveraging Existing Research</h3><p>The Routine Consumables team was responsible for the baby category at Walmart, and fortunately the registry had undergone a design overhaul just a couple of years prior. That meant we had a strong foundation of research to build from — market studies, customer feedback, and interview data that offered rich insights.</p><h3>Grounding the Team in User Insights</h3><p>Understanding users’ motivations, sources of friction, and moments of delight is essential for building human-centered products. I wanted to ensure the team was anchored in these insights before diving into solutions.</p><h3>Aligning Through an Offsite</h3><p>We held an offsite at the start of the project to bring the design team together, clarify goals, and align on the initial outline of what we were building. The session began with a deep dive into prior research, presented by our UX researcher, so everyone had shared context.</p><h3>Key Research Takeaways</h3><p>The review revealed consistent themes: Walmart registry users wanted more control over their selections, clearer guidance throughout the process, and a stronger sense of trust in the overall experience.</p>"
+            "text": "<h3>Leveraging Existing Research</h3><p>The Routine Consumables team was responsible for the baby category at Walmart, and fortunately the registry had undergone a design overhaul just a couple of years prior. That meant we had a strong foundation of research to build from — market studies, customer feedback, and interview data that offered rich insights.</p><h3>Grounding the Team in User Insights</h3><p>Understanding users’ motivations, sources of friction, and moments of delight is essential for building human-centered products. I wanted to ensure the team was anchored in these insights before diving into solutions.</p><h3>Aligning Through an Offsite</h3><p>We held an offsite at the start of the project to bring the design team together, clarify goals, and align on the initial outline of what we were building. The session began with a deep dive into prior research, presented by our UX researcher, so everyone had shared context.</p><h3>Research Takeaways</h3><p>The review revealed consistent themes: Walmart registry users wanted more control over their selections, clearer guidance throughout the process, and a stronger sense of trust in the overall experience.</p>"
           },
           "column": "left"
         },
@@ -118,8 +118,8 @@
         {
           "type": "text",
           "content": {
-            "title": "Key Insight",
-            "text": "<p>Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)</p>"
+            "title": "",
+            "text": "<h3>Key Insight</h3><p>Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)</p>"
           },
           "column": "left",
           "id": "1755725303970-0.4068849301587639"
