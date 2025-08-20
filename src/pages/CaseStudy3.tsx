@@ -79,11 +79,17 @@ const CaseStudy3 = () => {
         if (response.ok) {
           const jsonData = await response.json();
           if (jsonData && Array.isArray(jsonData)) {
-            // Convert JSON sections to editable format
+            console.log('Loading content from JSON file');
+            // Convert JSON sections to editable format - properly handle the existing module structure
             const convertedFromJson = jsonData.map(section => ({
               title: section.title,
               subheader: section.subheader || '',
-              modules: section.modules || []
+              modules: (section.modules || []).map((module: any) => ({
+                id: module.id || `${section.title}-${Date.now()}-${Math.random()}`,
+                type: module.type,
+                content: module.content,
+                column: module.column || 'full'
+              }))
             }));
             setEditableSections(convertedFromJson);
             return;

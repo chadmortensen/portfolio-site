@@ -106,7 +106,8 @@ const CaseStudy2 = () => {
         }
       }
 
-      // Convert static sections to editable format
+      // Convert static sections to editable format as fallback
+      console.log('Converting static sections to editable format');
       const converted = sections.map(section => {
         const modules: Module[] = [];
         
