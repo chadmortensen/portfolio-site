@@ -57,7 +57,7 @@ const Navigation = () => {
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 py-4 ${
       isScrolled 
-        ? 'bg-surface-primary/95 backdrop-blur-sm border-b border-swiss-light' 
+        ? 'bg-surface-primary/80 backdrop-blur-md backdrop-saturate-150 border-b border-swiss-light' 
         : 'bg-surface-primary'
     }`}>
       <div className="max-width-container mx-auto px-4 sm:px-6">
@@ -67,7 +67,7 @@ const Navigation = () => {
             {navItems.map((item) => (
               item.label === "Case Studies" ? (
                 <DropdownMenu key={item.href}>
-                  <DropdownMenuTrigger className="text-caption sm:text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap flex items-center space-x-1">
+                  <DropdownMenuTrigger className="text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap flex items-center space-x-1">
                     <span>{item.label}</span>
                     <ChevronDown size={14} />
                     <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
@@ -94,7 +94,7 @@ const Navigation = () => {
                 <button
                   key={item.href}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-caption sm:text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap"
+                  className="text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap"
                 >
                   {item.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
