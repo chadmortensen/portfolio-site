@@ -60,7 +60,7 @@ const CaseStudies = () => {
               <div className="lg:col-span-5">
                 <img src={study.image} alt={study.title} className="w-full h-48 sm:h-64 lg:h-full object-cover" />
               </div>
-              <div className="lg:col-span-7 p-4 sm:p-8">
+              <div className="lg:col-span-7 p-4 sm:p-8 flex flex-col justify-center">
                 <div className="space-y-4 sm:space-y-6">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                     <div>
