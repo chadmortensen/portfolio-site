@@ -324,13 +324,41 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      <Hero />
-      <About />
-      <Experience />
-      <Leadership />
-      <Value />
-      <CaseStudies />
-      <Contact />
+      
+      {/* Hero section with editable title and subtitle */}
+      <section id="home" className="relative py-32 bg-surface-primary overflow-hidden">
+        <div className="swiss-grid text-center relative z-10">
+          <div className="col-span-12">
+            <h1 className="text-display text-text-primary mb-4">{title}</h1>
+            <p className="text-body text-text-secondary max-w-4xl mx-auto">{subtitle}</p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Render editable sections */}
+      {editableSections.map((section, index) => {
+        // Skip the case studies section if it should show the actual case studies component
+        if (section.title === "Additional projects") {
+          return (
+            <section key={section.title} className={index % 2 === 0 ? "py-24 bg-surface-primary" : "py-24 bg-surface-secondary"}>
+              <div className="swiss-grid fade-in">
+                <div className="col-span-12 text-center mb-16">
+                  <h2 className="text-headline text-text-primary mb-4">{section.title}</h2>
+                  <div className="w-16 h-px bg-accent-teal mx-auto mb-6"></div>
+                  {section.subheader && (
+                    <p className="text-body text-text-secondary max-w-4xl mx-auto mb-8">
+                      {section.subheader}
+                    </p>
+                  )}
+                </div>
+                <CaseStudies />
+              </div>
+            </section>
+          );
+        }
+        
+        return renderEditableSection(section, index);
+      })}
       
       {/* Hidden edit button */}
       <div className="bg-surface-primary border-t border-swiss-light">

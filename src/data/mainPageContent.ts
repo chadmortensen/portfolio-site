@@ -116,14 +116,14 @@ export const defaultMainPageContent: {
       ]
     },
     {
-      title: "Case Studies",
-      subheader: "Featured work and leadership initiatives",
+      title: "Additional projects",
+      subheader: "Walmart eCommerce",
       modules: [
         {
-          id: "case-studies-placeholder",
+          id: "additional-projects-description",
           type: "text",
           content: {
-            text: "<p>Case studies component will be rendered here in view mode.</p>"
+            text: "<p>Here are some past examples of my influence in driving product strategy through design leadership</p>"
           },
           column: "full"
         }
