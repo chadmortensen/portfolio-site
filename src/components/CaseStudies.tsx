@@ -39,7 +39,7 @@ const CaseStudies = () => {
     company: "Various",
     duration: "Ongoing",
     teamSize: "Various",
-    image: "/img/placeholder-project.png?auto=format&fit=crop&w=800&q=80",
+    image: "/img/other-main.jpg?auto=format&fit=crop&w=800&q=80",
     challenge: "Collection of additional product leadership work, research initiatives, and strategic consulting across different companies and industries.",
     results: ["Multiple successful product launches", "Cross-functional team leadership", "Strategic planning and execution", "User research and insights"],
     route: "/case-study-4"
