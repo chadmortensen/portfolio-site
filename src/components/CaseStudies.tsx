@@ -35,12 +35,12 @@ const CaseStudies = () => {
     route: "/case-study-3"
   }, {
     id: 4,
-    title: "Other Projects",
-    company: "Various",
+    title: "Additional projects",
+    company: "Walmart eCommerce",
     duration: "Ongoing",
     teamSize: "Various",
     image: "/img/other-main.jpg?auto=format&fit=crop&w=800&q=80",
-    challenge: "Collection of additional product leadership work, research initiatives, and strategic consulting across different companies and industries.",
+    challenge: "Here are some past examples of my influence in driving product strategy through design leadership",
     results: ["Multiple successful product launches", "Cross-functional team leadership", "Strategic planning and execution", "User research and insights"],
     route: "/case-study-4"
   }];
@@ -99,7 +99,7 @@ const CaseStudies = () => {
 
                   <div className="pt-4">
                     <button onClick={() => navigate(study.route)} className="inline-flex items-center space-x-2 px-6 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray transition-colors duration-200 w-full sm:w-auto justify-center sm:justify-start">
-                      <span>Read Full Case Study</span>
+                      <span>{study.id === 4 ? "View Projects" : "Read Full Case Study"}</span>
                       <ArrowRight size={16} />
                     </button>
                   </div>
