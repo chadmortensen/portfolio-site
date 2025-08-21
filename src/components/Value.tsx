@@ -22,10 +22,6 @@ const Value = () => {
       title: "Contribute to org-wide design culture",
       description: "Beyond my direct team, I contribute to the broader design organization — leading or sponsoring initiatives around hiring, recognition, design thinking, and internal education that make the culture stronger and more inclusive."
     }
-    {
-      title: "Elevate design quality,
-      description: "I raise the bar by championing user-centered practices, setting clear principles, and facilitate constructive feedback that sharpens outcomes. Through open collaboration and knowledge sharing, I help teams grow their craft — while encouraging experimentation, new technologies, and fresh approaches to keep our design practice innovative and relevant."
-    }
   ];
 
   return (
