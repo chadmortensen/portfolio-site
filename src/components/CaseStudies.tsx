@@ -73,7 +73,6 @@ const CaseStudies = () => {
                   </div>
 
                   <div>
-                    <h4 className="text-body text-text-primary font-medium mb-3">The Challenge</h4>
                     <p className="text-body text-text-secondary leading-relaxed">{study.challenge}</p>
                   </div>
                   
@@ -87,15 +86,6 @@ const CaseStudies = () => {
                       </ul>
                     </div>}
 
-                  {study.results && !study.goals && <div>
-                      <h4 className="text-body text-text-primary font-medium mb-3">Results Achieved</h4>
-                      <ul className="space-y-2">
-                        {study.results.slice(0, 3).map((result, resultIndex) => <li key={resultIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-accent-orange mt-2 flex-shrink-0"></div>
-                            <span className="text-body text-text-secondary leading-relaxed">{result}</span>
-                          </li>)}
-                      </ul>
-                    </div>}
 
                   <div className="pt-4">
                     <button onClick={() => navigate(study.route)} className="inline-flex items-center space-x-2 px-6 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray transition-colors duration-200 w-full sm:w-auto justify-center sm:justify-start">
