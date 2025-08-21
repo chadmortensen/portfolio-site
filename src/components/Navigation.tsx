@@ -36,7 +36,8 @@ const Navigation = () => {
   const caseStudies = [
     { title: "Walmart Registry Revamp", route: "/case-study-1" },
     { title: "Etsy Fulfillment Vision", route: "/case-study-2" },
-    { title: "Brightside Growth Vision", route: "/case-study-3" }
+    { title: "Brightside Growth Vision", route: "/case-study-3" },
+    { title: "Additional work examples", route: "/case-study-4" }
   ];
 
   const scrollToSection = (href: string) => {
