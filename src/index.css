@@ -289,7 +289,7 @@
     padding: 0 2rem;
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 360px) {
   .swiss-grid {
     padding: 4rem 2rem;
   }
