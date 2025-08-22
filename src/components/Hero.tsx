@@ -8,7 +8,7 @@ const Hero = () => {
       });
     }
   };
-  return <section id="home" className="min-h-screen flex items-center justify-center bg-surface-primary">
+  return <section id="home" className="min-h-screen flex items-center justify-center bg-surface-secondary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
           <div className="space-y-6 sm:space-y-8">
