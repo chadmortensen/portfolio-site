@@ -1,22 +1,7 @@
 
-import { Mail, Linkedin, Phone, MapPin, Lightbulb } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import uxTipsData from "../../data/ux-tips.json";
+import { Mail, Linkedin, Phone, MapPin } from "lucide-react";
 
 const Contact = () => {
-  const [currentTip, setCurrentTip] = useState<string | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
-  
-  const getRandomTip = () => {
-    setIsAnimating(true);
-    setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * uxTipsData.tips.length);
-      setCurrentTip(uxTipsData.tips[randomIndex]);
-      setIsAnimating(false);
-    }, 600);
-  };
-
   return (
     <section id="contact" className="py-24 bg-surface-primary">
       <div className="swiss-grid fade-in">
@@ -76,46 +61,6 @@ const Contact = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* UX Tips Section */}
-        <div className="col-span-12 text-center pt-16 mt-16">
-          <h3 className="text-subheadline text-text-primary mb-4">UX Tips</h3>
-          <p className="text-body text-text-secondary mb-8 max-w-2xl mx-auto">
-            Oh, you came here for the UX tips? Well, I can't disappoint!
-          </p>
-          
-          <Button 
-            onClick={getRandomTip}
-            className="mb-8 px-8 py-3 text-lg"
-            variant="default"
-            disabled={isAnimating}
-          >
-            <Lightbulb className="mr-2 h-5 w-5" />
-            UX Tip, Please
-          </Button>
-
-          {(currentTip || isAnimating) && (
-            <div className="max-w-2xl mx-auto bg-surface-primary border border-swiss-light rounded-lg p-8 shadow-sm relative overflow-hidden">
-              <div className={`transition-all duration-600 ${isAnimating ? 'animate-slot-machine' : 'animate-fade-in'}`}>
-                {isAnimating ? (
-                  <div className="text-body text-text-secondary italic leading-relaxed">
-                    Generating wisdom...
-                  </div>
-                ) : (
-                  <p className="text-body text-text-primary italic leading-relaxed">
-                    "{currentTip}"
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="col-span-12 text-center pt-16 border-t border-swiss-light mt-16">
-          <p className="text-caption text-text-tertiary">
-            © 2024 Chad Mortensen. All rights reserved.
-          </p>
         </div>
       </div>
     </section>
