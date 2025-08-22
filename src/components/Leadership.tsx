@@ -6,12 +6,12 @@ const Leadership = () => {
     {
       icon: Shield,
       title: "Transparency builds trust",
-      description: "I lead with honesty and clarity — sharing context, being direct, and creating space for open conversations. Trust starts with being someone your team can count on."
+      description: "I lead with honesty and clarity, sharing context, being direct, and creating space for open conversations. Trust starts with being someone your team can count on."
     },
     {
       icon: TrendingUp,
       title: "Celebrate progress, not just outcomes",
-      description: "Design is demanding — it's easy to skip the moments that matter. I make time to recognize great work, reflect on what we've learned, and keep morale high."
+      description: "Design is demanding. It's easy to skip the moments that matter. I make time to recognize great work, reflect on what we've learned, and keep morale high."
     },
     {
       icon: Users,
@@ -21,7 +21,7 @@ const Leadership = () => {
     {
       icon: Award,
       title: "Craft matters",
-      description: "I set a high bar for quality, while supporting accountability and growth. Our work should be effective, thoughtful — and something we're proud to stand behind."
+      description: "I hold a high bar for quality and help teams rise to it through thoughtful critique, collaboration, and shared pride in the work. Great design should not only be effective but also something we're genuinely proud to put into the world."
     }
   ];
 
@@ -32,7 +32,7 @@ const Leadership = () => {
           <h2 className="text-headline text-text-primary mb-4">My Leadership Style</h2>
           <div className="w-16 h-px bg-accent-aqua mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-4xl mx-auto">
-            Leading design teams is about more than setting direction — it's about creating an environment where people can thrive, grow, and do their best work. Here's what I believe makes that possible:
+            Leading design teams is about more than setting direction, it's about creating an environment where people can thrive, grow, and do their best work. Here's what I believe makes that possible:
           </p>
         </div>
 

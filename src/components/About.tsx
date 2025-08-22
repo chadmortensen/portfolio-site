@@ -15,7 +15,7 @@ const About = () => {
           <div>
             <h3 className="text-title text-text-primary mb-6 font-light">Background</h3>
             <p className="text-body text-text-secondary leading-relaxed">
-              I'm a product design leader with 25+ years of experience turning complex problems into meaningful outcomes — by guiding teams, shaping culture, and building thoughtful, scalable design solutions across eCommerce, health tech, and omnichannel platforms.
+              I'm a product design leader with 25+ years of experience turning complex problems into meaningful outcomes by guiding teams, shaping culture, and building thoughtful, scalable design solutions across eCommerce, health tech, and omnichannel platforms.
             </p>
           </div>
         </div>

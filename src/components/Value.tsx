@@ -4,11 +4,11 @@ const Value = () => {
   const valueProps = [
     {
       title: "Build trusted cross-functional partnerships",
-      description: "Strong collaboration with product, engineering, analytics, and research is foundational. I invest early and consistently in these relationships to ensure design is part of strategic decision-making — not an afterthought."
+      description: "Strong collaboration with product, engineering, analytics, and research is foundational. I invest early and consistently in these relationships to ensure design is part of strategic decision-making, not an afterthought."
     },
     {
       title: "Connect design to company strategy",
-      description: "I help design teams zoom out. By aligning day-to-day efforts with broader business goals, I ensure we're focusing on what matters most — advocating for the right resourcing and investing in high-leverage work."
+      description: "I help design teams zoom out. By aligning day-to-day efforts with broader business goals, I ensure we're focusing on what matters most, advocating for the right resourcing and investing in high-leverage work."
     },
     {
       title: "Grow people and careers",
@@ -16,15 +16,15 @@ const Value = () => {
     },
     {
       title: "Design for team health and effectiveness",
-      description: "I keep a pulse on team morale and operational clarity — listening for signals and adjusting processes, rituals, or roles to support long-term health, cohesion, and effectiveness."
+      description: "I keep a pulse on team morale and operational clarity, listening for signals and adjusting processes, rituals, or roles to support long-term health, cohesion, and effectiveness."
     },
     {
       title: "Contribute to org-wide design culture",
-      description: "Beyond my direct team, I contribute to the broader design organization — leading or sponsoring initiatives around hiring, recognition, design thinking, and internal education that make the culture stronger and more inclusive."
+      description: "Beyond my direct team, I contribute to the broader design organization, leading or sponsoring initiatives around hiring, recognition, design thinking, and internal education that make the culture stronger and more inclusive."
     },
     {
       title: "Elevate design quality",
-      description: "I raise the bar by championing user-centered practices, setting clear principles, and facilitate constructive feedback that sharpens outcomes. Through open collaboration and knowledge sharing, I help teams grow their craft — while encouraging experimentation, new technologies, and fresh approaches to keep our design practice innovative and relevant."
+      description: "I raise the bar by championing user-centered practices, setting clear principles, and facilitate constructive feedback that sharpens outcomes. Through open collaboration and knowledge sharing, I help teams grow their craft while encouraging experimentation, new technologies, and fresh approaches to keep our design practice innovative and relevant."
     }
   ];
 
@@ -35,7 +35,7 @@ const Value = () => {
           <h2 className="text-headline text-text-primary mb-4">Value I Bring</h2>
           <div className="w-16 h-px bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto">
-            As a product design leader, I wear many hats — and I focus on the work that drives clarity, alignment, and impact across the organization.
+            As a product design leader, I wear many hats and I focus on the work that drives clarity, alignment, and impact across the organization.
           </p>
         </div>
 

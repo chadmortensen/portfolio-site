@@ -23,7 +23,7 @@ const Hero = () => {
             </div>
             
             <div className="space-y-4 sm:space-y-6 px-4">
-              <p className="text-body text-text-tertiary max-w-3xl mx-auto leading-relaxed">Yes, I used AI tools to create this portfolio. I even used an LLM to rewrite some of the content, so you might notice the occasional em dash. Rest assured, I approve of and stand behind everything on this website as true.</p>
+              <p className="text-body text-text-tertiary max-w-3xl mx-auto leading-relaxed">Yes, I used AI tools to create this portfolio. Rest assured, I approve of and stand behind everything on this website as true.</p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 sm:pt-8">
                 <button onClick={scrollToAbout} className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200">
