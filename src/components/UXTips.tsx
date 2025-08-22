@@ -36,7 +36,7 @@ const UXTips = () => {
   return (
     <section id="ux-tips" className="py-24 bg-surface-secondary">
       <div className="swiss-grid fade-in">
-        <div className="col-span-12 text-center mb-8">
+        <div className="col-span-12 text-center">
           <h2 className="text-headline text-text-primary mb-4">UX Tips</h2>
           <div className="w-16 h-px bg-accent-blue mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto mb-6">
