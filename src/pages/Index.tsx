@@ -6,7 +6,6 @@ import Leadership from "@/components/Leadership";
 import Value from "@/components/Value";
 import CaseStudies from "@/components/CaseStudies";
 import Contact from "@/components/Contact";
-import UXTips from "@/components/UXTips";
 import Navigation from "@/components/Navigation";
 
 const Index = () => {
@@ -20,7 +19,6 @@ const Index = () => {
       <Value />
       <CaseStudies />
       <Contact />
-      <UXTips />
     </div>
   );
 };
