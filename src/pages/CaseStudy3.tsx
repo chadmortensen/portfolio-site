@@ -525,17 +525,18 @@ const CaseStudy3 = () => {
   return (
     <div className="min-h-screen bg-surface-primary">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-surface-primary/80 backdrop-blur-md backdrop-saturate-150 border-b border-swiss-light py-4">
+      <nav className="sticky top-0 z-50 bg-surface-primary/80 backdrop-blur-md backdrop-saturate-150 border-b border-swiss-light py-4 overflow-x-visible">
         <div className="swiss-grid">
-          <div className="col-span-12 flex items-center justify-between">
+          <div className="col-span-12 flex items-center justify-between min-w-0">
             <button
               onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors"
+              className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors flex-shrink-0"
             >
               <ArrowLeft size={20} />
-              <span className="text-body">Back to Portfolio</span>
+              <span className="text-body hidden sm:inline">Back to Portfolio</span>
+              <span className="text-body sm:hidden">Back</span>
             </button>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0 overflow-visible">
               {isEditing ? (
                 <Button
                   variant="outline"
@@ -544,7 +545,8 @@ const CaseStudy3 = () => {
                   className="flex items-center space-x-2 text-text-primary border-accent-blue"
                 >
                   <Save size={16} />
-                  <span className="text-sm">Save Changes</span>
+                  <span className="text-sm hidden sm:inline">Save Changes</span>
+                  <span className="text-sm sm:hidden">Save</span>
                 </Button>
               ) : (
                 <Button
@@ -554,7 +556,7 @@ const CaseStudy3 = () => {
                   className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
                 >
                   <Edit3 size={16} />
-                  <span className="text-sm">Edit Mode</span>
+                  <span className="text-sm hidden md:inline">Edit Mode</span>
                 </Button>
               )}
               <Button
@@ -564,9 +566,9 @@ const CaseStudy3 = () => {
                 className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
               >
                 <Play size={16} />
-                <span className="text-sm">Presentation Mode</span>
+                <span className="text-sm hidden md:inline">Presentation Mode</span>
               </Button>
-              <span className="text-body text-text-primary font-bold">Chad Mortensen</span>
+              <span className="text-body text-text-primary font-bold hidden sm:inline whitespace-nowrap">Chad Mortensen</span>
             </div>
           </div>
         </div>
