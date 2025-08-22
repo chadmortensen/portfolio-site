@@ -40,7 +40,7 @@ const UXTips = () => {
           <h2 className="text-headline text-text-primary mb-4">UX Tips</h2>
           <div className="w-16 h-px bg-accent-blue mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto mb-6">
-            Oh, you came here for the UX tips? Well, I can't disappoint!
+            Oh, you came here for some tips? Here you go!
           </p>
         </div>
 
