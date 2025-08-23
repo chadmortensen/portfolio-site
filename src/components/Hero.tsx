@@ -32,7 +32,7 @@ const Hero = () => {
                 </button>
                 <button onClick={() => document.querySelector("#case-studies")?.scrollIntoView({
                 behavior: "smooth"
-              })} className="w-full sm:w-auto px-6 sm:px-8 py-3 border border-swiss-light text-text-primary hover:bg-surface-secondary transition-all duration-200">
+              })} className="w-full sm:w-auto px-6 sm:px-8 py-3 border border-swiss-charcoal text-text-primary hover:bg-surface-secondary transition-all duration-200">
                   View My Work
                 </button>
               </div>
