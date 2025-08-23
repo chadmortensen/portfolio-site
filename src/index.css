@@ -139,6 +139,7 @@
 
 .border-swiss-light { border-color: hsl(var(--swiss-light)); }
 .border-swiss-medium { border-color: hsl(var(--swiss-medium)); }
+.border-swiss-gray { border-color: hsl(var(--swiss-gray)); }
 
 /* Minimal animations */
 .fade-in {
