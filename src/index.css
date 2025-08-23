@@ -138,6 +138,7 @@
 .text-text-tertiary { color: hsl(var(--text-tertiary)); }
 
 .border-swiss-light { border-color: hsl(var(--swiss-light)); }
+.border-swiss-medium { border-color: hsl(var(--swiss-medium)); }
 
 /* Minimal animations */
 .fade-in {
