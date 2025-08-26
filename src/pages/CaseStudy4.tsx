@@ -33,8 +33,8 @@ const CaseStudy4 = () => {
     subheader?: string;
     modules: Module[];
   }>>([]);
-  const [title, setTitle] = useState('Walmart Leadership Portfolio');
-  const [subtitle, setSubtitle] = useState('Strategic design leadership across verticals');
+  const [title, setTitle] = useState('Additional work examples');
+  const [subtitle, setSubtitle] = useState('Strategic Design Leadership Across Multiple Verticals');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
