@@ -30,8 +30,8 @@ const CaseStudy1 = () => {
     subheader?: string;
     modules: Module[];
   }>>([]);
-  const [title, setTitle] = useState('Walmart eCommerce');
-  const [subtitle, setSubtitle] = useState('Building a customer-centered registry experience under tight constraints (2019)');
+  const [title, setTitle] = useState('A rapid revamp to the Walmart registry');
+  const [subtitle, setSubtitle] = useState('Building a customer-centered registry experience under tight constraints');
 
   const sensors = useSensors(
     useSensor(PointerSensor),

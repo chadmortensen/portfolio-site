@@ -20,7 +20,7 @@ const Contact = () => {
                 <Mail size={24} className="text-accent-blue" />
               </div>
               <div className="text-left">
-                {/* <h3 className="text-body text-text-primary font-medium mb-1">Email</h3> */}
+                <h3 className="text-body text-text-primary font-medium mb-1">Email</h3>
                 <a href="mailto:chadmor@gmail.com" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
                   chadmor@gmail.com
                 </a>
@@ -32,7 +32,7 @@ const Contact = () => {
                 <Linkedin size={24} className="text-accent-blue" />
               </div>
               <div className="text-left">
-                {/* <h3 className="text-body text-text-primary font-medium mb-1">LinkedIn</h3> */}
+                <h3 className="text-body text-text-primary font-medium mb-1">LinkedIn</h3>
                 <a href="https://linkedin.com/in/chadmortensen" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
                   linkedin.com/in/chadmortensen
                 </a>
@@ -44,7 +44,7 @@ const Contact = () => {
                 <Phone size={24} className="text-accent-blue" />
               </div>
               <div className="text-left">
-                {/* <h3 className="text-body text-text-primary font-medium mb-1">Phone</h3> */}
+                <h3 className="text-body text-text-primary font-medium mb-1">Phone</h3>
                 <a href="tel:+15033470199" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
                   (503) 347-0199
                 </a>
@@ -56,7 +56,7 @@ const Contact = () => {
                 <MapPin size={24} className="text-accent-blue" />
               </div>
               <div className="text-left">
-                {/* <h3 className="text-body text-text-primary font-medium mb-1">Location</h3> */}
+                <h3 className="text-body text-text-primary font-medium mb-1">Location</h3>
                 <p className="text-body text-text-secondary">Portland, Oregon</p>
               </div>
             </div>
