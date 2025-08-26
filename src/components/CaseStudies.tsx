@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [{
-    id: 1,
+    id: 3,
     title: "A rapid revamp to the Walmart registry",
     company: "Walmart", 
     duration: "1 quarter",
@@ -24,7 +24,7 @@ const CaseStudies = () => {
     results: ["Created a product vision for Fulfillment at Etsy", "Created design principles", "Aligned team leadership around a unified goal", "Provided needed guidance to supporting teams"],
     route: "/case-study-2"
   }, {
-    id: 3,
+    id: 1,
     title: "Design Vision for Growth team at Brightside Health",
     company: "Brightside Health",
     duration: "6 weeks",
