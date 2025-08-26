@@ -30,8 +30,9 @@ const CaseStudy3 = () => {
     subheader?: string;
     modules: Module[];
   }>>([]);
-  const [title, setTitle] = useState('Brightside Health – Designing a Better Way In');
-  const [subtitle, setSubtitle] = useState('Creating a unified vision for mental health intake and conversion');
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -51,6 +52,7 @@ const CaseStudy3 = () => {
           setTitle(githubContent.title);
           setSubtitle(githubContent.subtitle);
           setEditableSections(githubContent.sections);
+          setIsLoading(false);
           return;
         }
       } catch (error) {
@@ -66,6 +68,7 @@ const CaseStudy3 = () => {
             setTitle(parsed.title);
             setSubtitle(parsed.subtitle);
             setEditableSections(parsed.sections);
+            setIsLoading(false);
             return;
           }
         } catch (error) {
@@ -92,6 +95,9 @@ const CaseStudy3 = () => {
               }))
             }));
             setEditableSections(convertedFromJson);
+            setTitle('Brightside Health');
+            setSubtitle('Designing a Better Way In (2024)');
+            setIsLoading(false);
             return;
           }
         }
@@ -200,8 +206,11 @@ const CaseStudy3 = () => {
            subheader: section.subheader,
            modules
          };
-       });
+        });
         setEditableSections(converted);
+        setTitle('Brightside Health');
+        setSubtitle('Designing a Better Way In (2024)');
+        setIsLoading(false);
     };
 
     loadContent();
@@ -519,6 +528,17 @@ const CaseStudy3 = () => {
         onExit={() => setIsPresentationMode(false)}
         storageFilename="case-study-3.json"
       />
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-surface-primary flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-8 h-8 border-2 border-accent-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-text-secondary">Loading case study...</p>
+        </div>
+      </div>
     );
   }
 
