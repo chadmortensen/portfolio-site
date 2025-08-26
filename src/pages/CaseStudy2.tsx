@@ -31,7 +31,7 @@ const CaseStudy2 = () => {
     modules: Module[];
   }>>([]);
   const [title, setTitle] = useState('Fulfillment at Etsy');
-  const [subtitle, setSubtitle] = useState('Crafting a Shared Vision and Guiding Principles');
+  const [subtitle, setSubtitle] = useState('Crafting a Shared Vision and Guiding Principles (2022)');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
