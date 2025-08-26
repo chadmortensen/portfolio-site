@@ -4,26 +4,6 @@ import { useNavigate } from "react-router-dom";
 const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [{
-    id: 3,
-    title: "A rapid revamp to the Walmart registry",
-    company: "Walmart", 
-    duration: "1 quarter",
-    teamSize: "6 people",
-    image: "/img/baby-registry-walmart.png?auto=format&fit=crop&w=800&q=80",
-    challenge: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
-    goals: ["Increase quality registry creations (creations that lead to a first curation action)", "Increase curation by 10%", "Increase sharing by 20%", "Increase purchase conversion by 25%", "Helping new parents with this major moment in life"],
-    route: "/case-study-1"
-  }, {
-    id: 2,
-    title: "Long term vision for Fulfillment at Etsy",
-    company: "Etsy",
-    duration: "4 weeks",
-    teamSize: "5",
-    image: "/img/etsy-vision-cover.png?auto=format&fit=crop&w=800&q=80",
-    challenge: "Teams had near term targets and roadmaps but they were missing something to help guide their decisions and align them to where the business was headed.",
-    results: ["Created a product vision for Fulfillment at Etsy", "Created design principles", "Aligned team leadership around a unified goal", "Provided needed guidance to supporting teams"],
-    route: "/case-study-2"
-  }, {
     id: 1,
     title: "Design Vision for Growth team at Brightside Health",
     company: "Brightside Health",
@@ -33,7 +13,30 @@ const CaseStudies = () => {
     challenge: "The Growth team needed a clear product vision to align cross-functional efforts and guide strategic decisions for scaling mental health services to underserved communities.",
     results: ["Developed comprehensive product vision for Growth initiatives", "Established clear success metrics and KPIs", "Aligned stakeholders across product, engineering, and business teams", "Created roadmap for sustainable growth strategies"],
     route: "/case-study-3"
-  }, {
+  },
+  {
+    id: 2,
+    title: "Long term vision for Fulfillment at Etsy",
+    company: "Etsy",
+    duration: "4 weeks",
+    teamSize: "5",
+    image: "/img/etsy-vision-cover.png?auto=format&fit=crop&w=800&q=80",
+    challenge: "Teams had near term targets and roadmaps but they were missing something to help guide their decisions and align them to where the business was headed.",
+    results: ["Created a product vision for Fulfillment at Etsy", "Created design principles", "Aligned team leadership around a unified goal", "Provided needed guidance to supporting teams"],
+    route: "/case-study-2"
+  },
+    {
+    id: 3,
+    title: "A rapid revamp to the Walmart registry",
+    company: "Walmart", 
+    duration: "1 quarter",
+    teamSize: "6 people",
+    image: "/img/baby-registry-walmart.png?auto=format&fit=crop&w=800&q=80",
+    challenge: "In 1 quarter; design, develop and launch an improved baby registry experience addressing shortcomings of the previous registry tool.",
+    goals: ["Increase quality registry creations (creations that lead to a first curation action)", "Increase curation by 10%", "Increase sharing by 20%", "Increase purchase conversion by 25%", "Helping new parents with this major moment in life"],
+    route: "/case-study-1"
+  },  
+    {
     id: 4,
     title: "Additional projects",
     company: "Walmart eCommerce",
