@@ -1,7 +1,7 @@
 // GitHub configuration - Add your GitHub Personal Access Token here
 // Token needs "Contents" permission for the repository
 export const GITHUB_CONFIG = {
-  token: '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', // Replace with your actual token
+  token: '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', // Replace with your actual token
   owner: 'chadmortensen', // Replace with your GitHub username
   repo: 'chad-mortensen-portfolio-13', // Replace with your repository name
   branch: 'main', // or 'master' depending on your default branch
