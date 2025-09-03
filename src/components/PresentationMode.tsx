@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, X, Edit3, Save, Lock, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -444,13 +445,11 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
                 <Dialog>
                   <DialogTrigger asChild>
                     <div className="cursor-pointer hover:opacity-90 transition-opacity">
-                       <img
-                         src={section.image || section.sectionImage || section.fullWidthImage}
-                         alt={`${section.title} - Design process and outcomes illustration`}
-                         className="w-full h-auto rounded-lg shadow-lg"
-                         loading="lazy"
-                         decoding="async"
-                       />
+                       <LazyImage
+                          src={section.image || section.sectionImage || section.fullWidthImage}
+                          alt={`${section.title} - Design process and outcomes illustration`}
+                          className="w-full h-auto rounded-lg shadow-lg"
+                        />
                     </div>
                   </DialogTrigger>
                   <DialogContent className="max-w-6xl w-full p-0">
@@ -458,13 +457,11 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
                     <DialogDescription className="sr-only">
                       Enlarged view of {section.title} illustration
                     </DialogDescription>
-                     <img
-                       src={section.image || section.sectionImage || section.fullWidthImage}
-                       alt={`${section.title} - Enlarged design process and outcomes illustration`}
-                       className="w-full h-auto"
-                       loading="lazy"
-                       decoding="async"
-                     />
+                     <LazyImage
+                        src={section.image || section.sectionImage || section.fullWidthImage}
+                        alt={`${section.title} - Enlarged design process and outcomes illustration`}
+                        className="w-full h-auto"
+                      />
                   </DialogContent>
                 </Dialog>
               )}
