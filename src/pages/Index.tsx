@@ -13,6 +13,9 @@ import Navigation from "@/components/Navigation";
 const Index = () => {
   return (
     <div className="min-h-screen bg-white">
+      <a href="#main-content" className="skip-nav">
+        Skip to main content
+      </a>
       <Navigation />
       <main id="main-content">
         <Hero />
