@@ -42,7 +42,7 @@ const Value = () => {
         <div className="col-span-12 grid lg:grid-cols-2 gap-12">
           {valueProps.map((value, index) => (
             <div key={index} className="group">
-              <h3 className="text-title text-text-primary font-light mb-4 group-hover:text-accent-blue transition-colors duration-300">
+              <h3 className="text-title text-text-primary font-light mb-4">
                 {value.title}
               </h3>
               <p className="text-body text-text-secondary leading-relaxed">
