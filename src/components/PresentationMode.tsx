@@ -444,11 +444,13 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
                 <Dialog>
                   <DialogTrigger asChild>
                     <div className="cursor-pointer hover:opacity-90 transition-opacity">
-                      <img
-                        src={section.image || section.sectionImage || section.fullWidthImage}
-                        alt={`${section.title} illustration`}
-                        className="w-full h-auto rounded-lg shadow-lg"
-                      />
+                       <img
+                         src={section.image || section.sectionImage || section.fullWidthImage}
+                         alt={`${section.title} - Design process and outcomes illustration`}
+                         className="w-full h-auto rounded-lg shadow-lg"
+                         loading="lazy"
+                         decoding="async"
+                       />
                     </div>
                   </DialogTrigger>
                   <DialogContent className="max-w-6xl w-full p-0">
@@ -456,11 +458,13 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
                     <DialogDescription className="sr-only">
                       Enlarged view of {section.title} illustration
                     </DialogDescription>
-                    <img
-                      src={section.image || section.sectionImage || section.fullWidthImage}
-                      alt={`${section.title} illustration`}
-                      className="w-full h-auto"
-                    />
+                     <img
+                       src={section.image || section.sectionImage || section.fullWidthImage}
+                       alt={`${section.title} - Enlarged design process and outcomes illustration`}
+                       className="w-full h-auto"
+                       loading="lazy"
+                       decoding="async"
+                     />
                   </DialogContent>
                 </Dialog>
               )}

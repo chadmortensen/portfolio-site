@@ -303,19 +303,23 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
         return (
           <Dialog>
             <DialogTrigger asChild>
-              <img
-                src={module.content.src}
-                alt={module.content.alt || ''}
-                className="w-full cursor-pointer hover:opacity-90 transition-opacity self-start"
-                style={heightStyle}
-              />
+               <img
+                 src={module.content.src}
+                 alt={module.content.alt || 'Case study visual content'}
+                 className="w-full cursor-pointer hover:opacity-90 transition-opacity self-start"
+                 style={heightStyle}
+                 loading="lazy"
+                 decoding="async"
+               />
             </DialogTrigger>
             <DialogContent className="max-w-6xl w-full p-0">
-              <img
-                src={module.content.src}
-                alt={module.content.alt || ''}
-                className="w-full h-auto"
-              />
+               <img
+                 src={module.content.src}
+                 alt={module.content.alt || 'Enlarged case study visual content'}
+                 className="w-full h-auto"
+                 loading="lazy"
+                 decoding="async"
+               />
             </DialogContent>
           </Dialog>
         );

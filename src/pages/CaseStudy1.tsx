@@ -641,11 +641,13 @@ const CaseStudy1 = () => {
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
         <DialogContent className="max-w-7xl max-h-[90vh] p-0 border-0 bg-transparent">
           {selectedImage && (
-            <img 
-              src={selectedImage} 
-              alt="Enlarged view" 
-              className="w-full h-auto max-h-[85vh] object-contain"
-            />
+             <img 
+               src={selectedImage} 
+               alt="Enlarged case study image showing detailed design process and outcomes" 
+               className="w-full h-auto max-h-[85vh] object-contain"
+               loading="lazy"
+               decoding="async"
+             />
           )}
         </DialogContent>
       </Dialog>
