@@ -437,6 +437,7 @@ const CaseStudy2 = () => {
 
   return (
     <div className="min-h-screen bg-surface-primary">
+      <a href="#main-content" className="skip-nav">Skip to main content</a>
       {/* Password prompt dialog */}
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -541,7 +542,7 @@ const CaseStudy2 = () => {
       </section>
 
       {/* Content Sections */}
-      <div className="py-16">
+      <div id="main-content" className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
             <SectionEditor

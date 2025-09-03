@@ -352,6 +352,7 @@ const CaseStudy4 = () => {
 
   return (
     <div className="min-h-screen bg-surface-primary">
+      <a href="#main-content" className="skip-nav">Skip to main content</a>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-surface-primary/80 backdrop-blur-md backdrop-saturate-150 border-b border-swiss-light py-4 overflow-x-visible">
         <div className="swiss-grid">
@@ -435,7 +436,7 @@ const CaseStudy4 = () => {
       </section>
 
       {/* Content Sections */}
-      <div className="py-16">
+      <div id="main-content" className="py-16">
         <div className="swiss-grid">
           <div className="col-span-12 space-y-24">
             {/* Section Editor */}
