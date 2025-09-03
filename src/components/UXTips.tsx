@@ -52,7 +52,7 @@ const UXTips = () => {
             disabled={isAnimating}
           >
             <Lightbulb className="mr-2 h-5 w-5" />
-            Tip me!
+            Tip please!
           </Button>
 
           {(currentTip || isAnimating) && (
