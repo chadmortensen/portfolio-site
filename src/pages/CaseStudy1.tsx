@@ -467,9 +467,6 @@ const CaseStudy1 = () => {
 
   return (
     <div className="min-h-screen bg-surface-primary">
-      <a href="#main-content" className="skip-nav">
-        Skip to main content
-      </a>
       {/* Password prompt dialog */}
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -544,7 +541,6 @@ const CaseStudy1 = () => {
       </nav>
 
       {/* Hero Section */}
-      <main id="main-content">
       <section className="py-16 bg-surface-secondary">
         <div className="swiss-grid">
           <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
@@ -631,7 +627,6 @@ const CaseStudy1 = () => {
       </div>
 
       {/* Footer */}
-      </main>
       <footer className="py-12 bg-surface-secondary border-t border-swiss-light">
         <div className="swiss-grid">
           <div className="col-span-12 text-center">

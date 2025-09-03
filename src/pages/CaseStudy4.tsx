@@ -352,9 +352,6 @@ const CaseStudy4 = () => {
 
   return (
     <div className="min-h-screen bg-surface-primary">
-      <a href="#main-content" className="skip-nav">
-        Skip to main content
-      </a>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-surface-primary/80 backdrop-blur-md backdrop-saturate-150 border-b border-swiss-light py-4 overflow-x-visible">
         <div className="swiss-grid">
@@ -406,7 +403,6 @@ const CaseStudy4 = () => {
       </nav>
 
       {/* Hero Section */}
-      <main id="main-content">
       <section className="py-16 bg-surface-secondary">
         <div className="swiss-grid">
           <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
@@ -490,7 +486,6 @@ const CaseStudy4 = () => {
           </div>
         </div>
       </div>
-      </main>
 
       {/* Password Prompt Modal */}
       {showPasswordPrompt && (
