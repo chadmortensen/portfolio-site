@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Lightbulb } from "lucide-react";
 import uxTipsData from "../../data/ux-tips.json";
 
 const UXTips = () => {
@@ -51,7 +50,6 @@ const UXTips = () => {
             variant="default"
             disabled={isAnimating}
           >
-            <Lightbulb className="mr-2 h-5 w-5" />
             Tip please!
           </Button>
 
