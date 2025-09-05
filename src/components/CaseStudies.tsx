@@ -1,7 +1,7 @@
 import { ArrowRight, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
+import { LazyImage } from "@/components/ui/lazy-image";
 import { useNavigate } from "react-router-dom";
 
 const CaseStudies = () => {
@@ -64,7 +64,7 @@ const CaseStudies = () => {
         <div className="col-span-12 space-y-12 sm:space-y-16">
           {caseStudies.map((study, index) => <div key={index} className="grid lg:grid-cols-12 gap-6 sm:gap-8 bg-surface-primary border border-swiss-light overflow-hidden">
               <div className="lg:col-span-5">
-                <img 
+                <LazyImage 
                   src={study.image} 
                   alt={`${study.title} - ${study.company} case study showing design process and outcomes`} 
                   className="w-full h-48 sm:h-64 lg:h-full object-cover"

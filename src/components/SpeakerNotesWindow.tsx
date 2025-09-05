@@ -456,21 +456,21 @@ const SpeakerNotesWindow = ({
     <div className="flex items-center space-x-2">
       {!isWindowOpen ? (
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           onClick={openSpeakerNotesWindow}
-          className="p-2 hover:bg-surface-primary"
+          className="flex items-center space-x-2"
         >
-          <StickyNote size={16} />
+          <StickyNote className="h-4 w-4" />
         </Button>
       ) : (
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           onClick={closeSpeakerNotesWindow}
-          className="p-2 hover:bg-surface-primary"
+          className="flex items-center space-x-2"
         >
-          <StickyNote size={16} />
+          <StickyNote className="h-4 w-4" />
         </Button>
       )}
     </div>
