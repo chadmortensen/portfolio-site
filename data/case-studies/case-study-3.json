@@ -1,364 +1,360 @@
-{
-  "title": "Brightside Health",
-  "subtitle": "Designing a Better Way In (2024)",
-  "sections": [
-    {
-      "title": "The Challenge",
-      "subheader": "Fragmented Efforts, No Shared Vision",
-      "modules": [
-        {
-          "id": "challenge-content-1",
-          "type": "text",
-          "content": {
-            "text": "<p>At Brightside Health, several parallel efforts were in motion to improve the intake funnel. However, they were happening as isolated experiments, each focused on short-term gains without a shared sense of direction. The designer on the squad shared some explorations he was working on.</p>"
-          },
-          "column": "left"
+[
+  {
+    "title": "The Challenge",
+    "subheader": "Fragmented Efforts, No Shared Vision",
+    "modules": [
+      {
+        "id": "challenge-content-1",
+        "type": "text",
+        "content": {
+          "text": "<p>At Brightside Health, several parallel efforts were in motion to improve the intake funnel. However, they were happening as isolated experiments, each focused on short-term gains without a shared sense of direction. The designer on the squad shared some explorations he was working on.</p>"
         },
-        {
-          "id": "challenge-encouragement-1",
-          "type": "text",
-          "content": {
-            "text": "<h3><span style=\"background-color: transparent;\">Encouragement to push the design explorations</span></h3><p>I encouraged the designer on the growth squad to pause and consider a more expansive approach. What if we looked beyond the immediate constraints and imagined what a truly exceptional experience could be? I often use the analogy of mild, medium, and spicy to explore beyond the most immediate solution and consider what better or exceptional solutions might be.</p>"
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "id": "challenge-encouragement-1",
+        "type": "text",
+        "content": {
+          "text": "<h3><span style=\"background-color: transparent;\">Encouragement to push the design explorations</span></h3><p>I encouraged the designer on the growth squad to pause and consider a more expansive approach. What if we looked beyond the immediate constraints and imagined what a truly exceptional experience could be? I often use the analogy of mild, medium, and spicy to explore beyond the most immediate solution and consider what better or exceptional solutions might be.</p>"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/brightside-intro.jpg",
-            "alt": "Brightside app signup screen",
-            "position": "below",
-            "columns": "6",
-            "heightPercent": ""
-          },
-          "column": "right",
-          "id": "1755549044832-0.7580628103042646"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Goals",
-      "subheader": "Grounded decisions through analytics and insights",
-      "modules": [
-        {
-          "type": "text",
-          "content": {
-            "title": "",
-            "text": "<h3><span style=\"background-color: transparent;\">Business</span></h3><p><span style=\"background-color: transparent;\">Brightside needed an intake experience that could increase conversion rates while enabling more flexible marketing channels.</span></p><h3><span style=\"background-color: transparent;\">Users&nbsp;</span></h3><p><span style=\"background-color: transparent;\">For users, the experience had to inspire confidence, helping them feel secure in their decision to seek care and giving them clarity around the cost of services.</span></p><h3><span style=\"background-color: transparent;\">Squad</span></h3><p><span style=\"background-color: transparent;\">At the squad level, success meant designing a more adaptable flow that could support a variety of user journeys while reducing friction.</span></p><h3><span style=\"background-color: transparent;\">Leadership</span></h3><p><span style=\"background-color: transparent;\">For executives, it was equally important that the work signal a long-term plan, giving confidence that near-term improvements were part of a larger, coherent vision.</span></p>"
-          },
-          "column": "left",
-          "id": "1755544027673-0.26157148920207385"
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/brightside-intro.jpg",
+          "alt": "Brightside app signup screen",
+          "position": "below",
+          "columns": "6",
+          "heightPercent": ""
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/brightside-business-user.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755549167942-0.45356572339992574"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "The Data",
-      "subheader": "Understanding Where Users Struggled",
-      "modules": [
-        {
-          "id": "data-content-1",
-          "type": "text",
-          "content": {
-            "text": "<p>Our design decisions were grounded in both qualitative and quantitative inputs. These included customer survey feedback, funnel analytics, and a competitive audit.</p><p>Analytics showed that the most significant drop-offs occurred at high-friction moments, such as account creation and payment. Interestingly, the long series of personal and health-related questions did contribute to some attrition, but the impact was relatively minor.</p>"
-          },
-          "column": "left"
+        "column": "right",
+        "id": "1755549044832-0.7580628103042646"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Goals",
+    "subheader": "Grounded decisions through analytics and insights",
+    "modules": [
+      {
+        "type": "text",
+        "content": {
+          "title": "",
+          "text": "<h3><span style=\"background-color: transparent;\">Business</span></h3><p><span style=\"background-color: transparent;\">Brightside needed an intake experience that could increase conversion rates while enabling more flexible marketing channels.</span></p><h3><span style=\"background-color: transparent;\">Users&nbsp;</span></h3><p><span style=\"background-color: transparent;\">For users, the experience had to inspire confidence, helping them feel secure in their decision to seek care and giving them clarity around the cost of services.</span></p><h3><span style=\"background-color: transparent;\">Squad</span></h3><p><span style=\"background-color: transparent;\">At the squad level, success meant designing a more adaptable flow that could support a variety of user journeys while reducing friction.</span></p><h3><span style=\"background-color: transparent;\">Leadership</span></h3><p><span style=\"background-color: transparent;\">For executives, it was equally important that the work signal a long-term plan, giving confidence that near-term improvements were part of a larger, coherent vision.</span></p>"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/brightside-data.jpeg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755555316956-0.17249185516718013"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Bonus: Custom GPT Side Project",
-      "subheader": "Expanding beyond immediate constraints",
-      "modules": [
-        {
-          "type": "text",
-          "content": {
-            "title": "",
-            "text": "<p><span style=\"background-color: transparent;\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.﻿</span></p>"
-          },
-          "column": "left",
-          "id": "1755543918558-0.04842676308756744"
+        "column": "left",
+        "id": "1755544027673-0.26157148920207385"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/brightside-business-user.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/ChatGPT_logo.svg",
-            "alt": "",
-            "position": "below",
-            "columns": "6",
-            "heightPercent": "20"
-          },
-          "column": "right",
-          "id": "1755555345052-0.7064357406449328"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Competitive Audit",
-      "subheader": "180 Steps vs. 40",
-      "modules": [
-        {
-          "id": "competitive-content-1",
-          "type": "text",
-          "content": {
-            "text": "<p>To understand how Brightside compared to other services, I gathered input from stakeholders and conducted a scan of leading telehealth and mental health providers. Using a combination of internal suggestions and external research, I identified 11 companies to include in the audit.</p><p>Rather than just focusing on individual screens, I mapped each company's intake journey and defined their building blocks to get a full view of the process. This helped us assess the overall structure and flow of their experiences.</p><p>One finding stood out immediately. Brightside's intake process had 180 distinct steps. The next closest competitor had 70, and most were in the range of 20 to 40 steps.</p>"
-          },
-          "column": "left"
+        "column": "right",
+        "id": "1755549167942-0.45356572339992574"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "The Data",
+    "subheader": "Understanding Where Users Struggled",
+    "modules": [
+      {
+        "id": "data-content-1",
+        "type": "text",
+        "content": {
+          "text": "<p>Our design decisions were grounded in both qualitative and quantitative inputs. These included customer survey feedback, funnel analytics, and a competitive audit.</p><p>Analytics showed that the most significant drop-offs occurred at high-friction moments, such as account creation and payment. Interestingly, the long series of personal and health-related questions did contribute to some attrition, but the impact was relatively minor.</p>"
         },
-        {
-          "id": "competitive-takeaways-1",
-          "type": "bullets",
-          "content": {
-            "title": "Other Key Takeaways",
-            "items": [
-              "The order in which information was requested varied widely across competitors.",
-              "Only one other company, Hims, collected full personal and medical history during the initial sign-up. Others either postponed this step or conducted it during a follow-up.",
-              "About half of the competitors did not perform an insurance check early in the process, possibly due to differences in their service models."
-            ]
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/brightside-data.jpeg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
         },
-        {
-          "id": "competitive-gap-1",
-          "type": "text",
-          "content": {
-            "text": "<p>The main gap was clear. Brightside asked significantly more from users before they even created an account, which made the experience feel heavier and more intrusive than others in the space. This, along with strategic goals to expand marketing channels, provided a clear path to opportunities in improving the experience.</p>"
-          },
-          "column": "left"
+        "column": "right",
+        "id": "1755555316956-0.17249185516718013"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Bonus: Custom GPT",
+    "subheader": "Opportunity to level up the team",
+    "modules": [
+      {
+        "type": "text",
+        "content": {
+          "title": "",
+          "text": "<p><span style=\"background-color: transparent;\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.﻿</span></p>"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/comp-audit.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755562142867-0.8487199560611444"
+        "column": "left",
+        "id": "1755543918558-0.04842676308756744"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/ChatGPT_logo.svg",
+          "alt": "",
+          "position": "below",
+          "columns": "6",
+          "heightPercent": "20"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/comp-audit2.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755562245409-0.291384451227796"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Exploration",
-      "subheader": "Moving from Quick Fixes to Big Leaps",
-      "modules": [
-        {
-          "id": "process-content-1",
-          "type": "text",
-          "content": {
-            "text": "<p>Unlike many vision projects, this effort did not begin with a structured group brainstorm. The designer had already started working on near-term improvements. My goal was to help him think more broadly and explore directions that weren't limited by what could be built in the next sprint.</p><p>Instead of formal workshops, we used a series of design critiques and 1-on-1s to push the work further. I challenged him to integrate new insights from the research and bring more spicy options into the designs.</p>"
-          },
-          "column": "left"
+        "column": "right",
+        "id": "1755555345052-0.7064357406449328"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Competitive Audit",
+    "subheader": "180 Steps vs. 40",
+    "modules": [
+      {
+        "id": "competitive-content-1",
+        "type": "text",
+        "content": {
+          "text": "<p>To understand how Brightside compared to other services, I gathered input from stakeholders and conducted a scan of leading telehealth and mental health providers. Using a combination of internal suggestions and external research, I identified 11 companies to include in the audit.</p><p>Rather than just focusing on individual screens, I mapped each company's intake journey and defined their building blocks to get a full view of the process. This helped us assess the overall structure and flow of their experiences.</p><p>One finding stood out immediately. Brightside's intake process had 180 distinct steps. The next closest competitor had 70, and most were in the range of 20 to 40 steps.</p>"
         },
-        {
-          "id": "process-ideas-1",
-          "type": "bullets",
-          "content": {
-            "title": "Two Standout Ideas Emerged",
-            "items": [
-              "Use AI to offer helpful guidance during complex decision points, such as selecting a payment method or understanding insurance. We knew there were moments of overwhelm, which caused friction.",
-              "Introduce a more human tone by incorporating videos and personalized therapist content, making the process feel more like a conversation, or what people were used to offline, than a transaction."
-            ]
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "id": "competitive-takeaways-1",
+        "type": "bullets",
+        "content": {
+          "title": "Other Key Takeaways",
+          "items": [
+            "The order in which information was requested varied widely across competitors.",
+            "Only one other company, Hims, collected full personal and medical history during the initial sign-up. Others either postponed this step or conducted it during a follow-up.",
+            "About half of the competitors did not perform an insurance check early in the process, possibly due to differences in their service models."
+          ]
         },
-        {
-          "id": "process-iteration-1",
-          "type": "text",
-          "content": {
-            "text": "<p>Through critiques, we evaluated which ideas could be combined, simplified, or expanded. This iterative approach helped us shape a stronger, more inspiring vision.</p>"
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "id": "competitive-gap-1",
+        "type": "text",
+        "content": {
+          "text": "<p>The main gap was clear. Brightside asked significantly more from users before they even created an account, which made the experience feel heavier and more intrusive than others in the space. This, along with strategic goals to expand marketing channels, provided a clear path to opportunities in improving the experience.</p>"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/standout-ideas.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755555395332-0.3809088438063506"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "The Design Vision",
-      "subheader": "More Human, More Assistive, More Concise",
-      "modules": [
-        {
-          "id": "vision-intro-1",
-          "type": "text",
-          "content": {
-            "text": "<p>The design vision focused on three guiding principles:</p>"
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/comp-audit.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
         },
-        {
-          "id": "vision-assistive-1",
-          "type": "bullets",
-          "content": {
-            "title": "Give them the answers, be more assistive (AI-Driven)",
-            "items": [
-              "While AI was not the core of the vision, it played a valuable role in making the experience feel smarter and more responsive. It surfaced relevant content at the right time and used natural language to reduce friction. I wanted to be careful and not insert AI for the sake of using a new technology. It needed to serve a purpose."
-            ]
-          },
-          "column": "left"
+        "column": "right",
+        "id": "1755562142867-0.8487199560611444"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/comp-audit2.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
         },
-        {
-          "id": "vision-concise-1",
-          "type": "bullets",
-          "content": {
-            "title": "Keep it simple, more concise",
-            "items": [
-              "We removed unnecessary steps, combined related screens, and postponed some questions until after the user created an account. This helped make the experience shorter and less mentally taxing."
-            ]
-          },
-          "column": "left"
+        "column": "right",
+        "id": "1755562245409-0.291384451227796"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Exploration",
+    "subheader": "Moving from Quick Fixes to Big Leaps",
+    "modules": [
+      {
+        "id": "process-content-1",
+        "type": "text",
+        "content": {
+          "text": "<p>Unlike many vision projects, this effort did not begin with a structured group brainstorm. The designer had already started working on near-term improvements. My goal was to help him think more broadly and explore directions that weren't limited by what could be built in the next sprint.</p><p>Instead of formal workshops, we used a series of design critiques and 1-on-1s to push the work further. I challenged him to integrate new insights from the research and bring more spicy options into the designs.</p>"
         },
-        {
-          "id": "vision-human-1",
-          "type": "bullets",
-          "content": {
-            "title": "Make it more personal and human centered",
-            "items": [
-              "We aimed to create a sign-up process that felt supportive and empathetic. Video content helped explain complicated decisions. We also highlighted therapist bios and working styles to create a stronger emotional connection between patient and provider."
-            ]
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "id": "process-ideas-1",
+        "type": "bullets",
+        "content": {
+          "title": "Two Standout Ideas Emerged",
+          "items": [
+            "Use AI to offer helpful guidance during complex decision points, such as selecting a payment method or understanding insurance. We knew there were moments of overwhelm, which caused friction.",
+            "Introduce a more human tone by incorporating videos and personalized therapist content, making the process feel more like a conversation, or what people were used to offline, than a transaction."
+          ]
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/brightside-vision.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755620719057-0.2006871630685244"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Navigating Stakeholder Concerns",
-      "subheader": "",
-      "modules": [
-        {
-          "type": "text",
-          "content": {
-            "title": "",
-            "text": "<p>When we proposed shortening the sign-up process, we quickly ran into pushback from our clinical leadership. Their concern was valid: reducing the number of upfront questions might make the process easier for prospective members, but it could also leave therapists underprepared for their first session.</p><h3><span style=\"background-color: transparent;\">Finding the Right Balance</span></h3><p><span style=\"background-color: transparent;\">To address this, we partnered closely with product management and the clinical team to review the intake questions one by one. Together, we identified which were truly essential to begin care, which were “nice to have,” and which had become outdated. This collaborative process helped reduce friction without compromising clinical readiness.</span></p><h3><span style=\"background-color: transparent;\">Testing Assumptions</span></h3><p><span style=\"background-color: transparent;\">To build confidence in the approach, we ran a pilot test that removed all personal and medical history questions from the initial sign-up. Therapists instead asked these during the first session. The result? Sign-ups didn’t increase enough to justify the added burden on therapists. This experiment provided valuable evidence that simply deferring all questions wasn’t the right solution, but that a more balanced reduction was possible.</span></p><h3><span style=\"background-color: transparent;\">Continuing the Evolution</span></h3><p><span style=\"background-color: transparent;\">The team is still exploring ways to streamline data collection. Possibilities include capturing information in the member dashboard or a virtual waiting room before the first session. Looking ahead, AI could help further reduce the load; for example, by summarizing responses into a concise report that therapists can review right before meeting a new member.</span></p>"
-          },
-          "column": "left",
-          "id": "1755555663714-0.165830591307783"
+        "column": "left"
+      },
+      {
+        "id": "process-iteration-1",
+        "type": "text",
+        "content": {
+          "text": "<p>Through critiques, we evaluated which ideas could be combined, simplified, or expanded. This iterative approach helped us shape a stronger, more inspiring vision.</p>"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/stakeholder-alignment.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755624543311-0.4452902221452745"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Output",
-      "subheader": "Prototype & Narrative to Inspire",
-      "modules": [
-        {
-          "id": "output-content-1",
-          "type": "text",
-          "content": {
-            "text": "<p>The final output included a functional prototype of the redesigned intake experience. Built in Figma, it allowed stakeholders to click through and experience the flow firsthand. It was also embedded in a Figma Slides presentation to provide context and narrative.</p><p>The prototype was shared with the head of product, the growth squad, and the CEO. The CEO's response was brief but encouraging. He said it was clear that the work was thoughtful and asked when the new experience could be implemented.</p><p>More importantly, the prototype provided a concrete vision. It gave the team something to rally around and helped connect near-term initiatives with long-term goals.</p>"
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/standout-ideas.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/vision-output.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755623283899-0.7449398674076507"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Results",
-      "subheader": "A Clearer Path Forward",
-      "modules": [
-        {
-          "id": "results-intro-1",
-          "type": "text",
-          "content": {
-            "text": "<p><span style=\"background-color: transparent;\">While the full vision has not yet been implemented, it has already begun to shape the team’s direction.</span></p><ul><li><strong style=\"background-color: transparent;\">Validated the roadmap</strong> – <span style=\"background-color: transparent;\">The work confirmed that the squad’s short-term initiatives were aligned with a larger, more ambitious goal.</span></li><li><strong style=\"background-color: transparent;\">Strengthened cross-functional trust</strong><span style=\"background-color: transparent;\"> – The collaboration with clinical leadership was a turning point. By listening to their concerns, testing assumptions, and co-deciding what data was essential, we built credibility and demonstrated that design could reconcile business, user, and clinical needs.</span></li><li><strong style=\"background-color: transparent;\">Elevated design’s role</strong><span style=\"background-color: transparent;\"> – The project reinforced the value of design as a strategic partner, not just a delivery function.</span></li><li><strong style=\"background-color: transparent;\">Improved clarity for engineering</strong><span style=\"background-color: transparent;\"> – The head of engineering noted he now understood more clearly </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> the team was building what they were building, which boosted collaboration and focus.</span></li><li><strong style=\"background-color: transparent;\">Fostered growth in the squad designer</strong><span style=\"background-color: transparent;\"> – He shifted from solving isolated problems to thinking systemically and aspirationally, moving from </span><em style=\"background-color: transparent;\">what’s feasible</em><span style=\"background-color: transparent;\"> to </span><em style=\"background-color: transparent;\">what’s possible</em><span style=\"background-color: transparent;\">.</span></li></ul><p><br></p><h3><span style=\"background-color: transparent;\">Personal reflection</span></h3><p><span style=\"background-color: transparent;\">This alignment across design, product, and clinical teams wasn’t just about reducing signup steps; it showed that when you bring different perspectives together, you can unlock solutions that serve everyone. That’s the kind of trust and shared vision that makes real transformation sustainable.</span></p>"
-          },
-          "column": "left"
+        "column": "right",
+        "id": "1755555395332-0.3809088438063506"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "The Design Vision",
+    "subheader": "More Human, More Assistive, More Concise",
+    "modules": [
+      {
+        "id": "vision-intro-1",
+        "type": "text",
+        "content": {
+          "text": "<p>The design vision focused on three guiding principles:</p>"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/brightside-results.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755624856963-0.45338631832920784"
-        }
-      ],
-      "speakerNotes": ""
-    }
-  ]
-}
+        "column": "left"
+      },
+      {
+        "id": "vision-assistive-1",
+        "type": "bullets",
+        "content": {
+          "title": "Give them the answers, be more assistive (AI-Driven)",
+          "items": [
+            "While AI was not the core of the vision, it played a valuable role in making the experience feel smarter and more responsive. It surfaced relevant content at the right time and used natural language to reduce friction. I wanted to be careful and not insert AI for the sake of using a new technology. It needed to serve a purpose."
+          ]
+        },
+        "column": "left"
+      },
+      {
+        "id": "vision-concise-1",
+        "type": "bullets",
+        "content": {
+          "title": "Keep it simple, more concise",
+          "items": [
+            "We removed unnecessary steps, combined related screens, and postponed some questions until after the user created an account. This helped make the experience shorter and less mentally taxing."
+          ]
+        },
+        "column": "left"
+      },
+      {
+        "id": "vision-human-1",
+        "type": "bullets",
+        "content": {
+          "title": "Make it more personal and human centered",
+          "items": [
+            "We aimed to create a sign-up process that felt supportive and empathetic. Video content helped explain complicated decisions. We also highlighted therapist bios and working styles to create a stronger emotional connection between patient and provider."
+          ]
+        },
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/brightside-vision.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "right",
+        "id": "1755620719057-0.2006871630685244"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Navigating Stakeholder Concerns",
+    "subheader": "",
+    "modules": [
+      {
+        "type": "text",
+        "content": {
+          "title": "",
+          "text": "<p>When we proposed shortening the sign-up process, we quickly ran into pushback from our clinical leadership. Their concern was valid: reducing the number of upfront questions might make the process easier for prospective members, but it could also leave therapists underprepared for their first session.</p><h3><span style=\"background-color: transparent;\">Finding the Right Balance</span></h3><p><span style=\"background-color: transparent;\">To address this, we partnered closely with product management and the clinical team to review the intake questions one by one. Together, we identified which were truly essential to begin care, which were “nice to have,” and which had become outdated. This collaborative process helped reduce friction without compromising clinical readiness.</span></p><h3><span style=\"background-color: transparent;\">Testing Assumptions</span></h3><p><span style=\"background-color: transparent;\">To build confidence in the approach, we ran a pilot test that removed all personal and medical history questions from the initial sign-up. Therapists instead asked these during the first session. The result? Sign-ups didn’t increase enough to justify the added burden on therapists. This experiment provided valuable evidence that simply deferring all questions wasn’t the right solution, but that a more balanced reduction was possible.</span></p><h3><span style=\"background-color: transparent;\">Continuing the Evolution</span></h3><p><span style=\"background-color: transparent;\">The team is still exploring ways to streamline data collection. Possibilities include capturing information in the member dashboard or a virtual waiting room before the first session. Looking ahead, AI could help further reduce the load; for example, by summarizing responses into a concise report that therapists can review right before meeting a new member.</span></p>"
+        },
+        "column": "left",
+        "id": "1755555663714-0.165830591307783"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/stakeholder-alignment.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "right",
+        "id": "1755624543311-0.4452902221452745"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Output",
+    "subheader": "Prototype & Narrative to Inspire",
+    "modules": [
+      {
+        "id": "output-content-1",
+        "type": "text",
+        "content": {
+          "text": "<p>The final output included a functional prototype of the redesigned intake experience. Built in Figma, it allowed stakeholders to click through and experience the flow firsthand. It was also embedded in a Figma Slides presentation to provide context and narrative.</p><p>The prototype was shared with the head of product, the growth squad, and the CEO. The CEO's response was brief but encouraging. He said it was clear that the work was thoughtful and asked when the new experience could be implemented.</p><p>More importantly, the prototype provided a concrete vision. It gave the team something to rally around and helped connect near-term initiatives with long-term goals.</p>"
+        },
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/vision-output.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "right",
+        "id": "1755623283899-0.7449398674076507"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Results",
+    "subheader": "A Clearer Path Forward",
+    "modules": [
+      {
+        "id": "results-intro-1",
+        "type": "text",
+        "content": {
+          "text": "<p><span style=\"background-color: transparent;\">While the full vision has not yet been implemented, it has already begun to shape the team’s direction.</span></p><ul><li><strong style=\"background-color: transparent;\">Validated the roadmap</strong> – <span style=\"background-color: transparent;\">The work confirmed that the squad’s short-term initiatives were aligned with a larger, more ambitious goal.</span></li><li><strong style=\"background-color: transparent;\">Strengthened cross-functional trust</strong><span style=\"background-color: transparent;\"> – The collaboration with clinical leadership was a turning point. By listening to their concerns, testing assumptions, and co-deciding what data was essential, we built credibility and demonstrated that design could reconcile business, user, and clinical needs.</span></li><li><strong style=\"background-color: transparent;\">Elevated design’s role</strong><span style=\"background-color: transparent;\"> – The project reinforced the value of design as a strategic partner, not just a delivery function.</span></li><li><strong style=\"background-color: transparent;\">Improved clarity for engineering</strong><span style=\"background-color: transparent;\"> – The head of engineering noted he now understood more clearly </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> the team was building what they were building, which boosted collaboration and focus.</span></li><li><strong style=\"background-color: transparent;\">Fostered growth in the squad designer</strong><span style=\"background-color: transparent;\"> – He shifted from solving isolated problems to thinking systemically and aspirationally, moving from </span><em style=\"background-color: transparent;\">what’s feasible</em><span style=\"background-color: transparent;\"> to </span><em style=\"background-color: transparent;\">what’s possible</em><span style=\"background-color: transparent;\">.</span></li></ul><p><br></p><h3><span style=\"background-color: transparent;\">Personal reflection</span></h3><p><span style=\"background-color: transparent;\">This alignment across design, product, and clinical teams wasn’t just about reducing signup steps; it showed that when you bring different perspectives together, you can unlock solutions that serve everyone. That’s the kind of trust and shared vision that makes real transformation sustainable.</span></p>"
+        },
+        "column": "left"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/brightside-results.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
+        },
+        "column": "right",
+        "id": "1755624856963-0.45338631832920784"
+      }
+    ],
+    "speakerNotes": ""
+  }
+]
