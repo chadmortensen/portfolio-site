@@ -497,20 +497,24 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
   const nextSlide = () => {
     if (currentSlide < activeSections.length - 1 && !isTransitioning) {
       setIsTransitioning(true);
-      setCurrentSlide(currentSlide + 1);
       setTimeout(() => {
-        setIsTransitioning(false);
-      }, 750); // Match the transition duration
+        setCurrentSlide(currentSlide + 1);
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 50); // Very brief to allow content to render
+      }, 200); // Brief fade out
     }
   };
 
   const prevSlide = () => {
     if (currentSlide > 0 && !isTransitioning) {
       setIsTransitioning(true);
-      setCurrentSlide(currentSlide - 1);
       setTimeout(() => {
-        setIsTransitioning(false);
-      }, 750); // Match the transition duration
+        setCurrentSlide(currentSlide - 1);
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 50); // Very brief to allow content to render
+      }, 200); // Brief fade out
     }
   };
 
@@ -626,30 +630,16 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       {/* Slide Container */}
       <div className="h-full overflow-y-auto p-8 pt-32 pb-16">
         <div className="max-w-6xl mx-auto">
-          {/* Slide Content with Water Ripple Effect */}
+          {/* Slide Content with Smooth Fade */}
           <div
-            className={`transition-all duration-700 ease-out transform ${
-              isTransitioning
-                ? 'opacity-0 translate-y-12 scale-95'
-                : 'opacity-100 translate-y-0 scale-100'
+            className={`transition-opacity duration-300 ease-out ${
+              isTransitioning ? 'opacity-0' : 'opacity-100'
             }`}
-            style={{
-              filter: isTransitioning ? 'blur(8px)' : 'blur(0px)',
-              transform: isTransitioning 
-                ? 'translateY(30px) scale(0.95) rotateX(5deg)' 
-                : 'translateY(0px) scale(1) rotateX(0deg)',
-              transformStyle: 'preserve-3d',
-              perspective: '1000px'
-            }}
           >
-            <div className={`
-              ${isTransitioning ? 'animate-water-emerge-out' : 'animate-water-emerge-in'}
-            `}>
-              {activeSections.length > 0 && currentSlide < activeSections.length ? 
-                renderSlideContent(activeSections[currentSlide], currentSlide) :
-                <div className="text-center text-text-secondary">No slides available</div>
-              }
-            </div>
+            {activeSections.length > 0 && currentSlide < activeSections.length ? 
+              renderSlideContent(activeSections[currentSlide], currentSlide) :
+              <div className="text-center text-text-secondary">No slides available</div>
+            }
           </div>
         </div>
       </div>
