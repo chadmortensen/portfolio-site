@@ -114,9 +114,14 @@ const SpeakerNotesWindow = ({
     return currentSection?.speakerNotes || '';
   };
 
-  const handleNotesChange = (notes: string) => {
-    onUpdateSpeakerNotes(currentSlide, notes);
-    // Don't re-render content immediately to avoid focus loss
+  const handleSaveNotes = () => {
+    if (windowRef.current && windowRef.current.document) {
+      const textarea = windowRef.current.document.getElementById('notes-editor') as HTMLTextAreaElement;
+      if (textarea) {
+        onUpdateSpeakerNotes(currentSlide, textarea.value);
+        onSave();
+      }
+    }
   };
 
   const renderSpeakerNotesContent = () => {
@@ -304,7 +309,7 @@ const SpeakerNotesWindow = ({
                 <div class="font-size-display" id="font-size-display">${fontSize}px</div>
                 <button class="font-size-btn" onclick="parent.adjustFontSize(2)">A+</button>
               </div>
-              ${isEditing ? '<button class="save-btn" onclick="parent.saveNotes()">Save</button>' : ''}
+              ${isEditing ? '<button class="save-btn" onclick="window.saveNotes()">Save</button>' : ''}
             </div>
           </div>
           
@@ -332,15 +337,10 @@ const SpeakerNotesWindow = ({
       adjustFontSize(delta);
     };
 
-    (windowRef.current as any).updateNotes = (notes: string) => {
-      handleNotesChange(notes);
-    };
-
     (windowRef.current as any).saveNotes = () => {
-      onSave();
+      handleSaveNotes();
     };
 
-    // Timer functions
     (windowRef.current as any).toggleTimer = () => {
       if (isTimerRunning) {
         stopTimer();
@@ -353,10 +353,9 @@ const SpeakerNotesWindow = ({
       resetTimer();
     };
 
-    // Set up textarea event listener with proper event handling
+    // Set up textarea without auto-save to prevent cursor reset
     if (isEditing && windowRef.current.document.getElementById('notes-editor')) {
       const textarea = windowRef.current.document.getElementById('notes-editor') as HTMLTextAreaElement;
-      let debounceTimer: NodeJS.Timeout;
       
       // Prevent event bubbling that could cause focus loss
       textarea.addEventListener('keydown', (e) => {
@@ -365,14 +364,6 @@ const SpeakerNotesWindow = ({
 
       textarea.addEventListener('keyup', (e) => {
         e.stopPropagation();
-      });
-
-      textarea.addEventListener('input', (e) => {
-        e.stopPropagation();
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          handleNotesChange((e.target as HTMLTextAreaElement).value);
-        }, 300);
       });
 
       // Focus the textarea
