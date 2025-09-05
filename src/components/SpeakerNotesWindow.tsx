@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { ZoomIn, ZoomOut, Save } from 'lucide-react';
+import { ZoomIn, ZoomOut, Save, StickyNote, Play, Pause, RotateCcw } from 'lucide-react';
 
 interface SpeakerNotesWindowProps {
   currentSlide: number;
@@ -21,6 +21,9 @@ const SpeakerNotesWindow = ({
   const [fontSize, setFontSize] = useState(16);
   const windowRef = useRef<Window | null>(null);
   const [isWindowOpen, setIsWindowOpen] = useState(false);
+  const [timerSeconds, setTimerSeconds] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Load saved font size
@@ -34,6 +37,39 @@ const SpeakerNotesWindow = ({
     // Save font size to localStorage
     localStorage.setItem('speaker-notes-font-size', fontSize.toString());
   }, [fontSize]);
+
+  // Timer logic
+  useEffect(() => {
+    if (isTimerRunning) {
+      timerIntervalRef.current = setInterval(() => {
+        setTimerSeconds(prev => prev + 1);
+      }, 1000);
+    } else {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+        timerIntervalRef.current = null;
+      }
+    }
+
+    return () => {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+      }
+    };
+  }, [isTimerRunning]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const startTimer = () => setIsTimerRunning(true);
+  const stopTimer = () => setIsTimerRunning(false);
+  const resetTimer = () => {
+    setIsTimerRunning(false);
+    setTimerSeconds(0);
+  };
 
   const openSpeakerNotesWindow = () => {
     if (windowRef.current && !windowRef.current.closed) {
@@ -82,9 +118,7 @@ const SpeakerNotesWindow = ({
 
   const handleNotesChange = (notes: string) => {
     onUpdateSpeakerNotes(currentSlide, notes);
-    if (isWindowOpen) {
-      renderSpeakerNotesContent();
-    }
+    // Don't re-render content immediately to avoid focus loss
   };
 
   const renderSpeakerNotesContent = () => {
@@ -127,8 +161,53 @@ const SpeakerNotesWindow = ({
             }
             .controls {
               display: flex;
-              gap: 8px;
+              gap: 12px;
               align-items: center;
+              flex-wrap: wrap;
+            }
+            .timer-controls {
+              display: flex;
+              gap: 6px;
+              align-items: center;
+              background: #1a1a1a;
+              padding: 8px 12px;
+              border-radius: 6px;
+              border: 1px solid #3a3a3a;
+            }
+            .timer-display {
+              font-family: 'Courier New', monospace;
+              font-size: 18px;
+              font-weight: 600;
+              color: #22d3ee;
+              min-width: 65px;
+              text-align: center;
+            }
+            .timer-btn {
+              background: #3a3a3a;
+              border: 1px solid #4a4a4a;
+              color: #e0e0e0;
+              padding: 6px 8px;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 14px;
+              transition: background-color 0.2s;
+              min-width: 32px;
+              height: 32px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .timer-btn:hover {
+              background: #4a4a4a;
+            }
+            .timer-btn.start {
+              color: #10b981;
+            }
+            .timer-btn.stop {
+              color: #ef4444;
+            }
+            .timer-btn.reset {
+              color: #f59e0b;
             }
             .font-controls {
               display: flex;
@@ -215,6 +294,13 @@ const SpeakerNotesWindow = ({
               Slide ${currentSlide + 1}: ${slideTitle}
             </div>
             <div class="controls">
+              <div class="timer-controls">
+                <div class="timer-display">${formatTime(timerSeconds)}</div>
+                <button class="timer-btn ${isTimerRunning ? 'stop' : 'start'}" onclick="parent.${isTimerRunning ? 'stopTimer' : 'startTimer'}()">
+                  ${isTimerRunning ? '⏸' : '▶'}
+                </button>
+                <button class="timer-btn reset" onclick="parent.resetTimer()">↻</button>
+              </div>
               <div class="font-controls">
                 <button class="font-size-btn" onclick="parent.adjustFontSize(-2)">A-</button>
                 <div class="font-size-display">${fontSize}px</div>
@@ -227,10 +313,9 @@ const SpeakerNotesWindow = ({
           <div class="notes-container">
             ${isEditing ? `
               <textarea 
+                id="notes-editor"
                 class="notes-editor" 
                 placeholder="Enter speaker notes for this slide..."
-                onchange="parent.updateNotes(this.value)"
-                oninput="parent.updateNotes(this.value)"
               >${speakerNotes}</textarea>
             ` : `
               <div class="notes-content">
@@ -256,6 +341,31 @@ const SpeakerNotesWindow = ({
     (windowRef.current as any).saveNotes = () => {
       onSave();
     };
+
+    (windowRef.current as any).startTimer = () => {
+      startTimer();
+    };
+
+    (windowRef.current as any).stopTimer = () => {
+      stopTimer();
+    };
+
+    (windowRef.current as any).resetTimer = () => {
+      resetTimer();
+    };
+
+    // Set up textarea event listener for notes editing to avoid focus loss
+    if (isEditing && windowRef.current.document.getElementById('notes-editor')) {
+      const textarea = windowRef.current.document.getElementById('notes-editor') as HTMLTextAreaElement;
+      let debounceTimer: NodeJS.Timeout;
+      
+      textarea.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          handleNotesChange((e.target as HTMLTextAreaElement).value);
+        }, 300);
+      });
+    }
   };
 
   // Update content when current slide changes
@@ -274,7 +384,7 @@ const SpeakerNotesWindow = ({
           onClick={openSpeakerNotesWindow}
           className="flex items-center space-x-2"
         >
-          <span>Open Speaker Notes</span>
+          <StickyNote className="h-4 w-4" />
         </Button>
       ) : (
         <Button
@@ -283,7 +393,7 @@ const SpeakerNotesWindow = ({
           onClick={closeSpeakerNotesWindow}
           className="flex items-center space-x-2"
         >
-          <span>Close Speaker Notes</span>
+          <StickyNote className="h-4 w-4" />
         </Button>
       )}
     </div>
