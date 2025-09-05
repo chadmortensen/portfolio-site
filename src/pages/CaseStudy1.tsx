@@ -168,18 +168,26 @@ const CaseStudy1 = () => {
     const loadContent = async () => {
       const githubService = new GitHubStorageService();
       
-      // Try to load from GitHub first
-      const githubContent = await githubService.readFile('case-study-1.json');
-      if (githubContent) {
-        // Handle the correct data structure with title, subtitle, and sections
-        if (githubContent.title) {
-          setTitle(githubContent.title);
-        }
-        if (githubContent.subtitle) {
-          setSubtitle(githubContent.subtitle);
-        }
-        if (githubContent.sections) {
-          // Ensure subheaders are migrated from static sections and add speaker notes
+      try {
+        // Try to load from GitHub first
+        const githubContent = await githubService.readFile('case-study-1.json');
+        if (githubContent && Array.isArray(githubContent)) {
+          // Handle array format (sections only)
+          const migratedContent = githubContent.map((section: any, index: number) => ({
+            ...section,
+            subheader: section.subheader || sections[index]?.subheader,
+            speakerNotes: section.speakerNotes || ''
+          }));
+          setEditableSections(migratedContent);
+          return;
+        } else if (githubContent && githubContent.sections) {
+          // Handle object format with title, subtitle, and sections
+          if (githubContent.title) {
+            setTitle(githubContent.title);
+          }
+          if (githubContent.subtitle) {
+            setSubtitle(githubContent.subtitle);
+          }
           const migratedContent = githubContent.sections.map((section: any, index: number) => ({
             ...section,
             subheader: section.subheader || sections[index]?.subheader,
@@ -188,22 +196,32 @@ const CaseStudy1 = () => {
           setEditableSections(migratedContent);
           return;
         }
+      } catch (error) {
+        console.error('Error loading from GitHub:', error);
       }
 
       // Fallback to localStorage
-      const savedContent = localStorage.getItem('case-study-1-content');
-      if (savedContent) {
-        try {
+      try {
+        const savedContent = localStorage.getItem('case-study-1-content');
+        if (savedContent) {
           const parsed = JSON.parse(savedContent);
-          // Handle the correct data structure with title, subtitle, and sections
-          if (parsed.title) {
-            setTitle(parsed.title);
-          }
-          if (parsed.subtitle) {
-            setSubtitle(parsed.subtitle);
-          }
-          if (parsed.sections) {
-            // Ensure subheaders are migrated from static sections and add speaker notes
+          if (Array.isArray(parsed)) {
+            // Handle array format (sections only)
+            const migratedContent = parsed.map((section: any, index: number) => ({
+              ...section,
+              subheader: section.subheader || sections[index]?.subheader,
+              speakerNotes: section.speakerNotes || ''
+            }));
+            setEditableSections(migratedContent);
+            return;
+          } else if (parsed.sections) {
+            // Handle object format with title, subtitle, and sections
+            if (parsed.title) {
+              setTitle(parsed.title);
+            }
+            if (parsed.subtitle) {
+              setSubtitle(parsed.subtitle);
+            }
             const migratedContent = parsed.sections.map((section: any, index: number) => ({
               ...section,
               subheader: section.subheader || sections[index]?.subheader,
@@ -212,9 +230,9 @@ const CaseStudy1 = () => {
             setEditableSections(migratedContent);
             return;
           }
-        } catch (e) {
-          console.error('Failed to parse saved content:', e);
         }
+      } catch (e) {
+        console.error('Failed to parse saved content:', e);
       }
 
       // Convert static sections as fallback - always run if no saved content loaded
@@ -461,7 +479,11 @@ const CaseStudy1 = () => {
   if (isPresentationMode) {
     return (
       <PresentationMode
-        sections={editableSections}
+        sections={editableSections.length > 0 ? editableSections : sections.map(section => ({
+          ...section,
+          modules: [],
+          speakerNotes: ''
+        }))}
         onExit={() => setIsPresentationMode(false)}
         storageFilename="case-study-1.json"
       />

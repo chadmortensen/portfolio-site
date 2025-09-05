@@ -114,9 +114,10 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
   // Use sections prop directly - they're already loaded in parent component
   useEffect(() => {
     if (sections && sections.length > 0) {
-      // Ensure each section has a speakerNotes property
+      // Ensure each section has a speakerNotes property and modules array
       const sectionsWithNotes = sections.map(section => ({
         ...section,
+        modules: section.modules || [],
         speakerNotes: section.speakerNotes || ''
       }));
       setEditableSections(sectionsWithNotes);
@@ -338,8 +339,11 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       return <div className="text-center text-text-secondary">Loading...</div>;
     }
     
+    // Use the section that exists (prioritize activeSection if available)
+    const displaySection = activeSection || section;
+    
     // Check if we have modules to display (either in editing mode or view mode)
-    const hasModules = activeSection?.modules && activeSection.modules.length > 0;
+    const hasModules = displaySection?.modules && displaySection.modules.length > 0;
     
     // If we have modules, render with module layout
     if (hasModules) {
@@ -348,11 +352,11 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
           {/* Title */}
           <div className="text-center mb-12">
             <h1 className="text-4xl lg:text-6xl font-light text-text-primary mb-4">
-              {activeSection.title}
+              {displaySection.title}
             </h1>
-            {activeSection.subheader && (
+            {displaySection.subheader && (
               <h2 className="text-2xl lg:text-3xl text-text-secondary font-light">
-                {activeSection.subheader}
+                {displaySection.subheader}
               </h2>
             )}
             <div className="w-24 h-px bg-accent-teal mx-auto mt-8"></div>
@@ -381,25 +385,25 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
             )}
 
           {/* Modules with column layout */}
-          {renderModulesWithLayout(activeSection.modules, sectionIndex, isEditing)}
+          {renderModulesWithLayout(displaySection.modules, sectionIndex, isEditing)}
         </div>
       );
     }
 
-    // Regular presentation view for original sections
-    const hasImages = section.image || section.sectionImage || section.fullWidthImage || 
-                     section.workshopImages || section.additionalImages;
+    // Regular presentation view for original sections (fallback)
+    const hasImages = displaySection.image || displaySection.sectionImage || displaySection.fullWidthImage || 
+                     displaySection.workshopImages || displaySection.additionalImages;
 
     return (
       <div className="space-y-8">
         {/* Title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-6xl font-light text-text-primary mb-4">
-            {section.title}
+            {displaySection.title}
           </h1>
-          {section.subheader && (
+          {displaySection.subheader && (
             <h2 className="text-2xl lg:text-3xl text-text-secondary font-light">
-              {section.subheader}
+              {displaySection.subheader}
             </h2>
           )}
           <div className="w-24 h-px bg-accent-teal mx-auto mt-8"></div>
@@ -409,18 +413,18 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
         <div className={`grid ${hasImages ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'} gap-12 items-start`}>
           {/* Content Column */}
           <div className="space-y-8">
-            {section.content && (
+            {displaySection.content && (
               <div 
                 className="prose prose-lg max-w-none prose-headings:text-text-primary prose-p:text-text-secondary prose-p:text-xl prose-p:lg:text-2xl prose-p:leading-relaxed prose-strong:text-text-primary prose-ul:text-text-secondary prose-ol:text-text-secondary prose-li:text-lg prose-li:lg:text-xl"
-                dangerouslySetInnerHTML={{ __html: section.content }}
+                dangerouslySetInnerHTML={{ __html: displaySection.content }}
               />
             )}
 
-            {section.goals && (
+            {displaySection.goals && (
               <div className="space-y-4">
                 <h3 className="text-2xl text-text-primary font-light">Goals</h3>
                 <ul className="space-y-3">
-                  {section.goals.map((goal: string, goalIndex: number) => (
+                  {displaySection.goals.map((goal: string, goalIndex: number) => (
                     <li key={goalIndex} className="flex items-start space-x-3">
                       <div className="w-2 h-2 rounded-full bg-accent-blue mt-3 flex-shrink-0"></div>
                       <span className="text-lg text-text-secondary">{goal}</span>
@@ -430,19 +434,19 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
               </div>
             )}
 
-            {section.quotes && (
+            {displaySection.quotes && (
               <div className="space-y-4">
                 <h3 className="text-2xl text-text-primary font-light">User Feedback</h3>
-                {section.quotes.map((quote: string, quoteIndex: number) => (
+                {displaySection.quotes.map((quote: string, quoteIndex: number) => (
                   <blockquote key={quoteIndex} className="border-l-4 border-accent-orange pl-6 mb-4">
                     <p className="text-lg text-text-secondary italic">"{quote}"</p>
                   </blockquote>
                 ))}
-                {section.insight && (
+                {displaySection.insight && (
                   <div className="p-6 bg-surface-secondary border border-swiss-light rounded-lg">
                     <div 
                       className="prose prose-lg max-w-none prose-headings:text-text-primary prose-p:text-text-primary prose-p:font-medium prose-strong:text-text-primary prose-ul:text-text-primary prose-ol:text-text-primary"
-                      dangerouslySetInnerHTML={{ __html: section.insight }}
+                      dangerouslySetInnerHTML={{ __html: displaySection.insight }}
                     />
                   </div>
                 )}
