@@ -497,8 +497,8 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
   const nextSlide = () => {
     if (currentSlide < activeSections.length - 1 && !isTransitioning) {
       setIsTransitioning(true);
+      setCurrentSlide(currentSlide + 1);
       setTimeout(() => {
-        setCurrentSlide(currentSlide + 1);
         setIsTransitioning(false);
       }, 300);
     }
@@ -507,8 +507,8 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
   const prevSlide = () => {
     if (currentSlide > 0 && !isTransitioning) {
       setIsTransitioning(true);
+      setCurrentSlide(currentSlide - 1);
       setTimeout(() => {
-        setCurrentSlide(currentSlide - 1);
         setIsTransitioning(false);
       }, 300);
     }

@@ -296,10 +296,10 @@ const SpeakerNotesWindow = ({
             <div class="controls">
               <div class="timer-controls">
                 <div class="timer-display">${formatTime(timerSeconds)}</div>
-                <button class="timer-btn ${isTimerRunning ? 'stop' : 'start'}" onclick="parent.${isTimerRunning ? 'stopTimer' : 'startTimer'}()">
+                <button class="timer-btn ${isTimerRunning ? 'stop' : 'start'}" onclick="window.parentTimerStart()">
                   ${isTimerRunning ? '⏸' : '▶'}
                 </button>
-                <button class="timer-btn reset" onclick="parent.resetTimer()">↻</button>
+                <button class="timer-btn reset" onclick="window.parentTimerReset()">↻</button>
               </div>
               <div class="font-controls">
                 <button class="font-size-btn" onclick="parent.adjustFontSize(-2)">A-</button>
@@ -342,16 +342,21 @@ const SpeakerNotesWindow = ({
       onSave();
     };
 
-    (windowRef.current as any).startTimer = () => {
-      startTimer();
+    // Timer functions need to be accessible from the window
+    (windowRef.current as any).parentTimerStart = () => {
+      if (isTimerRunning) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+      // Re-render to update button state
+      setTimeout(() => renderSpeakerNotesContent(), 100);
     };
 
-    (windowRef.current as any).stopTimer = () => {
-      stopTimer();
-    };
-
-    (windowRef.current as any).resetTimer = () => {
+    (windowRef.current as any).parentTimerReset = () => {
       resetTimer();
+      // Re-render to update display
+      setTimeout(() => renderSpeakerNotesContent(), 100);
     };
 
     // Set up textarea event listener for notes editing to avoid focus loss
@@ -373,7 +378,7 @@ const SpeakerNotesWindow = ({
     if (isWindowOpen && windowRef.current && !windowRef.current.closed) {
       renderSpeakerNotesContent();
     }
-  }, [currentSlide, sections, fontSize, isEditing]);
+  }, [currentSlide, sections, fontSize, isEditing, timerSeconds, isTimerRunning]);
 
   return (
     <div className="flex items-center space-x-2">
