@@ -34,7 +34,8 @@
           "column": "right",
           "id": "1755549044832-0.7580628103042646"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Goals",
@@ -60,7 +61,8 @@
           "column": "right",
           "id": "1755549167942-0.45356572339992574"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "The Data",
@@ -85,7 +87,8 @@
           "column": "right",
           "id": "1755555316956-0.17249185516718013"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Bonus: Custom GPT Side Project",
@@ -107,12 +110,13 @@
             "alt": "",
             "position": "below",
             "columns": "6",
-            "heightPercent": "20"
+            "heightPercent": ""
           },
           "column": "right",
           "id": "1755555345052-0.7064357406449328"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Competitive Audit",
@@ -169,7 +173,8 @@
           "column": "right",
           "id": "1755562245409-0.291384451227796"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Exploration",
@@ -214,7 +219,8 @@
           "column": "right",
           "id": "1755555395332-0.3809088438063506"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "The Design Vision",
@@ -272,7 +278,8 @@
           "column": "right",
           "id": "1755620719057-0.2006871630685244"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Navigating Stakeholder Concerns",
@@ -298,7 +305,8 @@
           "column": "right",
           "id": "1755624543311-0.4452902221452745"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Output",
@@ -323,7 +331,8 @@
           "column": "right",
           "id": "1755623283899-0.7449398674076507"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Results",
@@ -348,7 +357,8 @@
           "column": "right",
           "id": "1755624856963-0.45338631832920784"
         }
-      ]
+      ],
+      "speakerNotes": ""
     }
   ]
 }
