@@ -51,7 +51,12 @@ const CaseStudy3 = () => {
         if (githubContent && githubContent.title && githubContent.subtitle && githubContent.sections) {
           setTitle(githubContent.title);
           setSubtitle(githubContent.subtitle);
-          setEditableSections(githubContent.sections);
+          // Ensure each section has a speakerNotes property
+          const sectionsWithNotes = githubContent.sections.map((section: any) => ({
+            ...section,
+            speakerNotes: section.speakerNotes || ''
+          }));
+          setEditableSections(sectionsWithNotes);
           setIsLoading(false);
           return;
         }
@@ -67,7 +72,12 @@ const CaseStudy3 = () => {
           if (parsed && parsed.title && parsed.subtitle && parsed.sections) {
             setTitle(parsed.title);
             setSubtitle(parsed.subtitle);
-            setEditableSections(parsed.sections);
+            // Ensure each section has a speakerNotes property
+            const sectionsWithNotes = parsed.sections.map((section: any) => ({
+              ...section,
+              speakerNotes: section.speakerNotes || ''
+            }));
+            setEditableSections(sectionsWithNotes);
             setIsLoading(false);
             return;
           }
@@ -87,6 +97,7 @@ const CaseStudy3 = () => {
             const convertedFromJson = jsonData.map(section => ({
               title: section.title,
               subheader: section.subheader || '',
+              speakerNotes: section.speakerNotes || '',
               modules: (section.modules || []).map((module: any) => ({
                 id: module.id || `${section.title}-${Date.now()}-${Math.random()}`,
                 type: module.type,
@@ -204,6 +215,7 @@ const CaseStudy3 = () => {
          return {
            title: section.title,
            subheader: section.subheader,
+           speakerNotes: '',
            modules
          };
         });

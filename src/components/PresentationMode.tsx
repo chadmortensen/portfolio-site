@@ -11,6 +11,7 @@ import { EditableModule, Module } from "./EditableModule";
 import { ModuleLibrary } from "./ModuleLibrary";
 import { SectionEditor } from "./SectionEditor";
 import { GitHubStorageService } from "../services/githubStorage";
+import SpeakerNotesWindow from "./SpeakerNotesWindow";
 
 interface PresentationModeProps {
   sections: any[];
@@ -100,6 +101,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
     title: string;
     subheader?: string;
     modules: Module[];
+    speakerNotes?: string;
   }>>([]);
 
   const sensors = useSensors(
@@ -112,7 +114,12 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
   // Use sections prop directly - they're already loaded in parent component
   useEffect(() => {
     if (sections && sections.length > 0) {
-      setEditableSections(sections);
+      // Ensure each section has a speakerNotes property
+      const sectionsWithNotes = sections.map(section => ({
+        ...section,
+        speakerNotes: section.speakerNotes || ''
+      }));
+      setEditableSections(sectionsWithNotes);
     }
   }, [sections]);
 
@@ -211,7 +218,13 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
     setEditableSections(newSections);
   };
 
-  const handleUpdateSections = (newSections: Array<{title: string; subheader?: string; modules: Module[]}>) => {
+  const handleUpdateSections = (newSections: Array<{title: string; subheader?: string; modules: Module[]; speakerNotes?: string}>) => {
+    setEditableSections(newSections);
+  };
+
+  const handleUpdateSpeakerNotes = (sectionIndex: number, notes: string) => {
+    const newSections = [...editableSections];
+    newSections[sectionIndex] = { ...newSections[sectionIndex], speakerNotes: notes };
     setEditableSections(newSections);
   };
 
@@ -574,6 +587,18 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
               <span className="ml-2 text-sm">Edit</span>
             </Button>
           )}
+          
+          <div className="w-px h-6 bg-swiss-light mx-2"></div>
+          
+          <SpeakerNotesWindow
+            currentSlide={currentSlide}
+            sections={editableSections}
+            isEditing={isEditing}
+            onUpdateSpeakerNotes={handleUpdateSpeakerNotes}
+            onSave={handleSave}
+          />
+          
+          <div className="w-px h-6 bg-swiss-light mx-2"></div>
           
           <Button
             variant="ghost"

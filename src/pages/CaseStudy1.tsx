@@ -179,10 +179,11 @@ const CaseStudy1 = () => {
           setSubtitle(githubContent.subtitle);
         }
         if (githubContent.sections) {
-          // Ensure subheaders are migrated from static sections
+          // Ensure subheaders are migrated from static sections and add speaker notes
           const migratedContent = githubContent.sections.map((section: any, index: number) => ({
             ...section,
-            subheader: section.subheader || sections[index]?.subheader
+            subheader: section.subheader || sections[index]?.subheader,
+            speakerNotes: section.speakerNotes || ''
           }));
           setEditableSections(migratedContent);
           return;
@@ -202,10 +203,11 @@ const CaseStudy1 = () => {
             setSubtitle(parsed.subtitle);
           }
           if (parsed.sections) {
-            // Ensure subheaders are migrated from static sections
+            // Ensure subheaders are migrated from static sections and add speaker notes
             const migratedContent = parsed.sections.map((section: any, index: number) => ({
               ...section,
-              subheader: section.subheader || sections[index]?.subheader
+              subheader: section.subheader || sections[index]?.subheader,
+              speakerNotes: section.speakerNotes || ''
             }));
             setEditableSections(migratedContent);
             return;
@@ -257,6 +259,7 @@ const CaseStudy1 = () => {
         return {
           title: section.title,
           subheader: section.subheader,
+          speakerNotes: '',
           modules
         };
       });
