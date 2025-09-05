@@ -80,16 +80,29 @@ const CaseStudy2 = () => {
         const githubService = new GitHubStorageService();
         const githubContent = await githubService.readFile('case-study-2.json');
         
-        if (githubContent && githubContent.title && githubContent.subtitle && githubContent.sections) {
-          setTitle(githubContent.title);
-          setSubtitle(githubContent.subtitle);
-          // Ensure each section has a speakerNotes property
-          const sectionsWithNotes = githubContent.sections.map((section: any) => ({
-            ...section,
-            speakerNotes: section.speakerNotes || ''
-          }));
-          setEditableSections(sectionsWithNotes);
-          return;
+        if (githubContent) {
+          // Handle array format (sections only)
+          if (Array.isArray(githubContent)) {
+            console.log('Loading sections from GitHub (array format)');
+            const sectionsWithNotes = githubContent.map((section: any) => ({
+              ...section,
+              speakerNotes: section.speakerNotes || ''
+            }));
+            setEditableSections(sectionsWithNotes);
+            return;
+          }
+          // Handle object format with title, subtitle, and sections
+          else if (githubContent.title && githubContent.subtitle && githubContent.sections) {
+            console.log('Loading full content from GitHub (object format)');
+            setTitle(githubContent.title);
+            setSubtitle(githubContent.subtitle);
+            const sectionsWithNotes = githubContent.sections.map((section: any) => ({
+              ...section,
+              speakerNotes: section.speakerNotes || ''
+            }));
+            setEditableSections(sectionsWithNotes);
+            return;
+          }
         }
       } catch (error) {
         console.log('No GitHub content found, trying localStorage');
@@ -100,10 +113,21 @@ const CaseStudy2 = () => {
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          if (parsed && parsed.title && parsed.subtitle && parsed.sections) {
+          // Handle array format (sections only)
+          if (Array.isArray(parsed)) {
+            console.log('Loading sections from localStorage (array format)');
+            const sectionsWithNotes = parsed.map((section: any) => ({
+              ...section,
+              speakerNotes: section.speakerNotes || ''
+            }));
+            setEditableSections(sectionsWithNotes);
+            return;
+          }
+          // Handle object format with title, subtitle, and sections
+          else if (parsed && parsed.title && parsed.subtitle && parsed.sections) {
+            console.log('Loading full content from localStorage (object format)');
             setTitle(parsed.title);
             setSubtitle(parsed.subtitle);
-            // Ensure each section has a speakerNotes property
             const sectionsWithNotes = parsed.sections.map((section: any) => ({
               ...section,
               speakerNotes: section.speakerNotes || ''
@@ -438,7 +462,11 @@ const CaseStudy2 = () => {
   if (isPresentationMode) {
     return (
       <PresentationMode
-        sections={editableSections}
+        sections={editableSections.length > 0 ? editableSections : sections.map(section => ({
+          ...section,
+          modules: [],
+          speakerNotes: ''
+        }))}
         onExit={() => setIsPresentationMode(false)}
         storageFilename="case-study-2.json"
       />
