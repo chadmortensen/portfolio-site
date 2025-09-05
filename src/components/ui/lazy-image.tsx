@@ -92,7 +92,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
           src={src}
           alt={alt}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
+            "absolute inset-0 object-cover transition-opacity duration-300",
             isLoaded ? "opacity-100" : "opacity-0"
           )}
           onLoad={handleImageLoad}
