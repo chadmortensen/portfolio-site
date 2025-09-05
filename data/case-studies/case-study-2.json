@@ -1,157 +1,159 @@
-{
-  "title": "Fulfillment at Etsy",
-  "subtitle": "Crafting a Shared Vision and Guiding Principles (2022)",
-  "sections": [
-    {
-      "title": "Why This, and Why Now?",
-      "subheader": "",
-      "modules": [
-        {
-          "id": "Why This, and Why Now?-content-1755722042513",
-          "type": "text",
-          "content": {
-            "text": "<h3>A Gap Between Roadmaps and Strategy</h3><p>When I joined Etsy's fulfillment team, I noticed a disconnect. Teams had near-term roadmaps and delivery targets, but they lacked a unifying vision, something that tied their work to Etsy's broader business strategy. Without that north star, it was difficult to make confident decisions or understand how each initiative contributed to the bigger picture.</p><h3>Recognizing the Opportunity</h3><p>I saw an opportunity to fill that gap. Not by imposing another rigid product plan, but by creating a shared vision grounded in user research, market realities, and Etsy's brand mission. This would give teams clarity on where we wanted to evolve, while still leaving room for flexibility in execution.</p><h3>Goals of the Work</h3><p>The purpose of this effort went beyond documentation. My goals were to:</p><ul><li><strong>Create a vision</strong> that reflected user needs while aligning with Etsy's business strategy.</li><li><strong>Define guideposts</strong> that could shape yearly and quarterly planning, ensuring continuity between strategy and execution.</li><li><strong>Build consensus</strong> across design, product, engineering, and business leaders that this work was both necessary and urgent.</li></ul><h3>Leading with Influence</h3><p>Because this wasn't work that had been formally requested, success depended on influence and alignment. I initiated the effort, rallied cross-functional leadership, and created the conditions for the team to see the value in stepping back from delivery to define a shared direction.</p>"
-          },
-          "column": "left"
+[
+  {
+    "title": "Why This, and Why Now?",
+    "subheader": "",
+    "modules": [
+      {
+        "id": "Why This, and Why Now?-content-1755722042513",
+        "type": "text",
+        "content": {
+          "text": "<h3>A Gap Between Roadmaps and Strategy</h3><p>When I joined Etsy's fulfillment team, I noticed a disconnect. Teams had near-term roadmaps and delivery targets, but they lacked a unifying vision, something that tied their work to Etsy's broader business strategy. Without that north star, it was difficult to make confident decisions or understand how each initiative contributed to the bigger picture.</p><h3>Recognizing the Opportunity</h3><p>I saw an opportunity to fill that gap. Not by imposing another rigid product plan, but by creating a shared vision grounded in user research, market realities, and Etsy's brand mission. This would give teams clarity on where we wanted to evolve, while still leaving room for flexibility in execution.</p><h3>Goals of the Work</h3><p>The purpose of this effort went beyond documentation. My goals were to:</p><ul><li><strong>Create a vision</strong> that reflected user needs while aligning with Etsy's business strategy.</li><li><strong>Define guideposts</strong> that could shape yearly and quarterly planning, ensuring continuity between strategy and execution.</li><li><strong>Build consensus</strong> across design, product, engineering, and business leaders that this work was both necessary and urgent.</li></ul><h3>Leading with Influence</h3><p>Because this wasn't work that had been formally requested, success depended on influence and alignment. I initiated the effort, rallied cross-functional leadership, and created the conditions for the team to see the value in stepping back from delivery to define a shared direction.</p>"
         },
-        {
-          "id": "Why This, and Why Now?-image-1755722042513",
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.jpeg",
-            "alt": "Why This, and Why Now? visual"
-          },
-          "column": "right"
-        }
-      ]
-    },
-    {
-      "title": "Participants",
-      "subheader": "",
-      "modules": [
-        {
-          "type": "text",
-          "content": {
-            "title": "",
-            "text": "<h3>My Role</h3><ul><li>Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work</li><li>Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers</li><li>Synthesized the output into enduring artifacts, a vision statement, and a set of fulfillment principles that the team could carry forward into planning and execution</li></ul><h3>Partnered With</h3><ul><li>Research leadership</li><li>Staff Designer (who facilitated the sessions)</li></ul><h3>Participants</h3><ul><li>GM/VP of Fulfillment</li><li>Product, Engineering, and Research leaders</li><li>Product Marketing, Analytics, and Finance leads</li><li>Product Design Manager</li></ul>"
-          },
-          "column": "left",
-          "id": "1755725835527-0.4935839077782954"
+        "column": "left"
+      },
+      {
+        "id": "Why This, and Why Now?-image-1755722042513",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.jpeg",
+          "alt": "Why This, and Why Now? visual"
         },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/etsy-participants.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "right",
-          "id": "1755725874091-0.2040796268059083"
-        }
-      ]
-    },
-    {
-      "title": "Workshop Design",
-      "subheader": "",
-      "modules": [
-        {
-          "id": "Workshop Design-content-1755722042513",
-          "type": "text",
-          "content": {
-            "text": "<p>To build true alignment across disciplines, I designed a three-day workshop focused on co-creation, strategic thinking, and grounding our decisions in real user needs. The structure was intentional: each activity layered insight and perspective, ultimately enabling the team to converge on a shared direction.</p><h3>Grounding in Research</h3><p>We began by immersing ourselves in key inputs: seller behavior data, industry trends, brand positioning, and a reminder of Etsy's broader mission, to ensure we were anchored in both user insight and business context.</p><h3>Thinking Hats Exercise</h3><p>To challenge assumptions and foster empathy, we explored seller opportunities through a set of creative mindsets, including the optimist, pessimist, and visionary, uncovering nuanced perspectives often missed in traditional brainstorming.</p><h3>Future View</h3><p>We envisioned what a best-in-class fulfillment experience could look like 3–5 years out, encouraging blue-sky thinking while staying tethered to seller and buyer realities.</p><h3>Cover Story</h3><p>We closed with a storytelling exercise where teams imagined Etsy featured in a future success story. This narrative served as a powerful foundation for the Fulfillment Vision I later authored and refined.</p>"
-          },
-          "column": "left"
+        "column": "right"
+      }
+    ],
+    "speakerNotes": "f"
+  },
+  {
+    "title": "Participants",
+    "subheader": "",
+    "modules": [
+      {
+        "type": "text",
+        "content": {
+          "title": "",
+          "text": "<h3>My Role</h3><ul><li>Championed the need for strategic alignment with my partners, using past successes to make the case for investing time in this work</li><li>Designed and orchestrated a three-day workshop, including defining activities and securing a neutral facilitator so I could participate fully alongside my peers</li><li>Synthesized the output into enduring artifacts, a vision statement, and a set of fulfillment principles that the team could carry forward into planning and execution</li></ul><h3>Partnered With</h3><ul><li>Research leadership</li><li>Staff Designer (who facilitated the sessions)</li></ul><h3>Participants</h3><ul><li>GM/VP of Fulfillment</li><li>Product, Engineering, and Research leaders</li><li>Product Marketing, Analytics, and Finance leads</li><li>Product Design Manager</li></ul>"
         },
-        {
-          "id": "Workshop Design-workshop-img-0-1755722042513",
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
-            "alt": "Workshop Design workshop image 1"
-          },
-          "column": "right"
-        }
-      ]
-    },
-    {
-      "title": "Output: Fulfillment Vision",
-      "subheader": "",
-      "modules": [
-        {
-          "id": "Output: Fulfillment Vision-content-1755722042513",
-          "type": "text",
-          "content": {
-            "text": "<p><span style=\"background-color: transparent;\">By combing the output from the various workshop activities, especially the cover story exercise, I was able to write and refine the teams thoughts into a mission statement. The team referred to this as the Fulfillment Vision.&nbsp;&nbsp;</span></p><p><span style=\"background-color: transparent;\">The resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.</span></p>",
-            "title": ""
-          },
-          "column": "left"
+        "column": "left",
+        "id": "1755725835527-0.4935839077782954"
+      },
+      {
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/etsy-participants.jpg",
+          "alt": "",
+          "position": "below",
+          "columns": "6"
         },
-        {
-          "id": "Output: Fulfillment Vision-image-1755722042513",
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.jpeg",
-            "alt": "Output: Fulfillment Vision visual"
-          },
-          "column": "right"
+        "column": "right",
+        "id": "1755725874091-0.2040796268059083"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Workshop Design",
+    "subheader": "",
+    "modules": [
+      {
+        "id": "Workshop Design-content-1755722042513",
+        "type": "text",
+        "content": {
+          "text": "<p>To build true alignment across disciplines, I designed a three-day workshop focused on co-creation, strategic thinking, and grounding our decisions in real user needs. The structure was intentional: each activity layered insight and perspective, ultimately enabling the team to converge on a shared direction.</p><h3>Grounding in Research</h3><p>We began by immersing ourselves in key inputs: seller behavior data, industry trends, brand positioning, and a reminder of Etsy's broader mission, to ensure we were anchored in both user insight and business context.</p><h3>Thinking Hats Exercise</h3><p>To challenge assumptions and foster empathy, we explored seller opportunities through a set of creative mindsets, including the optimist, pessimist, and visionary, uncovering nuanced perspectives often missed in traditional brainstorming.</p><h3>Future View</h3><p>We envisioned what a best-in-class fulfillment experience could look like 3–5 years out, encouraging blue-sky thinking while staying tethered to seller and buyer realities.</p><h3>Cover Story</h3><p>We closed with a storytelling exercise where teams imagined Etsy featured in a future success story. This narrative served as a powerful foundation for the Fulfillment Vision I later authored and refined.</p>"
         },
-        {
-          "type": "quote",
-          "content": {
-            "title": "",
-            "text": "<p><span style=\"background-color: transparent;\">\"Commodity based ecommerce has put an emphasis on immediate delivery of items from a warehouse shelf to your door and has set this expectation with shoppers. Etsy's buyers shop directly from independent sellers who make handmade items and souce vintage goods. The unique nature of our marketplace and the items being sold introduces an unfamiliar fulfillment process.&nbsp;</span></p><p><span style=\"background-color: transparent;\">By providing a clear and trustworthy experience we can reset and establish meaningful expectations that are unique to Etsy. By doing this we can then redirect the focus on what matters most - </span><strong style=\"background-color: transparent;\">the special</strong><span style=\"background-color: transparent;\">\"</span></p>"
-          },
-          "column": "left",
-          "id": "1755796976185-0.8986621548756766"
-        }
-      ]
-    },
-    {
-      "title": "Output: Fulfillment Principles",
-      "subheader": "Strategic Guideposts for Decision Making",
-      "modules": [
-        {
-          "id": "Output: Fulfillment Principles-content-1755722042513",
-          "type": "text",
-          "content": {
-            "text": "<p>Beyond the vision statement, the workshop generated a set of strategic principles that became decision-making guideposts for the team. These weren't abstract ideals but practical frameworks rooted in our shared understanding of user needs and market realities.</p><h3>The Five Fulfillment Principles</h3><p>Each principle captured a key insight from our collaborative work and provided clear direction for how we wanted to approach fulfillment challenges moving forward:</p><ul><li><strong>Human-centered:</strong> Recognize that behind every transaction are real people with individual needs, circumstances, and expectations</li><li><strong>Transparent:</strong> Provide clear, honest communication about timelines, processes, and any changes that affect the buyer's experience</li><li><strong>Reliable:</strong> Build consistent, dependable experiences that buyers can trust, even when dealing with the inherent variability of a handmade marketplace</li><li><strong>Educational:</strong> Help buyers understand what makes Etsy's fulfillment experience unique and valuable, setting appropriate expectations</li><li><strong>Flexible:</strong> Design systems and processes that can adapt to the diverse needs of sellers while maintaining quality standards</li></ul><p>These principles became our north star for product decisions, helping teams evaluate trade-offs and maintain consistency across different fulfillment initiatives.</p>"
-          },
-          "column": "left"
+        "column": "left"
+      },
+      {
+        "id": "Workshop Design-workshop-img-0-1755722042513",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
+          "alt": "Workshop Design workshop image 1"
         },
-        {
-          "id": "Output: Fulfillment Principles-image-1755722042513",
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/fashion-principles.jpg",
-            "alt": "Fulfillment Principles framework"
-          },
-          "column": "right"
-        }
-      ]
-    },
-    {
-      "title": "Impact and Next Steps",
-      "subheader": "",
-      "modules": [
-        {
-          "id": "Impact and Next Steps-content-1755722042513",
-          "type": "text",
-          "content": {
-            "text": "<h3>Immediate Impact</h3><p>The workshop and resulting artifacts had an immediate effect on how the team approached their work:</p><ul><li><strong>Strategic Clarity:</strong> Leadership had a shared framework for evaluating new initiatives and making resource allocation decisions</li><li><strong>Team Alignment:</strong> Cross-functional partners could reference common principles when discussing trade-offs and priorities</li><li><strong>Decision Confidence:</strong> Individual contributors had clear guideposts for daily product and design decisions</li></ul><h3>Long-term Integration</h3><p>The vision and principles became living documents that informed:</p><ul><li>Quarterly planning sessions and roadmap prioritization</li><li>New team member onboarding and context-setting</li><li>Cross-team collaboration and dependency discussions</li><li>Executive presentations and strategic communications</li></ul><h3>Key Learnings</h3><p>This experience reinforced several important insights about leading strategic work:</p><ul><li><strong>Influence over Authority:</strong> Sometimes the most important work isn't formally assigned—it requires building consensus and demonstrating value</li><li><strong>Process Matters:</strong> How you arrive at a vision is as important as the vision itself—collaborative creation builds stronger buy-in</li><li><strong>Balance Structure and Flexibility:</strong> Strategic frameworks should provide clarity without constraining creative problem-solving</li></ul>"
-          },
-          "column": "left"
+        "column": "right"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Output: Fulfillment Vision",
+    "subheader": "",
+    "modules": [
+      {
+        "id": "Output: Fulfillment Vision-content-1755722042513",
+        "type": "text",
+        "content": {
+          "text": "<p><span style=\"background-color: transparent;\">By combing the output from the various workshop activities, especially the cover story exercise, I was able to write and refine the teams thoughts into a mission statement. The team referred to this as the Fulfillment Vision.&nbsp;&nbsp;</span></p><p><span style=\"background-color: transparent;\">The resulting vision captured the heart of Etsy's fulfillment journey: human-centered at its core, but aligned with the company's broader mission and competitive realities. It became the shared voice of our leadership team and a touchstone for our direction.</span></p>",
+          "title": ""
         },
-        {
-          "id": "Impact and Next Steps-image-1755722042513",
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/etsy-reflections.jpg",
-            "alt": "Workshop reflection and next steps"
-          },
-          "column": "right"
-        }
-      ]
-    }
-  ]
-}
+        "column": "left"
+      },
+      {
+        "id": "Output: Fulfillment Vision-image-1755722042513",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.jpeg",
+          "alt": "Output: Fulfillment Vision visual"
+        },
+        "column": "right"
+      },
+      {
+        "type": "quote",
+        "content": {
+          "title": "",
+          "text": "<p><span style=\"background-color: transparent;\">\"Commodity based ecommerce has put an emphasis on immediate delivery of items from a warehouse shelf to your door and has set this expectation with shoppers. Etsy's buyers shop directly from independent sellers who make handmade items and souce vintage goods. The unique nature of our marketplace and the items being sold introduces an unfamiliar fulfillment process.&nbsp;</span></p><p><span style=\"background-color: transparent;\">By providing a clear and trustworthy experience we can reset and establish meaningful expectations that are unique to Etsy. By doing this we can then redirect the focus on what matters most - </span><strong style=\"background-color: transparent;\">the special</strong><span style=\"background-color: transparent;\">\"</span></p>"
+        },
+        "column": "left",
+        "id": "1755796976185-0.8986621548756766"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Output: Fulfillment Principles",
+    "subheader": "Strategic Guideposts for Decision Making",
+    "modules": [
+      {
+        "id": "Output: Fulfillment Principles-content-1755722042513",
+        "type": "text",
+        "content": {
+          "text": "<p>Beyond the vision statement, the workshop generated a set of strategic principles that became decision-making guideposts for the team. These weren't abstract ideals but practical frameworks rooted in our shared understanding of user needs and market realities.</p><h3>The Five Fulfillment Principles</h3><p>Each principle captured a key insight from our collaborative work and provided clear direction for how we wanted to approach fulfillment challenges moving forward:</p><ul><li><strong>Human-centered:</strong> Recognize that behind every transaction are real people with individual needs, circumstances, and expectations</li><li><strong>Transparent:</strong> Provide clear, honest communication about timelines, processes, and any changes that affect the buyer's experience</li><li><strong>Reliable:</strong> Build consistent, dependable experiences that buyers can trust, even when dealing with the inherent variability of a handmade marketplace</li><li><strong>Educational:</strong> Help buyers understand what makes Etsy's fulfillment experience unique and valuable, setting appropriate expectations</li><li><strong>Flexible:</strong> Design systems and processes that can adapt to the diverse needs of sellers while maintaining quality standards</li></ul><p>These principles became our north star for product decisions, helping teams evaluate trade-offs and maintain consistency across different fulfillment initiatives.</p>"
+        },
+        "column": "left"
+      },
+      {
+        "id": "Output: Fulfillment Principles-image-1755722042513",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/fashion-principles.jpg",
+          "alt": "Fulfillment Principles framework"
+        },
+        "column": "right"
+      }
+    ],
+    "speakerNotes": ""
+  },
+  {
+    "title": "Impact and Next Steps",
+    "subheader": "",
+    "modules": [
+      {
+        "id": "Impact and Next Steps-content-1755722042513",
+        "type": "text",
+        "content": {
+          "text": "<h3>Immediate Impact</h3><p>The workshop and resulting artifacts had an immediate effect on how the team approached their work:</p><ul><li><strong>Strategic Clarity:</strong> Leadership had a shared framework for evaluating new initiatives and making resource allocation decisions</li><li><strong>Team Alignment:</strong> Cross-functional partners could reference common principles when discussing trade-offs and priorities</li><li><strong>Decision Confidence:</strong> Individual contributors had clear guideposts for daily product and design decisions</li></ul><h3>Long-term Integration</h3><p>The vision and principles became living documents that informed:</p><ul><li>Quarterly planning sessions and roadmap prioritization</li><li>New team member onboarding and context-setting</li><li>Cross-team collaboration and dependency discussions</li><li>Executive presentations and strategic communications</li></ul><h3>Key Learnings</h3><p>This experience reinforced several important insights about leading strategic work:</p><ul><li><strong>Influence over Authority:</strong> Sometimes the most important work isn't formally assigned—it requires building consensus and demonstrating value</li><li><strong>Process Matters:</strong> How you arrive at a vision is as important as the vision itself—collaborative creation builds stronger buy-in</li><li><strong>Balance Structure and Flexibility:</strong> Strategic frameworks should provide clarity without constraining creative problem-solving</li></ul>"
+        },
+        "column": "left"
+      },
+      {
+        "id": "Impact and Next Steps-image-1755722042513",
+        "type": "image",
+        "content": {
+          "src": "/lovable-uploads/etsy-reflections.jpg",
+          "alt": "Workshop reflection and next steps"
+        },
+        "column": "right"
+      }
+    ],
+    "speakerNotes": ""
+  }
+]
