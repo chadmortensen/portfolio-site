@@ -9,6 +9,8 @@ interface SpeakerNotesWindowProps {
   isEditing: boolean;
   onUpdateSpeakerNotes: (sectionIndex: number, notes: string) => void;
   onSave: () => void;
+  onNextSlide?: () => void;
+  onPrevSlide?: () => void;
 }
 
 const SpeakerNotesWindow = ({ 
@@ -16,7 +18,9 @@ const SpeakerNotesWindow = ({
   sections, 
   isEditing, 
   onUpdateSpeakerNotes,
-  onSave 
+  onSave,
+  onNextSlide,
+  onPrevSlide
 }: SpeakerNotesWindowProps) => {
   const [fontSize, setFontSize] = useState(16);
   const windowRef = useRef<Window | null>(null);
@@ -97,6 +101,10 @@ const SpeakerNotesWindow = ({
 
   const closeSpeakerNotesWindow = () => {
     if (windowRef.current) {
+      // Clean up event listener before closing
+      if (windowRef.current.document && (windowRef.current as any).handleKeyDown) {
+        windowRef.current.document.removeEventListener('keydown', (windowRef.current as any).handleKeyDown);
+      }
       windowRef.current.close();
       windowRef.current = null;
       setIsWindowOpen(false);
@@ -118,7 +126,9 @@ const SpeakerNotesWindow = ({
     if (windowRef.current && windowRef.current.document) {
       const textarea = windowRef.current.document.getElementById('notes-editor') as HTMLTextAreaElement;
       if (textarea) {
-        onUpdateSpeakerNotes(currentSlide, textarea.value);
+        // Trim whitespace and ensure clean text
+        const cleanText = textarea.value.trim();
+        onUpdateSpeakerNotes(currentSlide, cleanText);
         onSave();
       }
     }
@@ -131,204 +141,213 @@ const SpeakerNotesWindow = ({
     const speakerNotes = currentSection?.speakerNotes || '';
     const slideTitle = currentSection?.title || `Slide ${currentSlide + 1}`;
 
-    windowRef.current.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Speaker Notes - ${slideTitle}</title>
-          <meta charset="utf-8">
-          <style>
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-              margin: 0;
-              padding: 20px;
-              background: #1a1a1a;
-              color: #e0e0e0;
-              line-height: 1.6;
-            }
-            .header {
-              background: #2a2a2a;
-              padding: 16px;
-              margin: -20px -20px 20px -20px;
-              border-bottom: 2px solid #3a3a3a;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              flex-wrap: wrap;
-              gap: 10px;
-            }
-            .slide-info {
-              font-size: 18px;
-              font-weight: 600;
-              color: #22d3ee;
-            }
-            .controls {
-              display: flex;
-              gap: 12px;
-              align-items: center;
-              flex-wrap: wrap;
-            }
-            .timer-controls {
-              display: flex;
-              gap: 6px;
-              align-items: center;
-              background: #1a1a1a;
-              padding: 8px 12px;
-              border-radius: 6px;
-              border: 1px solid #3a3a3a;
-            }
-            .timer-display {
-              font-family: 'Courier New', monospace;
-              font-size: 18px;
-              font-weight: 600;
-              color: #22d3ee;
-              min-width: 65px;
-              text-align: center;
-            }
-            .timer-btn {
-              background: #3a3a3a;
-              border: 1px solid #4a4a4a;
-              color: #e0e0e0;
-              padding: 6px 8px;
-              border-radius: 4px;
-              cursor: pointer;
-              font-size: 14px;
-              transition: background-color 0.2s;
-              min-width: 32px;
-              height: 32px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-            .timer-btn:hover {
-              background: #4a4a4a;
-            }
-            .timer-btn.start {
-              color: #10b981;
-            }
-            .timer-btn.stop {
-              color: #ef4444;
-            }
-            .timer-btn.reset {
-              color: #f59e0b;
-            }
-            .font-controls {
-              display: flex;
-              gap: 4px;
-              align-items: center;
-            }
-            .font-size-btn {
-              background: #3a3a3a;
-              border: 1px solid #4a4a4a;
-              color: #e0e0e0;
-              padding: 6px 10px;
-              border-radius: 4px;
-              cursor: pointer;
-              font-size: 14px;
-              transition: background-color 0.2s;
-            }
-            .font-size-btn:hover {
-              background: #4a4a4a;
-            }
-            .font-size-display {
-              background: #2a2a2a;
-              padding: 6px 12px;
-              border-radius: 4px;
-              font-size: 14px;
-              min-width: 50px;
-              text-align: center;
-              border: 1px solid #4a4a4a;
-            }
-            .save-btn {
-              background: #22d3ee;
-              color: #1a1a1a;
-              border: none;
-              padding: 8px 16px;
-              border-radius: 4px;
-              cursor: pointer;
-              font-weight: 600;
-              transition: background-color 0.2s;
-            }
-            .save-btn:hover {
-              background: #06b6d4;
-            }
-            .notes-container {
-              margin-top: 20px;
-            }
-            .notes-content {
-              font-size: ${fontSize}px;
-              line-height: 1.8;
-              white-space: pre-wrap;
-              word-wrap: break-word;
-              min-height: 400px;
-              padding: 20px;
-              background: #2a2a2a;
-              border-radius: 8px;
-              border: 1px solid #3a3a3a;
-            }
-            .notes-editor {
-              width: 100%;
-              min-height: 400px;
-              padding: 20px;
-              background: #2a2a2a;
-              border: 1px solid #3a3a3a;
-              border-radius: 8px;
-              color: #e0e0e0;
-              font-size: ${fontSize}px;
-              line-height: 1.8;
-              font-family: inherit;
-              resize: vertical;
-            }
-            .notes-editor:focus {
-              outline: 2px solid #22d3ee;
-              border-color: #22d3ee;
-            }
-            .empty-notes {
-              color: #888;
-              font-style: italic;
-              text-align: center;
-              padding: 40px 20px;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <div class="slide-info" id="slide-info">
-              Slide ${currentSlide + 1}: ${slideTitle}
+      windowRef.current.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Speaker Notes - ${slideTitle}</title>
+            <meta charset="utf-8">
+            <style>
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background: #1a1a1a;
+                color: #e0e0e0;
+                line-height: 1.6;
+              }
+              .header {
+                background: #2a2a2a;
+                padding: 16px;
+                margin: -20px -20px 20px -20px;
+                border-bottom: 2px solid #3a3a3a;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 10px;
+              }
+              .slide-info {
+                font-size: 18px;
+                font-weight: 600;
+                color: #22d3ee;
+              }
+              .controls {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                flex-wrap: wrap;
+              }
+              .keyboard-hint {
+                font-size: 12px;
+                color: #888;
+                background: #1a1a1a;
+                padding: 4px 8px;
+                border-radius: 4px;
+                border: 1px solid #3a3a3a;
+              }
+              .timer-controls {
+                display: flex;
+                gap: 6px;
+                align-items: center;
+                background: #1a1a1a;
+                padding: 8px 12px;
+                border-radius: 6px;
+                border: 1px solid #3a3a3a;
+              }
+              .timer-display {
+                font-family: 'Courier New', monospace;
+                font-size: 18px;
+                font-weight: 600;
+                color: #22d3ee;
+                min-width: 65px;
+                text-align: center;
+              }
+              .timer-btn {
+                background: #3a3a3a;
+                border: 1px solid #4a4a4a;
+                color: #e0e0e0;
+                padding: 6px 8px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.2s;
+                min-width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+              .timer-btn:hover {
+                background: #4a4a4a;
+              }
+              .timer-btn.start {
+                color: #10b981;
+              }
+              .timer-btn.stop {
+                color: #ef4444;
+              }
+              .timer-btn.reset {
+                color: #f59e0b;
+              }
+              .font-controls {
+                display: flex;
+                gap: 4px;
+                align-items: center;
+              }
+              .font-size-btn {
+                background: #3a3a3a;
+                border: 1px solid #4a4a4a;
+                color: #e0e0e0;
+                padding: 6px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.2s;
+              }
+              .font-size-btn:hover {
+                background: #4a4a4a;
+              }
+              .font-size-display {
+                background: #2a2a2a;
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-size: 14px;
+                min-width: 50px;
+                text-align: center;
+                border: 1px solid #4a4a4a;
+              }
+              .save-btn {
+                background: #22d3ee;
+                color: #1a1a1a;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: background-color 0.2s;
+              }
+              .save-btn:hover {
+                background: #06b6d4;
+              }
+              .notes-container {
+                margin-top: 20px;
+              }
+              .notes-content {
+                font-size: ${fontSize}px;
+                line-height: 1.8;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                min-height: 400px;
+                padding: 20px;
+                background: #2a2a2a;
+                border-radius: 8px;
+                border: 1px solid #3a3a3a;
+              }
+              .notes-editor {
+                width: 100%;
+                min-height: 400px;
+                padding: 20px;
+                background: #2a2a2a;
+                border: 1px solid #3a3a3a;
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-size: ${fontSize}px;
+                line-height: 1.8;
+                font-family: inherit;
+                resize: vertical;
+              }
+              .notes-editor:focus {
+                outline: 2px solid #22d3ee;
+                border-color: #22d3ee;
+              }
+              .empty-notes {
+                color: #888;
+                font-style: italic;
+                text-align: center;
+                padding: 40px 20px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <div class="slide-info" id="slide-info">
+                Slide ${currentSlide + 1}: ${slideTitle}
+              </div>
+              <div class="controls">
+                <div class="keyboard-hint">Ctrl+←/→ to navigate</div>
+                <div class="timer-controls">
+                  <div class="timer-display" id="timer-display">${formatTime(timerSeconds)}</div>
+                  <button class="timer-btn start" id="timer-start-btn" onclick="window.toggleTimer()">
+                    ▶
+                  </button>
+                  <button class="timer-btn reset" id="timer-reset-btn" onclick="window.resetTimer()">↻</button>
+                </div>
+                <div class="font-controls">
+                  <button class="font-size-btn" onclick="parent.adjustFontSize(-2)">A-</button>
+                  <div class="font-size-display" id="font-size-display">${fontSize}px</div>
+                  <button class="font-size-btn" onclick="parent.adjustFontSize(2)">A+</button>
+                </div>
+                ${isEditing ? '<button class="save-btn" onclick="window.saveNotes()">Save</button>' : ''}
+              </div>
             </div>
-            <div class="controls">
-              <div class="timer-controls">
-                <div class="timer-display" id="timer-display">${formatTime(timerSeconds)}</div>
-                <button class="timer-btn start" id="timer-start-btn" onclick="window.toggleTimer()">
-                  ▶
-                </button>
-                <button class="timer-btn reset" id="timer-reset-btn" onclick="window.resetTimer()">↻</button>
-              </div>
-              <div class="font-controls">
-                <button class="font-size-btn" onclick="parent.adjustFontSize(-2)">A-</button>
-                <div class="font-size-display" id="font-size-display">${fontSize}px</div>
-                <button class="font-size-btn" onclick="parent.adjustFontSize(2)">A+</button>
-              </div>
-              ${isEditing ? '<button class="save-btn" onclick="window.saveNotes()">Save</button>' : ''}
+            
+            <div class="notes-container">
+              ${isEditing ? `
+                <textarea 
+                  id="notes-editor"
+                  class="notes-editor" 
+                  placeholder="Enter speaker notes for this slide..."
+                >${speakerNotes}</textarea>
+              ` : `
+                <div class="notes-content">
+                  ${speakerNotes || '<div class="empty-notes">No speaker notes for this slide</div>'}
+                </div>
+              `}
             </div>
-          </div>
-          
-          <div class="notes-container">
-            ${isEditing ? `
-              <textarea 
-                id="notes-editor"
-                class="notes-editor" 
-                placeholder="Enter speaker notes for this slide..."
-              >${speakerNotes}</textarea>
-            ` : `
-              <div class="notes-content">
-                ${speakerNotes || '<div class="empty-notes">No speaker notes for this slide</div>'}
-              </div>
-            `}
-          </div>
-        </body>
-      </html>
-    `);
+          </body>
+        </html>
+      `);
 
     windowRef.current.document.close();
 
@@ -352,6 +371,20 @@ const SpeakerNotesWindow = ({
     (windowRef.current as any).resetTimer = () => {
       resetTimer();
     };
+
+    // Add arrow key navigation to speaker notes window
+    (windowRef.current as any).handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' && e.ctrlKey) {
+        e.preventDefault();
+        if (onNextSlide) onNextSlide();
+      } else if (e.key === 'ArrowLeft' && e.ctrlKey) {
+        e.preventDefault();
+        if (onPrevSlide) onPrevSlide();
+      }
+    };
+
+    // Add keydown listener to speaker notes window
+    windowRef.current.document.addEventListener('keydown', (windowRef.current as any).handleKeyDown);
 
     // Set up textarea without auto-save to prevent cursor reset
     if (isEditing && windowRef.current.document.getElementById('notes-editor')) {

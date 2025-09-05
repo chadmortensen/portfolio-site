@@ -500,7 +500,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       setCurrentSlide(currentSlide + 1);
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 300);
+      }, 750); // Match the transition duration
     }
   };
 
@@ -510,7 +510,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       setCurrentSlide(currentSlide - 1);
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 300);
+      }, 750); // Match the transition duration
     }
   };
 
@@ -528,8 +528,17 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       }
     };
 
+    // Expose navigation functions to speaker notes window
+    (window as any).nextSlide = nextSlide;
+    (window as any).prevSlide = prevSlide;
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      // Clean up exposed functions
+      delete (window as any).nextSlide;
+      delete (window as any).prevSlide;
+    };
   }, [currentSlide, isTransitioning, isEditing]);
 
   return (
@@ -596,6 +605,8 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
             isEditing={isEditing}
             onUpdateSpeakerNotes={handleUpdateSpeakerNotes}
             onSave={handleSave}
+            onNextSlide={nextSlide}
+            onPrevSlide={prevSlide}
           />
           
           <div className="w-px h-6 bg-swiss-light mx-2"></div>
