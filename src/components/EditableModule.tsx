@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LazyImage } from "@/components/ui/lazy-image";
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -304,7 +304,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
         return (
           <Dialog>
             <DialogTrigger asChild>
-               <LazyImage
+               <img
                   src={module.content.src}
                   alt={module.content.alt || 'Case study visual content'}
                   className="w-full cursor-pointer hover:opacity-90 transition-opacity self-start"
@@ -312,11 +312,11 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                 />
             </DialogTrigger>
             <DialogContent className="max-w-6xl w-full p-0">
-               <LazyImage
+               <img
                   src={module.content.src}
                   alt={module.content.alt || 'Enlarged case study visual content'}
                   className="w-full h-auto"
-                 decoding="async"
+                  decoding="async"
                />
             </DialogContent>
           </Dialog>
