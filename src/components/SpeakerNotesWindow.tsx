@@ -106,9 +106,7 @@ const SpeakerNotesWindow = ({
   const adjustFontSize = (delta: number) => {
     const newSize = Math.max(12, Math.min(32, fontSize + delta));
     setFontSize(newSize);
-    if (isWindowOpen) {
-      renderSpeakerNotesContent();
-    }
+    // Font size display will be updated via useEffect
   };
 
   const getCurrentSpeakerNotes = () => {
@@ -290,20 +288,20 @@ const SpeakerNotesWindow = ({
         </head>
         <body>
           <div class="header">
-            <div class="slide-info">
+            <div class="slide-info" id="slide-info">
               Slide ${currentSlide + 1}: ${slideTitle}
             </div>
             <div class="controls">
               <div class="timer-controls">
-                <div class="timer-display">${formatTime(timerSeconds)}</div>
-                <button class="timer-btn ${isTimerRunning ? 'stop' : 'start'}" onclick="window.parentTimerStart()">
-                  ${isTimerRunning ? '⏸' : '▶'}
+                <div class="timer-display" id="timer-display">${formatTime(timerSeconds)}</div>
+                <button class="timer-btn start" id="timer-start-btn" onclick="window.toggleTimer()">
+                  ▶
                 </button>
-                <button class="timer-btn reset" onclick="window.parentTimerReset()">↻</button>
+                <button class="timer-btn reset" id="timer-reset-btn" onclick="window.resetTimer()">↻</button>
               </div>
               <div class="font-controls">
                 <button class="font-size-btn" onclick="parent.adjustFontSize(-2)">A-</button>
-                <div class="font-size-display">${fontSize}px</div>
+                <div class="font-size-display" id="font-size-display">${fontSize}px</div>
                 <button class="font-size-btn" onclick="parent.adjustFontSize(2)">A+</button>
               </div>
               ${isEditing ? '<button class="save-btn" onclick="parent.saveNotes()">Save</button>' : ''}
@@ -342,43 +340,93 @@ const SpeakerNotesWindow = ({
       onSave();
     };
 
-    // Timer functions need to be accessible from the window
-    (windowRef.current as any).parentTimerStart = () => {
+    // Timer functions
+    (windowRef.current as any).toggleTimer = () => {
       if (isTimerRunning) {
         stopTimer();
       } else {
         startTimer();
       }
-      // Re-render to update button state
-      setTimeout(() => renderSpeakerNotesContent(), 100);
     };
 
-    (windowRef.current as any).parentTimerReset = () => {
+    (windowRef.current as any).resetTimer = () => {
       resetTimer();
-      // Re-render to update display
-      setTimeout(() => renderSpeakerNotesContent(), 100);
     };
 
-    // Set up textarea event listener for notes editing to avoid focus loss
+    // Set up textarea event listener with proper event handling
     if (isEditing && windowRef.current.document.getElementById('notes-editor')) {
       const textarea = windowRef.current.document.getElementById('notes-editor') as HTMLTextAreaElement;
       let debounceTimer: NodeJS.Timeout;
       
+      // Prevent event bubbling that could cause focus loss
+      textarea.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+      });
+
+      textarea.addEventListener('keyup', (e) => {
+        e.stopPropagation();
+      });
+
       textarea.addEventListener('input', (e) => {
+        e.stopPropagation();
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
           handleNotesChange((e.target as HTMLTextAreaElement).value);
         }, 300);
       });
+
+      // Focus the textarea
+      setTimeout(() => textarea.focus(), 100);
     }
   };
 
-  // Update content when current slide changes
+  // Update timer display without full re-render
+  const updateTimerDisplay = () => {
+    if (windowRef.current && !windowRef.current.closed && windowRef.current.document) {
+      const timerDisplay = windowRef.current.document.getElementById('timer-display');
+      const startBtn = windowRef.current.document.getElementById('timer-start-btn');
+      
+      if (timerDisplay) {
+        timerDisplay.textContent = formatTime(timerSeconds);
+      }
+      
+      if (startBtn) {
+        startBtn.textContent = isTimerRunning ? '⏸' : '▶';
+        startBtn.className = `timer-btn ${isTimerRunning ? 'stop' : 'start'}`;
+      }
+    }
+  };
+
+  // Update font size display without full re-render
+  const updateFontSizeDisplay = () => {
+    if (windowRef.current && !windowRef.current.closed && windowRef.current.document) {
+      const fontSizeDisplay = windowRef.current.document.getElementById('font-size-display');
+      if (fontSizeDisplay) {
+        fontSizeDisplay.textContent = `${fontSize}px`;
+      }
+    }
+  };
+
+  // Update content when current slide changes or for initial render
   useEffect(() => {
     if (isWindowOpen && windowRef.current && !windowRef.current.closed) {
       renderSpeakerNotesContent();
     }
-  }, [currentSlide, sections, fontSize, isEditing, timerSeconds, isTimerRunning]);
+  }, [currentSlide, sections, isEditing]);
+
+  // Update timer display without full re-render
+  useEffect(() => {
+    if (isWindowOpen && windowRef.current && !windowRef.current.closed) {
+      updateTimerDisplay();
+    }
+  }, [timerSeconds, isTimerRunning]);
+
+  // Update font size display without full re-render
+  useEffect(() => {
+    if (isWindowOpen && windowRef.current && !windowRef.current.closed) {
+      updateFontSizeDisplay();
+    }
+  }, [fontSize]);
 
   return (
     <div className="flex items-center space-x-2">
