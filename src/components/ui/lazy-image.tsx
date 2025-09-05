@@ -79,7 +79,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
         src={placeholderSrc}
         alt={alt}
         className={cn(
-          "w-full h-full object-cover transition-opacity duration-300",
+          "object-cover transition-opacity duration-300",
           isLoaded ? "opacity-0" : "opacity-100",
           "blur-sm scale-110" // Slight blur and scale to hide pixelation
         )}
