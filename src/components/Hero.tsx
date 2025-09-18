@@ -18,7 +18,7 @@ const Hero = () => {
               </h1>
               <div className="w-16 h-px bg-accent-blue mx-auto"></div>
               <p className="text-title2 font-light text-text-secondary max-w-4xl mx-auto px-4">
-                Product design leader with 25+ years of experience turning complex problems into meaningful outcomes
+                Design Leadership at Scale <br/> Blending empathy, strategy, and impact
               </p>
             </div>
             
