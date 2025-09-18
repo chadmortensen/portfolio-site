@@ -18,7 +18,7 @@ const Hero = () => {
               </h1>
               <div className="w-16 h-px bg-accent-blue mx-auto"></div>
               <p className="text-title2 font-light text-text-secondary max-w-4xl mx-auto px-4">
-                Empathy, systems thinking, and collaboration define my approach. <br />Balancing craft with strategy while coaching teams to deliver impact.
+                My work blends human-centered craft with strategic clarity to move people and products forward.
               </p>
             </div>
             
