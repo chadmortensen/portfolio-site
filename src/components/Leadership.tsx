@@ -39,8 +39,8 @@ const Leadership = () => {
         <div className="col-span-12 grid lg:grid-cols-2 gap-12">
           {principles.map((principle, index) => (
             <div key={index} className="flex items-start space-x-6">
-              <div className="p-3 bg-surface-primary border border-swiss-light flex-shrink-0">
-                <principle.icon className="text-accent-blue" size={24} />
+              <div className="p-3 bg-surface-primary flex-shrink-0">
+                <principle.icon className="text-accent-blue" size={28} />
               </div>
               <div>
                 <h3 className="text-title text-text-primary font-light mb-4">{principle.title}</h3>
