@@ -96,7 +96,7 @@ const Experience = () => {
           <div className="mt-8 flex justify-center">
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
-              variant="outline"
+              variant="default"
               className="flex items-center gap-2"
               aria-expanded={isExpanded}
               aria-label={isExpanded ? "Hide experience details" : "Show experience details"}
