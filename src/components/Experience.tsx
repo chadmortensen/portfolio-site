@@ -93,7 +93,7 @@ const Experience = () => {
             25+ years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
           </p>
           
-          <div className="mt-8 flex justify-center">
+          <div className="inline-flex items-center space-x-2 px-6 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray transition-colors duration-200 w-full sm:w-auto justify-center sm:justify-start">
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
               variant="outline"
