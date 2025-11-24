@@ -3,6 +3,33 @@
   "subtitle": "Strategic Design Leadership Across Multiple Verticals",
   "sections": [
     {
+      "title": "Design driving business success",
+      "subheader": "Walmart eCommerce",
+      "modules": [
+        {
+          "id": "ecommerce-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<h3>Driving discovery into a design-led backlog</h3><p>This initiative wasn’t just about running workshops. It was about using design to uncover real customer pain points and turning those insights into opportunities the business could act on. Through targeted research, co-creation sessions, and rapid concept testing, we surfaced the friction customers felt across the grocery journey and mapped where the biggest value sat.</p><p><br></p><p><strong>My role:</strong> I guided the team through the full discovery process, making sure design served as the connective tissue between research, problem framing, and prioritization. The result was a backlog grounded in customer truth and aligned to measurable business outcomes. Design didn’t just support the strategy. It shaped where the business could grow next.</p>"
+          },
+          "column": "right"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/design-backlog.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "left",
+          "id": "1755730367236-0.4984568432232931"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
       "title": "Design Principles",
       "subheader": "Walmart Fashion",
       "modules": [
@@ -52,33 +79,6 @@
           },
           "column": "left",
           "id": "1755730342065-0.194717889099993"
-        }
-      ],
-      "speakerNotes": ""
-    },
-    {
-      "title": "Design driving business success",
-      "subheader": "Walmart eCommerce",
-      "modules": [
-        {
-          "id": "ecommerce-overview",
-          "type": "text",
-          "content": {
-            "title": "",
-            "text": "<h3>Driving discovery into a design-led backlog</h3><p>This initiative wasn’t just about running workshops. It was about using design to uncover real customer pain points and turning those insights into opportunities the business could act on. Through targeted research, co-creation sessions, and rapid concept testing, we surfaced the friction customers felt across the grocery journey and mapped where the biggest value sat.</p><p><br></p><p><strong>My role:</strong> I guided the team through the full discovery process, making sure design served as the connective tissue between research, problem framing, and prioritization. The result was a backlog grounded in customer truth and aligned to measurable business outcomes. Design didn’t just support the strategy. It shaped where the business could grow next.</p>"
-          },
-          "column": "right"
-        },
-        {
-          "type": "image",
-          "content": {
-            "src": "/lovable-uploads/design-backlog.jpg",
-            "alt": "",
-            "position": "below",
-            "columns": "6"
-          },
-          "column": "left",
-          "id": "1755730367236-0.4984568432232931"
         }
       ],
       "speakerNotes": ""
