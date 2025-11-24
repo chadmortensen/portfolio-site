@@ -26,7 +26,8 @@
           "column": "left",
           "id": "1755730306443-0.3683720949786914"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Design Vision",
@@ -52,18 +53,19 @@
           "column": "left",
           "id": "1755730342065-0.194717889099993"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
-      "title": "Building a healthy pipeline of customer-driven features",
-      "subheader": "Walmart Grocery Fulfillment",
+      "title": "Design driving business success",
+      "subheader": "Walmart eCommerce",
       "modules": [
         {
           "id": "ecommerce-overview",
           "type": "text",
           "content": {
             "title": "",
-            "text": "<h3><span style=\"background-color: transparent;\">Driving discovery into a design-led backlog</span></h3><p><span style=\"background-color: transparent;\">For a key discovery initiative in grocery, I guided the team through a structured process: defining our design target, articulating goals and customer problems, synthesizing past research alongside new co-creation studies, creating design principles, and facilitating cross-functional ideation. We tested concepts, validated assumptions, and ultimately built a backlog driven directly by customer insights.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I shaped the process end to end, making sure design played the connective role between research, ideation, and execution. The result was a backlog that reflected not just business needs, but a clear line of sight to customer value.</span></p>"
+            "text": "<h3>Driving discovery into a design-led backlog</h3><p>This initiative wasn’t just about running workshops. It was about using design to uncover real customer pain points and turning those insights into opportunities the business could act on. Through targeted research, co-creation sessions, and rapid concept testing, we surfaced the friction customers felt across the grocery journey and mapped where the biggest value sat.</p><p><br></p><p><strong>My role:</strong> I guided the team through the full discovery process, making sure design served as the connective tissue between research, problem framing, and prioritization. The result was a backlog grounded in customer truth and aligned to measurable business outcomes. Design didn’t just support the strategy. It shaped where the business could grow next.</p>"
           },
           "column": "right"
         },
@@ -78,7 +80,8 @@
           "column": "left",
           "id": "1755730367236-0.4984568432232931"
         }
-      ]
+      ],
+      "speakerNotes": ""
     },
     {
       "title": "Journey Maps",
@@ -104,7 +107,8 @@
           "column": "left",
           "id": "1755730424173-0.5933010399483203"
         }
-      ]
+      ],
+      "speakerNotes": ""
     }
   ]
 }
