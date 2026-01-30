@@ -18,9 +18,6 @@ export default {
 			}
 		},
 		extend: {
-			borderRadius: {
-				DEFAULT: '0.375rem'
-			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -88,6 +85,7 @@ export default {
 				'surface-tertiary': 'hsl(var(--surface-tertiary))'
 			},
 			borderRadius: {
+				DEFAULT: '0.375rem',
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
