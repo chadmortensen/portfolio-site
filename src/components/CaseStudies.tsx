@@ -98,7 +98,7 @@ const CaseStudies = () => {
 
 
                   <div className="pt-4">
-                    <button onClick={() => navigate(study.route)} className="inline-flex items-center space-x-2 px-6 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray transition-colors duration-200 w-full sm:w-auto justify-center sm:justify-start">
+                    <button onClick={() => navigate(study.route)} className="inline-flex items-center space-x-2 px-6 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray rounded transition-colors duration-200 w-full sm:w-auto justify-center sm:justify-start">
                       <span>{study.id === 4 ? "View Projects" : "Read Full Case Study"}</span>
                       <ArrowRight size={16} />
                     </button>

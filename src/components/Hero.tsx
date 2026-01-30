@@ -27,18 +27,18 @@ const Hero = () => {
               <p className="text-body text-text-tertiary max-w-3xl mx-auto leading-relaxed">Yes, I used AI tools to create this portfolio. Rest assured, I approve of and stand behind everything on this website as true.</p>
               */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 sm:pt-8">
-                <button 
-                  onClick={scrollToAbout} 
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+                <button
+                  onClick={scrollToAbout}
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray rounded transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
                   aria-label="Learn more about Chad Mortensen's background and experience"
                 >
                   Learn About Me
                 </button>
-                <button 
+                <button
                   onClick={() => document.querySelector("#case-studies")?.scrollIntoView({
                     behavior: "smooth"
-                  })} 
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 border border-swiss-charcoal text-text-primary hover:bg-surface-secondary transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+                  })}
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 border border-swiss-charcoal text-text-primary hover:bg-surface-secondary rounded transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
                   aria-label="View Chad Mortensen's case studies and design work"
                 >
                   View My Work
