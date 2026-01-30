@@ -44,9 +44,9 @@ const UXTips = () => {
         </div>
 
         <div className="col-span-12 max-w-2xl mx-auto text-center">
-          <Button 
+          <Button
             onClick={getRandomTip}
-            className="mb-8 px-8 py-3 text-lg"
+            className="mb-8 px-8 py-3 text-lg rounded"
             variant="default"
             disabled={isAnimating}
           >

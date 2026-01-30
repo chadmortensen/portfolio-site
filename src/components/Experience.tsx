@@ -97,7 +97,7 @@ const Experience = () => {
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
               variant="default"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 rounded"
               aria-expanded={isExpanded}
               aria-label={isExpanded ? "Hide experience details" : "Show experience details"}
             >
