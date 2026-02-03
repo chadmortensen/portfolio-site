@@ -62,7 +62,7 @@ const CaseStudies = () => {
         </div>
 
         <div className="col-span-12 space-y-12 sm:space-y-16">
-          {caseStudies.map((study, index) => <div key={index} className="grid lg:grid-cols-12 gap-6 sm:gap-8 bg-surface-primary border border-swiss-light overflow-hidden">
+          {caseStudies.map((study, index) => <div key={index} className="grid lg:grid-cols-12 gap-6 sm:gap-8 bg-surface-primary border border-swiss-light overflow-hidden rounded-[2em]">
               <div className="lg:col-span-5">
                 <img 
                   src={study.image} 
