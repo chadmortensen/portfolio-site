@@ -50,7 +50,7 @@ const UXTips = () => {
             variant="default"
             disabled={isAnimating}
           >
-            Tip please!
+            <p>Get a UX Tip</p>
           </Button>
 
           {(currentTip || isAnimating) && (
