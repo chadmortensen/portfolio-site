@@ -22,9 +22,9 @@ const About = () => {
         
         <div className="col-span-12 lg:col-span-4 space-y-8">
           <div>
-            <h3 className="text-title text-text-primary mb-6 font-light">My Passion</h3>
+            <h3 className="text-title text-text-primary mb-6 font-light">My Super Power</h3>
             <p className="text-body text-text-secondary leading-relaxed">
-              I believe great design starts with empathy, scales with systems thinking, and succeeds through collaboration. Whether leading design at Brightside Health, Etsy, or Walmart, I focus on aligning teams around clear goals, supporting individual growth, and delivering thoughtful, high-impact experiences.
+              I do my best work when things get complex and the stakes are high. When pressure rises, I stay steady. I quickly assess what matters most, create clarity, and move with urgency without adding noise or unnecessary stress. I've been told I have a way of lowering the temperature in heated discussions and helping teams shift from tension to traction. Diplomatic but honest, calm but decisive, I create the conditions for thoughtful decisions and meaningful forward progress.
             </p>
           </div>
         </div>
