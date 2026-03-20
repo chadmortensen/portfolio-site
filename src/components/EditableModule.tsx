@@ -306,7 +306,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             <DialogTrigger asChild>
                <img
                   src={module.content.src}
-                  alt={module.content.alt || 'Case study visual content'}
+                  alt={module.content.alt ?? 'Case study visual content'}
                   className="w-full cursor-pointer hover:opacity-90 transition-opacity self-start"
                   style={heightStyle}
                 />
@@ -314,7 +314,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             <DialogContent className="max-w-6xl w-full p-0">
                <img
                   src={module.content.src}
-                  alt={module.content.alt || 'Enlarged case study visual content'}
+                  alt={module.content.alt ?? 'Enlarged case study visual content'}
                   className="w-full h-auto"
                   decoding="async"
                />

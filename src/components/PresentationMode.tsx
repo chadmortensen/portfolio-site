@@ -464,7 +464,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
                     <div className="cursor-pointer hover:opacity-90 transition-opacity">
                        <img
                           src={section.image || section.sectionImage || section.fullWidthImage}
-                          alt={`${section.title} - Design process and outcomes illustration`}
+                          alt={`Supporting visual for ${section.title}`}
                           className="w-full h-auto rounded-lg shadow-lg"
                         />
                     </div>
@@ -476,7 +476,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
                     </DialogDescription>
                      <img
                         src={section.image || section.sectionImage || section.fullWidthImage}
-                        alt={`${section.title} - Enlarged design process and outcomes illustration`}
+                        alt={`Enlarged supporting visual for ${section.title}`}
                         className="w-full h-auto"
                       />
                   </DialogContent>
