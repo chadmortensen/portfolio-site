@@ -40,7 +40,7 @@
         "type": "image",
         "content": {
           "src": "/lovable-uploads/etsy-participants.jpg",
-          "alt": "",
+          "alt": "Workshop participants collaborating on Etsy fulfillment strategy",
           "position": "below",
           "columns": "6"
         },
@@ -402,7 +402,7 @@
         "type": "image",
         "content": {
           "src": "/lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
-          "alt": "Workshop Design workshop image 1"
+          "alt": "Workshop activity used to align the Etsy fulfillment team"
         },
         "column": "right"
       }
@@ -1027,7 +1027,7 @@
         "type": "image",
         "content": {
           "src": "/lovable-uploads/7af65158-25af-4b70-958c-a2ce6f8cd266.jpeg",
-          "alt": "Output: Fulfillment Vision visual"
+          "alt": "Documented Etsy fulfillment vision"
         },
         "column": "right"
       }
@@ -1328,7 +1328,7 @@
         "type": "image",
         "content": {
           "src": "/lovable-uploads/5994c658-34de-437e-853c-9be70a50c57b.jpeg",
-          "alt": "Output: Fulfillment Principles visual"
+          "alt": "Etsy fulfillment principles used to guide roadmap decisions"
         },
         "column": "right"
       }
@@ -1477,7 +1477,7 @@
         "type": "image",
         "content": {
           "src": "/lovable-uploads/etsy-reflections.jpg",
-          "alt": "",
+          "alt": "Alignment takeaways from the Etsy fulfillment workshop",
           "position": "below",
           "columns": "6"
         },

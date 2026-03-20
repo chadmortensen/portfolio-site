@@ -19,7 +19,7 @@
           "type": "image",
           "content": {
             "src": "/lovable-uploads/design-backlog.jpg",
-            "alt": "",
+          "alt": "Design discovery backlog shaped by Walmart eCommerce research",
             "position": "below",
             "columns": "6"
           },
@@ -46,7 +46,7 @@
           "type": "image",
           "content": {
             "src": "/lovable-uploads/fashion-principles.jpg",
-            "alt": "",
+          "alt": "Research-backed design principles for Walmart Fashion",
             "position": "below",
             "columns": "6"
           },
@@ -73,7 +73,7 @@
           "type": "image",
           "content": {
             "src": "/lovable-uploads/grocery-vision.jpg",
-            "alt": "",
+          "alt": "Future-state vision for Walmart Grocery Fulfillment",
             "position": "below",
             "columns": "6"
           },
@@ -100,7 +100,7 @@
           "type": "image",
           "content": {
             "src": "/lovable-uploads/journey-map.jpg",
-            "alt": "",
+          "alt": "Customer journey map connecting Walmart fulfillment strategy to user experience",
             "position": "below",
             "columns": "6"
           },
