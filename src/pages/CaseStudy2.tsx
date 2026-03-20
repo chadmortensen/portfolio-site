@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import PresentationMode from "@/components/PresentationMode";
+import Footer from "@/components/Footer";
 import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
 import { SectionEditor } from "@/components/SectionEditor";
@@ -632,6 +633,8 @@ const CaseStudy2 = () => {
           </div>
         </div>
       </div>
+
+      <Footer backgroundClassName="bg-surface-secondary" />
     </div>
   );
 };

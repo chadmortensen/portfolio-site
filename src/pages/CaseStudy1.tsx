@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import PresentationMode from "@/components/PresentationMode";
+import Footer from "@/components/Footer";
 import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
 import { SectionEditor } from "@/components/SectionEditor";
@@ -652,16 +653,11 @@ const CaseStudy1 = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="py-12 bg-surface-secondary border-t border-swiss-light">
-        <div className="swiss-grid">
-          <div className="col-span-12 text-center">
-            <button onClick={() => navigate('/')} className="px-8 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray transition-colors duration-200">
-              Back to Portfolio
-            </button>
-          </div>
-        </div>
-      </footer>
+      <Footer
+        backgroundClassName="bg-surface-secondary"
+        showBackButton
+        onBackClick={() => navigate('/')}
+      />
 
       {/* Image Overlay Dialog */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
