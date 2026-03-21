@@ -1,7 +1,7 @@
 import { ArrowLeft, Calendar, Users, Target, X, Play, Edit3, Save, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
@@ -662,6 +662,7 @@ const CaseStudy1 = () => {
       {/* Image Overlay Dialog */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
         <DialogContent className="max-w-7xl max-h-[90vh] p-0 border-0 bg-transparent">
+          <DialogTitle className="sr-only">Enlarged case study image</DialogTitle>
           {selectedImage && (
              <img 
                src={selectedImage} 
