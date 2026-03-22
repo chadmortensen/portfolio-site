@@ -1,46 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import uxTipsData from "../../data/ux-tips.json";
+import { useLanguage } from "@/hooks/use-language";
 
 const UXTips = () => {
+  const { content } = useLanguage();
   const [currentTip, setCurrentTip] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [displayTip, setDisplayTip] = useState<string>("");
-  
+
   const getRandomTip = () => {
     setIsAnimating(true);
-    
-    // Start the slot machine animation
+
     let cycleCount = 0;
-    const maxCycles = 12; // Number of tips to cycle through
-    const finalTip = uxTipsData.tips[Math.floor(Math.random() * uxTipsData.tips.length)];
-    
+    const maxCycles = 12;
+    const finalTip = content.uxTips.tips[Math.floor(Math.random() * content.uxTips.tips.length)];
+
     const cycleInterval = setInterval(() => {
-      const randomTip = uxTipsData.tips[Math.floor(Math.random() * uxTipsData.tips.length)];
+      const randomTip = content.uxTips.tips[Math.floor(Math.random() * content.uxTips.tips.length)];
       setDisplayTip(randomTip);
       cycleCount++;
-      
+
       if (cycleCount >= maxCycles) {
         clearInterval(cycleInterval);
-        // Final tip reveal with slight delay
         setTimeout(() => {
           setDisplayTip(finalTip);
           setCurrentTip(finalTip);
           setIsAnimating(false);
         }, 200);
       }
-    }, 100); // Change tip every 100ms
+    }, 100);
   };
 
   return (
     <section id="ux-tips" className="py-24 bg-surface-secondary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center">
-          <h2 className="text-headline text-text-primary mb-4">UX Tips</h2>
-          <div className="w-16 h-px bg-accent-blue mx-auto mb-6"></div>
-          <p className="text-body text-text-secondary max-w-3xl mx-auto mb-6">
-            Oh, you came here for some tips? Here you go!
-          </p>
+          <h2 className="text-headline text-text-primary mb-4">{content.uxTips.title}</h2>
+          <div className="w-16 h-px bg-accent-blue mx-auto mb-6" />
+          <p className="text-body text-text-secondary max-w-3xl mx-auto mb-6">{content.uxTips.intro}</p>
         </div>
 
         <div className="col-span-12 max-w-2xl mx-auto text-center">
@@ -50,20 +47,16 @@ const UXTips = () => {
             variant="default"
             disabled={isAnimating}
           >
-            <p>Get a UX Tip</p>
+            {content.uxTips.buttonLabel}
           </Button>
 
           {(currentTip || isAnimating) && (
             <div className="bg-surface-primary border border-swiss-light rounded-lg p-8 shadow-sm relative overflow-hidden">
-              <div className={`transition-all duration-200 ${isAnimating ? 'animate-slot-machine' : 'animate-fade-in'}`}>
+              <div className={`transition-all duration-200 ${isAnimating ? "animate-slot-machine" : "animate-fade-in"}`}>
                 {isAnimating ? (
-                  <p className="text-body text-text-primary italic leading-relaxed min-h-[60px] flex items-center justify-center">
-                    "{displayTip}"
-                  </p>
+                  <p className="text-body text-text-primary italic leading-relaxed min-h-[60px] flex items-center justify-center">"{displayTip}"</p>
                 ) : (
-                  <p className="text-body text-text-primary italic leading-relaxed">
-                    "{currentTip}"
-                  </p>
+                  <p className="text-body text-text-primary italic leading-relaxed">"{currentTip}"</p>
                 )}
               </div>
             </div>
