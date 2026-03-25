@@ -12,6 +12,7 @@ import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
 import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
+import Footer from "@/components/Footer";
 
 const CaseStudy2 = () => {
   const navigate = useNavigate();
@@ -632,6 +633,8 @@ const CaseStudy2 = () => {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
