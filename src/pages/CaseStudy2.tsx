@@ -12,14 +12,10 @@ import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
 import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
-import { useLanguage } from "@/hooks/use-language";
-import { pageCopy } from "@/lib/page-copy";
 
 const CaseStudy2 = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const { language } = useLanguage();
-  const copy = pageCopy[language];
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editPassword, setEditPassword] = useState('');
@@ -519,14 +515,14 @@ const CaseStudy2 = () => {
           <div className="col-span-12 flex items-center justify-between min-w-0">
             <button onClick={() => navigate('/')} className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors flex-shrink-0">
               <ArrowLeft size={20} />
-              <span className="text-body hidden sm:inline">{copy.backToPortfolio}</span>
-              <span className="text-body sm:hidden">{copy.backShort}</span>
+              <span className="text-body hidden sm:inline">Back to Portfolio</span>
+              <span className="text-body sm:hidden">Back</span>
             </button>
             <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0 overflow-visible">
               {isEditing && (
                 <Button onClick={handleSave} size="sm" className="flex items-center space-x-2">
                   <Save size={16} />
-                  <span className="text-sm hidden sm:inline">{language === "es" ? "Guardar" : language === "fr" ? "Enregistrer" : "Save"}</span>
+                  <span className="text-sm hidden sm:inline">Save</span>
                 </Button>
               )}
               <Button
@@ -536,7 +532,7 @@ const CaseStudy2 = () => {
                 className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
               >
                 <Play size={16} />
-                <span className="text-sm hidden md:inline">{language === "es" ? "Modo presentación" : language === "fr" ? "Mode présentation" : "Presentation Mode"}</span>
+                <span className="text-sm hidden md:inline">Presentation Mode</span>
               </Button>
               <Button
                 variant="ghost"
@@ -545,7 +541,7 @@ const CaseStudy2 = () => {
                 className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
               >
                 <Edit3 size={16} />
-                <span className="text-sm hidden md:inline">{language === "es" ? "Modo edición" : language === "fr" ? "Mode édition" : "Edit Mode"}</span>
+                <span className="text-sm hidden md:inline">Edit Mode</span>
               </Button>
               <span className="text-body text-text-primary font-bold hidden sm:inline whitespace-nowrap">Chad Mortensen</span>
             </div>
@@ -563,7 +559,7 @@ const CaseStudy2 = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="text-display text-center bg-transparent border-none text-text-primary placeholder:text-text-secondary"
-                  placeholder={copy.caseStudyTitlePlaceholder}
+                  placeholder="Case study title"
                 />
                 <Input
                   value={subtitle}
@@ -616,7 +612,7 @@ const CaseStudy2 = () => {
                         className="flex items-center space-x-2"
                       >
                         <Plus size={16} />
-                        <span>{language === "es" ? "Agregar módulo" : language === "fr" ? "Ajouter un module" : "Add Module"}</span>
+                        <span>Add Module</span>
                       </Button>
                     </div>
                   )}
