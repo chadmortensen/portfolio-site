@@ -1,23 +1,39 @@
+
 import { Shield, TrendingUp, Users, Award } from "lucide-react";
-import { useLanguage } from "@/hooks/use-language";
 
 const Leadership = () => {
-  const { content } = useLanguage();
-
   const principles = [
-    { icon: Shield, ...content.leadership.principles[0] },
-    { icon: TrendingUp, ...content.leadership.principles[1] },
-    { icon: Users, ...content.leadership.principles[2] },
-    { icon: Award, ...content.leadership.principles[3] },
+    {
+      icon: Shield,
+      title: "Transparency builds trust",
+      description: "I lead with honesty and clarity, sharing context, being direct, and creating space for open conversations. Trust starts with being someone your team can count on."
+    },
+    {
+      icon: TrendingUp,
+      title: "Celebrate progress, not just outcomes",
+      description: "Design is demanding. It's easy to skip the moments that matter. I make time to recognize great work, reflect on what we've learned, and keep morale high."
+    },
+    {
+      icon: Users,
+      title: "Diverse perspectives make better products",
+      description: "I believe the best teams reflect a range of backgrounds and experiences. Diversity makes our work stronger, more inclusive, and more relevant."
+    },
+    {
+      icon: Award,
+      title: "Craft matters",
+      description: "I hold a high bar for quality and help teams rise to it through thoughtful critique, collaboration, and shared pride in the work. Great design should not only be effective but also something we're genuinely proud to put into the world."
+    }
   ];
 
   return (
     <section id="leadership" className="py-24 bg-surface-secondary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-16">
-          <h2 className="text-headline text-text-primary mb-4">{content.leadership.title}</h2>
-          <div className="w-16 h-px bg-accent-aqua mx-auto mb-6" />
-          <p className="text-body text-text-secondary max-w-4xl mx-auto">{content.leadership.intro}</p>
+          <h2 className="text-headline text-text-primary mb-4">My Leadership Style</h2>
+          <div className="w-16 h-px bg-accent-aqua mx-auto mb-6"></div>
+          <p className="text-body text-text-secondary max-w-4xl mx-auto">
+            Leading design teams is about more than setting direction, it's about creating an environment where people can thrive, grow, and do their best work. Here's what I believe makes that possible:
+          </p>
         </div>
 
         <div className="col-span-12 grid lg:grid-cols-2 gap-12">
