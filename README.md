@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# UX Tips
 
-## Project info
+A living portfolio exploring how modern product design and AI-assisted development can work together to build thoughtful, scalable digital experiences.
 
-**URL**: https://lovable.dev/projects/dfb2c5a7-497a-41e6-8cad-e9a007ec763f
+🔗 https://uxtips.com
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🧭 Why This Project Exists
 
-**Use Lovable**
+UX Tips started as a way to share insights on product design, but it has evolved into something more interesting:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/dfb2c5a7-497a-41e6-8cad-e9a007ec763f) and start prompting.
+**A hands-on exploration of how designers can build and ship using AI.**
 
-Changes made via Lovable will be committed automatically to this repo.
+Rather than treating AI as a novelty, this project treats it as a creative partner across:
+- Product thinking
+- Content creation
+- Front-end development
+- Iteration and refinement
 
-**Use your preferred IDE**
+This site is both a portfolio and a proof point.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## ⚙️ How This Site Is Built
 
-Follow these steps:
+This project is intentionally built using a hybrid workflow that reflects how modern teams are starting to operate.
+
+**Core stack**
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+
+**Build + editing workflow**
+- Builder.io for visual editing and rapid iteration
+- Cursor + ChatGPT for AI-assisted development
+- Direct code editing for precision and control
+
+Each tool plays a role depending on the problem being solved.
+
+---
+
+## 🤖 How AI Is Used
+
+AI is not just used to generate code. It’s used as a thinking partner.
+
+Examples:
+- Refactoring and extending components across the codebase
+- Generating accessible patterns (like alt text and semantic structure)
+- Translating design intent into working UI
+- Speeding up repetitive implementation work
+- Exploring multiple directions quickly before committing
+
+Everything generated is reviewed, refined, and shaped intentionally.
+
+---
+
+## 🧪 What I’m Exploring
+
+This project is an ongoing exploration of:
+
+- How design leaders can stay hands-on in an AI-driven workflow
+- How AI changes the speed and quality of iteration
+- Where human judgment still matters most (hint: almost everywhere)
+- How to balance velocity with craftsmanship
+
+---
+
+## 🧑‍💻 Running Locally
+
+To run the project locally:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone https://github.com/chadmortensen/chad-mortensen-portfolio-13.git
+cd chad-mortensen-portfolio-13
+npm install
 npm run dev
-```
+``` 
 
-**Edit a file directly in GitHub**
+Then open:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/dfb2c5a7-497a-41e6-8cad-e9a007ec763f) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- `http://localhost:8080`
