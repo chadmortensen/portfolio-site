@@ -171,6 +171,10 @@ export const SectionEditor = ({ sections, onUpdateSections, isEditing }: Section
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
 
+    if (!over || active.id === over.id) {
+      return;
+    }
+
     if (active.id !== over.id) {
       const oldIndex = sections.findIndex((_, i) => `section-${i}` === active.id);
       const newIndex = sections.findIndex((_, i) => `section-${i}` === over.id);
