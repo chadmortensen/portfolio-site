@@ -1,7 +1,14 @@
-import { ArrowLeft, Play, Edit3, Save, Plus } from "lucide-react";
+import { ArrowLeft, Play, Edit3, Save, Plus, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
@@ -14,11 +21,12 @@ import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
 import { useLanguage } from "@/hooks/use-language";
 import { pageCopy } from "@/lib/page-copy";
+import { languageOptions, type LanguageCode } from "@/lib/site-content";
 
 const CaseStudy2 = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language, setLanguage, content } = useLanguage();
   const copy = pageCopy[language];
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -42,6 +50,34 @@ const CaseStudy2 = () => {
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
+  );
+
+  const LanguageSelector = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className="inline-flex items-center gap-1 rounded-full border border-swiss-light px-3 py-1 text-caption text-text-secondary transition-colors hover:text-text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2"
+        aria-label={content.navigation.languageSelectorAriaLabel}
+      >
+        <span>{language.toUpperCase()}</span>
+        <ChevronDown size={14} />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-24 bg-surface-primary border border-swiss-light shadow-lg">
+        <DropdownMenuRadioGroup value={language} onValueChange={(value) => setLanguage(value as LanguageCode)}>
+          {languageOptions.map((option) => (
+            <DropdownMenuRadioItem
+              key={option.code}
+              value={option.code}
+              className="cursor-pointer text-text-secondary hover:text-text-primary hover:bg-surface-secondary"
+            >
+              <div className="flex w-full items-center justify-between gap-3">
+                <span>{option.label}</span>
+                <span className="text-caption text-text-tertiary">{option.name}</span>
+              </div>
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 
   const sections = [{
@@ -538,6 +574,7 @@ const CaseStudy2 = () => {
               <span className="text-body sm:hidden">{copy.backShort}</span>
             </button>
             <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0 overflow-visible">
+              <LanguageSelector />
               {isEditing && (
                 <Button onClick={handleSave} size="sm" className="flex items-center space-x-2">
                   <Save size={16} />
