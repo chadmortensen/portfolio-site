@@ -12,6 +12,7 @@ import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
 import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
+import Footer from "@/components/Footer";
 
 const CaseStudy3 = () => {
   const navigate = useNavigate();
@@ -691,6 +692,8 @@ const CaseStudy3 = () => {
           </div>
         </div>
       </div>
+
+      <Footer />
 
       {/* Password Prompt Modal */}
       {showPasswordPrompt && (

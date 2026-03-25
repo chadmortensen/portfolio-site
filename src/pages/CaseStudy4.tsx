@@ -10,6 +10,7 @@ import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
 import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
+import Footer from "@/components/Footer";
 
 interface Section {
   title: string;
@@ -498,6 +499,8 @@ const CaseStudy4 = () => {
           </div>
         </div>
       </div>
+
+      <Footer />
 
       {/* Password Prompt Modal */}
       {showPasswordPrompt && (
