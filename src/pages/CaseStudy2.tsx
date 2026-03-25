@@ -82,7 +82,14 @@ const CaseStudy2 = () => {
       try {
         // Try to load from GitHub first
         const githubService = new GitHubStorageService();
-        const githubContent = await githubService.readFile('case-study-2.json');
+        const storageBase = "case-study-2";
+        const localizedFilename = `${storageBase}.${language}.json`;
+        const legacyFilename = `${storageBase}.json`;
+        const localizedStorageKey = `${storageBase}-content-${language}`;
+        const legacyStorageKey = `${storageBase}-content`;
+
+        const githubContent =
+          (await githubService.readFile(localizedFilename)) ?? (await githubService.readFile(legacyFilename));
         
         if (githubContent) {
           // Handle array format (sections only)
@@ -113,7 +120,10 @@ const CaseStudy2 = () => {
       }
 
       // Try localStorage
-      const saved = localStorage.getItem('case-study-2-content');
+      const storageBase = "case-study-2";
+      const localizedStorageKey = `${storageBase}-content-${language}`;
+      const legacyStorageKey = `${storageBase}-content`;
+      const saved = localStorage.getItem(localizedStorageKey) ?? localStorage.getItem(legacyStorageKey);
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -255,7 +265,7 @@ const CaseStudy2 = () => {
     };
 
     loadContent();
-  }, []);
+  }, [language]);
 
 
   const handlePasswordSubmit = () => {
@@ -266,13 +276,16 @@ const CaseStudy2 = () => {
       localStorage.setItem('edit-authenticated', 'true');
       setIsAuthenticated(true);
     } else {
-      alert('Incorrect password');
+      alert(copy.incorrectPassword);
       setEditPassword('');
     }
   };
 
   const handleSave = async () => {
     try {
+      const storageBase = "case-study-2";
+      const localizedFilename = `${storageBase}.${language}.json`;
+      const localizedStorageKey = `${storageBase}-content-${language}`;
       const saveData = {
         title,
         subtitle,
@@ -280,21 +293,23 @@ const CaseStudy2 = () => {
       };
       
       const githubService = new GitHubStorageService();
-      await githubService.writeFile('case-study-2.json', saveData);
+      await githubService.writeFile(localizedFilename, saveData);
       
       // Also save to localStorage as backup
-      localStorage.setItem('case-study-2-content', JSON.stringify(saveData));
+      localStorage.setItem(localizedStorageKey, JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved successfully to GitHub!');
     } catch (error) {
       console.error('Error saving to GitHub:', error);
       // Fallback to localStorage only
+      const storageBase = "case-study-2";
+      const localizedStorageKey = `${storageBase}-content-${language}`;
       const saveData = {
         title,
         subtitle,
         sections: editableSections
       };
-      localStorage.setItem('case-study-2-content', JSON.stringify(saveData));
+      localStorage.setItem(localizedStorageKey, JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved locally (GitHub save failed)');
     }
@@ -484,18 +499,18 @@ const CaseStudy2 = () => {
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div className="bg-surface-primary p-6 rounded-lg">
-            <h3 className="text-lg font-medium mb-4">Enter password to edit</h3>
+            <h3 className="text-lg font-medium mb-4">{copy.enterPasswordToEdit}</h3>
             <Input
               type="password"
               value={editPassword}
               onChange={(e) => setEditPassword(e.target.value)}
-              placeholder="Password"
+              placeholder={copy.passwordPlaceholder}
               className="mb-4"
               onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit()}
             />
             <div className="flex space-x-2">
-              <Button onClick={handlePasswordSubmit}>Submit</Button>
-              <Button variant="outline" onClick={() => setShowPasswordPrompt(false)}>Cancel</Button>
+              <Button onClick={handlePasswordSubmit}>{copy.submit}</Button>
+              <Button variant="outline" onClick={() => setShowPasswordPrompt(false)}>{copy.cancel}</Button>
             </div>
           </div>
         </div>
@@ -526,7 +541,7 @@ const CaseStudy2 = () => {
               {isEditing && (
                 <Button onClick={handleSave} size="sm" className="flex items-center space-x-2">
                   <Save size={16} />
-                  <span className="text-sm hidden sm:inline">{language === "es" ? "Guardar" : language === "fr" ? "Enregistrer" : "Save"}</span>
+                  <span className="text-sm hidden sm:inline">{copy.save}</span>
                 </Button>
               )}
               <Button
@@ -536,7 +551,7 @@ const CaseStudy2 = () => {
                 className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
               >
                 <Play size={16} />
-                <span className="text-sm hidden md:inline">{language === "es" ? "Modo presentación" : language === "fr" ? "Mode présentation" : "Presentation Mode"}</span>
+                <span className="text-sm hidden md:inline">{copy.presentationMode}</span>
               </Button>
               <Button
                 variant="ghost"
@@ -545,7 +560,7 @@ const CaseStudy2 = () => {
                 className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
               >
                 <Edit3 size={16} />
-                <span className="text-sm hidden md:inline">{language === "es" ? "Modo edición" : language === "fr" ? "Mode édition" : "Edit Mode"}</span>
+                <span className="text-sm hidden md:inline">{copy.editMode}</span>
               </Button>
               <span className="text-body text-text-primary font-bold hidden sm:inline whitespace-nowrap">Chad Mortensen</span>
             </div>
@@ -569,7 +584,7 @@ const CaseStudy2 = () => {
                   value={subtitle}
                   onChange={(e) => setSubtitle(e.target.value)}
                   className="text-lg text-center bg-transparent border-none text-text-secondary placeholder:text-text-secondary"
-                  placeholder="Subtitle"
+                  placeholder={copy.subtitlePlaceholder}
                 />
               </div>
             ) : (
@@ -616,7 +631,7 @@ const CaseStudy2 = () => {
                         className="flex items-center space-x-2"
                       >
                         <Plus size={16} />
-                        <span>{language === "es" ? "Agregar módulo" : language === "fr" ? "Ajouter un module" : "Add Module"}</span>
+                        <span>{copy.addModule}</span>
                       </Button>
                     </div>
                   )}

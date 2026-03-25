@@ -10,6 +10,8 @@ import { EditableModule, Module } from "@/components/EditableModule";
 import { ModuleLibrary } from "@/components/ModuleLibrary";
 import { SectionEditor } from "@/components/SectionEditor";
 import { GitHubStorageService } from "@/services/githubStorage";
+import { useLanguage } from "@/hooks/use-language";
+import { pageCopy } from "@/lib/page-copy";
 
 interface Section {
   title: string;
@@ -19,6 +21,8 @@ interface Section {
 
 const CaseStudy4 = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const copy = pageCopy[language];
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editPassword, setEditPassword] = useState('');
@@ -48,7 +52,14 @@ const CaseStudy4 = () => {
     const loadContent = async () => {
       try {
         const githubService = new GitHubStorageService();
-        const githubContent = await githubService.readFile('case-study-4.json');
+        const storageBase = "case-study-4";
+        const localizedFilename = `${storageBase}.${language}.json`;
+        const legacyFilename = `${storageBase}.json`;
+        const localizedStorageKey = `${storageBase}-content-${language}`;
+        const legacyStorageKey = `${storageBase}-content`;
+
+        const githubContent =
+          (await githubService.readFile(localizedFilename)) ?? (await githubService.readFile(legacyFilename));
         
         if (githubContent && githubContent.title && githubContent.subtitle && githubContent.sections) {
           setTitle(githubContent.title);
@@ -66,7 +77,10 @@ const CaseStudy4 = () => {
       }
 
       // Try localStorage
-      const saved = localStorage.getItem('case-study-4-content');
+      const storageBase = "case-study-4";
+      const localizedStorageKey = `${storageBase}-content-${language}`;
+      const legacyStorageKey = `${storageBase}-content`;
+      const saved = localStorage.getItem(localizedStorageKey) ?? localStorage.getItem(legacyStorageKey);
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -115,7 +129,7 @@ const CaseStudy4 = () => {
     };
 
     loadContent();
-  }, []);
+  }, [language]);
 
   const handlePasswordSubmit = () => {
     if (editPassword === '4455') {
@@ -126,7 +140,7 @@ const CaseStudy4 = () => {
       localStorage.setItem('edit-authenticated', 'true');
       setIsAuthenticated(true);
     } else {
-      alert('Incorrect password');
+      alert(copy.incorrectPassword);
       setEditPassword('');
     }
   };
@@ -141,16 +155,19 @@ const CaseStudy4 = () => {
     const githubService = new GitHubStorageService();
     
     // Save to GitHub
-    const success = await githubService.writeFile('case-study-4.json', saveData);
+    const storageBase = "case-study-4";
+    const localizedFilename = `${storageBase}.${language}.json`;
+    const localizedStorageKey = `${storageBase}-content-${language}`;
+    const success = await githubService.writeFile(localizedFilename, saveData);
     
     if (success) {
       // Also save to localStorage as backup
-      localStorage.setItem('case-study-4-content', JSON.stringify(saveData));
+      localStorage.setItem(localizedStorageKey, JSON.stringify(saveData));
       setIsEditing(false);
       alert('Changes saved successfully to GitHub!');
     } else {
       // If GitHub fails, still save to localStorage
-      localStorage.setItem('case-study-4-content', JSON.stringify(saveData));
+      localStorage.setItem(localizedStorageKey, JSON.stringify(saveData));
       setIsEditing(false);
       alert('Saved locally (GitHub save failed - check config)');
     }
@@ -159,14 +176,16 @@ const CaseStudy4 = () => {
   // Auto-save to localStorage when content changes and in edit mode
   useEffect(() => {
     if (isEditing && editableSections.length > 0) {
+      const storageBase = "case-study-4";
+      const localizedStorageKey = `${storageBase}-content-${language}`;
       const saveData = {
         title,
         subtitle,
         sections: editableSections
       };
-      localStorage.setItem('case-study-4-content', JSON.stringify(saveData));
+      localStorage.setItem(localizedStorageKey, JSON.stringify(saveData));
     }
-  }, [editableSections, title, subtitle, isEditing]);
+  }, [editableSections, title, subtitle, isEditing, language]);
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
@@ -373,8 +392,8 @@ const CaseStudy4 = () => {
               className="flex items-center space-x-2 text-text-secondary hover:text-text-primary transition-colors flex-shrink-0"
             >
               <ArrowLeft size={20} />
-              <span className="text-body hidden sm:inline">Back to Portfolio</span>
-              <span className="text-body sm:hidden">Back</span>
+              <span className="text-body hidden sm:inline">{copy.backToPortfolio}</span>
+              <span className="text-body sm:hidden">{copy.backShort}</span>
             </button>
             <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0 overflow-visible">
               {isEditing ? (
@@ -385,8 +404,8 @@ const CaseStudy4 = () => {
                   className="flex items-center space-x-2 text-text-primary border-accent-blue"
                 >
                   <Save size={16} />
-                  <span className="text-sm hidden sm:inline">Save Changes</span>
-                  <span className="text-sm sm:hidden">Save</span>
+                  <span className="text-sm hidden sm:inline">{copy.saveChanges}</span>
+                  <span className="text-sm sm:hidden">{copy.save}</span>
                 </Button>
               ) : (
                 <Button
@@ -396,7 +415,7 @@ const CaseStudy4 = () => {
                   className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
                 >
                   <Edit3 size={16} />
-                  <span className="text-sm hidden md:inline">Edit Mode</span>
+                  <span className="text-sm hidden md:inline">{copy.editMode}</span>
                 </Button>
               )}
               <Button
@@ -406,7 +425,7 @@ const CaseStudy4 = () => {
                 className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center space-x-2 text-text-secondary hover:text-text-primary"
               >
                 <Play size={16} />
-                <span className="text-sm hidden md:inline">Presentation Mode</span>
+                <span className="text-sm hidden md:inline">{copy.presentationMode}</span>
               </Button>
               <span className="text-body text-text-primary font-bold hidden sm:inline whitespace-nowrap">Chad Mortensen</span>
             </div>
@@ -424,13 +443,13 @@ const CaseStudy4 = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="text-display text-center bg-transparent border-none text-text-primary placeholder:text-text-secondary"
-                  placeholder="Case study title"
+                  placeholder={copy.caseStudyTitlePlaceholder}
                 />
                 <Input
                   value={subtitle}
                   onChange={(e) => setSubtitle(e.target.value)}
                   className="text-lg text-center bg-transparent border-none text-text-secondary placeholder:text-text-secondary"
-                  placeholder="Subtitle (optional)"
+                  placeholder={copy.subtitlePlaceholder}
                 />
               </div>
             ) : (
@@ -484,7 +503,7 @@ const CaseStudy4 = () => {
                       className="flex items-center space-x-2"
                     >
                       <Plus size={16} />
-                      <span className="text-sm">Add Module</span>
+                      <span className="text-sm">{copy.addModule}</span>
                     </Button>
                   )}
                 </div>
@@ -503,18 +522,18 @@ const CaseStudy4 = () => {
       {showPasswordPrompt && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div className="bg-surface-primary border border-swiss-light rounded-lg p-6 max-w-sm w-full mx-4">
-            <h2 className="text-headline text-text-primary mb-4">Enter Edit Password</h2>
+            <h2 className="text-headline text-text-primary mb-4">{copy.enterPasswordToEdit}</h2>
             <div className="space-y-4">
               <Input
                 type="password"
                 value={editPassword}
                 onChange={(e) => setEditPassword(e.target.value)}
-                placeholder="Password"
+                placeholder={copy.passwordPlaceholder}
                 onKeyPress={(e) => e.key === 'Enter' && handlePasswordSubmit()}
               />
               <div className="flex space-x-2">
                 <Button onClick={handlePasswordSubmit} className="flex-1">
-                  Enter
+                  {copy.submit}
                 </Button>
                 <Button
                   variant="outline"
@@ -524,7 +543,7 @@ const CaseStudy4 = () => {
                   }}
                   className="flex-1"
                 >
-                  Cancel
+                  {copy.cancel}
                 </Button>
               </div>
             </div>
