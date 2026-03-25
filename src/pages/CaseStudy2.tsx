@@ -45,6 +45,20 @@ const CaseStudy2 = () => {
   const [title, setTitle] = useState('Fulfillment at Etsy');
   const [subtitle, setSubtitle] = useState('Crafting a Shared Vision and Guiding Principles (2022)');
 
+  const applyLocalizedDefaults = () => {
+    const card = content.caseStudies.cards.find((c) => c.route === "/case-study-2");
+    if (card?.title) {
+      setTitle(card.title);
+    }
+
+    const subtitleByLanguage: Record<typeof language, string> = {
+      en: "Crafting a Shared Vision and Guiding Principles (2022)",
+      es: "Creando una visión compartida y principios guía (2022)",
+      fr: "Créer une vision partagée et des principes directeurs (2022)",
+    };
+    setSubtitle(subtitleByLanguage[language] ?? subtitleByLanguage.en);
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -124,8 +138,9 @@ const CaseStudy2 = () => {
         const localizedStorageKey = `${storageBase}-content-${language}`;
         const legacyStorageKey = `${storageBase}-content`;
 
-        const githubContent =
-          (await githubService.readFile(localizedFilename)) ?? (await githubService.readFile(legacyFilename));
+        let usedLegacy = false;
+        const localizedContent = await githubService.readFile(localizedFilename);
+        const githubContent = localizedContent ?? (usedLegacy = true, await githubService.readFile(legacyFilename));
         
         if (githubContent) {
           // Handle array format (sections only)
@@ -136,13 +151,18 @@ const CaseStudy2 = () => {
               speakerNotes: section.speakerNotes || ''
             }));
             setEditableSections(sectionsWithNotes);
+            if (usedLegacy) applyLocalizedDefaults();
             return;
           }
           // Handle object format with title, subtitle, and sections
           else if (githubContent.title && githubContent.subtitle && githubContent.sections) {
             console.log('Loading full content from GitHub (object format)');
-            setTitle(githubContent.title);
-            setSubtitle(githubContent.subtitle);
+            if (usedLegacy) {
+              applyLocalizedDefaults();
+            } else {
+              setTitle(githubContent.title);
+              setSubtitle(githubContent.subtitle);
+            }
             const sectionsWithNotes = githubContent.sections.map((section: any) => ({
               ...section,
               speakerNotes: section.speakerNotes || ''
@@ -159,7 +179,9 @@ const CaseStudy2 = () => {
       const storageBase = "case-study-2";
       const localizedStorageKey = `${storageBase}-content-${language}`;
       const legacyStorageKey = `${storageBase}-content`;
-      const saved = localStorage.getItem(localizedStorageKey) ?? localStorage.getItem(legacyStorageKey);
+      const localizedSaved = localStorage.getItem(localizedStorageKey);
+      const saved = localizedSaved ?? localStorage.getItem(legacyStorageKey);
+      const usedLegacy = !localizedSaved && !!saved;
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -171,13 +193,18 @@ const CaseStudy2 = () => {
               speakerNotes: section.speakerNotes || ''
             }));
             setEditableSections(sectionsWithNotes);
+            if (usedLegacy) applyLocalizedDefaults();
             return;
           }
           // Handle object format with title, subtitle, and sections
           else if (parsed && parsed.title && parsed.subtitle && parsed.sections) {
             console.log('Loading full content from localStorage (object format)');
-            setTitle(parsed.title);
-            setSubtitle(parsed.subtitle);
+            if (usedLegacy) {
+              applyLocalizedDefaults();
+            } else {
+              setTitle(parsed.title);
+              setSubtitle(parsed.subtitle);
+            }
             const sectionsWithNotes = parsed.sections.map((section: any) => ({
               ...section,
               speakerNotes: section.speakerNotes || ''
@@ -192,6 +219,7 @@ const CaseStudy2 = () => {
 
       // Convert static sections to editable format as fallback
       console.log('Converting static sections to editable format');
+      applyLocalizedDefaults();
       const converted = sections.map(section => {
         const modules: Module[] = [];
         

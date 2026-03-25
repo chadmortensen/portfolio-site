@@ -45,6 +45,20 @@ const CaseStudy1 = () => {
   const [title, setTitle] = useState('Walmart eCommerce');
   const [subtitle, setSubtitle] = useState('Building a customer-centered registry experience under tight constraints (2019)');
 
+  const applyLocalizedDefaults = () => {
+    const card = content.caseStudies.cards.find((c) => c.route === "/case-study-1");
+    if (card?.title) {
+      setTitle(card.title);
+    }
+
+    const subtitleByLanguage: Record<typeof language, string> = {
+      en: "Building a customer-centered registry experience under tight constraints (2019)",
+      es: "Construyendo una experiencia de registro centrada en la persona bajo restricciones estrictas (2019)",
+      fr: "Créer une expérience de registre centrée sur l’utilisateur sous fortes contraintes (2019)",
+    };
+    setSubtitle(subtitleByLanguage[language] ?? subtitleByLanguage.en);
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -215,8 +229,9 @@ const CaseStudy1 = () => {
       
       try {
         // Try to load from GitHub first
-        const githubContent =
-          (await githubService.readFile(localizedFilename)) ?? (await githubService.readFile(legacyFilename));
+        let usedLegacy = false;
+        const localizedContent = await githubService.readFile(localizedFilename);
+        const githubContent = localizedContent ?? (usedLegacy = true, await githubService.readFile(legacyFilename));
         if (githubContent && Array.isArray(githubContent)) {
           // Handle array format (sections only)
           const migratedContent = githubContent.map((section: any, index: number) => ({
@@ -225,14 +240,19 @@ const CaseStudy1 = () => {
             speakerNotes: section.speakerNotes || ''
           }));
           setEditableSections(migratedContent);
+          if (usedLegacy) applyLocalizedDefaults();
           return;
         } else if (githubContent && githubContent.sections) {
           // Handle object format with title, subtitle, and sections
-          if (githubContent.title) {
-            setTitle(githubContent.title);
-          }
-          if (githubContent.subtitle) {
-            setSubtitle(githubContent.subtitle);
+          if (usedLegacy) {
+            applyLocalizedDefaults();
+          } else {
+            if (githubContent.title) {
+              setTitle(githubContent.title);
+            }
+            if (githubContent.subtitle) {
+              setSubtitle(githubContent.subtitle);
+            }
           }
           const migratedContent = githubContent.sections.map((section: any, index: number) => ({
             ...section,
@@ -248,7 +268,9 @@ const CaseStudy1 = () => {
 
       // Fallback to localStorage
       try {
-        const savedContent = localStorage.getItem(localizedStorageKey) ?? localStorage.getItem(legacyStorageKey);
+        const localizedSaved = localStorage.getItem(localizedStorageKey);
+        const savedContent = localizedSaved ?? localStorage.getItem(legacyStorageKey);
+        const usedLegacy = !localizedSaved && !!savedContent;
         if (savedContent) {
           const parsed = JSON.parse(savedContent);
           if (Array.isArray(parsed)) {
@@ -259,14 +281,19 @@ const CaseStudy1 = () => {
               speakerNotes: section.speakerNotes || ''
             }));
             setEditableSections(migratedContent);
+            if (usedLegacy) applyLocalizedDefaults();
             return;
           } else if (parsed.sections) {
             // Handle object format with title, subtitle, and sections
-            if (parsed.title) {
-              setTitle(parsed.title);
-            }
-            if (parsed.subtitle) {
-              setSubtitle(parsed.subtitle);
+            if (usedLegacy) {
+              applyLocalizedDefaults();
+            } else {
+              if (parsed.title) {
+                setTitle(parsed.title);
+              }
+              if (parsed.subtitle) {
+                setSubtitle(parsed.subtitle);
+              }
             }
             const migratedContent = parsed.sections.map((section: any, index: number) => ({
               ...section,
@@ -282,6 +309,7 @@ const CaseStudy1 = () => {
       }
 
       // Convert static sections as fallback - always run if no saved content loaded
+      applyLocalizedDefaults();
       const converted = sections.map((section) => {
         const modules: Module[] = [];
         

@@ -46,6 +46,20 @@ const CaseStudy3 = () => {
   const [subtitle, setSubtitle] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
+  const applyLocalizedDefaults = () => {
+    const card = content.caseStudies.cards.find((c) => c.route === "/case-study-3");
+    if (card?.title) {
+      setTitle(card.title);
+    }
+
+    const subtitleByLanguage: Record<typeof language, string> = {
+      en: "Designing a Better Way In (2024)",
+      es: "Diseñando una mejor forma de entrar (2024)",
+      fr: "Concevoir une meilleure entrée (2024)",
+    };
+    setSubtitle(subtitleByLanguage[language] ?? subtitleByLanguage.en);
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -92,12 +106,17 @@ const CaseStudy3 = () => {
         const localizedStorageKey = `${storageBase}-content-${language}`;
         const legacyStorageKey = `${storageBase}-content`;
 
-        const githubContent =
-          (await githubService.readFile(localizedFilename)) ?? (await githubService.readFile(legacyFilename));
+        let usedLegacy = false;
+        const localizedContent = await githubService.readFile(localizedFilename);
+        const githubContent = localizedContent ?? (usedLegacy = true, await githubService.readFile(legacyFilename));
         
         if (githubContent && githubContent.title && githubContent.subtitle && githubContent.sections) {
-          setTitle(githubContent.title);
-          setSubtitle(githubContent.subtitle);
+          if (usedLegacy) {
+            applyLocalizedDefaults();
+          } else {
+            setTitle(githubContent.title);
+            setSubtitle(githubContent.subtitle);
+          }
           // Ensure each section has a speakerNotes property
           const sectionsWithNotes = githubContent.sections.map((section: any) => ({
             ...section,
@@ -115,13 +134,19 @@ const CaseStudy3 = () => {
       const storageBase = "case-study-3";
       const localizedStorageKey = `${storageBase}-content-${language}`;
       const legacyStorageKey = `${storageBase}-content`;
-      const saved = localStorage.getItem(localizedStorageKey) ?? localStorage.getItem(legacyStorageKey);
+      const localizedSaved = localStorage.getItem(localizedStorageKey);
+      const saved = localizedSaved ?? localStorage.getItem(legacyStorageKey);
+      const usedLegacy = !localizedSaved && !!saved;
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
           if (parsed && parsed.title && parsed.subtitle && parsed.sections) {
-            setTitle(parsed.title);
-            setSubtitle(parsed.subtitle);
+            if (usedLegacy) {
+              applyLocalizedDefaults();
+            } else {
+              setTitle(parsed.title);
+              setSubtitle(parsed.subtitle);
+            }
             // Ensure each section has a speakerNotes property
             const sectionsWithNotes = parsed.sections.map((section: any) => ({
               ...section,
@@ -138,7 +163,8 @@ const CaseStudy3 = () => {
 
       // Load from the static JSON data file
       try {
-        const response = await fetch('/data/case-studies/case-study-3.json');
+        const localizedResponse = await fetch(`/data/case-studies/case-study-3.${language}.json`);
+        const response = localizedResponse.ok ? localizedResponse : await fetch('/data/case-studies/case-study-3.json');
         if (response.ok) {
           const jsonData = await response.json();
           if (jsonData && Array.isArray(jsonData)) {
@@ -156,8 +182,7 @@ const CaseStudy3 = () => {
               }))
             }));
             setEditableSections(convertedFromJson);
-            setTitle('Brightside Health');
-            setSubtitle('Designing a Better Way In (2024)');
+            applyLocalizedDefaults();
             setIsLoading(false);
             return;
           }
@@ -270,8 +295,7 @@ const CaseStudy3 = () => {
          };
         });
         setEditableSections(converted);
-        setTitle('Brightside Health');
-        setSubtitle('Designing a Better Way In (2024)');
+        applyLocalizedDefaults();
         setIsLoading(false);
     };
 
