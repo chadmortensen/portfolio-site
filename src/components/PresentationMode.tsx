@@ -145,14 +145,14 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       await githubService.writeFile(filename, editableSections);
       
       // Also save to localStorage as backup
-      localStorage.setItem(filename.replace('.json', ''), JSON.stringify(editableSections));
+      localStorage.setItem(filename.replace('.json', '-content'), JSON.stringify(editableSections));
       setIsEditing(false);
       alert('Changes saved successfully to GitHub!');
     } catch (error) {
       console.error('Error saving to GitHub:', error);
       // Fallback to localStorage only
       const filename = storageFilename || 'presentation-mode.json';
-      localStorage.setItem(filename.replace('.json', ''), JSON.stringify(editableSections));
+      localStorage.setItem(filename.replace('.json', '-content'), JSON.stringify(editableSections));
       setIsEditing(false);
       alert('Changes saved locally (GitHub save failed)');
     }
@@ -160,6 +160,10 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
 
   const handleColumnDragEnd = (event: any, sectionIndex: number, column: 'left' | 'right') => {
     const { active, over } = event;
+
+    if (!over || active.id === over.id) {
+      return;
+    }
 
     if (active.id !== over.id) {
       const section = editableSections[sectionIndex];
@@ -547,7 +551,7 @@ const PresentationMode = ({ sections, onExit, storageFilename }: PresentationMod
       delete (window as any).nextSlide;
       delete (window as any).prevSlide;
     };
-  }, [currentSlide, isTransitioning, isEditing]);
+  }, [currentSlide, isTransitioning, isEditing, nextSlide, onExit, prevSlide]);
 
   return (
     <div className="fixed inset-0 bg-surface-primary z-50 overflow-hidden">

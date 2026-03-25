@@ -414,6 +414,10 @@ const CaseStudy2 = () => {
   const handleColumnDragEnd = (event: any, sectionIndex: number, column: 'left' | 'right') => {
     const { active, over } = event;
 
+    if (!over || active.id === over.id) {
+      return;
+    }
+
     if (active.id !== over.id) {
       const section = editableSections[sectionIndex];
       const columnModules = section.modules.filter(m => m.column === column);

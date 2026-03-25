@@ -172,6 +172,10 @@ const CaseStudy4 = () => {
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
 
+    if (!over || active.id === over.id) {
+      return;
+    }
+
     if (active.id !== over.id) {
       const sectionIndex = currentSectionIndex;
       const section = editableSections[sectionIndex];
@@ -187,6 +191,10 @@ const CaseStudy4 = () => {
 
   const handleColumnDragEnd = (event: any, sectionIndex: number, column: 'left' | 'right') => {
     const { active, over } = event;
+
+    if (!over || active.id === over.id) {
+      return;
+    }
 
     if (active.id !== over.id) {
       const section = editableSections[sectionIndex];

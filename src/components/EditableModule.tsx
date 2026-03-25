@@ -26,6 +26,87 @@ interface EditableModuleProps {
   onDelete: (id: string) => void;
 }
 
+type TextContent = {
+  title?: string;
+  text?: string;
+};
+
+type ImageContent = {
+  src?: string;
+  alt?: string;
+  heightPercent?: string | number;
+};
+
+type BulletsContent = {
+  title?: string;
+  items?: string[];
+};
+
+type QuoteContent = {
+  title?: string;
+  text?: string;
+};
+
+type TableContent = {
+  title?: string;
+  headers?: string[];
+  rows?: string[][];
+};
+
+const wrapPlainTextAsHtml = (value: string) =>
+  value
+    .split('\n\n')
+    .map((paragraph) => `<p>${paragraph.replace(/\n/g, '<br />')}</p>`)
+    .join('');
+
+const getTextContent = (content: unknown): TextContent => {
+  if (typeof content === "string") {
+    return { text: wrapPlainTextAsHtml(content) };
+  }
+
+  if (content && typeof content === "object") {
+    return content as TextContent;
+  }
+
+  return {};
+};
+
+const getImageContent = (content: unknown): ImageContent => {
+  if (content && typeof content === "object") {
+    return content as ImageContent;
+  }
+
+  return {};
+};
+
+const getBulletsContent = (content: unknown): BulletsContent => {
+  if (content && typeof content === "object") {
+    return content as BulletsContent;
+  }
+
+  return {};
+};
+
+const getQuoteContent = (content: unknown): QuoteContent => {
+  if (typeof content === "string") {
+    return { text: wrapPlainTextAsHtml(content) };
+  }
+
+  if (content && typeof content === "object") {
+    return content as QuoteContent;
+  }
+
+  return {};
+};
+
+const getTableContent = (content: unknown): TableContent => {
+  if (content && typeof content === "object") {
+    return content as TableContent;
+  }
+
+  return {};
+};
+
 export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: EditableModuleProps) => {
   const {
     attributes,
@@ -59,20 +140,21 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
 
   const renderEditMode = () => {
     switch (module.type) {
-      case 'text':
+      case 'text': {
+        const textContent = getTextContent(module.content);
         return (
           <div className="space-y-4">
             <Input
-              value={module.content.title || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, title: e.target.value })}
+              value={textContent.title || ''}
+              onChange={(e) => onUpdate(module.id, { ...textContent, title: e.target.value })}
               placeholder="Title (optional)"
               className="font-medium"
             />
             <div className="rich-text-editor">
               <ReactQuill
                 theme="snow"
-                value={module.content.text || ''}
-                onChange={(value) => onUpdate(module.id, { ...module.content, text: value })}
+                value={textContent.text || ''}
+                onChange={(value) => onUpdate(module.id, { ...textContent, text: value })}
                 modules={quillModules}
                 formats={quillFormats}
                 placeholder="Enter text content..."
@@ -81,48 +163,52 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             </div>
           </div>
         );
+      }
 
-      case 'image':
+      case 'image': {
+        const imageContent = getImageContent(module.content);
         return (
           <div className="space-y-4">
             <Input
-              value={module.content.src || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, src: e.target.value })}
+              value={imageContent.src || ''}
+              onChange={(e) => onUpdate(module.id, { ...imageContent, src: e.target.value })}
               placeholder="Image URL or path"
             />
             <Input
-              value={module.content.alt || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, alt: e.target.value })}
+              value={imageContent.alt || ''}
+              onChange={(e) => onUpdate(module.id, { ...imageContent, alt: e.target.value })}
               placeholder="Alt text"
             />
             <Input
               type="number"
               min="10"
               max="100"
-              value={module.content.heightPercent || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, heightPercent: e.target.value })}
+              value={imageContent.heightPercent || ''}
+              onChange={(e) => onUpdate(module.id, { ...imageContent, heightPercent: e.target.value })}
               placeholder="Height % (optional)"
             />
           </div>
         );
+      }
 
-      case 'bullets':
+      case 'bullets': {
+        const bulletsContent = getBulletsContent(module.content);
         return (
           <div className="space-y-4">
             <Input
-              value={module.content.title || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, title: e.target.value })}
+              value={bulletsContent.title || ''}
+              onChange={(e) => onUpdate(module.id, { ...bulletsContent, title: e.target.value })}
               placeholder="List title"
             />
             <div className="space-y-2">
-              {(module.content.items || ['']).map((item: string, index: number) => (
+              {(bulletsContent.items || ['']).map((item: string, index: number) => (
                 <div key={index} className="flex gap-2">
                   <Input
                     value={item}
                     onChange={(e) => {
-                      const newItems = [...(module.content.items || [])];
+                      const newItems = [...(bulletsContent.items || [])];
                       newItems[index] = e.target.value;
-                      onUpdate(module.id, { ...module.content, items: newItems });
+                      onUpdate(module.id, { ...bulletsContent, items: newItems });
                     }}
                     placeholder={`Item ${index + 1}`}
                   />
@@ -130,8 +216,8 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                     variant="ghost"
                     size="sm"
                     onClick={() => {
-                      const newItems = (module.content.items || []).filter((_: any, i: number) => i !== index);
-                      onUpdate(module.id, { ...module.content, items: newItems });
+                      const newItems = (bulletsContent.items || []).filter((_, i: number) => i !== index);
+                      onUpdate(module.id, { ...bulletsContent, items: newItems });
                     }}
                   >
                     <Trash2 size={16} />
@@ -142,8 +228,8 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  const newItems = [...(module.content.items || []), ''];
-                  onUpdate(module.id, { ...module.content, items: newItems });
+                  const newItems = [...(bulletsContent.items || []), ''];
+                  onUpdate(module.id, { ...bulletsContent, items: newItems });
                 }}
               >
                 <Plus size={16} className="mr-2" />
@@ -152,20 +238,22 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             </div>
           </div>
         );
+      }
 
-      case 'quote':
+      case 'quote': {
+        const quoteContent = getQuoteContent(module.content);
         return (
           <div className="space-y-4">
             <Input
-              value={module.content.title || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, title: e.target.value })}
+              value={quoteContent.title || ''}
+              onChange={(e) => onUpdate(module.id, { ...quoteContent, title: e.target.value })}
               placeholder="Quote title (optional)"
             />
             <div className="rich-text-editor">
               <ReactQuill
                 theme="snow"
-                value={module.content.text || ''}
-                onChange={(value) => onUpdate(module.id, { ...module.content, text: value })}
+                value={quoteContent.text || ''}
+                onChange={(value) => onUpdate(module.id, { ...quoteContent, text: value })}
                 modules={quillModules}
                 formats={quillFormats}
                 placeholder="Enter quote text..."
@@ -174,13 +262,15 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             </div>
           </div>
         );
+      }
 
-      case 'table':
+      case 'table': {
+        const tableContent = getTableContent(module.content);
         return (
           <div className="space-y-4">
             <Input
-              value={module.content.title || ''}
-              onChange={(e) => onUpdate(module.id, { ...module.content, title: e.target.value })}
+              value={tableContent.title || ''}
+              onChange={(e) => onUpdate(module.id, { ...tableContent, title: e.target.value })}
               placeholder="Table title (optional)"
             />
             
@@ -188,14 +278,14 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gray-50">
-                    {(module.content.headers || []).map((header: string, index: number) => (
+                    {(tableContent.headers || []).map((header: string, index: number) => (
                       <TableHead key={index}>
                         <Input
                           value={header}
                           onChange={(e) => {
-                            const newHeaders = [...(module.content.headers || [])];
+                            const newHeaders = [...(tableContent.headers || [])];
                             newHeaders[index] = e.target.value;
-                            onUpdate(module.id, { ...module.content, headers: newHeaders });
+                            onUpdate(module.id, { ...tableContent, headers: newHeaders });
                           }}
                           className="bg-transparent border-none"
                           placeholder={`Header ${index + 1}`}
@@ -207,9 +297,9 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          const newHeaders = [...(module.content.headers || []), 'New Column'];
-                          const newRows = (module.content.rows || []).map((row: string[]) => [...row, '']);
-                          onUpdate(module.id, { ...module.content, headers: newHeaders, rows: newRows });
+                          const newHeaders = [...(tableContent.headers || []), 'New Column'];
+                          const newRows = (tableContent.rows || []).map((row: string[]) => [...row, '']);
+                          onUpdate(module.id, { ...tableContent, headers: newHeaders, rows: newRows });
                         }}
                       >
                         <Plus size={16} />
@@ -218,7 +308,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {(module.content.rows || []).map((row: string[], rowIndex: number) => (
+                  {(tableContent.rows || []).map((row: string[], rowIndex: number) => (
                     <TableRow key={rowIndex}>
                        {row.map((cell: string, cellIndex: number) => (
                          <TableCell key={cellIndex}>
@@ -227,9 +317,9 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                                theme="snow"
                                value={cell || ''}
                                onChange={(value) => {
-                                 const newRows = [...(module.content.rows || [])];
+                                 const newRows = [...(tableContent.rows || [])];
                                  newRows[rowIndex][cellIndex] = value;
-                                 onUpdate(module.id, { ...module.content, rows: newRows });
+                                 onUpdate(module.id, { ...tableContent, rows: newRows });
                                }}
                                modules={quillModules}
                                formats={quillFormats}
@@ -241,14 +331,14 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                        ))}
                       <TableCell className="w-12">
                         <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            const newRows = (module.content.rows || []).filter((_: any, index: number) => index !== rowIndex);
-                            onUpdate(module.id, { ...module.content, rows: newRows });
-                          }}
-                        >
-                          <Trash2 size={16} />
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          const newRows = (tableContent.rows || []).filter((_, index: number) => index !== rowIndex);
+                          onUpdate(module.id, { ...tableContent, rows: newRows });
+                        }}
+                      >
+                        <Trash2 size={16} />
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -261,9 +351,9 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    const newRow = new Array(module.content.headers?.length || 2).fill('');
-                    const newRows = [...(module.content.rows || []), newRow];
-                    onUpdate(module.id, { ...module.content, rows: newRows });
+                    const newRow = new Array(tableContent.headers?.length || 2).fill('');
+                    const newRows = [...(tableContent.rows || []), newRow];
+                    onUpdate(module.id, { ...tableContent, rows: newRows });
                   }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -273,6 +363,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             </div>
           </div>
         );
+      }
 
       default:
         return <div>Editing not supported for this module type yet</div>;
@@ -281,89 +372,98 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
 
   const renderViewMode = () => {
     switch (module.type) {
-      case 'text':
+      case 'text': {
+        const textContent = getTextContent(module.content);
         return (
           <div className="space-y-4">
-            {module.content.title && (
-              <h3 className="text-title text-text-primary font-light">{module.content.title}</h3>
+            {textContent.title && (
+              <h3 className="text-title text-text-primary font-light">{textContent.title}</h3>
             )}
-            {module.content.text && (
+            {textContent.text && (
               <div 
                 className="prose prose-slate max-w-none text-body text-text-secondary leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: module.content.text }}
+                dangerouslySetInnerHTML={{ __html: textContent.text }}
               />
             )}
           </div>
         );
+      }
 
-      case 'image':
-        if (!module.content.src) return null;
-        const heightStyle = module.content.heightPercent 
-          ? { height: `${module.content.heightPercent}vh`, objectFit: 'contain' as const }
+      case 'image': {
+        const imageContent = getImageContent(module.content);
+        if (!imageContent.src) return null;
+        const heightStyle = imageContent.heightPercent
+          ? { height: `${imageContent.heightPercent}vh`, objectFit: 'contain' as const }
           : {};
         return (
           <Dialog>
             <DialogTrigger asChild>
                <img
-                  src={module.content.src}
-                  alt={module.content.alt || 'Case study visual content'}
+                  src={imageContent.src}
+                  alt={imageContent.alt || 'Case study visual content'}
                   className="w-full cursor-pointer hover:opacity-90 transition-opacity self-start"
                   style={heightStyle}
                 />
             </DialogTrigger>
             <DialogContent className="max-w-6xl w-full p-0">
                <img
-                  src={module.content.src}
-                  alt={module.content.alt || 'Enlarged case study visual content'}
+                  src={imageContent.src}
+                  alt={imageContent.alt || 'Enlarged case study visual content'}
                   className="w-full h-auto"
                   decoding="async"
                />
             </DialogContent>
           </Dialog>
         );
+      }
 
-      case 'bullets':
+      case 'bullets': {
+        const bulletsContent = getBulletsContent(module.content);
         return (
           <div className="space-y-4">
-            {module.content.title && (
-              <h3 className="text-lg mb-2 text-foreground font-semibold">{module.content.title}</h3>
+            {bulletsContent.title && (
+              <h3 className="text-lg mb-2 text-foreground font-semibold">{bulletsContent.title}</h3>
             )}
-            {module.content.items && module.content.items.length > 0 && (
+            {bulletsContent.items && bulletsContent.items.length > 0 && (
               <ul className="space-y-2">
-                {module.content.items.map((item: string, index: number) => (
+                {bulletsContent.items.map((item: string, index: number) => (
                   <li key={index} className="text-body text-text-secondary" dangerouslySetInnerHTML={{ __html: item }} />
                 ))}
               </ul>
             )}
           </div>
         );
+      }
 
-      case 'quote':
+      case 'quote': {
+        const quoteContent = getQuoteContent(module.content);
         return (
           <div className="p-4 bg-surface-secondary">
-            {module.content.title && (
-              <h4 className="text-title text-text-primary font-medium mb-2">{module.content.title}</h4>
+            {quoteContent.title && (
+              <h4 className="text-title text-text-primary font-medium mb-2">{quoteContent.title}</h4>
             )}
             <div 
               className="prose prose-slate max-w-none text-body text-text-secondary italic [&_h3]:text-lg [&_h3]:mb-2 [&_h3]:text-foreground [&_h3]:font-semibold"
-              dangerouslySetInnerHTML={{ __html: module.content.text }}
+              dangerouslySetInnerHTML={{ __html: quoteContent.text || '' }}
             />
           </div>
         );
+      }
 
-      case 'table':
+      case 'table': {
+        const tableContent = getTableContent(module.content);
         return (
           <div className="space-y-4">
-            {module.content.title && (
-              <h3 className="text-title text-text-primary font-light">{module.content.title}</h3>
+            {tableContent.title && (
+              <h3 className="text-title text-text-primary font-light">{tableContent.title}</h3>
             )}
-            {(module.content.headers || module.content.rows) && (
+            {(tableContent.headers || tableContent.rows) && (
               <div className="overflow-hidden">
                 <Table>
-                  {module.content.headers && (
+                  {tableContent.headers && (
                     <TableHeader>
                       <TableRow className="bg-gray-50 border-b border-gray-200">
-                        {module.content.headers.map((header: string, index: number) => (
+                        {tableContent.headers.map((header: string, index: number) => (
                           <TableHead key={index} className="font-semibold text-gray-900 py-4 px-6">
                             {header}
                           </TableHead>
@@ -371,9 +471,9 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
                       </TableRow>
                     </TableHeader>
                   )}
-                  {module.content.rows && (
+                  {tableContent.rows && (
                      <TableBody>
-                       {module.content.rows.map((row: string[], rowIndex: number) => (
+                       {tableContent.rows.map((row: string[], rowIndex: number) => (
                          <TableRow key={rowIndex} className="border-b border-gray-200 last:border-b-0">
                            {row.map((cell: string, cellIndex: number) => (
                              <TableCell key={cellIndex} className="py-4 px-6">
@@ -392,6 +492,7 @@ export const EditableModule = ({ module, isEditing, onUpdate, onDelete }: Editab
             )}
           </div>
         );
+      }
 
       default:
         return <div>Unknown module type: {module.type}</div>;
