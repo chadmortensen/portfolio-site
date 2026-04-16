@@ -59,10 +59,9 @@ const CaseStudy1 = () => {
     content: "The Routine Consumables team was responsible for the baby category at Walmart. The baby registry had received a design overhaul a couple of years prior; luckily, we had quite a bit of research to start with. Market research, customer feedback and customer interviews provide rich insights.\n\nUnderstanding users' motivations, areas of friction as well as areas of delight is key to building human-centered products. I wanted to ensure that the team was grounded in insights.\n\nWe held an offsite at the beginning of this project to bring together the designers, understand the goals, and align on the initial outline of what we were building. We kicked off this offsite with a deep dive into the past research, presented by the team's UX Researcher.\n\nThe key insights gained from the research review were that Walmart registry users have been asking for a greater level of control, guidance, and needed to establish trust with the experience.",
     quotes: ["I became so frustrated in making the registry through the app, that I quit. It is not intuitive nor easy to navigate in order to add or change something.", "It's not as user friendly as other registries I've used. It would be better if the registry picks fell into the categories provided. That would make it much easier."],
     insight: "Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their person needs (GCIA Oct 2019)",
-    image: "/lovable-uploads/7ccb122a-dcc0-42aa-b708-2b4efed30bd9.png",
+    image: "/lovable-uploads/1268a6d5-7794-4290-89ec-54f8fec3cb8a.png",
     additionalImages: [
       "/lovable-uploads/1268a6d5-7794-4290-89ec-54f8fec3cb8a.png", // New Mom Journey
-      "/lovable-uploads/34674288-e5b6-4941-953c-a17ddfabc474.png"  // Customer Insights
     ]
   }, {
     title: "Create Design Principles",
