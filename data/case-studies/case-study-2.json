@@ -18,7 +18,7 @@
           "id": "Why This, and Why Now?-image-1755722042513",
           "type": "image",
           "content": {
-            "src": "/lovable-uploads/31fcdfe5-22ff-450f-b551-e5b251c3fecc.jpeg",
+            "src": "/img/etsy-kickoff.jpg",
             "alt": "Why This, and Why Now? visual"
           },
           "column": "right"
@@ -42,7 +42,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/lovable-uploads/etsy-participants.jpg",
+            "src": "/img/etsy-offsite-insession.jpg",
             "alt": "",
             "position": "below",
             "columns": "6"
@@ -1330,7 +1330,7 @@
           "id": "Output: Fulfillment Principles-image-1755722042513",
           "type": "image",
           "content": {
-            "src": "/lovable-uploads/5994c658-34de-437e-853c-9be70a50c57b.jpeg",
+            "src": "/img/etsy-principles.jpg",
             "alt": "Output: Fulfillment Principles visual"
           },
           "column": "right"
@@ -1479,7 +1479,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/lovable-uploads/etsy-reflections.jpg",
+            "src": "/img/etsy-reflection.jpg",
             "alt": "",
             "position": "below",
             "columns": "6"
