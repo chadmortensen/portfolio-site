@@ -25,8 +25,8 @@
         {
           "type": "image",
           "content": {
-            "src": "/lovable-uploads/brightside-intro.jpg",
-            "alt": "Brightside app signup screen",
+            "src": "/img/bright-challenge.jpeg",
+            "alt": "Brightside Challenge illustration",
             "position": "below",
             "columns": "6",
             "heightPercent": ""
@@ -297,7 +297,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/lovable-uploads/stakeholder-alignment.jpg",
+            "src": "/img/bright-align.jpeg",
             "alt": "",
             "position": "below",
             "columns": "6"
@@ -349,7 +349,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/lovable-uploads/brightside-results.jpg",
+            "src": "/img/bright-success.jpeg",
             "alt": "",
             "position": "below",
             "columns": "6"
