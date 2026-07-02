@@ -5,8 +5,8 @@ type BirdPosition = {
   y: number;
 };
 
-const BIRD_WIDTH = 44;
-const BIRD_HEIGHT = 32;
+const BIRD_WIDTH = 48;
+const BIRD_HEIGHT = 36;
 const SCROLL_RETURN_DELAY = 8000;
 
 const getRandomPosition = (): BirdPosition => ({
@@ -35,7 +35,7 @@ const getHeadingPerches = (): BirdPosition[] => {
           window.innerWidth - BIRD_WIDTH - 12,
           Math.max(12, rect.left + rect.width / 2 - BIRD_WIDTH / 2)
         ),
-        y: Math.max(72, rect.top - BIRD_HEIGHT - 0),
+        y: Math.max(72, rect.top - BIRD_HEIGHT + 5),
       };
     })
     .filter((position): position is BirdPosition => Boolean(position));
@@ -178,12 +178,18 @@ const PixelBird = () => {
         }
 
         .pixel-bird__sprite {
+          --bird-outline: hsl(var(--swiss-charcoal));
+          --bird-blue: hsl(var(--accent-blue));
+          --bird-teal: hsl(var(--accent-teal));
+          --bird-aqua: hsl(var(--accent-aqua));
+          --bird-cream: hsl(var(--swiss-pure));
+          --bird-orange: hsl(var(--accent-orange));
           position: relative;
           width: ${BIRD_WIDTH}px;
           height: ${BIRD_HEIGHT}px;
           image-rendering: pixelated;
           transform-origin: 50% 50%;
-          filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.14));
+          filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.16));
         }
 
         .pixel-bird__sprite--left {
@@ -211,67 +217,110 @@ const PixelBird = () => {
           box-sizing: border-box;
         }
 
+        .pixel-bird__tail {
+          left: 2px;
+          top: 17px;
+          width: 12px;
+          height: 8px;
+          background: var(--bird-teal);
+          box-shadow:
+            -4px -4px 0 var(--bird-outline),
+            0 -4px 0 var(--bird-teal),
+            -4px 0 0 var(--bird-outline),
+            -4px 4px 0 var(--bird-outline),
+            0 8px 0 var(--bird-outline),
+            8px 8px 0 var(--bird-outline);
+        }
+
         .pixel-bird__body {
           left: 12px;
           top: 12px;
-          width: 20px;
-          height: 12px;
-          background: hsl(var(--accent-blue));
+          width: 24px;
+          height: 16px;
+          background: var(--bird-blue);
           box-shadow:
-            4px -4px 0 hsl(var(--accent-blue)),
-            8px 8px 0 hsl(var(--accent-teal));
+            -4px 0 0 var(--bird-outline),
+            0 -4px 0 var(--bird-outline),
+            4px -4px 0 var(--bird-blue),
+            8px -4px 0 var(--bird-blue),
+            12px -4px 0 var(--bird-outline),
+            24px 0 0 var(--bird-outline),
+            24px 4px 0 var(--bird-outline),
+            20px 16px 0 var(--bird-outline),
+            16px 16px 0 var(--bird-teal),
+            12px 16px 0 var(--bird-teal),
+            8px 16px 0 var(--bird-outline),
+            0 16px 0 var(--bird-outline),
+            -4px 12px 0 var(--bird-outline);
         }
 
         .pixel-bird__belly {
-          left: 20px;
-          top: 20px;
+          left: 23px;
+          top: 22px;
           width: 12px;
           height: 8px;
-          background: hsl(var(--swiss-pure));
+          background: var(--bird-cream);
+          box-shadow:
+            4px -4px 0 var(--bird-cream),
+            8px 0 0 var(--bird-outline),
+            4px 8px 0 var(--bird-outline),
+            -4px 4px 0 var(--bird-outline);
         }
 
         .pixel-bird__head {
-          left: 28px;
-          top: 8px;
-          width: 12px;
-          height: 12px;
-          background: hsl(var(--accent-aqua));
-          box-shadow: -4px 4px 0 hsl(var(--accent-blue));
+          left: 31px;
+          top: 7px;
+          width: 14px;
+          height: 14px;
+          background: var(--bird-aqua);
+          box-shadow:
+            -4px 0 0 var(--bird-outline),
+            0 -4px 0 var(--bird-outline),
+            4px -4px 0 var(--bird-outline),
+            12px 0 0 var(--bird-outline),
+            12px 4px 0 var(--bird-outline),
+            8px 12px 0 var(--bird-outline),
+            0 12px 0 var(--bird-blue),
+            -4px 8px 0 var(--bird-outline);
         }
 
         .pixel-bird__eye {
-          left: 36px;
-          top: 12px;
+          left: 40px;
+          top: 11px;
           width: 4px;
           height: 4px;
-          background: hsl(var(--swiss-charcoal));
+          background: var(--bird-outline);
+          box-shadow: 0 -4px 0 rgba(255, 255, 255, 0.78);
         }
 
         .pixel-bird__beak {
-          left: 40px;
+          left: 45px;
           top: 16px;
           width: 8px;
           height: 4px;
-          background: hsl(var(--accent-orange));
-          box-shadow: 4px 4px 0 hsl(var(--accent-orange));
-        }
-
-        .pixel-bird__tail {
-          left: 4px;
-          top: 16px;
-          width: 12px;
-          height: 8px;
-          background: hsl(var(--accent-teal));
-          box-shadow: -4px -4px 0 hsl(var(--accent-teal));
+          background: var(--bird-orange);
+          box-shadow:
+            4px 0 0 var(--bird-outline),
+            0 4px 0 var(--bird-orange),
+            4px 4px 0 var(--bird-outline),
+            -4px -4px 0 var(--bird-outline);
         }
 
         .pixel-bird__wing {
-          left: 16px;
-          top: 8px;
-          width: 12px;
-          height: 12px;
-          background: hsl(var(--swiss-charcoal));
-          transform-origin: 10px 12px;
+          left: 15px;
+          top: 6px;
+          width: 16px;
+          height: 16px;
+          background: var(--bird-outline);
+          box-shadow:
+            4px 4px 0 var(--bird-teal),
+            8px 4px 0 var(--bird-teal),
+            4px 8px 0 var(--bird-teal),
+            8px 8px 0 var(--bird-blue),
+            0 12px 0 var(--bird-outline),
+            4px 12px 0 var(--bird-outline),
+            8px 12px 0 var(--bird-outline);
+          transform-origin: 14px 18px;
         }
 
         .pixel-bird--flying .pixel-bird__wing {
@@ -279,27 +328,39 @@ const PixelBird = () => {
         }
 
         .pixel-bird--perched .pixel-bird__wing {
-          top: 14px;
+          left: 16px;
+          top: 15px;
+          width: 16px;
           height: 8px;
-          background: hsl(var(--swiss-gray));
+          background: var(--bird-outline);
+          box-shadow:
+            4px 0 0 var(--bird-teal),
+            8px 0 0 var(--bird-teal),
+            4px 4px 0 var(--bird-blue),
+            8px 4px 0 var(--bird-outline),
+            0 8px 0 var(--bird-outline);
         }
 
         .pixel-bird__feet {
-          left: 20px;
-          top: 28px;
+          left: 21px;
+          top: 32px;
           width: 4px;
           height: 4px;
-          background: hsl(var(--accent-orange));
-          box-shadow: 8px 0 0 hsl(var(--accent-orange));
+          background: var(--bird-orange);
+          box-shadow:
+            8px 0 0 var(--bird-orange),
+            -4px 4px 0 var(--bird-orange),
+            8px 4px 0 var(--bird-orange),
+            12px 4px 0 var(--bird-orange);
         }
 
         @keyframes pixel-bird-flap {
           0%, 100% {
-            top: 4px;
+            top: 3px;
             height: 16px;
           }
           50% {
-            top: 16px;
+            top: 17px;
             height: 8px;
           }
         }
