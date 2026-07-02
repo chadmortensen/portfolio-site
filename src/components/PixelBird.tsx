@@ -23,8 +23,9 @@ const getHeadingPerches = (): BirdPosition[] => {
   return headings
     .map((heading) => {
       const rect = heading.getBoundingClientRect();
+      const isVisiblePerch = rect.top > 96 && rect.top < window.innerHeight - 16;
 
-      if (rect.width <= 0 || rect.height <= 0) {
+      if (rect.width <= 0 || rect.height <= 0 || !isVisiblePerch) {
         return null;
       }
 
