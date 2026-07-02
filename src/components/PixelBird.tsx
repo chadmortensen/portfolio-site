@@ -7,6 +7,7 @@ type BirdPosition = {
 
 const BIRD_WIDTH = 44;
 const BIRD_HEIGHT = 32;
+const SCROLL_RETURN_DELAY = 8000;
 
 const getRandomPosition = (): BirdPosition => ({
   x: Math.max(16, Math.random() * (window.innerWidth - BIRD_WIDTH - 32) + 16),
@@ -44,8 +45,15 @@ const PixelBird = () => {
   const [position, setPosition] = useState<BirdPosition>({ x: 48, y: 112 });
   const [isFlying, setIsFlying] = useState(true);
   const [isFacingLeft, setIsFacingLeft] = useState(false);
+  const [isScaredAway, setIsScaredAway] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const lastX = useRef(position.x);
+  const positionRef = useRef(position);
+  const returnTimer = useRef<number | undefined>();
+
+  useEffect(() => {
+    positionRef.current = position;
+  }, [position]);
 
   useEffect(() => {
     const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -59,7 +67,7 @@ const PixelBird = () => {
   }, []);
 
   useEffect(() => {
-    if (!shouldRender) {
+    if (!shouldRender || isScaredAway) {
       return;
     }
 
@@ -90,6 +98,47 @@ const PixelBird = () => {
     return () => {
       window.clearTimeout(flightTimer);
       window.clearTimeout(perchTimer);
+    };
+  }, [shouldRender, isScaredAway]);
+
+  useEffect(() => {
+    if (!shouldRender) {
+      return;
+    }
+
+    const scareAway = () => {
+      const currentPosition = positionRef.current;
+      const exitsLeft = currentPosition.x < window.innerWidth / 2;
+      const nextPosition = {
+        x: exitsLeft ? -BIRD_WIDTH - 56 : window.innerWidth + 56,
+        y: Math.min(
+          window.innerHeight - BIRD_HEIGHT - 24,
+          Math.max(72, currentPosition.y - 20 + Math.random() * 40)
+        ),
+      };
+
+      window.clearTimeout(returnTimer.current);
+      setIsScaredAway(true);
+      setIsFlying(true);
+      setIsFacingLeft(exitsLeft);
+      lastX.current = nextPosition.x;
+      setPosition(nextPosition);
+
+      returnTimer.current = window.setTimeout(() => {
+        const returnPosition = getRandomPosition();
+
+        setIsFacingLeft(returnPosition.x < lastX.current);
+        lastX.current = returnPosition.x;
+        setPosition(returnPosition);
+        setIsScaredAway(false);
+      }, SCROLL_RETURN_DELAY);
+    };
+
+    window.addEventListener("scroll", scareAway, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", scareAway);
+      window.clearTimeout(returnTimer.current);
     };
   }, [shouldRender]);
 
