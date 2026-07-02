@@ -25,7 +25,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/img/bright-challenge.jpeg",
+            "src": "/img/bright-challenge.png",
             "alt": "Brightside Challenge illustration",
             "position": "below",
             "columns": "6",
