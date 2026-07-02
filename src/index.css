@@ -365,3 +365,8 @@ h4 {
 .bg-surface-secondary {
   background-image: linear-gradient(to bottom, hsl(35, 68%, 95%), hsl(0, 0%, 100%));
 }
+
+#main-content img,
+[role="dialog"] img[src^="/lovable-uploads/"] {
+  border-radius: 10px;
+}
