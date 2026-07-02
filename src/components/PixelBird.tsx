@@ -34,7 +34,7 @@ const getHeadingPerches = (): BirdPosition[] => {
           window.innerWidth - BIRD_WIDTH - 12,
           Math.max(12, rect.left + rect.width / 2 - BIRD_WIDTH / 2)
         ),
-        y: Math.max(72, rect.top - BIRD_HEIGHT - 3),
+        y: Math.max(72, rect.top - BIRD_HEIGHT - 0),
       };
     })
     .filter((position): position is BirdPosition => Boolean(position));
