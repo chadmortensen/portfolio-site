@@ -1,4 +1,4 @@
-import { Briefcase, Calendar, ChevronDown, ChevronUp } from "lucide-react";
+import { Briefcase, Calendar, CircleMinus, CirclePlus } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -104,12 +104,12 @@ const Experience = () => {
               {isExpanded ? (
                 <>
                   Hide Experience
-                  <ChevronUp size={16} />
+                  <CircleMinus size={16} />
                 </>
               ) : (
                 <>
                   View Experience
-                  <ChevronDown size={16} />
+                  <CirclePlus size={16} />
                 </>
               )}
             </Button>
