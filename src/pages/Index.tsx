@@ -9,11 +9,13 @@ import Contact from "@/components/Contact";
 import UXTips from "@/components/UXTips";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import PixelBird from "@/components/PixelBird";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
+      <PixelBird />
       <main id="main-content">
         <Hero />
         <About />
