@@ -25,7 +25,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/img/bright-challenge.png",
+            "src": "/img/bright-challenge.jpg",
             "alt": "Brightside Challenge illustration",
             "position": "below",
             "columns": "6",
@@ -297,7 +297,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/img/bright-align.jpeg",
+            "src": "/img/bright-align.jpg",
             "alt": "",
             "position": "below",
             "columns": "6"
@@ -349,7 +349,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/img/bright-success.jpeg",
+            "src": "/img/bright-results.jpg",
             "alt": "",
             "position": "below",
             "columns": "6"
