@@ -15,13 +15,15 @@
           "column": "left"
         },
         {
-          "id": "Why This, and Why Now?-image-1755722042513",
           "type": "image",
           "content": {
             "src": "/img/etsy-kickoff.jpg",
-            "alt": "Why This, and Why Now? visual"
+            "alt": "Kick off illustration",
+            "position": "below",
+            "columns": "6"
           },
-          "column": "right"
+          "column": "right",
+          "id": "1783015421022-0.8301030192088021"
         }
       ],
       "speakerNotes": "gsdjfkdsal fjfkdsalj  fkdasljfkdsaljfdsa fljdsal  jfdkasljfadslk "

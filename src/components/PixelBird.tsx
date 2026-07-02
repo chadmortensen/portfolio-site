@@ -227,7 +227,7 @@ const PixelBird = () => {
           top: 20px;
           width: 12px;
           height: 8px;
-          background: hsl(var(--swiss-pure));
+          background: hsl(var(--accent-blue));
         }
 
         .pixel-bird__head {
