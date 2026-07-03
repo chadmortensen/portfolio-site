@@ -140,14 +140,12 @@ const Hero = () => {
                 Chad Mortensen
               </h1>
               <div className="w-16 h-px bg-accent-blue mx-auto"></div>
-              <p className="text-title2 font-light text-text-secondary max-w-4xl mx-auto px-4">
-                My work blends human-centered craft with strategic clarity to move people and products forward.
-              </p>
             </div>
             
             <div className="space-y-4 sm:space-y-6 px-4">
-              <p className="text-body text-text-secondary max-w-2xl mx-auto leading-relaxed">
-                The weather&apos;s great here in Portland. It&apos;s currently {weather.temperature} and {weather.condition}.<br />
+              <p className="text-title2 font-light text-text-secondary max-w-4xl mx-auto leading-relaxed">
+                Hi, the weather&apos;s great here in Portland.<br />
+                It&apos;s currently {weather.temperature} and {weather.condition}.<br />
                 {weather.activity}
               </p>
               {/* Removing, might add back later
