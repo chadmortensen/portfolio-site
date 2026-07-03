@@ -181,6 +181,38 @@
   animation: fade-in 0.6s ease-out;
 }
 
+section.hero-forest-bg {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.92) 34%, rgba(255, 255, 255, 0.54) 66%, rgba(250, 246, 239, 0.78) 100%),
+    linear-gradient(to bottom, rgba(250, 246, 239, 0.14) 0%, rgba(250, 246, 239, 0.38) 54%, rgba(255, 255, 255, 1) 90%),
+    url("/img/hero-forest-bg.webp");
+  background-color: hsl(var(--surface-secondary));
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 640px) {
+  section.hero-forest-bg {
+    background:
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.94) 38%, rgba(255, 255, 255, 0.62) 70%, rgba(250, 246, 239, 0.82) 100%),
+      linear-gradient(to bottom, rgba(250, 246, 239, 0.16) 0%, rgba(250, 246, 239, 0.44) 58%, rgba(255, 255, 255, 1) 88%),
+      url("/img/hero-forest-bg.webp");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100% 100%, 100% 100%, auto 72%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .animate-bounce {
+    animation: none;
+  }
+}
+
 /* Rich Text Editor Styles */
 .rich-text-editor .ql-toolbar {
   border: 1px solid hsl(var(--border));

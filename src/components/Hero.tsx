@@ -131,7 +131,7 @@ const Hero = () => {
       });
     }
   };
-  return <section id="home" className="min-h-screen flex items-center justify-center bg-surface-secondary">
+  return <section id="home" className="hero-forest-bg min-h-screen flex items-center justify-center bg-surface-secondary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
           <div className="space-y-6 sm:space-y-8">
@@ -147,7 +147,7 @@ const Hero = () => {
             
             <div className="space-y-4 sm:space-y-6 px-4">
               <p className="text-body text-text-secondary max-w-2xl mx-auto leading-relaxed">
-                Hi, the weather&apos;s great here in Portland. It&apos;s currently {weather.temperature} and {weather.condition}.<br />
+                The weather&apos;s great here in Portland! It&apos;s currently {weather.temperature} and {weather.condition}.<br />
                 {weather.activity}
               </p>
               {/* Removing, might add back later
