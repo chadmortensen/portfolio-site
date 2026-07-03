@@ -17,7 +17,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/img/etsy-kickoff.jpg",
+            "src": "/img/case-etsy-whythis.jpg",
             "alt": "Kick off illustration",
             "position": "below",
             "columns": "6"
@@ -44,7 +44,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/img/etsy-offsite-insession.jpg",
+            "src": "/img/case-etsy-participants.jpg",
             "alt": "",
             "position": "below",
             "columns": "6"
@@ -406,7 +406,7 @@
           "id": "Workshop Design-workshop-img-0-1755722042513",
           "type": "image",
           "content": {
-            "src": "lovable-uploads/136ddcb5-bb8b-4573-a9e6-8379fd19dca7.jpeg",
+            "src": "/img/case-etsy-workshop.jpg",
             "alt": "Workshop Design workshop image 1"
           },
           "column": "right"
@@ -1030,7 +1030,7 @@
           "id": "Output: Fulfillment Vision-image-1755722042513",
           "type": "image",
           "content": {
-            "src": "/img/etsy-vision-illustration.png",
+            "src": "/img/case-etsy-mission.jpg",
             "alt": "Output: Fulfillment Vision visual"
           },
           "column": "right"
@@ -1331,7 +1331,7 @@
           "id": "Output: Fulfillment Principles-image-1755722042513",
           "type": "image",
           "content": {
-            "src": "/img/etsy-principles.jpg",
+            "src": "/img/case-etsy-principles.jpg",
             "alt": "Output: Fulfillment Principles visual"
           },
           "column": "right"
@@ -1480,7 +1480,7 @@
         {
           "type": "image",
           "content": {
-            "src": "/img/etsy-reflection.jpg",
+            "src": "/img/case-etsy-reflection.jpg",
             "alt": "",
             "position": "below",
             "columns": "6"
