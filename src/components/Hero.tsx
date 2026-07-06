@@ -147,7 +147,7 @@ const Hero = () => {
             
             <div className="space-y-4 sm:space-y-6 px-4">
               <p className="text-body text-text-secondary max-w-2xl mx-auto leading-relaxed">
-                In case you&apos;re wondering, the weather&apos;s great here in Portland! It&apos;s currently {weather.temperature} and {weather.condition}.<br />
+                In case you&apos;re wondering, the weather&apos;s great here in Portland!<br /> It&apos;s currently {weather.temperature} and {weather.condition}.<br />
                 {weather.activity}
               </p>
               {/* Removing, might add back later
