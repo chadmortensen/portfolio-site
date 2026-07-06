@@ -64,7 +64,7 @@ const getPositiveActivity = (temperature: number, condition: string) => {
   }
 
   if (temperature >= 68) {
-    return "Excellent conditions for a walk through the neighborhood.";
+    return "Excellent conditions for a walk through the forest.";
   }
 
   if (condition === "cloudy" || condition === "misty" || condition === "partly cloudy") {
@@ -147,7 +147,7 @@ const Hero = () => {
             
             <div className="space-y-4 sm:space-y-6 px-4">
               <p className="text-body text-text-secondary max-w-2xl mx-auto leading-relaxed">
-                The weather&apos;s great here in Portland! It&apos;s currently {weather.temperature} and {weather.condition}.<br />
+                In case you&apos;re wondering, the weather&apos;s great here in Portland! It&apos;s currently {weather.temperature} and {weather.condition}.<br />
                 {weather.activity}
               </p>
               {/* Removing, might add back later
