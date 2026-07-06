@@ -64,7 +64,7 @@ const getPositiveActivity = (temperature: number, condition: string) => {
   }
 
   if (temperature >= 68) {
-    return "Excellent conditions for a walk through the forest.";
+    return "Excellent conditions for a walk in the forest.";
   }
 
   if (condition === "cloudy" || condition === "misty" || condition === "partly cloudy") {
