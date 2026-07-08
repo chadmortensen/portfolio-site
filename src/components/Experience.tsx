@@ -88,7 +88,7 @@ const Experience = () => {
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
           <h2 className="text-headline text-text-primary mb-4">Experience</h2>
-          <div className="w-16 h-px bg-accent-orange mx-auto mb-6"></div>
+          <div className="h-[3px] w-[7rem] bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
             25+ years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
           </p>

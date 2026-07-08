@@ -15,7 +15,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      {/* <PixelBird /> */}
       <main id="main-content">
         <Hero />
         <About />

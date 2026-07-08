@@ -7,7 +7,7 @@ const Contact = () => {
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-16">
           <h2 className="text-headline text-text-primary mb-4">Let's Connect</h2>
-          <div className="w-16 h-px bg-accent-aqua mx-auto mb-6"></div>
+          <div className="h-[3px] w-[7rem] bg-accent-aqua mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto">
             Ready to chat? I'd love to hear about your challenges and explore potential opportunities.
           </p>

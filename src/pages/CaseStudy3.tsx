@@ -552,7 +552,7 @@ const CaseStudy3 = () => {
     return (
       <div className="min-h-screen bg-surface-primary flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-8 h-8 border-2 border-accent-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <div className="w-8 h-8 border-2 border-accent-teal border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="text-text-secondary">Loading case study...</p>
         </div>
       </div>
@@ -639,7 +639,7 @@ const CaseStudy3 = () => {
                 )}
               </div>
             )}
-            <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
+            <div className="h-[3px] w-[12rem] bg-accent-teal mx-auto mb-8"></div>
           </div>
         </div>
       </section>
@@ -668,7 +668,7 @@ const CaseStudy3 = () => {
                         {section.subheader}
                       </h3>
                     )}
-                    <div className="w-12 h-px bg-accent-teal"></div>
+                    <div className="w-12 h-[3px] bg-accent-teal"></div>
                   </div>
                   
                   {isEditing && (

@@ -579,7 +579,7 @@ const CaseStudy2 = () => {
                 <p className="text-xl text-text-secondary mt-4">{subtitle}</p>
               </div>
             )}
-            <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
+            <div className="h-[3px] w-[12rem] bg-accent-orange mx-auto mb-8"></div>
           </div>
         </div>
       </section>
@@ -603,7 +603,7 @@ const CaseStudy2 = () => {
                   {section.subheader && (
                     <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">{section.subheader}</h3>
                   )}
-                  <div className="w-12 h-px bg-accent-teal"></div>
+                  <div className="w-12 h-[3px] bg-accent-orange"></div>
                   
                   {/* Edit controls */}
                   {isEditing && (

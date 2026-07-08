@@ -55,7 +55,7 @@ const CaseStudies = () => {
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
           <h2 className="text-headline text-text-primary mb-4">Case Studies</h2>
-          <div className="w-16 h-px bg-accent-blue mx-auto mb-6"></div>
+          <div className="h-[3px] w-[7rem] bg-accent-blue mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
             Real challenges, strategic solutions, and measurable outcomes that demonstrate the impact of effective leadership at Fortune 1 companies as well as growing startups.
           </p>

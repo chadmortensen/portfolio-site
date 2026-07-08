@@ -593,7 +593,7 @@ const CaseStudy1 = () => {
                 )}
               </div>
             )}
-            <div className="w-16 h-px bg-accent-blue mx-auto mb-8"></div>
+            <div className="h-[3px] w-[7rem] bg-accent-blue mx-auto mb-8"></div>
           </div>
         </div>
       </section>
@@ -617,7 +617,7 @@ const CaseStudy1 = () => {
                   {section.subheader && (
                     <h3 className="text-xl text-text-secondary font-light mt-4 mb-6">{section.subheader}</h3>
                   )}
-                  <div className="w-12 h-px bg-accent-teal"></div>
+                  <div className="h-[3px] w-12 bg-accent-blue"></div>
                   
                   {/* Edit controls */}
                   {isEditing && (

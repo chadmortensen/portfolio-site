@@ -30,7 +30,7 @@ const Leadership = () => {
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-16">
           <h2 className="text-headline text-text-primary mb-4">My Leadership Style</h2>
-          <div className="w-16 h-px bg-accent-aqua mx-auto mb-6"></div>
+          <div className="h-[3px] w-[7rem] bg-accent-aqua mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-4xl mx-auto">
             Leading design teams is about more than setting direction, it's about creating an environment where people can thrive, grow, and do their best work. Here's what I believe makes that possible:
           </p>

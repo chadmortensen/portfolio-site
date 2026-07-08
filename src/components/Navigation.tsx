@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,17 +10,7 @@ import {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const navItems = [
     { href: "#home", label: "Home" },
@@ -55,11 +45,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 py-4 ${
-      isScrolled 
-        ? 'bg-surface-primary/80 backdrop-blur-md backdrop-saturate-150 border-b border-swiss-light' 
-        : 'bg-surface-primary'
-    }`}>
+    <nav className="fixed top-0 w-full z-50 border-b border-swiss-light/60 bg-surface-primary/60 py-4 backdrop-blur-md backdrop-saturate-150">
       <div className="max-width-container mx-auto px-4 sm:px-6">
         <div className="flex justify-center items-center">
           {/* Desktop Navigation */}

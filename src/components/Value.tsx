@@ -33,7 +33,7 @@ const Value = () => {
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-20">
           <h2 className="text-headline text-text-primary mb-4">Value I Bring</h2>
-          <div className="w-16 h-px bg-accent-orange mx-auto mb-6"></div>
+          <div className="h-[3px] w-[7rem] bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto">
             As a product design leader, I wear many hats and I focus on the work that drives clarity, alignment, and impact across the organization.
           </p>

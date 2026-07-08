@@ -449,7 +449,7 @@ const Hero = () => {
             <h1 className={`text-display ${heroTextClass}`}>
               Chad Mortensen
             </h1>
-            <div className="mx-auto h-px w-16 bg-accent-blue"></div>
+            <div className="mx-auto h-[3px] w-[7rem] bg-black"></div>
             <p className={`text-title2 mx-auto max-w-3xl ${heroTextClass}`}>
               My work blends human-centered craft with strategic clarity to move people and products forward.
             </p>
@@ -474,7 +474,7 @@ const Hero = () => {
               className="w-full rounded px-6 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
               aria-label="Learn more about Chad Mortensen's background and experience"
             >
-              Learn More About Me
+              More About Me
             </button>
             <button
               onClick={() => document.querySelector("#case-studies")?.scrollIntoView({
