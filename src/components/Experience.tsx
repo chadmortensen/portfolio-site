@@ -84,7 +84,7 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-16 sm:py-24 bg-surface-primary">
+    <section id="experience" className="py-16 sm:py-24 bg-surface-secondary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
           <h2 className="text-headline text-text-primary mb-4">Experience</h2>

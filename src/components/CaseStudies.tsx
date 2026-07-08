@@ -1,14 +1,11 @@
-import { ArrowRight, Calendar, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [{
     id: 1,
-    title: "Design Vision for Growth team at Brightside Health",
+    title: "Design vision to inform the the Growth team's roadmap and strategy",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
@@ -19,7 +16,7 @@ const CaseStudies = () => {
   },
   {
     id: 2,
-    title: "Long term vision for Fulfillment at Etsy",
+    title: "Long term vision to guide and align the Fulfillment team to the company strategy",
     company: "Etsy",
     duration: "4 weeks",
     teamSize: "5",
@@ -30,7 +27,7 @@ const CaseStudies = () => {
   },
     {
     id: 3,
-    title: "A rapid revamp to the Walmart registry",
+    title: "A rapid revamp to the baby registry to regain lost trust and improve business performance",
     company: "Walmart", 
     duration: "1 quarter",
     teamSize: "6 people",
@@ -41,7 +38,7 @@ const CaseStudies = () => {
   },  
     {
     id: 4,
-    title: "Additional projects",
+    title: "Additional examples of design leadership",
     company: "Walmart eCommerce",
     duration: "Ongoing",
     teamSize: "Various",
@@ -61,51 +58,35 @@ const CaseStudies = () => {
           </p>
         </div>
 
-        <div className="col-span-12 space-y-12 sm:space-y-16">
-          {caseStudies.map((study, index) => <div key={index} className="grid lg:grid-cols-12 gap-6 sm:gap-8 bg-surface-primary border border-swiss-light overflow-hidden rounded-[2em]">
-              <div className="lg:col-span-5">
-                <img 
-                  src={study.image} 
-                  alt={`${study.title} - ${study.company} case study showing design process and outcomes`} 
-                  className="w-full h-48 sm:h-64 lg:h-full object-cover"
+        <div className="col-span-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {caseStudies.map((study) => <article key={study.id} className="flex min-h-[32rem] flex-col overflow-hidden rounded-[10px] border border-swiss-light bg-surface-primary">
+              <button
+                onClick={() => navigate(study.route)}
+                className="group block h-72 w-full overflow-hidden rounded-none text-left focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+                aria-label={`View ${study.title} case study`}
+              >
+                <img
+                  src={study.image}
+                  alt={`${study.title} - ${study.company} case study`}
+                  className="case-study-card-image h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                 />
-              </div>
-              <div className="lg:col-span-7 p-4 sm:p-8 flex flex-col justify-center">
-                <div className="space-y-4 sm:space-y-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                      <h3 className="text-title text-text-primary font-light mb-2">{study.title}</h3>
-                      <p className="text-body text-accent-blue font-medium">{study.company}</p>
-                    </div>
-                    <div className="flex flex-col sm:flex-row gap-4 mt-4 lg:mt-0">
-                      
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-body text-text-secondary leading-relaxed">{study.challenge}</p>
-                  </div>
-                  
-                  {study.goals && <div>
-                      <h4 className="text-body text-text-primary font-medium mb-3">Goals & Success Metrics</h4>
-                      <ul className="space-y-2">
-                        {study.goals.slice(0, 3).map((goal, goalIndex) => <li key={goalIndex} className="flex items-start space-x-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-accent-teal mt-2 flex-shrink-0"></div>
-                            <span className="text-body text-text-secondary leading-relaxed">{goal}</span>
-                          </li>)}
-                      </ul>
-                    </div>}
-
-
-                  <div className="pt-4">
-                    <button onClick={() => navigate(study.route)} className="inline-flex items-center space-x-2 px-6 py-3 bg-text-primary text-surface-primary hover:bg-swiss-gray rounded transition-colors duration-200 w-full sm:w-auto justify-center sm:justify-start">
-                      <span>{study.id === 4 ? "View Projects" : "Read Full Case Study"}</span>
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
+              </button>
+              <div className="flex flex-1 flex-col p-5 sm:p-6">
+                <div className="space-y-3">
+                  <h3 className="text-title text-text-primary font-light">{study.title}</h3>
+                  <p className="text-body text-accent-blue font-medium leading-snug">{study.company}</p>
                 </div>
+
+                <button
+                  onClick={() => navigate(study.route)}
+                  className="mt-auto inline-flex items-center gap-2 pt-8 text-body font-medium text-text-primary transition-colors duration-200 hover:text-accent-blue focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+                  aria-label={`View ${study.title} case study`}
+                >
+                  <span>{study.id === 4 ? "View Projects" : "View Case Study"}</span>
+                  <ArrowRight size={16} />
+                </button>
               </div>
-            </div>)}
+            </article>)}
         </div>
       </div>
     </section>;

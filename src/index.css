@@ -412,3 +412,6 @@ h4 {
 [role="dialog"] img[src^="/lovable-uploads/"] {
   border-radius: 10px;
 }
+#main-content img.case-study-card-image {
+  border-radius: 0;
+}

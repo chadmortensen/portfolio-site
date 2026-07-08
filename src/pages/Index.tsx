@@ -17,10 +17,10 @@ const Index = () => {
       <Navigation />
       <main id="main-content">
         <Hero />
+        <CaseStudies />
         <About />
         <Leadership />
         <Value />
-        <CaseStudies />
         <Experience />
         <Contact />
         <UXTips />

@@ -14,10 +14,10 @@ const Navigation = () => {
 
   const navItems = [
     { href: "#home", label: "Home" },
+    { href: "#case-studies", label: "Case Studies" },
     { href: "#about", label: "About" },
     { href: "#leadership", label: "Leadership" },
     { href: "#value", label: "Value" },
-    { href: "#case-studies", label: "Case Studies" },
     { href: "#experience", label: "Experience" },
     { href: "#contact", label: "Contact" }
   ];

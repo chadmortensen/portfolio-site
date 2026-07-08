@@ -33,7 +33,7 @@ const UXTips = () => {
   };
 
   return (
-    <section id="ux-tips" className="py-24 bg-surface-secondary">
+    <section id="ux-tips" className="py-24 bg-surface-primary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center">
           <h2 className="text-headline text-text-primary mb-4">UX Tips</h2>
