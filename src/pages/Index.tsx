@@ -18,10 +18,10 @@ const Index = () => {
       <main id="main-content">
         <Hero />
         <About />
-        <Experience />
         <Leadership />
         <Value />
         <CaseStudies />
+        <Experience />
         <Contact />
         <UXTips />
       </main>

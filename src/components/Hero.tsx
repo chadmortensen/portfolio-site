@@ -450,7 +450,7 @@ const Hero = () => {
               Chad Mortensen
             </h1>
             <div className="mx-auto h-[3px] w-[7rem] bg-black"></div>
-            <p className={`text-title2 mx-auto max-w-3xl ${heroTextClass}`}>
+            <p className={`text-title2 mx-auto max-w-xl ${heroTextClass}`}>
               My work blends human-centered craft with strategic clarity to move people and products forward.
             </p>
           </div>
@@ -460,15 +460,15 @@ const Hero = () => {
               <WeatherIcon condition={displayedWeather.condition} />
             </div>
             <div className="text-left">
-              <p className="text-headline font-medium leading-none tracking-normal">
+              <h2 className="text-headline font-medium leading-none tracking-normal">
                 {displayedWeather.temperature}&deg;
-              </p>
+              </h2>
               <p className="mt-1 text-[1.1rem] font-normal capitalize leading-[1.2rem]">{displayedWeather.condition}</p>
               <p className="text-[1.1rem] font-normal leading-[1.2rem]">Portland, OR</p>
             </div>
           </div>
 
-          <div className="mt-8 flex w-full max-w-2xl flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center">
+          <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center">
             <button
               onClick={scrollToAbout}
               className="w-full rounded px-6 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
@@ -493,8 +493,8 @@ const Hero = () => {
               className={`flex flex-col items-center gap-1 text-caption ${heroTextClass} transition-colors duration-200 hover:text-accent-aqua focus:outline-2 focus:outline-accent-blue focus:outline-offset-2`}
               aria-label="Scroll down to learn more about Chad Mortensen"
             >
-              <span>Scroll to explore</span>
-              <ArrowDown size={22} className="animate-bounce" />
+              {/* <span>Scroll to explore</span> */}
+              <ArrowDown size={32} className="animate-bounce" />
             </button>
           </div>
         </div>

@@ -15,10 +15,10 @@ const Navigation = () => {
   const navItems = [
     { href: "#home", label: "Home" },
     { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
     { href: "#leadership", label: "Leadership" },
     { href: "#value", label: "Value" },
     { href: "#case-studies", label: "Case Studies" },
+    { href: "#experience", label: "Experience" },
     { href: "#contact", label: "Contact" }
   ];
 
@@ -80,7 +80,7 @@ const Navigation = () => {
                 <button
                   key={item.href}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap rounded px-2 py-1"
+                  className="text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap rounded px-1 py-1"
                 >
                   {item.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
