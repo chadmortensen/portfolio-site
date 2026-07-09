@@ -431,3 +431,8 @@ h4 {
 #main-content img.case-study-card-image {
   border-radius: 0;
 }
+
+/* Remove extra top padding for sections on home page */
+.bg-surface-primary {
+  padding-top: 0;
+}
