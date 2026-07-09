@@ -214,6 +214,22 @@ section.hero-photo-bg--overlay::after {
   section.hero-photo-bg {
     background-position: center center;
   }
+
+  section.hero-photo-bg--overlay::after {
+    background:
+      linear-gradient(
+        to bottom,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.28)) 0%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.72)) 34%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / var(--hero-overlay-intensity, 0.3)) 64%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.48)) 100%
+      ),
+      radial-gradient(
+        ellipse at center,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.42)) 0%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / 0) 70%
+      );
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
