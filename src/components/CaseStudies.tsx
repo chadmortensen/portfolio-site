@@ -5,7 +5,7 @@ const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [{
     id: 1,
-    title: "Design vision to inform the the Growth team's roadmap and strategy",
+    title: "Growth vision and strategic alignment",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
@@ -16,7 +16,7 @@ const CaseStudies = () => {
   },
   {
     id: 2,
-    title: "Long term vision to guide and align the Fulfillment team to the company strategy",
+    title: "Long term vision for Fulfillment team",
     company: "Etsy",
     duration: "4 weeks",
     teamSize: "5",
@@ -27,7 +27,7 @@ const CaseStudies = () => {
   },
     {
     id: 3,
-    title: "A rapid revamp to the baby registry to regain lost trust and improve business performance",
+    title: "Baby registry revamp",
     company: "Walmart", 
     duration: "1 quarter",
     teamSize: "6 people",
@@ -38,7 +38,7 @@ const CaseStudies = () => {
   },  
     {
     id: 4,
-    title: "Additional examples of design leadership",
+    title: "Leading through design",
     company: "Walmart eCommerce",
     duration: "Ongoing",
     teamSize: "Various",
@@ -73,7 +73,7 @@ const CaseStudies = () => {
               </button>
               <div className="flex flex-1 flex-col p-5 sm:p-6">
                 <div className="space-y-3">
-                  <h3 className="text-title text-text-primary font-light">{study.title}</h3>
+                  <h4 className="text-title text-text-primary font-light">{study.title}</h4>
                   <p className="text-body text-accent-blue font-medium leading-snug">{study.company}</p>
                 </div>
 

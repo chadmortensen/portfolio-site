@@ -26,7 +26,7 @@ const Leadership = () => {
   ];
 
   return (
-    <section id="leadership" className="py-24 bg-surface-secondary">
+    <section id="leadership" className="py-24 bg-surface-primary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-16">
           <h2 className="text-headline text-text-primary mb-4">My Leadership Style</h2>
