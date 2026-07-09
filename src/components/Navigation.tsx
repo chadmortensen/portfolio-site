@@ -45,7 +45,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-swiss-light/60 bg-surface-primary/60 py-4 backdrop-blur-md backdrop-saturate-150">
+    <nav className="fixed top-0 w-full z-50 border-b border-swiss-light/60 bg-surface-primary/60 py-4 backdrop-blur-xl backdrop-saturate-150">
       <div className="max-width-container mx-auto px-4 sm:px-6">
         <div className="flex justify-center items-center">
           {/* Desktop Navigation */}
@@ -63,14 +63,14 @@ const Navigation = () => {
                       <DropdownMenuItem
                         key={study.route}
                         onClick={() => handleCaseStudyClick(study.route)}
-                        className="text-text-secondary hover:text-text-primary hover:bg-surface-secondary cursor-pointer"
+                        className="text-text-secondary hover:text-text-primary hover:bg-surface-secondary cursor-pointer px-4 py-2.5 leading-relaxed"
                       >
                         {study.title}
                       </DropdownMenuItem>
                     ))}
                     <DropdownMenuItem
                       onClick={() => scrollToSection(item.href)}
-                      className="text-text-secondary hover:text-text-primary hover:bg-surface-secondary cursor-pointer"
+                      className="text-text-secondary hover:text-text-primary hover:bg-surface-secondary cursor-pointer px-4 py-2.5 leading-relaxed"
                     >
                       View All Case Studies
                     </DropdownMenuItem>
@@ -111,14 +111,14 @@ const Navigation = () => {
                     >
                       {item.label}
                     </button>
-                    <div className="pl-4 space-y-2">
+                    <div className="pl-4 space-y-4">
                       {caseStudies.map((study) => (
                         <button
                           key={study.route}
                           onClick={() => handleCaseStudyClick(study.route)}
-                          className="block text-left text-caption text-text-secondary hover:text-text-primary transition-colors duration-200 rounded px-2 py-1"
+                          className="block text-left text-base text-text-secondary hover:text-text-primary transition-colors duration-200 rounded px-2 py-2"
                         >
-                          {study.title}
+                         - {study.title}
                         </button>
                       ))}
                     </div>
