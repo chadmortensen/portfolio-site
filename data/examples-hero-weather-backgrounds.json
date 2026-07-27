@@ -26,7 +26,16 @@
         "overlay": true,
         "overlayIntensity": 0.3,
         "overlayTheme": "light"
-      }
+      },
+      {
+      "src": "/img/back-sunny-motion.mp4",
+      "mediaType": "video",
+      "playbackRate": 0.2,
+      "textTheme": "dark",
+      "overlay": true,
+      "overlayIntensity": 0.3,
+      "overlayTheme": "light"
+    }
     ],
     "partlySunny": [
       {
