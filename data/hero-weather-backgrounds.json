@@ -10,21 +10,21 @@
         "src": "/img/hero-back-sunny1.jpg",
         "textTheme": "dark",
         "overlay": true,
-        "overlayIntensity": 0.70,
+        "overlayIntensity": 0.7,
         "overlayTheme": "light"
       },
       {
         "src": "/img/hero-back-sunny2.jpg",
         "textTheme": "dark",
         "overlay": true,
-        "overlayIntensity": 0.60,
+        "overlayIntensity": 0.6,
         "overlayTheme": "light"
       },
       {
         "src": "/img/hero-back-sunny3.jpg",
         "textTheme": "dark",
         "overlay": true,
-        "overlayIntensity": 0.30,
+        "overlayIntensity": 0.3,
         "overlayTheme": "light"
       }
     ],
@@ -48,7 +48,7 @@
         "src": "/img/hero-back-lightrain.jpg",
         "textTheme": "light",
         "overlay": true,
-        "overlayIntensity": 0.60,
+        "overlayIntensity": 0.6,
         "overlayTheme": "dark"
       }
     ],

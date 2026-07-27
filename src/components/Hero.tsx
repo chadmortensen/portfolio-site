@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import heroWeatherBackgrounds from "../../data/hero-weather-backgrounds.json";
 import {
   ArrowDown,
@@ -18,9 +18,12 @@ type WeatherSummary = {
 
 type HeroTextTheme = "dark" | "light";
 type HeroOverlayTheme = "dark" | "light";
+type HeroMediaType = "image" | "video";
 
 type WeatherBackgroundEntry = {
   src: string;
+  mediaType?: HeroMediaType;
+  playbackRate?: number;
   textTheme?: HeroTextTheme;
   overlay?: boolean;
   overlayTheme?: HeroOverlayTheme;
@@ -44,6 +47,7 @@ const PORTLAND_WEATHER_URL =
 
 const FALLBACK_BACKGROUND: WeatherBackgroundEntry = {
   src: "/img/hero-back-sunny1.jpg",
+  mediaType: "image",
   textTheme: "dark",
 };
 
@@ -166,6 +170,8 @@ const normalizeBackgroundEntry = (
 
   return {
     src: entry.src,
+    mediaType: entry.mediaType ?? "image",
+    playbackRate: entry.playbackRate,
     textTheme: entry.textTheme ?? inheritedTextTheme,
     overlay: entry.overlay ?? false,
     overlayTheme: entry.overlayTheme ?? "dark",
@@ -233,6 +239,20 @@ const isImageAvailable = (src: string) =>
     image.src = src;
   });
 
+const isVideoAvailable = (src: string) =>
+  new Promise<boolean>((resolve) => {
+    const video = document.createElement("video");
+    video.onloadedmetadata = () => resolve(true);
+    video.onerror = () => resolve(false);
+    video.preload = "metadata";
+    video.src = src;
+    video.load();
+  });
+
+const isBackgroundAvailable = (entry: WeatherBackgroundEntry) => (
+  entry.mediaType === "video" ? isVideoAvailable(entry.src) : isImageAvailable(entry.src)
+);
+
 const WeatherIcon = ({ condition }: { condition: string }) => {
   const iconProps = {
     size: 48,
@@ -269,6 +289,7 @@ const WeatherIcon = ({ condition }: { condition: string }) => {
 
 const Hero = () => {
   const [weather, setWeather] = useState<WeatherSummary | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const backgroundConfig = useMemo<WeatherBackgroundConfig>(() => ({
     ...DEFAULT_BACKGROUND_CONFIG,
     ...heroWeatherBackgrounds,
@@ -341,7 +362,7 @@ const Hero = () => {
 
     const applyFirstAvailableBackground = async () => {
       for (const candidate of candidates) {
-        const isAvailable = await isImageAvailable(candidate.src);
+        const isAvailable = await isBackgroundAvailable(candidate);
 
         if (!isMounted) {
           return;
@@ -385,7 +406,7 @@ const Hero = () => {
       for (let offset = 1; offset <= previewEntries.length; offset += 1) {
         const nextIndex = (startIndex + direction * offset + previewEntries.length) % previewEntries.length;
         const candidate = previewEntries[nextIndex];
-        const isAvailable = await isImageAvailable(candidate.src);
+        const isAvailable = await isBackgroundAvailable(candidate);
 
         if (isAvailable) {
           setPreviewIndex(nextIndex);
@@ -416,14 +437,23 @@ const Hero = () => {
   }, [activeBackground, previewEntries, previewIndex]);
 
   const heroTextClass = activeBackground?.textTheme === "light" ? "text-[#FBF4EA]" : "text-text-primary";
+  const hasVideoBackground = activeBackground?.mediaType === "video";
   const heroSectionClass = `hero-photo-bg${activeBackground?.overlay ? " hero-photo-bg--overlay" : ""} min-h-screen bg-surface-secondary`;
   const heroStyle = activeBackground
     ? {
-      "--hero-photo": `url("${activeBackground.src}")`,
+      "--hero-photo": hasVideoBackground ? "none" : `url("${activeBackground.src}")`,
       "--hero-overlay-rgb": getOverlayRgb(activeBackground.overlayTheme),
       "--hero-overlay-intensity": clampOverlayIntensity(activeBackground.overlayIntensity).toString(),
     } as React.CSSProperties
     : undefined;
+
+  useEffect(() => {
+    if (!videoRef.current || !activeBackground || activeBackground.mediaType !== "video") {
+      return;
+    }
+
+    videoRef.current.playbackRate = activeBackground.playbackRate ?? 1;
+  }, [activeBackground]);
 
   const scrollToAbout = () => {
     const aboutSection = document.querySelector("#about");
@@ -440,6 +470,19 @@ const Hero = () => {
       className={heroSectionClass}
       style={heroStyle}
     >
+      {hasVideoBackground && (
+        <video
+          key={activeBackground.src}
+          ref={videoRef}
+          className="hero-background-video"
+          src={activeBackground.src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        />
+      )}
       <div className="hero-content fade-in">
         <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col items-center justify-center px-4 pb-10 pt-28 text-center sm:px-6 lg:pt-32">
           <div className="space-y-3 sm:space-y-4">
