@@ -87,6 +87,22 @@
         "overlayIntensity": 0.45,
         "overlayTheme": "dark"
       }
+    ],
+    "night": [
+      {
+        "src": "/img/hero-back-portland-night.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-portland-night2.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      }
     ]
   }
 }

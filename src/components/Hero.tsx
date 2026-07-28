@@ -14,6 +14,7 @@ import {
 type WeatherSummary = {
   temperature: number;
   condition: string;
+  isDay: boolean;
 };
 
 type HeroTextTheme = "dark" | "light";
@@ -44,6 +45,7 @@ type WeatherBackgroundPreview = WeatherBackgroundEntry & {
 
 const PORTLAND_WEATHER_URL =
   "https://api.open-meteo.com/v1/forecast?latitude=45.5152&longitude=-122.6784&current=temperature_2m,weather_code,is_day&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=1";
+const PORTLAND_TIME_ZONE = "America/Los_Angeles";
 
 const FALLBACK_BACKGROUND: WeatherBackgroundEntry = {
   src: "/img/hero-back-sunny1.jpg",
@@ -95,37 +97,69 @@ const getWeatherCondition = (weatherCode: number, isDay: boolean) => {
   return "lovely";
 };
 
+const getPortlandHour = () => {
+  const formattedHour = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    hour12: false,
+    timeZone: PORTLAND_TIME_ZONE,
+  }).format(new Date());
+
+  return Number(formattedHour);
+};
+
+const getPortlandGreeting = () => {
+  const hour = getPortlandHour();
+
+  if (hour < 12) {
+    return "Good morning, I'm";
+  }
+
+  if (hour < 17) {
+    return "Good afternoon, I'm";
+  }
+
+  return "Good evening, I'm";
+};
+
 const getFallbackWeather = (): WeatherSummary => ({
   temperature: 78,
   condition: "sunny",
+  isDay: true,
 });
 
 const getWeatherPreview = (designation: string): WeatherSummary => {
   switch (designation) {
+    case "night":
+      return { temperature: 58, condition: "clear", isDay: false };
     case "partlySunny":
-      return { temperature: 72, condition: "partly sunny" };
+      return { temperature: 72, condition: "partly sunny", isDay: true };
     case "cloudy":
-      return { temperature: 64, condition: "cloudy" };
+      return { temperature: 64, condition: "cloudy", isDay: true };
     case "lightRain":
-      return { temperature: 58, condition: "drizzly" };
+      return { temperature: 58, condition: "drizzly", isDay: true };
     case "rain":
-      return { temperature: 55, condition: "rainy" };
+      return { temperature: 55, condition: "rainy", isDay: true };
     case "stormy":
-      return { temperature: 60, condition: "stormy" };
+      return { temperature: 60, condition: "stormy", isDay: true };
     case "snow":
-      return { temperature: 34, condition: "snowy" };
+      return { temperature: 34, condition: "snowy", isDay: true };
     case "freezing":
-      return { temperature: 28, condition: "clear" };
+      return { temperature: 28, condition: "clear", isDay: true };
     default:
-      return { temperature: 78, condition: "sunny" };
+      return { temperature: 78, condition: "sunny", isDay: true };
   }
 };
 
 const getWeatherDesignation = (
   condition: string,
   temperature: number,
-  freezingTemperatureF: number
+  freezingTemperatureF: number,
+  isDay: boolean
 ) => {
+  if (!isDay) {
+    return "night";
+  }
+
   if (temperature < freezingTemperatureF) {
     return "freezing";
   }
@@ -289,6 +323,7 @@ const WeatherIcon = ({ condition }: { condition: string }) => {
 
 const Hero = () => {
   const [weather, setWeather] = useState<WeatherSummary | null>(null);
+  const [heroGreeting, setHeroGreeting] = useState(getPortlandGreeting);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const backgroundConfig = useMemo<WeatherBackgroundConfig>(() => ({
     ...DEFAULT_BACKGROUND_CONFIG,
@@ -308,7 +343,8 @@ const Hero = () => {
       ? getWeatherDesignation(
         weather.condition,
         weather.temperature,
-        backgroundConfig.freezingTemperatureF
+        backgroundConfig.freezingTemperatureF,
+        weather.isDay
       )
       : null,
     [backgroundConfig.freezingTemperatureF, weather]
@@ -337,6 +373,7 @@ const Hero = () => {
         setWeather({
           temperature,
           condition,
+          isDay: Boolean(data.current.is_day),
         });
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") {
@@ -350,6 +387,14 @@ const Hero = () => {
     loadWeather();
 
     return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const greetingInterval = window.setInterval(() => {
+      setHeroGreeting(getPortlandGreeting());
+    }, 60_000);
+
+    return () => window.clearInterval(greetingInterval);
   }, []);
 
   useEffect(() => {
@@ -487,7 +532,7 @@ const Hero = () => {
         <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col items-center justify-center px-4 pb-10 pt-28 text-center sm:px-6 lg:pt-32">
           <div className="space-y-3 sm:space-y-4">
             <p className={`text-title2 ${heroTextClass}`}>
-              Hi, I&apos;m
+              {heroGreeting}
             </p>
             <h1 className={`text-display ${heroTextClass}`}>
               Chad Mortensen
