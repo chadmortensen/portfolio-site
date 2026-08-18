@@ -17,6 +17,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AlertTriangle, Info } from "lucide-react";
+import { SectionLibraryShowcase } from "@/components/case-study/SectionLibraryShowcase";
 
 const DesignSystem = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -439,6 +440,10 @@ const DesignSystem = () => {
             </CardContent>
           </Card>
         </section>
+
+        <Separator className="my-12" />
+
+        <SectionLibraryShowcase />
 
         {/* Footer */}
         <div className="py-8 border-t">
