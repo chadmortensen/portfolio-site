@@ -24,7 +24,7 @@ const Value = () => {
     },
     {
       title: "Elevate design quality",
-      description: "I raise the bar by championing user-centered practices, setting clear principles, and facilitate constructive feedback that sharpens outcomes. Through open collaboration and knowledge sharing, I help teams grow their craft while encouraging experimentation, new technologies, and fresh approaches to keep our design practice innovative and relevant."
+      description: "I raise the bar by championing user-centered practices, setting clear principles, and facilitating constructive feedback that sharpens outcomes. Through open collaboration and knowledge sharing, I help teams grow their craft while encouraging experimentation, new technologies, and fresh approaches to keep our design practice innovative and relevant."
     }
   ];
 
@@ -57,4 +57,3 @@ const Value = () => {
 };
 
 export default Value;
-

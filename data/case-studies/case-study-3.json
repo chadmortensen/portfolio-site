@@ -98,7 +98,7 @@
           "type": "text",
           "content": {
             "title": "",
-            "text": "<p><span style=\"background-color: transparent;\">I was eager to dig deep into customer data to pull forward insights, but the tools that we had in place were not the most user-friendly. So in an effort to help myself via AI chat tools I developed a GPT-based assistant that designers and product managers could also use to generate analytics reports in a more simple way. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.﻿</span></p>"
+            "text": "<p><span style=\"background-color: transparent;\">I wanted to dig deeper into customer data, but our existing tools were difficult to use. To make the data more accessible, I developed a GPT-based assistant that helped designers and product managers generate analytics reports more easily. This tool provided step-by-step instructions for using Brightside’s data tools and helped promote a more data-informed culture across the product organization. Although it was not part of the original project scope, it was a valuable enabler.</span></p>"
           },
           "column": "left",
           "id": "1755543918558-0.04842676308756744"
@@ -184,7 +184,7 @@
           "id": "process-content-1",
           "type": "text",
           "content": {
-            "text": "<p>Unlike many vision projects, this effort did not begin with a structured group brainstorm. The designer had already started working on near-term improvements. My goal was to help him think more broadly and explore directions that weren't limited by what could be built in the next sprint.</p><p>Instead of formal workshops, we used a series of design critiques and 1-on-1s to push the work further. I challenged him to integrate new insights from the research and bring more spicy options into the designs.</p>"
+            "text": "<p>Unlike many vision projects, this effort did not begin with a structured group brainstorm. The designer had already started working on near-term improvements. My goal was to help him think more broadly and explore directions that weren't limited by what could be built in the next sprint.</p><p>Instead of formal workshops, we used a series of design critiques and 1-on-1s to push the work further. I challenged him to integrate new insights from the research and bring bolder, more ambitious options into the designs.</p>"
           },
           "column": "left"
         },
@@ -195,7 +195,7 @@
             "title": "Two Standout Ideas Emerged",
             "items": [
               "Use AI to offer helpful guidance during complex decision points, such as selecting a payment method or understanding insurance. We knew there were moments of overwhelm, which caused friction.",
-              "Introduce a more human tone by incorporating videos and personalized therapist content, making the process feel more like a conversation, or what people were used to offline, than a transaction."
+              "Introduce a more human tone by incorporating videos and personalized therapist content, making the process feel more like the kinds of conversations people were accustomed to offline and less like a transaction."
             ]
           },
           "column": "left"
@@ -238,7 +238,7 @@
           "id": "vision-assistive-1",
           "type": "bullets",
           "content": {
-            "title": "Give them the answers, be more assistive (AI-Driven)",
+            "title": "Be more assistive and provide clearer answers",
             "items": [
               "While AI was not the core of the vision, it played a valuable role in making the experience feel smarter and more responsive. It surfaced relevant content at the right time and used natural language to reduce friction. I wanted to be careful and not insert AI for the sake of using a new technology. It needed to serve a purpose."
             ]
@@ -249,7 +249,7 @@
           "id": "vision-concise-1",
           "type": "bullets",
           "content": {
-            "title": "Keep it simple, more concise",
+            "title": "Keep it simple and concise",
             "items": [
               "We removed unnecessary steps, combined related screens, and postponed some questions until after the user created an account. This helped make the experience shorter and less mentally taxing."
             ]
@@ -260,7 +260,7 @@
           "id": "vision-human-1",
           "type": "bullets",
           "content": {
-            "title": "Make it more personal and human centered",
+            "title": "Make it more personal and human-centered",
             "items": [
               "We aimed to create a sign-up process that felt supportive and empathetic. Video content helped explain complicated decisions. We also highlighted therapist bios and working styles to create a stronger emotional connection between patient and provider."
             ]
@@ -342,7 +342,7 @@
           "id": "results-intro-1",
           "type": "text",
           "content": {
-            "text": "<p><span style=\"background-color: transparent;\">While the full vision has not yet been implemented, it has already begun to shape the team’s direction.</span></p><ul><li><strong style=\"background-color: transparent;\">Validated the roadmap</strong> – <span style=\"background-color: transparent;\">The work confirmed that the squad’s short-term initiatives were aligned with a larger, more ambitious goal.</span></li><li><strong style=\"background-color: transparent;\">Strengthened cross-functional trust</strong><span style=\"background-color: transparent;\"> – The collaboration with clinical leadership was a turning point. By listening to their concerns, testing assumptions, and co-deciding what data was essential, we built credibility and demonstrated that design could reconcile business, user, and clinical needs.</span></li><li><strong style=\"background-color: transparent;\">Elevated design’s role</strong><span style=\"background-color: transparent;\"> – The project reinforced the value of design as a strategic partner, not just a delivery function.</span></li><li><strong style=\"background-color: transparent;\">Improved clarity for engineering</strong><span style=\"background-color: transparent;\"> – The head of engineering noted he now understood more clearly </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> the team was building what they were building, which boosted collaboration and focus.</span></li><li><strong style=\"background-color: transparent;\">Fostered growth in the squad designer</strong><span style=\"background-color: transparent;\"> – He shifted from solving isolated problems to thinking systemically and aspirationally, moving from </span><em style=\"background-color: transparent;\">what’s feasible</em><span style=\"background-color: transparent;\"> to </span><em style=\"background-color: transparent;\">what’s possible</em><span style=\"background-color: transparent;\">.</span></li></ul><p><br></p><h3><span style=\"background-color: transparent;\">Personal reflection</span></h3><p><span style=\"background-color: transparent;\">This alignment across design, product, and clinical teams wasn’t just about reducing signup steps; it showed that when you bring different perspectives together, you can unlock solutions that serve everyone. That’s the kind of trust and shared vision that makes real transformation sustainable.</span></p>"
+            "text": "<p><span style=\"background-color: transparent;\">While the full vision has not yet been implemented, it has already begun to shape the team’s direction.</span></p><ul><li><strong style=\"background-color: transparent;\">Validated the roadmap</strong> – <span style=\"background-color: transparent;\">The work confirmed that the squad’s short-term initiatives were aligned with a larger, more ambitious goal.</span></li><li><strong style=\"background-color: transparent;\">Strengthened cross-functional trust</strong><span style=\"background-color: transparent;\"> – The collaboration with clinical leadership was a turning point. By listening to their concerns, testing assumptions, and deciding together which data was essential, we built credibility and demonstrated that design could reconcile business, user, and clinical needs.</span></li><li><strong style=\"background-color: transparent;\">Elevated design’s role</strong><span style=\"background-color: transparent;\"> – The project reinforced the value of design as a strategic partner, not just a delivery function.</span></li><li><strong style=\"background-color: transparent;\">Improved clarity for engineering</strong><span style=\"background-color: transparent;\"> – The head of engineering noted he now understood more clearly </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> the team was pursuing its roadmap, which boosted collaboration and focus.</span></li><li><strong style=\"background-color: transparent;\">Fostered growth in the squad designer</strong><span style=\"background-color: transparent;\"> – He shifted from solving isolated problems to thinking systemically and aspirationally, moving from </span><em style=\"background-color: transparent;\">what’s feasible</em><span style=\"background-color: transparent;\"> to </span><em style=\"background-color: transparent;\">what’s possible</em><span style=\"background-color: transparent;\">.</span></li></ul><p><br></p><h3><span style=\"background-color: transparent;\">Personal reflection</span></h3><p><span style=\"background-color: transparent;\">This alignment across design, product, and clinical teams wasn’t just about reducing sign-up steps; it showed that when you bring different perspectives together, you can unlock solutions that serve everyone. That’s the kind of trust and shared vision that makes real transformation sustainable.</span></p>"
           },
           "column": "left"
         },
