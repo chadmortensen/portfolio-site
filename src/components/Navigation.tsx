@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +10,7 @@ import {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
 
   const navItems = [
@@ -29,14 +30,34 @@ const Navigation = () => {
     { title: "Additional work examples", route: "/case-study-4" }
   ];
 
+  useEffect(() => {
+    if (location.pathname !== "/" || !location.hash) {
+      return;
+    }
+
+    const animationFrame = window.requestAnimationFrame(() => {
+      document.querySelector(location.hash)?.scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [location.pathname, location.hash]);
+
   const scrollToSection = (href: string) => {
+    setIsOpen(false);
+
+    if (location.pathname !== "/") {
+      navigate(`/${href}`);
+      return;
+    }
+
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({
         behavior: "smooth"
       });
     }
-    setIsOpen(false);
   };
 
   const handleCaseStudyClick = (route: string) => {
