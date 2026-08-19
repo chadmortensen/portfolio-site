@@ -5,7 +5,7 @@ const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [{
     id: 1,
-    title: "Growth vision and strategic alignment",
+    title: "Turning Fragmented Growth Efforts Into a Shared Product Vision",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
@@ -16,7 +16,7 @@ const CaseStudies = () => {
   },
   {
     id: 2,
-    title: "Long term vision for Fulfillment team",
+    title: "Turning Fulfillment Roadmaps Into a Shared Strategy",
     company: "Etsy",
     duration: "4 weeks",
     teamSize: "5",
@@ -27,7 +27,7 @@ const CaseStudies = () => {
   },
     {
     id: 3,
-    title: "Baby registry revamp",
+    title: "Leading a Rapid Registry Turnaround That Increased Quality Creations by 28%",
     company: "Walmart", 
     duration: "1 quarter",
     teamSize: "6 people",
@@ -38,7 +38,7 @@ const CaseStudies = () => {
   },  
     {
     id: 4,
-    title: "Leading through design",
+    title: "Design Leadership in Practice: Shaping Strategy Across Multiple Verticals",
     company: "Walmart eCommerce",
     duration: "Ongoing",
     teamSize: "Various",
@@ -73,8 +73,8 @@ const CaseStudies = () => {
               </button>
               <div className="flex flex-1 flex-col p-5 sm:p-6">
                 <div className="space-y-3">
-                  <h4 className="text-title text-text-primary font-light">{study.title}</h4>
-                  <p className="text-body text-accent-blue font-medium leading-snug">{study.company}</p>
+                  <h4 className="text-case-study-title text-text-primary font-light">{study.title}</h4>
+                  <p className="text-case-study-label text-accent-blue font-medium">{study.company}</p>
                 </div>
 
                 <button
