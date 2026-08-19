@@ -11,6 +11,9 @@ const CaseStudy1 = lazy(() => import("./pages/CaseStudy1"));
 const CaseStudy2 = lazy(() => import("./pages/CaseStudy2"));
 const CaseStudy3 = lazy(() => import("./pages/CaseStudy3"));
 const CaseStudy4 = lazy(() => import("./pages/CaseStudy4"));
+const CaseStudy4Editor = import.meta.env.DEV
+  ? lazy(() => import("./pages/CaseStudy4Editor"))
+  : null;
 const DesignSystem = lazy(() => import("./pages/DesignSystem"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -36,6 +39,9 @@ const App = () => (
             <Route path="/case-study-2" element={<CaseStudy2 />} />
             <Route path="/case-study-3" element={<CaseStudy3 />} />
             <Route path="/case-study-4" element={<CaseStudy4 />} />
+            {CaseStudy4Editor && (
+              <Route path="/case-study-4/edit" element={<CaseStudy4Editor />} />
+            )}
             <Route path="/ds" element={<DesignSystem />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

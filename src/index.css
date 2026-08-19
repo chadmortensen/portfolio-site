@@ -3,6 +3,85 @@
 @tailwind components;
 @tailwind utilities;
 
+.portfolio-mdx-editor [role="toolbar"] {
+  position: static;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 0.5rem 0.75rem;
+}
+
+.portfolio-mdx-editor-content {
+  min-height: 65vh;
+  padding: 2rem clamp(1.25rem, 4vw, 3.5rem);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.portfolio-mdx-editor-content h1,
+.prose.case-study-mdx-content h1 {
+  font-family: "Young Serif", "Bricolage Grotesque", 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+}
+
+.portfolio-mdx-editor-content h2,
+.prose.case-study-mdx-content h2 {
+  font-family: "Young Serif", "Bricolage Grotesque", 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 2.25rem;
+}
+
+.portfolio-mdx-editor-content h3,
+.prose.case-study-mdx-content h3 {
+  margin-top: 1.75rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.portfolio-mdx-editor-content h4,
+.prose.case-study-mdx-content h4 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  line-height: 1.75rem;
+}
+
+.portfolio-mdx-editor-content h5,
+.prose.case-study-mdx-content h5 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+.portfolio-mdx-editor-content h6,
+.prose.case-study-mdx-content h6 {
+  color: hsl(var(--muted-foreground));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.portfolio-mdx-editor-content p,
+.prose.case-study-mdx-content p {
+  margin-block: 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.portfolio-mdx-editor-content ul,
+.portfolio-mdx-editor-content ol {
+  margin-block: 0.75rem;
+  padding-left: 1.5rem;
+}
+
 /* Swiss-Inspired Minimal Design System */
 
 @layer base {
@@ -428,9 +507,9 @@ section.hero-photo-bg--overlay::after {
 }
 
 h4 {
-    font-size: 1.2rem !important;
-    font-weight: 500 !important;
-  }
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+}
 
 .bg-surface-secondary {
   background-image: linear-gradient(to bottom, hsl(35, 68%, 95%), hsl(0, 0%, 100%));

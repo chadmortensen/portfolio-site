@@ -42,7 +42,7 @@ const CaseStudySection = ({
           content: { src: image, alt: imageAlt },
         }}
       />
-      <div className="prose prose-slate max-w-none text-case-study-body text-text-secondary leading-relaxed">
+      <div className="case-study-mdx-content prose prose-slate max-w-none text-case-study-body text-text-secondary leading-relaxed">
         {children}
       </div>
     </div>
