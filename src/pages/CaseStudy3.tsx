@@ -1,7 +1,12 @@
-import { CaseStudyPage } from "@/components/case-study/CaseStudyPage";
-import type { CaseStudyData } from "@/components/case-study/types";
-import data from "../../data/case-studies/case-study-3.json";
+import { MdxCaseStudyPage } from "@/components/case-study/MdxCaseStudyPage";
+import Content, { frontmatter } from "../../content/case-studies/brightside-growth-vision.mdx";
 
 export default function CaseStudy3() {
-  return <CaseStudyPage data={data as CaseStudyData} />;
+  return (
+    <MdxCaseStudyPage
+      title={frontmatter.title}
+      subtitle={frontmatter.subtitle}
+      Content={Content}
+    />
+  );
 }

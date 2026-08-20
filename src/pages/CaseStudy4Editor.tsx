@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Loader2, Save } from "lucide-react";
 import {
   BlockTypeSelect,
@@ -23,7 +23,12 @@ import {
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 
-const editorApiUrl = "/__mdx-editor/case-study-4";
+const editableCaseStudySlugs = new Set([
+  "case-study-1",
+  "case-study-2",
+  "case-study-3",
+  "case-study-4",
+]);
 
 type EditableCaseStudy = {
   title: string;
@@ -98,14 +103,70 @@ const caseStudySectionDescriptor: JsxComponentDescriptor = {
   props: [
     { name: "title", type: "string", required: true },
     { name: "subheader", type: "string", required: true },
-    { name: "image", type: "string", required: true },
-    { name: "imageAlt", type: "string", required: true },
+    { name: "image", type: "string" },
+    { name: "imageAlt", type: "string" },
+    { name: "layout", type: "string" },
   ],
   hasChildren: true,
   Editor: GenericJsxEditor,
 };
 
+const caseStudyColumnsDescriptor: JsxComponentDescriptor = {
+  name: "CaseStudyColumns",
+  kind: "flow",
+  props: [{ name: "layout", type: "string" }],
+  hasChildren: true,
+  Editor: GenericJsxEditor,
+};
+
+const caseStudyColumnDescriptor: JsxComponentDescriptor = {
+  name: "CaseStudyColumn",
+  kind: "flow",
+  props: [{ name: "side", type: "string", required: true }],
+  hasChildren: true,
+  Editor: GenericJsxEditor,
+};
+
+const caseStudyImageDescriptor: JsxComponentDescriptor = {
+  name: "CaseStudyImage",
+  kind: "flow",
+  props: [
+    { name: "src", type: "string", required: true },
+    { name: "alt", type: "string", required: true },
+    { name: "heightPercent", type: "string" },
+  ],
+  hasChildren: false,
+  Editor: GenericJsxEditor,
+};
+
+const caseStudyQuoteDescriptor: JsxComponentDescriptor = {
+  name: "CaseStudyQuote",
+  kind: "flow",
+  props: [
+    { name: "title", type: "string" },
+    { name: "variant", type: "string" },
+  ],
+  hasChildren: true,
+  Editor: GenericJsxEditor,
+};
+
+const caseStudyTableDescriptor: JsxComponentDescriptor = {
+  name: "CaseStudyTable",
+  kind: "flow",
+  props: [
+    { name: "title", type: "string" },
+    { name: "headers", type: "expression", required: true },
+    { name: "rows", type: "expression", required: true },
+  ],
+  hasChildren: false,
+  Editor: GenericJsxEditor,
+};
+
 const CaseStudy4Editor = () => {
+  const { caseStudySlug = "" } = useParams();
+  const isEditableCaseStudy = editableCaseStudySlugs.has(caseStudySlug);
+  const editorApiUrl = `/__mdx-editor/${caseStudySlug}`;
+  const caseStudyUrl = `/${caseStudySlug}`;
   const editorRef = useRef<MDXEditorMethods>(null);
   const [savedDocument, setSavedDocument] = useState<EditableCaseStudy | null>(null);
   const [pageTitle, setPageTitle] = useState("");
@@ -117,6 +178,12 @@ const CaseStudy4Editor = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    if (!isEditableCaseStudy) {
+      setMessage("This page does not have an MDX editor.");
+      setStatus("error");
+      return;
+    }
+
     const controller = new AbortController();
 
     const loadCaseStudy = async () => {
@@ -141,7 +208,7 @@ const CaseStudy4Editor = () => {
 
     void loadCaseStudy();
     return () => controller.abort();
-  }, []);
+  }, [editorApiUrl, isEditableCaseStudy]);
 
   useEffect(() => {
     const warnBeforeLeaving = (event: BeforeUnloadEvent) => {
@@ -166,7 +233,16 @@ const CaseStudy4Editor = () => {
       thematicBreakPlugin(),
       linkPlugin(),
       linkDialogPlugin(),
-      jsxPlugin({ jsxComponentDescriptors: [caseStudySectionDescriptor] }),
+      jsxPlugin({
+        jsxComponentDescriptors: [
+          caseStudySectionDescriptor,
+          caseStudyColumnsDescriptor,
+          caseStudyColumnDescriptor,
+          caseStudyImageDescriptor,
+          caseStudyQuoteDescriptor,
+          caseStudyTableDescriptor,
+        ],
+      }),
       toolbarPlugin({
         toolbarContents: () => (
           <>
@@ -227,7 +303,7 @@ const CaseStudy4Editor = () => {
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 sm:px-8">
           <div className="flex min-w-0 items-center gap-4">
             <Link
-              to="/case-study-4"
+              to={caseStudyUrl}
               className="inline-flex shrink-0 items-center gap-2 text-sm text-text-secondary transition-colors hover:text-text-primary"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -235,7 +311,7 @@ const CaseStudy4Editor = () => {
             </Link>
             <div className="hidden h-5 w-px bg-border-primary sm:block" aria-hidden="true" />
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold">{pageTitle || "Additional work examples"}</p>
+              <p className="truncate text-sm font-semibold">{pageTitle || "Case study editor"}</p>
               <p className="text-xs text-text-secondary">Local editor</p>
             </div>
           </div>
@@ -327,7 +403,7 @@ const CaseStudy4Editor = () => {
               </p>
             </div>
 
-            <div className="portfolio-mdx-editor overflow-hidden rounded-xl border border-border-primary bg-white text-slate-900 shadow-sm">
+            <div className="portfolio-mdx-editor rounded-xl border border-border-primary bg-white text-slate-900 shadow-sm">
               <MDXEditor
                 ref={editorRef}
                 markdown={savedDocument.body}

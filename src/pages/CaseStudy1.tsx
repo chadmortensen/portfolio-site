@@ -1,7 +1,12 @@
-import { CaseStudyPage } from "@/components/case-study/CaseStudyPage";
-import type { CaseStudyData } from "@/components/case-study/types";
-import data from "../../data/case-studies/case-study-1.json";
+import { MdxCaseStudyPage } from "@/components/case-study/MdxCaseStudyPage";
+import Content, { frontmatter } from "../../content/case-studies/baby-registry-revamp.mdx";
 
 export default function CaseStudy1() {
-  return <CaseStudyPage data={data as CaseStudyData} />;
+  return (
+    <MdxCaseStudyPage
+      title={frontmatter.title}
+      subtitle={frontmatter.subtitle}
+      Content={Content}
+    />
+  );
 }

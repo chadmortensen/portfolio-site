@@ -40,7 +40,7 @@ const App = () => (
             <Route path="/case-study-3" element={<CaseStudy3 />} />
             <Route path="/case-study-4" element={<CaseStudy4 />} />
             {CaseStudy4Editor && (
-              <Route path="/case-study-4/edit" element={<CaseStudy4Editor />} />
+              <Route path="/:caseStudySlug/edit" element={<CaseStudy4Editor />} />
             )}
             <Route path="/ds" element={<DesignSystem />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
