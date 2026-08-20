@@ -1,5 +1,12 @@
 # Case study content
 
-`case-study-1.json`, `case-study-2.json`, and `case-study-3.json` are active content sources.
+All four JSON files are retained as legacy backups of the case studies before their MDX migration.
 
-`case-study-4.json` is retained as a legacy backup of “Additional work examples.” The active version is `content/case-studies/additional-work-examples.mdx`.
+The active content sources are:
+
+- `content/case-studies/baby-registry-revamp.mdx`
+- `content/case-studies/etsy-fulfillment-vision.mdx`
+- `content/case-studies/brightside-growth-vision.mdx`
+- `content/case-studies/additional-work-examples.mdx`
+
+When the local development server is running, append `/edit` to any case-study URL to open its visual editor. For example, `/case-study-1/edit` edits the baby registry case study.

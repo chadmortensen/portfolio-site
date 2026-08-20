@@ -8,10 +8,12 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-const additionalWorkMdxPath = path.resolve(
-  __dirname,
-  "content/case-studies/additional-work-examples.mdx",
-);
+const editableCaseStudies = new Map([
+  ["case-study-1", "baby-registry-revamp.mdx"],
+  ["case-study-2", "etsy-fulfillment-vision.mdx"],
+  ["case-study-3", "brightside-growth-vision.mdx"],
+  ["case-study-4", "additional-work-examples.mdx"],
+]);
 
 const isLocalRequest = (request: IncomingMessage) => {
   const address = request.socket.remoteAddress;
@@ -36,15 +38,24 @@ const localMdxEditorApi = (): Plugin => ({
   name: "local-mdx-editor-api",
   apply: "serve",
   configureServer(server) {
-    server.middlewares.use("/__mdx-editor/case-study-4", async (request, response) => {
+    server.middlewares.use("/__mdx-editor", async (request, response) => {
       if (!isLocalRequest(request)) {
         sendResponse(response, 403, "The MDX editor is only available locally.");
         return;
       }
 
+      const slug = request.url?.split("?")[0].replace(/^\//, "") ?? "";
+      const filename = editableCaseStudies.get(slug);
+      if (!filename) {
+        sendResponse(response, 404, "This case study does not have an MDX editor.");
+        return;
+      }
+
+      const mdxPath = path.resolve(__dirname, "content/case-studies", filename);
+
       if (request.method === "GET") {
         try {
-          sendResponse(response, 200, await readFile(additionalWorkMdxPath, "utf8"));
+          sendResponse(response, 200, await readFile(mdxPath, "utf8"));
         } catch {
           sendResponse(response, 500, "Unable to read the case study.");
         }
@@ -76,7 +87,7 @@ const localMdxEditorApi = (): Plugin => ({
       }
 
       try {
-        await writeFile(additionalWorkMdxPath, Buffer.concat(chunks).toString("utf8"), "utf8");
+        await writeFile(mdxPath, Buffer.concat(chunks).toString("utf8"), "utf8");
         sendResponse(
           response,
           200,

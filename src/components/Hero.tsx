@@ -287,9 +287,9 @@ const isBackgroundAvailable = (entry: WeatherBackgroundEntry) => (
   entry.mediaType === "video" ? isVideoAvailable(entry.src) : isImageAvailable(entry.src)
 );
 
-const WeatherIcon = ({ condition }: { condition: string }) => {
+const WeatherIcon = ({ condition, size = 48 }: { condition: string; size?: number }) => {
   const iconProps = {
-    size: 48,
+    size,
     strokeWidth: 2,
     "aria-hidden": true,
   };
@@ -528,6 +528,17 @@ const Hero = () => {
           aria-hidden="true"
         />
       )}
+      <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-black/70 text-[#FBF4EA] backdrop-blur-xl backdrop-saturate-150">
+        <div
+          className="mx-auto flex min-h-11 items-center justify-center gap-2 px-4 py-2 text-center text-base font-normal"
+          aria-label={`Current Portland weather: ${displayedWeather.temperature} degrees and ${displayedWeather.condition}`}
+        >
+          <WeatherIcon condition={displayedWeather.condition} size={20} />
+          <p>
+            {displayedWeather.temperature}&deg; and <span className="capitalize">{displayedWeather.condition}</span> in Portland, OR
+          </p>
+        </div>
+      </div>
       <div className="hero-content fade-in">
         <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col items-center justify-center px-4 pb-10 pt-28 text-center sm:px-6 lg:pt-32">
           <div className="space-y-3 sm:space-y-4">
@@ -541,19 +552,6 @@ const Hero = () => {
             <p className={`text-title2 mx-auto max-w-xl ${heroTextClass}`}>
               My work blends human-centered craft with strategic clarity to move people and products forward.
             </p>
-          </div>
-
-          <div className={`mt-8 flex items-center justify-center gap-4 ${heroTextClass} sm:mt-10 sm:gap-5`}>
-            <div className="shrink-0" aria-label={`Current Portland weather: ${displayedWeather.condition}`}>
-              <WeatherIcon condition={displayedWeather.condition} />
-            </div>
-            <div className="text-left">
-              <h2 className="text-headline font-medium leading-none tracking-normal">
-                {displayedWeather.temperature}&deg;
-              </h2>
-              <p className="mt-1 text-[1.1rem] font-normal capitalize leading-[1.2rem]">{displayedWeather.condition}</p>
-              <p className="text-[1.1rem] font-normal leading-[1.2rem]">Portland, OR</p>
-            </div>
           </div>
 
           <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center">
