@@ -27,7 +27,7 @@ const Navigation = () => {
     { title: "Brightside Growth Vision", route: "/case-study-3" },
     { title: "Etsy Fulfillment Vision", route: "/case-study-2" },
     { title: "Walmart Registry Revamp", route: "/case-study-1" },
-    { title: "Additional work examples", route: "/case-study-4" }
+    { title: "How I Lead", route: "/case-study-4" }
   ];
 
   useEffect(() => {
