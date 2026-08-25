@@ -38,8 +38,8 @@ const CaseStudies = () => {
   },  
     {
     id: 4,
-    title: "Design Leadership in Practice: Shaping Strategy Across Multiple Verticals",
-    company: "Walmart eCommerce",
+    title: "How I Lead: Raising Quality, Growing People, and Scaling Design",
+    company: "",
     duration: "Ongoing",
     teamSize: "Various",
     image: "/img/case-additional-projects.jpg?auto=format&fit=crop&w=800&q=80",
@@ -51,10 +51,10 @@ const CaseStudies = () => {
   return <section id="case-studies" className="py-16 sm:py-24 bg-surface-secondary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
-          <h2 className="text-headline text-text-primary mb-4">Case Studies</h2>
+          <h2 className="text-headline text-text-primary mb-4">Case Studies: Product and Leadership</h2>
           <div className="h-[3px] w-[7rem] bg-accent-blue mx-auto mb-6"></div>
-          <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
-            Real challenges, strategic solutions, and measurable outcomes that demonstrate the impact of effective leadership at Fortune 1 companies as well as growing startups.
+          <p className="text-body text-text-secondary max-w-2xl mx-auto px-4">
+            Product challenges, leadership decisions, and measurable outcomes across the work, people, and practices I’ve helped shape.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ const CaseStudies = () => {
                   className="mt-auto inline-flex items-center gap-2 pt-8 text-body font-medium text-text-primary transition-colors duration-200 hover:text-accent-blue focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
                   aria-label={`View ${study.title} case study`}
                 >
-                  <span>{study.id === 4 ? "View Projects" : "View Case Study"}</span>
+                  <span>{study.id === 4 ? "View Examples" : "View Case Study"}</span>
                   <ArrowRight size={16} />
                 </button>
               </div>
