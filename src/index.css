@@ -51,6 +51,11 @@
   margin-top: 0;
 }
 
+.prose.case-study-mdx-content .case-study-quote > h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
 .portfolio-mdx-editor-content h4,
 .prose.case-study-mdx-content h4 {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
