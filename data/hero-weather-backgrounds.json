@@ -50,6 +50,13 @@
         "overlay": true,
         "overlayIntensity": 0.6,
         "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-lightrain2.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.6,
+        "overlayTheme": "dark"
       }
     ],
     "rain": [
@@ -59,7 +66,28 @@
         "overlay": true,
         "overlayIntensity": 0.35,
         "overlayTheme": "dark"
-      }
+      },
+      {
+        "src": "/img/hero-back-rain2.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.35,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-rain3.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.35,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-rain4.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.35,
+        "overlayTheme": "dark"
+      } 
     ],
     "stormy": [
       {
@@ -98,6 +126,13 @@
       },
       {
         "src": "/img/hero-back-portland-night2.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-portland-night3.jpg",
         "textTheme": "light",
         "overlay": true,
         "overlayIntensity": 0.25,
