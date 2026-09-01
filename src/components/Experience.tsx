@@ -97,19 +97,19 @@ const Experience = () => {
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
               variant="default"
-              className="flex items-center gap-2 rounded"
+              className="flex items-center gap-2"
               aria-expanded={isExpanded}
               aria-label={isExpanded ? "Hide experience details" : "Show experience details"}
             >
               {isExpanded ? (
                 <>
                   Hide Experience
-                  <CircleMinus size={16} />
+                  <CircleMinus size={16} className="-mr-[0.2rem]" />
                 </>
               ) : (
                 <>
                   View Experience
-                  <CirclePlus size={16} />
+                  <CirclePlus size={16} className="-mr-[0.2rem]" />
                 </>
               )}
             </Button>

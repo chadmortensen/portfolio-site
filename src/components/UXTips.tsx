@@ -46,11 +46,11 @@ const UXTips = () => {
         <div className="col-span-12 max-w-2xl mx-auto text-center">
           <Button
             onClick={getRandomTip}
-            className="mb-8 px-8 py-3 text-lg rounded"
+            className="mb-8"
             variant="default"
             disabled={isAnimating}
           >
-            <p>Get a UX Tip</p>
+            <span>Get a UX Tip</span>
           </Button>
 
           {(currentTip || isAnimating) && (
