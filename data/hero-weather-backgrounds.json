@@ -78,14 +78,14 @@
         "src": "/img/hero-back-rain3.jpg",
         "textTheme": "light",
         "overlay": true,
-        "overlayIntensity": 0.35,
+        "overlayIntensity": 0.5,
         "overlayTheme": "dark"
       },
       {
         "src": "/img/hero-back-rain4.jpg",
         "textTheme": "light",
         "overlay": true,
-        "overlayIntensity": 0.35,
+        "overlayIntensity": 0.6,
         "overlayTheme": "dark"
       } 
     ],
