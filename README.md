@@ -1,83 +1,143 @@
-# UX Tips
+# Chad Mortensen — Product Design Leadership Portfolio
 
-A living portfolio exploring how modern product design and AI-assisted development can work together to build thoughtful, scalable digital experiences.
+A portfolio of product strategy, design leadership, and measurable outcomes across health tech, eCommerce, and omnichannel experiences.
 
-🔗 https://uxtips.com
+**Live site:** [uxtips.com](https://uxtips.com)
 
----
+## About
 
-## 🧭 Why This Project Exists
+This site presents the work and leadership approach of Chad Mortensen, a product design leader with 25+ years of experience. It combines in-depth case studies with principles for building strong teams, raising design quality, and connecting human-centered design to business strategy.
 
-UX Tips started as a way to share insights on product design, but it has evolved into something more interesting:
+The portfolio is also a working product: responsive, content-driven, and built to support ongoing iteration.
 
-**A hands-on exploration of how designers can build and ship using AI.**
+## What’s Included
 
-Rather than treating AI as a novelty, this project treats it as a creative partner across:
-- Product thinking
-- Content creation
-- Front-end development
-- Iteration and refinement
+- Four case studies covering product vision, fulfillment strategy, registry growth, and design leadership
+- Career experience spanning Brightside Health, Etsy, Walmart, and Sam’s Club
+- Leadership principles and the value design can bring across an organization
+- A weather-aware hero that adapts its imagery to current conditions in Portland, Oregon
+- A reusable case-study component library and portfolio design system
+- A local-only MDX editor for updating case-study content
+- An interactive UX tip generator
 
-This site is both a portfolio and a proof point.
+## Featured Case Studies
 
----
+| Case study | Organization | Route |
+| --- | --- | --- |
+| Turning Fragmented Growth Efforts Into a Shared Product Vision | Brightside Health | [View case study](https://uxtips.com/case-study-3) |
+| Turning Fulfillment Roadmaps Into a Shared Strategy | Etsy | [View case study](https://uxtips.com/case-study-2) |
+| Leading a Rapid Registry Turnaround That Increased Quality Creations by 28% | Walmart | [View case study](https://uxtips.com/case-study-1) |
+| How I Lead: Raising Quality, Growing People, and Scaling Design | Leadership examples | [View examples](https://uxtips.com/case-study-4) |
 
-## ⚙️ How This Site Is Built
+## Experience Highlights
 
-This project is intentionally built using a hybrid workflow that reflects how modern teams are starting to operate.
+The portfolio includes leadership work across:
 
-**Core stack**
-- React + TypeScript
-- Vite
+- **Brightside Health** — Head of Product Design
+- **Etsy** — Director of Product Design for Fulfillment, Search, and Ads
+- **Walmart eCommerce** — Senior design leadership across fulfillment, grocery delivery, consumables, registry, and fashion
+- **Sam’s Club** — Mobile apps, in-store digital tools, and B2B experiences
+
+## Technology
+
+- React 18 and TypeScript
+- Vite with SWC
+- React Router
 - Tailwind CSS
-- shadcn/ui
+- shadcn/ui and Radix UI
+- MDX for case-study content
+- MDXEditor for local visual editing
+- TanStack Query
+- Lucide icons
+- Open-Meteo for current Portland weather
+- Cloudflare configuration for deployment
 
-**Build + editing workflow**
-- Builder.io for visual editing and rapid iteration
-- Cursor + ChatGPT for AI-assisted development
-- Direct code editing for precision and control
+Routes and case-study pages are lazy-loaded to keep the initial experience focused and lightweight.
 
-Each tool plays a role depending on the problem being solved.
+## Project Structure
 
----
+```text
+content/
+  case-studies/        MDX source files for portfolio stories
 
-## 🤖 How AI Is Used
+data/
+  hero-weather-backgrounds.json
+  ux-tips.json
 
-AI is not just used to generate code. It’s used as a thinking partner.
+public/
+  img/                 Portfolio and case-study media
 
-Examples:
-- Refactoring and extending components across the codebase
-- Generating accessible patterns (like alt text and semantic structure)
-- Translating design intent into working UI
-- Speeding up repetitive implementation work
-- Exploring multiple directions quickly before committing
+src/
+  components/          Homepage sections and shared UI
+    case-study/        Reusable case-study layouts and content blocks
+    ui/                shadcn/ui primitives
+  pages/               Portfolio, case-study, editor, and design-system routes
+  App.tsx               Application routes and providers
 
-Everything generated is reviewed, refined, and shaped intentionally.
+vite.config.ts         Vite, MDX, and local editor configuration
+wrangler.jsonc         Cloudflare configuration
+```
 
----
+## Run Locally
 
-## 🧪 What I’m Exploring
+### Prerequisites
 
-This project is an ongoing exploration of:
+- Node.js
+- npm
 
-- How design leaders can stay hands-on in an AI-driven workflow
-- How AI changes the speed and quality of iteration
-- Where human judgment still matters most (hint: almost everywhere)
-- How to balance velocity with craftsmanship
-
----
-
-## 🧑‍💻 Running Locally
-
-To run the project locally:
+### Setup
 
 ```sh
 git clone https://github.com/chadmortensen/chad-mortensen-portfolio-13.git
 cd chad-mortensen-portfolio-13
 npm install
 npm run dev
-``` 
+```
 
-Then open:
+Open [http://localhost:8080](http://localhost:8080).
 
-- `http://localhost:8080`
+### Available Commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the local development server on port 8080 |
+| `npm run build` | Create a production build |
+| `npm run build:dev` | Create a development-mode build |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint across the project |
+
+## Editing Case Studies
+
+Case-study content lives in `content/case-studies/` as MDX. It can be edited directly or through the visual editor available during local development:
+
+```text
+http://localhost:8080/case-study-1/edit
+http://localhost:8080/case-study-2/edit
+http://localhost:8080/case-study-3/edit
+http://localhost:8080/case-study-4/edit
+```
+
+The editor reads and writes the source MDX files through a development-only Vite endpoint restricted to local requests. Editor routes are excluded from production builds.
+
+## Design System
+
+A living component and style reference is available at:
+
+- Local: [http://localhost:8080/ds](http://localhost:8080/ds)
+- Production: [https://uxtips.com/ds](https://uxtips.com/ds)
+
+It documents the visual language, UI primitives, typography, feedback patterns, and reusable case-study sections used throughout the portfolio.
+
+## Approach
+
+The site is built with the same principles represented in the work:
+
+- Start with empathy and clear intent
+- Connect design decisions to product and business outcomes
+- Make complex information understandable
+- Build reusable systems without losing craft
+- Use technology—including AI-assisted tools—thoughtfully and with human judgment
+
+---
+
+Designed and built by [Chad Mortensen](https://uxtips.com).
