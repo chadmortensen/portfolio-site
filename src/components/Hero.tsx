@@ -550,26 +550,26 @@ const Hero = () => {
             </h1>
             <div className="mx-auto h-[3px] w-[7rem] bg-black"></div>
             <p className={`text-title2 mx-auto max-w-xl ${heroTextClass}`}>
-              My work blends human-centered craft with strategic clarity to move people and products forward.
+              I’m a product design leader who builds strong teams, shapes product strategy, and turns complex challenges into thoughtful experiences.
             </p>
           </div>
 
           <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center">
             <button
-              onClick={scrollToAbout}
-              className="w-full rounded-[4rem] px-6 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
-              aria-label="Learn more about Chad Mortensen's background and experience"
-            >
-              More About Me
-            </button>
-            <button
               onClick={() => document.querySelector("#case-studies")?.scrollIntoView({
                 behavior: "smooth"
               })}
-              className="w-full rounded-[4rem] px-6 py-3 border border-swiss-charcoal bg-surface-primary/60 text-text-primary text-body backdrop-blur-xl backdrop-saturate-150 hover:bg-surface-primary/80 transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+              className="w-full rounded-[4rem] px-6 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
               aria-label="View Chad Mortensen's case studies and design work"
             >
               View My Work
+            </button>
+            <button
+              onClick={scrollToAbout}
+              className="w-full rounded-[4rem] px-6 py-3 border border-swiss-charcoal bg-surface-primary/60 text-text-primary text-body backdrop-blur-xl backdrop-saturate-150 hover:bg-surface-primary/80 transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+              aria-label="Learn more about Chad Mortensen's background and experience"
+            >
+              More About Me
             </button>
           </div>
 

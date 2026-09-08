@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode } from "react";
+import { ExecutiveSummary } from "./ExecutiveSummary";
 import { cn } from "@/lib/utils";
 import {
   CaseStudyImage as CaseStudyImageView,
@@ -142,6 +143,7 @@ const CaseStudyTable = ({ title, headers, rows }: CaseStudyTableProps) => {
 };
 
 const mdxComponents = {
+  ExecutiveSummary,
   CaseStudySection,
   CaseStudyColumns,
   CaseStudyColumn,

@@ -1,3 +1,4 @@
+import { caseStudySummaries } from "./case-study/summaries";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -5,7 +6,8 @@ const CaseStudies = () => {
   const navigate = useNavigate();
   const caseStudies = [{
     id: 1,
-    title: "Turning Fragmented Growth Efforts Into a Shared Product Vision",
+    summary: caseStudySummaries.brightside,
+    title: "Turning Fragmented Growth Into a Shared Product Vision",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
@@ -16,6 +18,7 @@ const CaseStudies = () => {
   },
   {
     id: 2,
+    summary: caseStudySummaries.etsy,
     title: "Turning Fulfillment Roadmaps Into a Shared Strategy",
     company: "Etsy",
     duration: "4 weeks",
@@ -27,6 +30,7 @@ const CaseStudies = () => {
   },
     {
     id: 3,
+    summary: caseStudySummaries.walmart,
     title: "Leading a Rapid Registry Turnaround That Increased Quality Creations by 28%",
     company: "Walmart", 
     duration: "1 quarter",
@@ -38,7 +42,8 @@ const CaseStudies = () => {
   },  
     {
     id: 4,
-    title: "How I Lead: Raising Quality, Growing People, and Scaling Design",
+    summary: caseStudySummaries.leadership,
+    title: "How I Lead: Raising Quality, Growing People, Scaling Design",
     company: "",
     duration: "Ongoing",
     teamSize: "Various",
@@ -58,7 +63,7 @@ const CaseStudies = () => {
           </p>
         </div>
 
-        <div className="col-span-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="col-span-12 grid gap-6 sm:grid-cols-2">
           {caseStudies.map((study) => <article key={study.id} className="flex min-h-[32rem] flex-col overflow-hidden rounded-[10px] border border-swiss-light bg-surface-primary">
               <button
                 onClick={() => navigate(study.route)}
@@ -73,8 +78,9 @@ const CaseStudies = () => {
               </button>
               <div className="flex flex-1 flex-col p-5 sm:p-6">
                 <div className="space-y-3">
-                  <h4 className="text-case-study-title text-text-primary font-light">{study.title}</h4>
-                  <p className="text-case-study-label text-accent-blue font-medium">{study.company}</p>
+                  <h3 className="text-case-study-title text-text-primary !font-bold">{study.title}</h3>
+                  {study.company && <p className="text-case-study-label text-accent-blue font-medium">{study.company}</p>}
+                  <p className="text-base leading-relaxed text-text-secondary">{study.summary.card}</p>
                 </div>
 
                 <button
