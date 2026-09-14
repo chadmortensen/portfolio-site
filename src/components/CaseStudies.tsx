@@ -19,7 +19,7 @@ const CaseStudies = () => {
   {
     id: 2,
     summary: caseStudySummaries.etsy,
-    title: "Turning Fulfillment Roadmaps Into a Shared Strategy",
+    title: "Aligning Fulfillment Leadership Around a Shared Strategy",
     company: "Etsy",
     duration: "4 weeks",
     teamSize: "5",
