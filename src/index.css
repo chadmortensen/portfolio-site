@@ -1,0 +1,567 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.portfolio-mdx-editor [role="toolbar"] {
+  position: sticky;
+  top: 3.8125rem;
+  z-index: 40;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 0.25rem 0.75rem rgb(15 23 42 / 0.08);
+}
+
+.portfolio-mdx-editor-content {
+  min-height: 65vh;
+  padding: 2rem clamp(1.25rem, 4vw, 3.5rem);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.portfolio-mdx-editor-content h1,
+.prose.case-study-mdx-content h1 {
+  font-family: "Young Serif", "Bricolage Grotesque", 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+}
+
+.portfolio-mdx-editor-content h2,
+.prose.case-study-mdx-content h2 {
+  font-family: "Young Serif", "Bricolage Grotesque", 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 2.25rem;
+}
+
+.portfolio-mdx-editor-content h3,
+.prose.case-study-mdx-content h3 {
+  margin-top: 1.75rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.portfolio-mdx-editor-content > h3:first-child,
+.prose.case-study-mdx-content > h3:first-child {
+  margin-top: 0;
+}
+
+.prose.case-study-mdx-content .case-study-quote > h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.portfolio-mdx-editor-content h4,
+.prose.case-study-mdx-content h4 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  line-height: 1.75rem;
+}
+
+.portfolio-mdx-editor-content h5,
+.prose.case-study-mdx-content h5 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+.portfolio-mdx-editor-content h6,
+.prose.case-study-mdx-content h6 {
+  color: hsl(var(--muted-foreground));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.portfolio-mdx-editor-content p,
+.prose.case-study-mdx-content p {
+  margin-block: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.portfolio-mdx-editor-content img,
+.prose.case-study-mdx-content img {
+  margin-top: 0;
+  margin-bottom: 2em;
+}
+
+.portfolio-mdx-editor-content ul,
+.portfolio-mdx-editor-content ol {
+  margin-block: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+/* Case-study images and captions */
+main article figure {
+  margin: 0;
+}
+
+main article figure > img {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+main article figure figcaption,
+main article figure figcaption * {
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
+  font-style: italic;
+  color: #666;
+  margin-top: -1em !important;
+}
+
+main article figure figcaption p {
+  margin: 0.35rem 0 0 !important;
+}
+
+/* Swiss-Inspired Minimal Design System */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+
+    --primary: 0 0% 5%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 5%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 5%;
+
+    --radius: 0rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 5%;
+    --sidebar-primary: 0 0% 5%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 5%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 5%;
+
+    /* Swiss Minimal Color Palette */
+    --swiss-charcoal: 0 0% 8%;
+    --swiss-gray: 0 0% 15%;
+    --swiss-medium: 0 0% 45%;
+    --swiss-light: 0 0% 85%;
+    --swiss-paper: 0 0% 98%;
+    --swiss-pure: 0 0% 100%;
+    
+    /* Accent Colors - Subtle but Present */
+    --accent-blue: 210 80% 55%;
+    --accent-teal: 180 75% 45%;
+    --accent-orange: 25 85% 60%;
+    --accent-aqua: 195 85% 70%;
+
+    /* Functional Colors */
+    --text-primary: 0 0% 8%;
+    --text-secondary: 0 0% 40%;
+    --text-tertiary: 0 0% 0%;
+    --surface-primary: 0 0% 100%;
+    --surface-secondary: 40 100% 98%;
+    --surface-tertiary: 0 0% 85%;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-surface-primary text-text-primary;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  /* Enhanced Focus Indicators for Accessibility */
+  *:focus {
+    outline: 2px solid hsl(var(--accent-blue));
+    outline-offset: 2px;
+  }
+
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  *:focus-visible {
+    outline: 2px solid hsl(var(--accent-blue));
+    outline-offset: 2px;
+  }
+
+  /* Skip Navigation Link */
+  .skip-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    padding: 0.5rem 1rem;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    transform: translateY(-100%);
+    transition: transform 0.2s ease-in-out;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .skip-nav:focus {
+    transform: translateY(0);
+  }
+
+  h1, h2 {
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    font-family: "Young Serif", "Bricolage Grotesque",'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  h3, h4, h5, h6 {
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+}
+
+/* Swiss Design Color Classes */
+.bg-swiss-charcoal { background-color: hsl(var(--swiss-charcoal)); }
+.bg-swiss-gray { background-color: hsl(var(--swiss-gray)); }
+.bg-swiss-medium { background-color: hsl(var(--swiss-medium)); }
+.bg-swiss-light { background-color: hsl(var(--swiss-light)); }
+.bg-swiss-paper { background-color: hsl(var(--swiss-paper)); }
+.bg-swiss-pure { background-color: hsl(var(--swiss-pure)); }
+
+.bg-accent-blue { background-color: hsl(var(--accent-blue)); }
+.bg-accent-teal { background-color: hsl(var(--accent-teal)); }
+.bg-accent-orange { background-color: hsl(var(--accent-orange)); }
+.bg-accent-aqua { background-color: hsl(var(--accent-aqua)); }
+
+.text-swiss-charcoal { color: hsl(var(--swiss-charcoal)); }
+.text-swiss-gray { color: hsl(var(--swiss-gray)); }
+.text-swiss-medium { color: hsl(var(--swiss-medium)); }
+.text-text-primary { color: hsl(var(--text-primary)); }
+.text-text-secondary { color: hsl(var(--text-secondary)); }
+.text-text-tertiary { color: hsl(var(--text-tertiary)); }
+
+.border-swiss-light { border-color: hsl(var(--swiss-light)); }
+.border-swiss-medium { border-color: hsl(var(--swiss-medium)); }
+.border-swiss-gray { border-color: hsl(var(--swiss-gray)); }
+.border-swiss-charcoal { border-color: hsl(var(--swiss-charcoal)); }
+
+/* Minimal animations */
+.fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+section.hero-photo-bg {
+  position: relative;
+  overflow: hidden;
+  background-image: var(--hero-photo);
+  background-color: hsl(var(--surface-secondary));
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+section.hero-photo-bg--overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.10)) 0%,
+    rgb(var(--hero-overlay-rgb, 0 0 0) / var(--hero-overlay-intensity, 0.3)) 48%,
+    rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.10)) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-background-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  section.hero-photo-bg {
+    background-position: center center;
+  }
+
+  section.hero-photo-bg--overlay::after {
+    background:
+      linear-gradient(
+        to bottom,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.28)) 0%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.72)) 34%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / var(--hero-overlay-intensity, 0.3)) 64%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.48)) 100%
+      ),
+      radial-gradient(
+        ellipse at center,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / calc(var(--hero-overlay-intensity, 0.3) * 0.42)) 0%,
+        rgb(var(--hero-overlay-rgb, 0 0 0) / 0) 70%
+      );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .animate-bounce {
+    animation: none;
+  }
+}
+
+/* Rich Text Editor Styles */
+.rich-text-editor .ql-toolbar {
+  border: 1px solid hsl(var(--border));
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: hsl(var(--background));
+}
+
+.rich-text-editor .ql-container {
+  border: 1px solid hsl(var(--border));
+  border-radius: 0 0 6px 6px;
+  background: hsl(var(--background));
+  font-family: inherit;
+}
+
+.rich-text-editor .ql-editor {
+  color: hsl(var(--foreground));
+  line-height: 1.6;
+  min-height: 120px;
+}
+
+.rich-text-editor .ql-editor.ql-blank::before {
+  color: hsl(var(--muted-foreground));
+  font-style: normal;
+}
+
+.rich-text-editor .ql-snow .ql-picker-options {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.rich-text-editor .ql-snow .ql-picker-item:hover {
+  background: hsl(var(--accent));
+}
+
+.rich-text-editor .ql-snow .ql-tooltip {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Prose styling for rendered content */
+.prose h1, .prose h2, .prose h3 {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.prose h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* Consistent bullet styling across all modules */
+.prose ul, ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+  list-style-position: outside;
+}
+
+.prose ul li, ul li {
+  margin-bottom: 0.5rem;
+  color: hsl(var(--accent-blue));
+}
+
+.prose ul li::marker, ul li::marker {
+  color: hsl(var(--accent-blue));
+}
+
+/* Quote and text modules should use text-secondary color for list items */
+.bg-surface-secondary .prose ul li,
+.bg-surface-secondary .prose ul li::marker,
+.prose.text-text-secondary ul li,
+.prose.text-text-secondary ul li::marker {
+  color: hsl(var(--text-secondary));
+}
+
+.prose ol {
+  margin: 0;
+  padding: 0;
+  counter-reset: list-counter;
+  list-style: none;
+}
+
+.prose ol li {
+  margin-bottom: 0.5rem;
+  counter-increment: list-counter;
+}
+
+.prose ol li:before {
+  content: counter(list-counter) ".";
+  color: hsl(var(--accent-blue));
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-right: 0.75rem;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grid system for Swiss layout - Mobile First */
+.swiss-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .swiss-grid {
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+}
+
+/* Typography scale - Mobile First */
+.text-display { font-size: 2.25rem; font-weight: 400; line-height: 1.1; }
+.text-headline { font-size: 1.875rem; font-weight: 400; line-height: 1.2; }
+.text-title { font-size: 1.2rem; font-weight: 600; line-height: 1.3; }
+.text-title2 { font-size: 1.2rem; font-weight: 400; line-height: 1.3;}
+.text-case-study-title { font-size: 1.1rem !important; font-weight: 400; line-height: 1.3; }
+.text-case-study-label { font-size: 1rem; font-weight: 400; line-height: 1.4; }
+.text-case-study-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
+.text-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
+.text-caption { font-size: 0.875rem; font-weight: 400; line-height: 1.5; }
+
+/* Android-specific typography adjustments */
+@media (max-width: 480px) {
+  .text-display { 
+    word-break: keep-all;
+    hyphens: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .text-display { font-size: 5rem; }
+  .text-headline { font-size: 2.5rem; }
+  .text-title { font-size: 1.3rem; }
+  .text-title2 { font-size: 1.6rem; }
+}
+
+/* Prevent horizontal overflow */
+.max-width-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+h4 {
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+}
+
+.bg-surface-secondary {
+  background-image: linear-gradient(to bottom, hsl(35, 68%, 95%), hsl(0, 0%, 100%));
+}
+
+#main-content img,
+[role="dialog"] img[src^="/lovable-uploads/"] {
+  border-radius: 10px;
+}
+#main-content img.case-study-card-image {
+  border-radius: 0;
+}

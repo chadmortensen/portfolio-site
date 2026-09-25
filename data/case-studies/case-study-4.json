@@ -1,0 +1,114 @@
+{
+  "title": "Additional work examples",
+  "subtitle": "Strategic Design Leadership Across Multiple Verticals",
+  "sections": [
+    {
+      "title": "Design driving business success",
+      "subheader": "Walmart eCommerce",
+      "modules": [
+        {
+          "id": "ecommerce-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<h3>Driving discovery into a design-led backlog</h3><p>This initiative wasn’t just about running workshops. It was about using design to uncover real customer pain points and turning those insights into opportunities the business could act on. Through targeted research, co-creation sessions, and rapid concept testing, we surfaced the friction customers felt across the grocery journey and mapped where the biggest value sat.</p><p><br></p><p><strong>My role:</strong> I guided the team through the full discovery process, making sure design served as the connective tissue between research, problem framing, and prioritization. The result was a backlog grounded in customer truth and aligned to measurable business outcomes. Design didn’t just support the strategy. It shaped where the business could grow next.</p>"
+          },
+          "column": "right"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/design-backlog.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "left",
+          "id": "1755730367236-0.4984568432232931"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Design Principles",
+      "subheader": "Walmart Fashion",
+      "modules": [
+        {
+          "id": "fashion-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<h3><span style=\"background-color: transparent;\">Design leadership through principles</span></h3><p><span style=\"background-color: transparent;\">For the fashion vertical, I led design by grounding the work in clear, research-backed design principles. These weren’t abstract ideas; they were aligned to Walmart’s brand promise and distilled from customer insights. By codifying what mattered most to shoppers, the principles helped our cross-functional teams stay focused on customer value even as priorities shifted.</span></p><p><strong style=\"background-color: transparent;\">My role: </strong><span style=\"background-color: transparent;\">I drove the creation and adoption of these principles, making sure they weren’t just a design artifact but a shared north star for product, engineering, and business partners. This elevated design’s voice in strategic conversations and ensured execution always tied back to customer needs.</span></p>"
+          },
+          "column": "right"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/fashion-principles.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "left",
+          "id": "1755730306443-0.3683720949786914"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Design Vision",
+      "subheader": "Walmart Grocery Fulfillment",
+      "modules": [
+        {
+          "id": "vision-overview",
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<h3><span style=\"background-color: transparent;\">Creating clarity for near- and long-term goals</span></h3><p><span style=\"background-color: transparent;\">One of the most effective ways to align teams is to paint a clear picture of the future. I facilitated design sprints and discovery projects that brought design, product, engineering, and business leaders together to imagine what our experience could look like beyond the next quarter.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I guided the visioning process and mentored the staff designer who was leading the effort, ensuring we balanced imagination with feasibility. These efforts didn’t just create inspiring concepts; they gave executives and teams a tangible vision to rally around, clarifying how near-term roadmaps fit into a longer journey.</span></p>"
+          },
+          "column": "right"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/grocery-vision.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "left",
+          "id": "1755730342065-0.194717889099993"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Journey Maps",
+      "subheader": "Walmart eCommerce Fulfillment",
+      "modules": [
+        {
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<h3><span style=\"background-color: transparent;\">Conveying the direction through the customer’s eyes</span></h3><p><span style=\"background-color: transparent;\">As part of my design leadership, I introduced journey maps as a way to connect strategy to real human experiences. These maps illustrated the customer journey end to end, making it clear how each initiative fit into a broader story.</span></p><p><strong style=\"background-color: transparent;\">My role:</strong><span style=\"background-color: transparent;\"> I championed journey mapping as a leadership tool, not just a design artifact. It became a way to advocate for the customer at every step, helping executives and teams see not only </span><em style=\"background-color: transparent;\">what</em><span style=\"background-color: transparent;\"> we were building, but </span><em style=\"background-color: transparent;\">why</em><span style=\"background-color: transparent;\"> it mattered to people in the real world.</span></p>"
+          },
+          "column": "right",
+          "id": "1755729689298-0.3955697942264955"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/journey-map.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6"
+          },
+          "column": "left",
+          "id": "1755730424173-0.5933010399483203"
+        }
+      ],
+      "speakerNotes": ""
+    }
+  ]
+}

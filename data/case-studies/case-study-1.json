@@ -1,0 +1,450 @@
+{
+  "title": "Walmart eCommerce",
+  "subtitle": "Building a customer-centered registry experience under tight constraints (2019)",
+  "sections": [
+    {
+      "title": "The Challenge",
+      "modules": [
+        {
+          "id": "The Challenge-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>A Registry That Missed the Mark</h3><p>Walmart had redesigned its baby registry just a year prior, but the new version wasn’t performing as hoped. The team’s original hypothesis was that expecting parents would appreciate a pre-populated registry filled with recommended products. In practice, the opposite proved true. Baby registries are deeply personal, and parents-to-be want to curate their own lists, choosing items that reflect their needs, preferences, and budgets. Instead of feeling helpful, a “fully loaded” registry felt impersonal and overwhelming, leading to low engagement and limited adoption.</p><h3>The Challenge at Hand</h3><p>We were tasked with fixing this. In just one quarter, our team needed to design, develop, and launch an improved baby registry experience that would resonate with expecting parents while supporting Walmart’s business goals. The problem wasn’t just cosmetic; it was fundamental. We had to rethink the role of the registry, moving from a static, pre-built list to a tool that invited participation, felt personal, and provided real value during a major life event.</p><h3>The Team and Stakeholders</h3><p>This was a large, multi-disciplinary effort. The core team included design, product management, and three engineering teams spanning iOS, Android, and Web. We had support from analytics, research, and our business partners, most notably the head merchant for the baby category. Our primary stakeholder was the VP and head of the baby category, who was deeply invested in seeing registry performance improve. While design and product leadership supported the effort, they were largely focused on other high-profile initiatives at the time, giving our team unusual autonomy and accountability.</p><h3>Why It Mattered</h3><p>The baby registry wasn’t just another feature; it was a strategic touchpoint for Walmart. Registries often serve as the entry point to a long-term relationship with new parents, driving not just initial purchases but ongoing loyalty across multiple categories. Getting it wrong meant missing a critical opportunity. Getting it right could create lasting connections with families at a pivotal moment in their lives.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "The Challenge-goals-1755016105354",
+          "type": "bullets",
+          "content": {
+            "title": "Goals",
+            "items": [
+              "Increase quality registry creations (creations that lead to a first curation action)",
+              "Increase curation by 10%",
+              "Increase sharing by 20%",
+              "Increase purchase conversion by 25%",
+              "Helping new parents with this major moment in life"
+            ]
+          },
+          "column": "left"
+        },
+        {
+          "type": "image",
+          "content": {
+            "src": "/img/walmart-baby.jpg",
+            "alt": "",
+            "position": "below",
+            "columns": "6",
+            "heightPercent": "60"
+          },
+          "column": "right",
+          "id": "1755632049229-0.03549038428057394"
+        }
+      ],
+      "subheader": "Rapid transformation under tight constraints",
+      "speakerNotes": ""
+    },
+    {
+      "title": "Assembling the Team",
+      "subheader": "Leadership alignment and persuasion",
+      "modules": [
+        {
+          "id": "Assembling the Team-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>A Tight Timeline</h3><p>We had just six weeks to take the project from discovery through final deliverables, with much of that time falling in the holiday-heavy back half of Q4. I knew we needed to move quickly and assemble a team that could hit the ground running.</p><h3>Clarifying Scope and Resourcing Needs</h3><p>After aligning with our business and product partners, I had enough clarity on the scope to start making staffing decisions. One of my staff designers was well-positioned to lead the work, but I also knew that expecting him to carry the full load would put both the team and the project at risk.</p><h3>Building a Team Creatively</h3><p>Rather than waiting for headcount or formal allocations, I looked for creative ways to build the right team. The wedding registry team at Walmart was entering a period of uncertainty due to pending org changes, leaving some talented designers underutilized. I made the case to design leadership to temporarily borrow a couple of those designers, and supplemented the rest of the team with strong contractors from our existing pool.</p><h3>A Nimble, Cross-Functional Approach</h3><p>This approach allowed us to act fast, stay nimble, and build a cross-functional team that blended deep domain knowledge with fresh perspectives, all without missing a beat on our timeline.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Assembling the Team-main-image-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/walmart-team.jpg",
+            "alt": "Assembling the Team visual",
+            "heightPercent": "30"
+          },
+          "column": "right"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Grounding the Team",
+      "subheader": "We had past research so let's not lose that in an effort to be efficient",
+      "modules": [
+        {
+          "id": "Ground the Team in Research and Insights-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>Leveraging Existing Research</h3><p>The Routine Consumables team was responsible for the baby category at Walmart, and fortunately, the registry had undergone a design overhaul just a couple of years prior. That meant we had a strong foundation of research to build from: market studies, customer feedback, and interview data that offered rich insights.</p><h3>Grounding the Team in User Insights</h3><p>Understanding users’ motivations, sources of friction, and moments of delight is essential for building human-centered products. I wanted to ensure the team was anchored in these insights before diving into solutions.</p><h3>Aligning Through an Offsite</h3><p>We held an offsite at the start of the project to bring the design team together, clarify goals, and align on the initial outline of what we were building. The session began with a deep dive into prior research, presented by our UX researcher, so everyone had shared context.</p><h3>Research Takeaways</h3><p>The review revealed consistent themes: Walmart registry users wanted more control over their selections, clearer guidance throughout the process, and a stronger sense of trust in the overall experience.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "type": "quote",
+          "content": {
+            "title": "User Feedback",
+            "text": "<p>\"I became so frustrated in making the registry through the app, that I quit. It is not intuitive nor easy to navigate in order to add or change something.\"</p><p>\"It's not as user-friendly as other registries I've used. It would be better if the registry picks fell into the categories provided. That would make it much easier.\"</p>"
+          },
+          "column": "left",
+          "id": "1755725248494-0.0921760328731418"
+        },
+        {
+          "id": "Ground the Team in Research and Insights-additional-0-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/1268a6d5-7794-4290-89ec-54f8fec3cb8a.jpeg",
+            "alt": "Additional image 1"
+          },
+          "column": "right"
+        },
+        {
+          "id": "Ground the Team in Research and Insights-additional-1-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/34674288-e5b6-4941-953c-a17ddfabc474.jpeg",
+            "alt": "Additional image 2"
+          },
+          "column": "right"
+        },
+        {
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<h3>Key Insight</h3><p>Almost half of moms don't want any help creating a registry - they want to take ownership of their list and pick items that are relevant to their personal needs (GCIA Oct 2019)</p>"
+          },
+          "column": "left",
+          "id": "1755725303970-0.4068849301587639"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Create Design Principles",
+      "subheader": "Research-backed design principles kept the team focused",
+      "modules": [
+        {
+          "id": "Create Design Principles-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>From Insights to Principles</h3><p>One of the most effective ways to carry research forward, not just in spirit but in practice, is through clear, actionable design principles. After reviewing the insights as a team, we distilled what we heard into a focused set of principles that would guide our decision-making throughout the project.</p><h3>Grounded in Real Needs</h3><p>These weren’t abstract ideals; they were rooted in the real needs, emotions, and expectations of our registry users. Our goal was to create principles that anyone on the team, product, engineering, or content could revisit and use as a north star.</p><h3>A Tool for Alignment and Speed</h3><p>By capturing the essence of what mattered most to our users, these principles helped us stay aligned, make faster decisions, and ensure the experience we created remained anchored in empathy and clarity.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Create Design Principles-main-image-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/b0a6356d-f821-42bf-9254-9434eeb0a7e9.jpeg",
+            "alt": "Create Design Principles visual"
+          },
+          "column": "right"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Ideation Workshop - How Might We",
+      "modules": [
+        {
+          "id": "Ideation Workshop - How Might We-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>Turning Insights into Opportunities</h3><p>To bridge our research insights and business goals into actionable opportunities, I partnered with our staff designer to plan and facilitate a cross-functional “How Might We” workshop.</p><h3>A Cross-Functional Session</h3><p>We brought together eight team members from design, product, engineering, and research to explore improvements to the registry experience — using our design principles as the foundation. This collaborative exercise created alignment on where to focus and built a sense of shared ownership across disciplines as we moved into solutioning.</p><h3>From Ideas to Priorities</h3><p>The workshop generated more than seventy <em>“How Might We”</em> statements, reflecting a wide range of possible directions. To narrow the field, the team used dot voting to highlight the most promising ideas, then clustered them into eleven thematic categories. From there, we named and prioritized the top three opportunity areas that would guide the next phase of design. This progression, from raw brainstorming to focused priorities, gave us both a broad exploration and a clear direction forward.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Ideation Workshop - How Might We-main-image-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/696d025f-a8e0-4a25-8255-da6c90c4a2cb.jpeg",
+            "alt": "Ideation Workshop - How Might We visual"
+          },
+          "column": "right"
+        }
+      ],
+      "subheader": "Cross-functional collaboration to prioritize opportunities",
+      "speakerNotes": ""
+    },
+    {
+      "title": "Aligning Across Design, Product, and Business",
+      "modules": [
+        {
+          "id": "Aligning Across Design, Product, and Business-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<p>With research insights in hand and opportunity areas prioritized, the next step was alignment, not just within the design team, but across product, engineering, and the business. I led conversations that helped us distill a shared set of focus areas, ensuring that our design direction was grounded in user needs, technically feasible, and aligned with broader strategic goals.</p><p>We landed on four key areas of opportunity that met our goals and fit within our short timeline:</p>"
+          },
+          "column": "full"
+        },
+        {
+          "id": "Aligning Across Design, Product, and Business-focus-0-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Improve Onboarding",
+            "text": "<p>Instead of forcing everyone through a pre-populated registry that required manual cleanup, we introduced flexible, empowering flows that let users build their own registries:</p><ul><li>Full control for users who prefer to start from scratch</li><li>Guided setup for those who want help curating</li></ul>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Aligning Across Design, Product, and Business-focus-1-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Enhance Curation and Management",
+            "text": "<p>We focused on making the registry easier to manage, share, and personalize:</p><ul><li>Simplified tools to make registries public and shareable</li><li>Contextual guidance and recommendations embedded within the experience</li><li>Clear visibility into what's been purchased — at both the item and category level</li></ul>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Aligning Across Design, Product, and Business-focus-2-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Elevate the Gifting Experience",
+            "text": "<p>We looked at the registry from the gift-giver's perspective and brought in best practices from eCommerce:</p><ul><li>Made it easier to identify in-stock and available items</li><li>Created clear pathways for in-store shoppers to attribute purchases to a registry</li></ul>"
+          },
+          "column": "right"
+        },
+        {
+          "id": "Aligning Across Design, Product, and Business-focus-3-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Streamline Internal Processes",
+            "text": "<p>Finally, we identified improvements that would increase agility and reduce operational friction:</p><ul><li>Removed dependencies on engineering for updating curated inventory</li><li>Built tools for merchants to manage recommendations and track performance</li></ul>"
+          },
+          "column": "right"
+        }
+      ],
+      "subheader": "Strategic focus areas for maximum impact",
+      "speakerNotes": ""
+    },
+    {
+      "title": "Low to High Fidelity Design",
+      "subheader": "Balancing Speed with Alignment",
+      "modules": [
+        {
+          "id": "Low to High Fidelity Design-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>Low Fidelity First</h3><p>With a tight timeline and a lean team, efficiency in our design process was critical. We began in low fidelity, using wireframes to explore ideas quickly, iterate without friction, and align on the structure of the experience before investing in polished visuals.</p><h3>Feedback Rhythm</h3><p>To maintain momentum, I established a focused cadence of reviews and standups. These touchpoints created space for feedback, alignment, and unblockers while keeping the team’s energy on progress rather than process.</p><h3>Engineering in the Loop</h3><p>As we progressed into higher fidelity, we expanded our design reviews to include engineering partners. Their input reduced late-stage churn, strengthened cross-functional alignment, and ensured the full team stayed connected to design intent as implementation began.</p><h3>Balanced Pace</h3><p>This rhythm created a healthy balance, fast enough to keep the project on track, but with enough structure to build clarity and confidence along the way.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Low to High Fidelity Design-schedule-1755016105354",
+          "type": "bullets",
+          "content": {
+            "title": "Schedule",
+            "items": [
+              "Weekly Design Cadence",
+              "Mon / Wed / Fri – Leadership Reviews",
+              "Tue / Thur – Team Critiques",
+              "Daily – 15-minute standups to flag blockers and sync on progress"
+            ]
+          },
+          "column": "left"
+        },
+        {
+          "id": "Low to High Fidelity Design-main-image-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/dc3e659d-a7ff-4523-95e2-9c460eb8a16a.jpeg",
+            "alt": "Low to High Fidelity Design visual"
+          },
+          "column": "right"
+        },
+        {
+          "id": "Low to High Fidelity Design-additional-0-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/1859e055-78bd-4a46-8bc4-96e40ba05ed6.jpeg",
+            "alt": "Additional image 1"
+          },
+          "column": "right"
+        },
+        {
+          "id": "Low to High Fidelity Design-additional-1-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/14b8d499-bca9-4168-9e49-66c0e7ebcf56.jpeg",
+            "alt": "Additional image 2"
+          },
+          "column": "right"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Examples of Enhancements",
+      "modules": [
+        {
+          "id": "Examples of Enhancements-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>Revisiting the Research</h3><p>When we zoomed into specific enhancements, many of the most impactful updates came down to basic usability improvements and putting more control into the hands of parents-to-be. The key shift wasn’t just in the UI; it was in how we interpreted the research.</p><h3>Where the Previous Design Fell Short</h3><p>The earlier team had heard parents say, <em>“I’d like help,”</em> and interpreted that as a desire for the system to do the work for them. Their solution was a chatbot-driven experience that auto-generated a fully stocked registry after answering a few questions.</p><h3>What Parents Actually Wanted</h3><p>When we revisited the original research, even sitting down with the researcher who had conducted the interviews, we uncovered a different truth. Parents welcomed guidance in unfamiliar areas like diapers or bottles, but building a registry was a deeply personal process. They wanted to weigh advice from loved ones, make their own choices, and ultimately stay in control.</p><h3>Our Pivot</h3><p>Armed with this deeper understanding, we moved away from pre-populated registries. Instead, we focused on guiding parents with smart cues and applying strong usability practices to make adding items effortless. The shift supported parents through the process, rather than doing it for them.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Examples of Enhancements-main-image-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/167b31ed-0f68-4044-9d07-fd3b2e8b30ff.jpeg",
+            "alt": "Examples of Enhancements visual"
+          },
+          "column": "right"
+        }
+      ],
+      "subheader": "Key improvements and feature implementations",
+      "speakerNotes": ""
+    },
+    {
+      "title": "Constant Prioritization",
+      "subheader": "Staying Focused Without Losing the Spark",
+      "modules": [
+        {
+          "id": "Constant Prioritization-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<h3>Staying on Track</h3><p>With a fixed timeline and no room for extension, alignment on priorities was critical. I partnered closely with the product and engineering directors to continually reassess scope, timelines, and effort, ensuring the team stayed focused on the highest-impact work at each stage.</p><h3>A Living Roadmap</h3><p>Prioritization wasn’t a one-time exercise. It was an ongoing practice of cutting, refining, and reshaping the roadmap to fit what was possible, without compromising the quality of the experience.</p><h3>Balancing Tradeoffs</h3><p>When deadlines required tough choices, I worked to keep the team motivated and anchored in the “why.” That meant rallying support not only around critical features, but also around small touches of polish that built trust and elevated the experience.</p><h3>The Outcome</h3><p>This balance of discipline and inspiration allowed us to deliver on time, while still creating an experience we were proud of, one grounded in the needs of the parents we were designing for.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "Constant Prioritization-main-image-1755016105354",
+          "type": "image",
+          "content": {
+            "src": "/lovable-uploads/90200b10-1ca7-46fe-b43a-422df927dde9.jpeg",
+            "alt": "Constant Prioritization visual"
+          },
+          "column": "right"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "Results",
+      "subheader": "A Registry That Delivered",
+      "modules": [
+        {
+          "id": "Results-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<p>The updated baby registry launched on time, a major accomplishment given the ambitious scope and tight constraints. Just as importantly, it was a product that better reflected the needs of new parents, shifting from a “done-for-you” model to one that provided guidance while preserving choice and control. The team was proud of what we shipped, and it quickly proved to be a win for both customers and the business.</p>"
+          },
+          "column": "full"
+        },
+        {
+          "type": "table",
+          "content": {
+            "title": "",
+            "headers": [
+              "Goals",
+              "Results"
+            ],
+            "rows": [
+              [
+                "<p><span style=\"background-color: transparent;\">Increase quality registry creations </span></p><p><span style=\"background-color: transparent;\">(creations that lead to a first curation action)</span></p>",
+                "<p><strong style=\"background-color: transparent;\">+28% vs. Last year</strong></p>"
+              ],
+              [
+                "<p><span style=\"background-color: transparent;\">Increase curation by 10%</span></p>",
+                "<p><strong style=\"background-color: transparent;\">70% edited within 3-7 days.&nbsp;</strong></p><p><strong style=\"background-color: transparent;\">+20% increase</strong></p>"
+              ],
+              [
+                "<p><span style=\"background-color: transparent;\">Increase sharing by 20% </span></p>",
+                "<p><strong style=\"background-color: transparent;\">55% shared within 7 days</strong></p><p><strong style=\"background-color: transparent;\">+8% increase</strong></p>"
+              ],
+              [
+                "<p><span style=\"background-color: transparent;\">Increase purchase conversion by 25%</span></p>",
+                "<p><span style=\"background-color: transparent;\">GMV initially increased but then decreased starting in April, likely due to COVID</span></p>"
+              ]
+            ]
+          },
+          "column": "full",
+          "id": "1755709538060-0.1837029247426477"
+        },
+        {
+          "type": "text",
+          "content": {
+            "title": "",
+            "text": "<p>Even with the challenges of the pandemic, the new experience drove significant growth in the core behaviors of creating, curating, and sharing registries. It strengthened Walmart’s connection with new parents and set a solid foundation for continued iteration.</p>"
+          },
+          "column": "full",
+          "id": "1755709647930-0.5044437723475921"
+        }
+      ],
+      "speakerNotes": ""
+    },
+    {
+      "title": "What We Learned",
+      "subheader": "Leading with Clarity, Empathy, and Focus",
+      "modules": [
+        {
+          "id": "What We Learned-content-1755016105354",
+          "type": "text",
+          "content": {
+            "text": "<p>This project was a clear reminder that even with tight timelines, it's possible to deliver meaningful, customer-centered work, as long as you're intentional about how you lead, how you listen, and how you prioritize.</p>"
+          },
+          "column": "full"
+        },
+        {
+          "id": "What We Learned-learning-0-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Define the \"Why\" Early",
+            "text": "<p>Set clear goals and success metrics up front, so every team member understood what we were solving for and how we'd measure impact.</p>"
+          },
+          "column": "right"
+        },
+        {
+          "id": "What We Learned-learning-1-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Plan for Reality, Not Perfection",
+            "text": "<p>Sequenced the work with rough estimates to balance ambition with feasibility, helping the team stay focused without overcommitting.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "What We Learned-learning-2-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Right-Size the Team for the Mission",
+            "text": "<p>Augmented the core team (1 design lead, 4 designers total) by tapping into adjacent talent and available contractor resources.</p>"
+          },
+          "column": "right"
+        },
+        {
+          "id": "What We Learned-learning-3-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Lead with Empathy, Not Assumptions",
+            "text": "<p>Built on existing research and kept user needs front and center, creating space for insight to guide every decision.</p>"
+          },
+          "column": "left"
+        },
+        {
+          "id": "What We Learned-learning-4-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Make Space to Explore",
+            "text": "<p>Ideated and iterated quickly in low fidelity before polishing, ensuring feedback loops were short, inclusive, and grounded.</p>"
+          },
+          "column": "right"
+        },
+        {
+          "id": "What We Learned-learning-5-1755016105354",
+          "type": "quote",
+          "content": {
+            "title": "Prioritize Ruthlessly, Together",
+            "text": "<p>Partnered closely with product and engineering to cut noise, make tough tradeoffs, and still deliver moments of delight.</p>"
+          },
+          "column": "left"
+        }
+      ],
+      "speakerNotes": ""
+    }
+  ]
+}

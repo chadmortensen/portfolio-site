@@ -1,0 +1,165 @@
+{
+  "fallback": {
+    "src": "/img/hero-back-sunny1.jpg",
+    "textTheme": "dark"
+  },
+  "freezingTemperatureF": 40,
+  "backgrounds": {
+    "sunny": [
+      {
+        "src": "/img/hero-back-sunny1.jpg",
+        "textTheme": "dark",
+        "overlay": true,
+        "overlayIntensity": 0.7,
+        "overlayTheme": "light"
+      },
+      {
+        "src": "/img/hero-back-sunny2.jpg",
+        "textTheme": "dark",
+        "overlay": true,
+        "overlayIntensity": 0.6,
+        "overlayTheme": "light"
+      },
+      {
+        "src": "/img/hero-back-sunny3.jpg",
+        "textTheme": "dark",
+        "overlay": true,
+        "overlayIntensity": 0.3,
+        "overlayTheme": "light"
+      }
+    ],
+    "partlySunny": [
+      {
+        "src": "/img/hero-back-partsunny.jpg",
+        "textTheme": "dark"
+      }
+    ],
+    "cloudy": [
+      {
+        "src": "/img/hero-back-cloudy.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      },
+
+      {
+        "src": "/img/hero-back-cloudy3.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.5,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-cloudy4.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.5,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-cloudy5.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.5,
+        "overlayTheme": "dark"
+      }
+    ],
+    "lightRain": [
+      {
+        "src": "/img/hero-back-lightrain.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.6,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-lightrain2.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.6,
+        "overlayTheme": "dark"
+      }
+    ],
+    "rain": [
+      {
+        "src": "/img/hero-back-rain.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.35,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-rain2.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.35,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-rain3.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.5,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-rain4.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.6,
+        "overlayTheme": "dark"
+      } 
+    ],
+    "stormy": [
+      {
+        "src": "/img/hero-back-storm.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.45,
+        "overlayTheme": "dark"
+      }
+    ],
+    "snow": [
+      {
+        "src": "/img/hero-back-snow.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      }
+    ],
+    "freezing": [
+      {
+        "src": "/img/hero-back-freeze.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.45,
+        "overlayTheme": "dark"
+      }
+    ],
+    "night": [
+      {
+        "src": "/img/hero-back-portland-night.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-portland-night2.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      },
+      {
+        "src": "/img/hero-back-portland-night3.jpg",
+        "textTheme": "light",
+        "overlay": true,
+        "overlayIntensity": 0.25,
+        "overlayTheme": "dark"
+      }
+    ]
+  }
+}
