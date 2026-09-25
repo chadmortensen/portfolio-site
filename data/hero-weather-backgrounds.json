@@ -42,13 +42,7 @@
         "overlayIntensity": 0.25,
         "overlayTheme": "dark"
       },
-      {
-        "src": "/img/hero-back-cloudy2.jpg",
-        "textTheme": "light",
-        "overlay": true,
-        "overlayIntensity": 0.5,
-        "overlayTheme": "dark"
-      },
+
       {
         "src": "/img/hero-back-cloudy3.jpg",
         "textTheme": "light",
