@@ -7,7 +7,7 @@ const CaseStudies = () => {
   const caseStudies = [{
     id: 1,
     summary: caseStudySummaries.brightside,
-    title: "Turning Fragmented Growth Into a Shared Product Vision",
+    title: "Product Vision and Coaching a Sr. Designer to Lead",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
@@ -19,7 +19,7 @@ const CaseStudies = () => {
   {
     id: 2,
     summary: caseStudySummaries.etsy,
-    title: "Aligning Fulfillment Leadership Around a Shared Strategy",
+    title: "Aligning Senior Fulfillment Leadership Around a Shared Vision and Design Principles",
     company: "Etsy",
     duration: "4 weeks",
     teamSize: "5",
@@ -43,7 +43,7 @@ const CaseStudies = () => {
     {
     id: 4,
     summary: caseStudySummaries.leadership,
-    title: "How I Lead: Raising Quality, Growing People, Scaling Design",
+    title: "How I Lead High Performing Teams",
     company: "",
     duration: "Ongoing",
     teamSize: "Various",
