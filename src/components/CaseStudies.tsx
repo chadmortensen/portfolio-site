@@ -7,7 +7,7 @@ const CaseStudies = () => {
   const caseStudies = [{
     id: 1,
     summary: caseStudySummaries.brightside,
-    title: "Product Vision and Coaching a Sr. Designer to Lead",
+    title: "Product Vision, Alignment and Coaching a Senior Designer to Lead",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
