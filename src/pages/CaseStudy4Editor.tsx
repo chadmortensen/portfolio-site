@@ -17,7 +17,9 @@ import {
   listsPlugin,
   thematicBreakPlugin,
   toolbarPlugin,
+  useMdastNodeUpdater,
   type JsxComponentDescriptor,
+  type JsxEditorProps,
   type MDXEditorMethods,
   type Translation,
 } from "@mdxeditor/editor";
@@ -95,6 +97,81 @@ const designSystemTranslation: Translation = (key, defaultValue, interpolations 
     (value, [name, replacement]) => value.replaceAll(`{{${name}}}`, String(replacement)),
     defaultValue,
   );
+};
+
+const executiveSummaryFields = [
+  { name: "overview", label: "Overview" },
+  { name: "contribution", label: "My contribution" },
+  { name: "scope", label: "Scope" },
+  { name: "outcome", label: "Outcome" },
+] as const;
+
+const ExecutiveSummaryEditor = ({ mdastNode }: JsxEditorProps) => {
+  const updateMdastNode = useMdastNodeUpdater<typeof mdastNode>();
+
+  return (
+    <div contentEditable={false} className="my-4 rounded-lg border border-slate-300 bg-slate-50 p-5">
+      <h2 className="text-base font-semibold">Executive summary · At a glance</h2>
+      <div className="mt-4 grid gap-4">
+        {executiveSummaryFields.map(({ name, label }) => {
+          const attribute = mdastNode.attributes.find(
+            (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === name,
+          );
+          let value = "";
+          if (attribute?.type === "mdxJsxAttribute") {
+            if (typeof attribute.value === "string") {
+              value = attribute.value;
+            } else if (attribute.value) {
+              value = readFrontmatterValue(attribute.value.value);
+            }
+          }
+
+          return (
+            <label key={name} className="grid gap-1.5 text-sm font-medium">
+              {label}
+              <textarea
+                rows={name === "overview" || name === "outcome" ? 3 : 2}
+                value={value}
+                onChange={(event) => {
+                  const updatedAttribute = {
+                    type: "mdxJsxAttribute" as const,
+                    name,
+                    value: event.target.value,
+                  };
+                  const hasAttribute = mdastNode.attributes.some(
+                    (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === name,
+                  );
+                  updateMdastNode({
+                    attributes: hasAttribute
+                      ? mdastNode.attributes.map((attribute) =>
+                          attribute.type === "mdxJsxAttribute" && attribute.name === name
+                            ? updatedAttribute
+                            : attribute,
+                        )
+                      : [...mdastNode.attributes, updatedAttribute],
+                  });
+                }}
+                className="w-full resize-y rounded-md border border-slate-300 bg-white px-3 py-2.5 text-base font-normal outline-none transition-shadow focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+              />
+            </label>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const executiveSummaryDescriptor: JsxComponentDescriptor = {
+  name: "ExecutiveSummary",
+  kind: "flow",
+  props: [
+    { name: "overview", type: "string", required: true },
+    { name: "contribution", type: "string", required: true },
+    { name: "scope", type: "string", required: true },
+    { name: "outcome", type: "string", required: true },
+  ],
+  hasChildren: false,
+  Editor: ExecutiveSummaryEditor,
 };
 
 const caseStudySectionDescriptor: JsxComponentDescriptor = {
@@ -235,6 +312,7 @@ const CaseStudy4Editor = () => {
       linkDialogPlugin(),
       jsxPlugin({
         jsxComponentDescriptors: [
+          executiveSummaryDescriptor,
           caseStudySectionDescriptor,
           caseStudyColumnsDescriptor,
           caseStudyColumnDescriptor,
