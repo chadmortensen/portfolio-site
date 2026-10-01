@@ -565,3 +565,168 @@ h4 {
 #main-content img.case-study-card-image {
   border-radius: 0;
 }
+
+/* Stationary fan slots keep hover selection independent of card motion. */
+.case-studies-grid {
+  max-width: 1500px;
+}
+
+.case-study-fan-stage {
+  position: relative;
+  height: 37rem;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  --fan-step: clamp(3.5rem, calc((100% - 30rem) / 3), 20rem);
+}
+
+.case-study-fan-slot {
+  position: absolute;
+  top: 3rem;
+  left: calc(50% + var(--fan-offset) * var(--fan-step));
+  width: clamp(18rem, 34%, 24rem);
+  transform: translateX(-50%) translateZ(var(--fan-depth));
+  transform-style: preserve-3d;
+  /* Finish returning to the fan angle before easing back into the stack. */
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1) 280ms;
+}
+
+.case-study-fan-slot.is-active,
+.case-study-fan-slot:focus-within {
+  transform: translateX(-50%) translateZ(90px);
+  transition-duration: 420ms;
+  transition-delay: 0ms;
+}
+
+.case-study-fan-card {
+  min-height: 27rem;
+  transform-origin: 50% 85%;
+  transform: translateY(var(--fan-drop)) rotateZ(var(--fan-angle));
+  box-shadow: 0 10px 24px hsl(var(--swiss-charcoal) / 0.1);
+  transition: transform 280ms cubic-bezier(0.22, 1.08, 0.36, 1), box-shadow 280ms ease;
+}
+
+.case-study-fan-slot.is-active .case-study-fan-card,
+.case-study-fan-slot:focus-within .case-study-fan-card {
+  transform: translateY(-1.75rem) rotateZ(0deg);
+  box-shadow: 0 30px 56px hsl(var(--swiss-charcoal) / 0.18);
+  transition-duration: 420ms;
+}
+
+.case-study-fan-image {
+  height: 13rem;
+}
+
+.case-study-fan-selectors {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 6;
+  margin-top: 1rem;
+}
+
+.case-study-fan-selector {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  color: hsl(var(--text-secondary));
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.case-study-fan-selector:hover,
+.case-study-fan-selector[aria-pressed="true"] {
+  color: hsl(var(--text-primary));
+  background-color: hsl(var(--surface-primary));
+  border-color: hsl(var(--swiss-light));
+}
+
+@media (max-width: 767px) {
+  .case-study-fan-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: auto;
+    perspective: none;
+    transform-style: flat;
+  }
+  .case-study-fan-slot,
+  .case-study-fan-slot.is-active,
+  .case-study-fan-slot:focus-within {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(100%, 26rem);
+    margin: 0 auto;
+    transform: none;
+    transition: none;
+    transform-style: flat;
+  }
+  .case-study-fan-card,
+  .case-study-fan-slot.is-active .case-study-fan-card,
+  .case-study-fan-slot:focus-within .case-study-fan-card {
+    min-height: 0;
+    transform: none;
+  }
+  .case-study-fan-selectors { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study-fan-slot.is-active,
+  .case-study-fan-slot:focus-within { transform: translateX(-50%) translateZ(8px); }
+  .case-study-fan-slot.is-active .case-study-fan-card,
+  .case-study-fan-slot:focus-within .case-study-fan-card {
+    transform: rotateZ(0deg);
+  }
+  .case-study-fan-slot,
+  .case-study-fan-slot.is-active,
+  .case-study-fan-slot:focus-within,
+  .case-study-fan-card,
+  .case-study-fan-slot.is-active .case-study-fan-card,
+  .case-study-fan-slot:focus-within .case-study-fan-card,
+  .case-study-fan-selector { transition: none; }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .case-study-fan-slot.is-active,
+  .case-study-fan-slot:focus-within { transform: none; }
+}
+
+.about-photo-frame {
+  padding-block: 7% calc(32% + 150px);
+}
+
+.about-photo-collage {
+  position: relative;
+  width: 100%;
+  transform: rotate(8deg);
+}
+
+.about-personal-photo {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 18px 35px hsl(var(--swiss-charcoal) / 0.18), 0 3px 8px hsl(var(--swiss-charcoal) / 0.08);
+}
+
+.about-portrait-photo {
+  position: absolute;
+  top: calc(50% + 150px);
+  right: calc(2% + 65px);
+  width: 45%;
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .about-photo-collage {
+    width: calc(100% + clamp(0px, (100vw - 1200px) / 2, 6rem));
+    margin-left: clamp(0px, (100vw - 1200px) / 20, 0.75rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  .about-photo-frame { padding-inline: 5%; }
+}

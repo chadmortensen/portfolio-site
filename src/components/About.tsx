@@ -11,25 +11,19 @@ const About = () => {
           </p>
         </div>
 
-        <div className="col-span-12 lg:col-span-4 space-y-8">
+        <div className="col-span-12 lg:col-span-6 space-y-10">
           <div>
             <h3 className="text-title text-text-primary mb-6 font-light">Background</h3>
             <p className="text-body text-text-secondary leading-relaxed">
               I'm a product design leader with 25+ years of experience turning complex problems into meaningful outcomes by guiding teams, shaping culture, and building thoughtful, scalable design solutions across eCommerce, health tech, and omnichannel platforms.
             </p>
           </div>
-        </div>
-        
-        <div className="col-span-12 lg:col-span-4 space-y-8">
           <div>
             <h3 className="text-title text-text-primary mb-6 font-light">My Super Power</h3>
             <p className="text-body text-text-secondary leading-relaxed">
               I do my best work when things get complex and the stakes are high. When pressure rises, I stay steady. I quickly assess what matters most, create clarity, and move with urgency without adding noise or unnecessary stress. I've been told I have a way of lowering the temperature in heated discussions and helping teams shift from tension to traction. Diplomatic but honest, calm but decisive, I create the conditions for thoughtful decisions and meaningful forward progress.
             </p>
           </div>
-        </div>
-
-        <div className="col-span-12 lg:col-span-4 space-y-8">
           <div>
             <h3 className="text-title text-text-primary mb-6 font-light">Outside of Work</h3>
             <p className="text-body text-text-secondary leading-relaxed">
@@ -37,6 +31,31 @@ const About = () => {
               <br /><br />
               Also, I have a framed picture of Yoda in a three-piece suit hanging in my office. Interpret that however you'd like.
             </p>
+          </div>
+        </div>
+
+        <div className="col-span-12 lg:col-span-6">
+          <div className="about-photo-frame">
+            <div className="about-photo-collage">
+            <img
+              src="/img/cabin-dusk.webp"
+              alt="Cabins with warmly lit windows beside a meadow and evergreen trees at dusk."
+              width={1800}
+              height={1350}
+              loading="lazy"
+              decoding="async"
+              className="about-personal-photo"
+            />
+            <img
+              src="/img/chad-portrait.webp"
+              alt="Chad Mortensen smiling outdoors among evergreen trees."
+              width={799}
+              height={939}
+              loading="lazy"
+              decoding="async"
+              className="about-personal-photo about-portrait-photo"
+            />
+            </div>
           </div>
         </div>
       </div>
