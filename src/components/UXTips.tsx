@@ -53,6 +53,10 @@ const UXTips = () => {
             <span>Get a UX Tip</span>
           </Button>
 
+          <p className="sr-only" role="status" aria-atomic="true">
+            {!isAnimating ? currentTip : ""}
+          </p>
+
           {(currentTip || isAnimating) && (
             <div className="bg-surface-primary border border-swiss-light rounded-lg p-8 shadow-sm relative overflow-hidden">
               <div className={`transition-all duration-200 ${isAnimating ? 'animate-slot-machine' : 'animate-fade-in'}`}>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import heroWeatherBackgrounds from "../../data/hero-weather-backgrounds.json";
+import { navigateToSection } from "@/lib/section-navigation";
 import {
   ArrowDown,
   Cloud,
@@ -435,7 +436,7 @@ const Hero = () => {
         return false;
       }
 
-      return Boolean(target.closest("input, textarea, select, [contenteditable='true']"));
+      return target.isContentEditable || Boolean(target.closest("input, textarea, select, [role='textbox']"));
     };
 
     const previewBackground = async (direction: 1 | -1) => {
@@ -462,7 +463,10 @@ const Hero = () => {
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (shouldIgnoreShortcut(event.target)) {
+      if (
+        !event.shiftKey || event.altKey || event.ctrlKey || event.metaKey ||
+        event.defaultPrevented || shouldIgnoreShortcut(event.target)
+      ) {
         return;
       }
 
@@ -501,12 +505,7 @@ const Hero = () => {
   }, [activeBackground]);
 
   const scrollToAbout = () => {
-    const aboutSection = document.querySelector("#about");
-    if (aboutSection) {
-      aboutSection.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
+    navigateToSection("#about");
   };
 
   return (
@@ -556,18 +555,16 @@ const Hero = () => {
 
           <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center">
             <button
-              onClick={() => document.querySelector("#case-studies")?.scrollIntoView({
-                behavior: "smooth"
-              })}
+              onClick={() => navigateToSection("#case-studies")}
               className="w-full rounded-[4rem] px-6 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
-              aria-label="View Chad Mortensen's case studies and design work"
+              aria-label="View My Work: Chad Mortensen’s case studies and design work"
             >
               View My Work
             </button>
             <button
               onClick={scrollToAbout}
               className="w-full rounded-[4rem] px-6 py-3 border border-swiss-charcoal bg-surface-primary/60 text-text-primary text-body backdrop-blur-xl backdrop-saturate-150 hover:bg-surface-primary/80 transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
-              aria-label="Learn more about Chad Mortensen's background and experience"
+              aria-label="More About Me: Chad Mortensen’s background and experience"
             >
               More About Me
             </button>
@@ -580,7 +577,7 @@ const Hero = () => {
               aria-label="Scroll down to learn more about Chad Mortensen"
             >
               {/* <span>Scroll to explore</span> */}
-              <ArrowDown size={32} className="animate-bounce" />
+              <ArrowDown size={32} className="animate-bounce hero-scroll-arrow" aria-hidden="true" />
             </button>
           </div>
         </div>

@@ -376,7 +376,7 @@ const CaseStudy4Editor = () => {
   };
 
   return (
-    <main className="min-h-screen bg-surface-primary text-text-primary">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-surface-primary text-text-primary">
       <header className="sticky top-0 z-50 border-b border-border-primary bg-surface-primary/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 sm:px-8">
           <div className="flex min-w-0 items-center gap-4">

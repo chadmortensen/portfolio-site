@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { navigateToSection } from "@/lib/section-navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +11,7 @@ import {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,9 +38,7 @@ const Navigation = () => {
     }
 
     const animationFrame = window.requestAnimationFrame(() => {
-      document.querySelector(location.hash)?.scrollIntoView({
-        behavior: "smooth"
-      });
+      navigateToSection(location.hash);
     });
 
     return () => window.cancelAnimationFrame(animationFrame);
@@ -52,12 +52,7 @@ const Navigation = () => {
       return;
     }
 
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
+    navigateToSection(href);
   };
 
   const handleCaseStudyClick = (route: string) => {
@@ -66,7 +61,17 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-swiss-light/60 bg-surface-primary/60 py-4 backdrop-blur-xl backdrop-saturate-150">
+    <nav
+      aria-label="Main navigation"
+      className={`fixed top-0 w-full z-50 border-b border-swiss-light/60 ${isOpen ? "bg-surface-primary" : "bg-surface-primary/60"} py-4 backdrop-blur-xl backdrop-saturate-150${isOpen ? " max-h-[100dvh] overflow-y-auto" : ""}`}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && isOpen) {
+          event.preventDefault();
+          setIsOpen(false);
+          menuButtonRef.current?.focus();
+        }
+      }}
+    >
       <div className="max-width-container mx-auto px-4 sm:px-6">
         <div className="flex justify-center items-center">
           {/* Desktop Navigation */}
@@ -112,16 +117,20 @@ const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button
+            ref={menuButtonRef}
             className="md:hidden p-2 text-text-primary rounded"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls={isOpen ? "mobile-navigation" : undefined}
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+            {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden mt-6 pb-6 border-t border-swiss-light">
+          <div id="mobile-navigation" className="md:hidden mt-6 pb-6 border-t border-swiss-light">
             <div className="flex flex-col space-y-4 pt-6">
               {navItems.map((item) => (
                 item.label === "Case Studies" ? (

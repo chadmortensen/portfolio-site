@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import { Separator } from "@/components/ui/separator";
@@ -11,9 +11,13 @@ type CaseStudyShellProps = {
   children: ReactNode;
 };
 
-export const CaseStudyShell = ({ title, subtitle, children }: CaseStudyShellProps) => (
+export const CaseStudyShell = ({ title, subtitle, children }: CaseStudyShellProps) => {
+  useEffect(() => {
+    document.title = `${title} — Chad Mortensen`;
+  }, [title]);
+
+  return (
   <div className="min-h-screen bg-surface-primary">
-    <a href="#main-content" className="skip-nav">Skip to main content</a>
     <Navigation />
     <header className="pb-16 pt-32 bg-surface-secondary">
       <div className="swiss-grid"><div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
@@ -22,12 +26,13 @@ export const CaseStudyShell = ({ title, subtitle, children }: CaseStudyShellProp
         <div className="h-[3px] w-28 bg-accent-blue mx-auto mt-8" />
       </div></div>
     </header>
-    <main id="main-content" className="py-16"><div className="swiss-grid"><div className="col-span-12 space-y-24">
+    <main id="main-content" tabIndex={-1} className="py-16"><div className="swiss-grid"><div className="col-span-12 space-y-24">
       {children}
     </div></div></main>
     <Footer />
   </div>
-);
+  );
+};
 
 export const CaseStudyPage = ({ data }: { data: CaseStudyData }) => (
   <CaseStudyShell title={data.title} subtitle={data.subtitle}>

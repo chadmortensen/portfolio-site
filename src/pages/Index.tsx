@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -12,10 +13,13 @@ import Navigation from "@/components/Navigation";
 // import PixelBird from "@/components/PixelBird";
 
 const Index = () => {
+  useEffect(() => {
+    document.title = "Chad Mortensen - Empathetic Design Leader | 25+ Years Experience";
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <CaseStudies />
         <About />

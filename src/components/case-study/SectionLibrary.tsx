@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import type { CaseStudyModule, CaseStudySection, CaseStudySectionLayout } from "./types";
@@ -41,7 +41,8 @@ export const CaseStudyImage = ({ module }: { module: CaseStudyModule }) => {
           <img src={content.src} alt={content.alt || "Case study visual"} className="w-full cursor-zoom-in transition-opacity hover:opacity-90" style={heightStyle} loading="lazy" decoding="async" />
         </button>
       </DialogTrigger>
-      <DialogContent className="max-w-6xl w-full p-0 overflow-hidden">
+      <DialogContent className="max-w-6xl w-full p-0 overflow-hidden" aria-describedby={undefined}>
+        <DialogTitle className="sr-only">{content.alt || "Case study image"}</DialogTitle>
         <img src={content.src} alt={content.alt || "Enlarged case study visual"} className="w-full h-auto max-h-[85vh] object-contain" decoding="async" />
       </DialogContent>
     </Dialog>
@@ -55,7 +56,7 @@ export const CaseStudyList = ({ module }: { module: CaseStudyModule }) => {
 
 export const CaseStudyQuote = ({ module }: { module: CaseStudyModule }) => {
   const content = normalizeText(module.content);
-  return <aside className={cn("bg-surface-secondary p-4", module.variant === "feature" && "border-l-4 border-accent-blue p-6 md:p-8")}>{content.title && <h3 className="text-title text-text-primary font-medium mb-2">{content.title}</h3>}<RichText html={content.text} className="italic" /></aside>;
+  return <div role="note" className={cn("bg-surface-secondary p-4", module.variant === "feature" && "border-l-4 border-accent-blue p-6 md:p-8")}>{content.title && <h3 className="text-title text-text-primary font-medium mb-2">{content.title}</h3>}<RichText html={content.text} className="italic" /></div>;
 };
 
 export const CaseStudyTable = ({ module }: { module: CaseStudyModule }) => {
@@ -64,7 +65,7 @@ export const CaseStudyTable = ({ module }: { module: CaseStudyModule }) => {
     <div className="space-y-4 overflow-x-auto">
       {content.title && <h3 className="text-title text-text-primary font-light">{content.title}</h3>}
       <Table>
-        {content.headers && <TableHeader><TableRow className="bg-gray-50">{content.headers.map((header, index) => <TableHead key={index} className="font-semibold text-gray-900 py-4 px-6">{header}</TableHead>)}</TableRow></TableHeader>}
+        {content.headers && <TableHeader><TableRow className="bg-gray-50">{content.headers.map((header, index) => <TableHead scope="col" key={index} className="font-semibold text-gray-900 py-4 px-6">{header}</TableHead>)}</TableRow></TableHeader>}
         {content.rows && <TableBody>{content.rows.map((row, rowIndex) => <TableRow key={rowIndex}>{row.map((cell, cellIndex) => <TableCell key={cellIndex} className="py-4 px-6"><RichText html={cell} /></TableCell>)}</TableRow>)}</TableBody>}
       </Table>
     </div>

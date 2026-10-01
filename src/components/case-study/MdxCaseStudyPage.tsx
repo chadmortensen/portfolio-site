@@ -122,7 +122,8 @@ const CaseStudyImage = ({ src, alt, heightPercent }: CaseStudyImageProps) => (
 );
 
 const CaseStudyQuote = ({ title, variant = "default", children }: CaseStudyQuoteProps) => (
-  <aside
+  <div
+    role="note"
     className={cn(
       "case-study-quote not-prose bg-surface-secondary p-4 text-text-secondary",
       variant === "feature" && "border-l-4 border-accent-blue p-6 md:p-8",
@@ -130,7 +131,7 @@ const CaseStudyQuote = ({ title, variant = "default", children }: CaseStudyQuote
   >
     {title && <h3 className="mt-0 mb-2 text-[1.1rem] leading-[1.3] text-text-primary font-medium">{title}</h3>}
     <div className="case-study-mdx-content prose prose-slate max-w-none italic">{children}</div>
-  </aside>
+  </div>
 );
 
 const CaseStudyTable = ({ title, headers, rows }: CaseStudyTableProps) => {

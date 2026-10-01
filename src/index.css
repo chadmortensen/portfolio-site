@@ -145,12 +145,12 @@ main article figure figcaption p {
     --secondary-foreground: 0 0% 5%;
 
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 40%;
 
     --accent: 0 0% 96%;
     --accent-foreground: 0 0% 5%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 75% 40%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 90%;
@@ -177,9 +177,9 @@ main article figure figcaption p {
     --swiss-pure: 0 0% 100%;
     
     /* Accent Colors - Subtle but Present */
-    --accent-blue: 210 80% 55%;
+    --accent-blue: 210 80% 40%;
     --accent-teal: 180 75% 45%;
-    --accent-orange: 25 85% 60%;
+    --accent-orange: 25 85% 35%;
     --accent-aqua: 195 85% 70%;
 
     /* Functional Colors */
@@ -246,7 +246,7 @@ main article figure figcaption p {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 50;
+    z-index: 100;
     padding: 0.5rem 1rem;
     background-color: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
@@ -299,6 +299,14 @@ main article figure figcaption p {
 .border-swiss-charcoal { border-color: hsl(var(--swiss-charcoal)); }
 
 /* Minimal animations */
+main > section[id] {
+  scroll-margin-top: 5rem;
+}
+
+.hero-scroll-arrow {
+  animation-iteration-count: 3;
+}
+
 .fade-in {
   animation: fade-in 0.6s ease-out;
 }
@@ -522,7 +530,7 @@ section.hero-photo-bg--overlay::after {
 .text-title { font-size: 1.2rem; font-weight: 600; line-height: 1.3; }
 .text-title2 { font-size: 1.2rem; font-weight: 400; line-height: 1.3;}
 .text-case-study-title { font-size: 1.3rem !important; font-weight: 400; line-height: 1.3; }
-.text-case-study-label { font-size: 1rem; font-weight: 400; line-height: 1.4; }
+.text-case-study-label { font-size: 1rem; font-weight: 600; line-height: 1.4; }
 .text-case-study-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
 .text-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
 .text-caption { font-size: 0.875rem; font-weight: 400; line-height: 1.5; }
@@ -566,131 +574,98 @@ h4 {
   border-radius: 0;
 }
 
-/* Stationary fan slots keep hover selection independent of card motion. */
-.case-studies-grid {
-  max-width: 1500px;
+/* Full-width, native-scrolling gallery with an aligned inset and visible next card. */
+.case-study-gallery {
+  --gallery-inset: max(2rem, calc((100% - 1200px) / 2 + 2rem));
 }
 
-.case-study-fan-stage {
+.case-study-track {
   position: relative;
-  height: 37rem;
-  perspective: 1400px;
-  transform-style: preserve-3d;
-  --fan-step: clamp(3.5rem, calc((100% - 30rem) / 3), 20rem);
-}
-
-.case-study-fan-slot {
-  position: absolute;
-  top: 3rem;
-  left: calc(50% + var(--fan-offset) * var(--fan-step));
-  width: clamp(18rem, 34%, 24rem);
-  transform: translateX(-50%) translateZ(var(--fan-depth));
-  transform-style: preserve-3d;
-  /* Finish returning to the fan angle before easing back into the stack. */
-  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1) 280ms;
-}
-
-.case-study-fan-slot.is-active,
-.case-study-fan-slot:focus-within {
-  transform: translateX(-50%) translateZ(90px);
-  transition-duration: 420ms;
-  transition-delay: 0ms;
-}
-
-.case-study-fan-card {
-  min-height: 27rem;
-  transform-origin: 50% 85%;
-  transform: translateY(var(--fan-drop)) rotateZ(var(--fan-angle));
-  box-shadow: 0 10px 24px hsl(var(--swiss-charcoal) / 0.1);
-  transition: transform 280ms cubic-bezier(0.22, 1.08, 0.36, 1), box-shadow 280ms ease;
-}
-
-.case-study-fan-slot.is-active .case-study-fan-card,
-.case-study-fan-slot:focus-within .case-study-fan-card {
-  transform: translateY(-1.75rem) rotateZ(0deg);
-  box-shadow: 0 30px 56px hsl(var(--swiss-charcoal) / 0.18);
-  transition-duration: 420ms;
-}
-
-.case-study-fan-image {
-  height: 13rem;
-}
-
-.case-study-fan-selectors {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem var(--gallery-inset) 1.5rem;
+  scroll-padding-inline: var(--gallery-inset);
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.case-study-track::-webkit-scrollbar { display: none; }
+.case-study-track.is-dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+.case-study-track.is-dragging a { cursor: grabbing; }
+
+.case-study-slide {
+  display: grid;
+  grid-template-columns: 44% 56%;
+  flex: 0 0 min(60rem, calc(100% - 2rem));
+  min-height: 25rem;
+  overflow: hidden;
+  border: 1px solid hsl(var(--swiss-light));
+  border-radius: 10px;
+  background: hsl(var(--surface-primary));
+  box-shadow: 0 8px 20px hsl(var(--swiss-charcoal) / 0.06);
+  scroll-snap-align: start;
+}
+
+.case-study-slide-image { position: relative; display: block; min-width: 0; }
+.case-study-slide-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.case-study-slide-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  min-width: 0;
+}
+.case-study-slide-link {
+  display: inline-flex;
+  align-items: center;
   gap: 0.5rem;
-  position: relative;
-  z-index: 6;
-  margin-top: 1rem;
-}
-
-.case-study-fan-selector {
-  min-height: 44px;
-  padding: 0.5rem 1rem;
-  color: hsl(var(--text-secondary));
-  border: 1px solid transparent;
-  border-radius: 6px;
-  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
-}
-
-.case-study-fan-selector:hover,
-.case-study-fan-selector[aria-pressed="true"] {
+  margin-top: auto;
+  padding-top: 1rem;
   color: hsl(var(--text-primary));
-  background-color: hsl(var(--surface-primary));
-  border-color: hsl(var(--swiss-light));
+  transition: color 180ms ease;
 }
+.case-study-slide-link:hover { color: hsl(var(--accent-blue)); }
+.case-study-slide-image:focus-visible { outline-offset: -4px; }
+
+.case-study-gallery-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 2rem 0;
+}
+.case-study-gallery-arrow {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: hsl(var(--swiss-charcoal) / 0.08);
+  color: hsl(var(--text-primary));
+  transition: background-color 180ms ease;
+}
+.case-study-gallery-arrow:hover:not(:disabled) { background: hsl(var(--swiss-charcoal) / 0.15); }
+.case-study-gallery-arrow:disabled { opacity: 0.3; cursor: default; }
 
 @media (max-width: 767px) {
-  .case-study-fan-stage {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    height: auto;
-    perspective: none;
-    transform-style: flat;
-  }
-  .case-study-fan-slot,
-  .case-study-fan-slot.is-active,
-  .case-study-fan-slot:focus-within {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: min(100%, 26rem);
-    margin: 0 auto;
-    transform: none;
-    transition: none;
-    transform-style: flat;
-  }
-  .case-study-fan-card,
-  .case-study-fan-slot.is-active .case-study-fan-card,
-  .case-study-fan-slot:focus-within .case-study-fan-card {
-    min-height: 0;
-    transform: none;
-  }
-  .case-study-fan-selectors { display: none; }
+  .case-study-gallery { --gallery-inset: 1rem; }
+  .case-study-track { gap: 1rem; }
+  .case-study-slide { grid-template-columns: 30% 70%; flex-basis: calc(100% - 1rem); }
+  .case-study-slide-copy { padding: 1rem; gap: 0.75rem; }
+  .case-study-gallery-controls { padding-inline: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .case-study-fan-slot.is-active,
-  .case-study-fan-slot:focus-within { transform: translateX(-50%) translateZ(8px); }
-  .case-study-fan-slot.is-active .case-study-fan-card,
-  .case-study-fan-slot:focus-within .case-study-fan-card {
-    transform: rotateZ(0deg);
-  }
-  .case-study-fan-slot,
-  .case-study-fan-slot.is-active,
-  .case-study-fan-slot:focus-within,
-  .case-study-fan-card,
-  .case-study-fan-slot.is-active .case-study-fan-card,
-  .case-study-fan-slot:focus-within .case-study-fan-card,
-  .case-study-fan-selector { transition: none; }
-}
-
-@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .case-study-fan-slot.is-active,
-  .case-study-fan-slot:focus-within { transform: none; }
+  .case-study-slide-link, .case-study-gallery-arrow { transition: none; }
 }
 
 .about-photo-frame {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -22,8 +22,12 @@ import { SectionLibraryShowcase } from "@/components/case-study/SectionLibrarySh
 const DesignSystem = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  useEffect(() => {
+    document.title = "Design System — Chad Mortensen";
+  }, []);
+
   return (
-    <main className="min-h-screen bg-background">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-8">
@@ -50,8 +54,8 @@ const DesignSystem = () => {
             <ColorSwatch name="Card" className="bg-card text-card-foreground border border-border" />
             <ColorSwatch name="Accent Blue" className="bg-accent-blue text-white" />
             <ColorSwatch name="Accent Orange" className="bg-accent-orange text-white" />
-            <ColorSwatch name="Accent Teal" className="bg-accent-teal text-white" />
-            <ColorSwatch name="Accent Aqua" className="bg-accent-aqua text-white" />
+            <ColorSwatch name="Accent Teal" className="bg-accent-teal text-text-primary" />
+            <ColorSwatch name="Accent Aqua" className="bg-accent-aqua text-text-primary" />
             <ColorSwatch name="Swiss Charcoal" className="bg-swiss-charcoal text-white" />
             <ColorSwatch name="Swiss Gray" className="bg-swiss-gray text-white" />
           </div>
@@ -315,12 +319,12 @@ const DesignSystem = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label>Enable notifications</Label>
-                  <Switch />
+                  <Label id="notifications-label">Enable notifications</Label>
+                  <Switch aria-labelledby="notifications-label" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <Label>Disabled switch</Label>
-                  <Switch disabled />
+                  <Label id="disabled-switch-label">Disabled switch</Label>
+                  <Switch aria-labelledby="disabled-switch-label" disabled />
                 </div>
               </CardContent>
             </Card>

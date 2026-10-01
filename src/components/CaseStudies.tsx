@@ -1,49 +1,88 @@
-import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { caseStudySummaries } from "./case-study/summaries";
 
 const CaseStudies = () => {
-  const navigate = useNavigate();
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const pendingHover = useRef<number | null>(null);
-  const activeIndex = hoveredIndex ?? focusedIndex ?? selectedIndex;
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [canGoForward, setCanGoForward] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+  const drag = useRef({ startX: 0, startScroll: 0, active: false, moved: false });
+  const animationFrame = useRef<number | null>(null);
 
-  useEffect(() => () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+  const cancelAnimation = useCallback(() => {
+    if (animationFrame.current !== null) cancelAnimationFrame(animationFrame.current);
+    animationFrame.current = null;
+    trackRef.current?.style.removeProperty("scroll-snap-type");
   }, []);
 
-  const clearHover = () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    hoverTimer.current = null;
-    pendingHover.current = null;
-    setHoveredIndex(null);
+  const updateControls = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    setCanGoBack(track.scrollLeft > 2);
+    setCanGoForward(track.scrollLeft < track.scrollWidth - track.clientWidth - 2);
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const observer = new ResizeObserver(() => { cancelAnimation(); updateControls(); });
+    observer.observe(track);
+    updateControls();
+    return () => { observer.disconnect(); cancelAnimation(); };
+  }, [updateControls, cancelAnimation]);
+
+  const moveTo = (index: number) => {
+    const track = trackRef.current;
+    if (!track || animationFrame.current !== null) return;
+    const cards = Array.from(track.querySelectorAll<HTMLElement>(".case-study-slide"));
+    const card = cards[Math.max(0, Math.min(cards.length - 1, index))];
+    const inset = parseFloat(getComputedStyle(track).paddingLeft);
+    const destination = Math.min(card.offsetLeft - inset, track.scrollWidth - track.clientWidth);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      track.scrollTo({ left: destination, behavior: "instant" });
+      updateControls();
+      return;
+    }
+    const start = track.scrollLeft;
+    const startedAt = performance.now();
+    // Match the reference gallery: 500ms easeInOutQuad, snapping disabled in flight.
+    track.style.scrollSnapType = "none";
+    const animate = (now: number) => {
+      const progress = Math.min((now - startedAt) / 500, 1);
+      const eased = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      track.scrollLeft = start + (destination - start) * eased;
+      if (progress < 1) {
+        animationFrame.current = requestAnimationFrame(animate);
+      } else {
+        animationFrame.current = null;
+        track.style.removeProperty("scroll-snap-type");
+        updateControls();
+      }
+    };
+    animationFrame.current = requestAnimationFrame(animate);
   };
 
-  const previewCard = (index: number) => {
-    if (pendingHover.current === index) return;
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    pendingHover.current = index;
-    hoverTimer.current = setTimeout(() => {
-      setHoveredIndex(index);
-      hoverTimer.current = null;
-    }, 90);
+  const nearestIndex = () => {
+    const track = trackRef.current;
+    if (!track) return 0;
+    const inset = parseFloat(getComputedStyle(track).paddingLeft);
+    const cards = Array.from(track.querySelectorAll<HTMLElement>(".case-study-slide"));
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const distance = (card: HTMLElement) => Math.abs(Math.min(card.offsetLeft - inset, maxScroll) - track.scrollLeft);
+    return cards.reduce((best, card, index) => distance(card) < distance(cards[best]) ? index : best, 0);
   };
 
-  const previewFromPointer = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== "mouse" || window.matchMedia("(max-width: 767px)").matches) return;
-    // Measure stationary slots, so animated cards cannot change their own hover target.
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const pointerX = event.clientX - bounds.left;
-    const slots = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(".case-study-fan-slot"));
-    const nearest = slots.reduce((best, slot, index) =>
-      Math.abs(slot.offsetLeft - pointerX) < Math.abs(slots[best].offsetLeft - pointerX) ? index : best, 0);
-    previewCard(nearest);
+  const finishDrag = () => {
+    if (!drag.current.active) return;
+    drag.current.active = false;
+    setIsDragging(false);
+    if (drag.current.moved) moveTo(nearestIndex());
   };
   const caseStudies = [{
     id: 1,
+    summary: caseStudySummaries.brightside.card,
     title: "Product Vision, Alignment and Coaching a Senior Designer to Lead",
     company: "Brightside Health",
     duration: "6 weeks",
@@ -55,6 +94,7 @@ const CaseStudies = () => {
   },
   {
     id: 2,
+    summary: caseStudySummaries.etsy.card,
     title: "Aligning Senior Fulfillment Leadership Around a Shared Vision and Design Principles",
     company: "Etsy",
     duration: "4 weeks",
@@ -66,6 +106,7 @@ const CaseStudies = () => {
   },
     {
     id: 3,
+    summary: caseStudySummaries.walmart.card,
     title: "Leading a Rapid Registry Turnaround That Increased Quality Creations by 28%",
     company: "Walmart", 
     duration: "1 quarter",
@@ -77,6 +118,7 @@ const CaseStudies = () => {
   },  
     {
     id: 4,
+    summary: caseStudySummaries.leadership.card,
     title: "How I Lead High Performing Teams",
     company: "",
     duration: "Ongoing",
@@ -87,69 +129,76 @@ const CaseStudies = () => {
     route: "/case-study-4"
   }];
 
-  return <section id="case-studies" className="py-16 sm:py-24 bg-surface-secondary">
-      <div className="swiss-grid case-studies-grid fade-in">
+  return <section id="case-studies" className="case-study-gallery py-16 sm:py-24 bg-surface-secondary" aria-labelledby="case-studies-heading">
+      <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
-          <h2 className="text-headline text-text-primary mb-4">Case Studies: Product and Leadership</h2>
+          <h2 id="case-studies-heading" className="text-headline text-text-primary mb-4">Case Studies: Product and Leadership</h2>
           <div className="h-[3px] w-[7rem] bg-accent-blue mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-2xl mx-auto px-4">
             Product challenges, leadership decisions, and measurable outcomes across the work, people, and practices I’ve helped shape.
           </p>
         </div>
-
-        <div className="col-span-12 case-study-fan" onPointerLeave={clearHover}>
-          <div className="case-study-fan-stage" onPointerMove={previewFromPointer}>
-          {caseStudies.map((study, index) => <div
-            key={study.id}
-            className={`case-study-fan-slot${activeIndex === index ? " is-active" : ""}`}
-            style={{ "--fan-offset": index - 1.5, "--fan-angle": `${(index - 1.5) * 8}deg`, "--fan-drop": `${Math.abs(index - 1.5) * 16}px`, "--fan-depth": `${(3 - index) * 2}px` } as CSSProperties}
-            onFocusCapture={() => { clearHover(); setFocusedIndex(index); }}
-            onBlurCapture={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocusedIndex(null);
-            }}
-          ><article id={`case-study-card-${study.id}`} className="case-study-fan-card flex flex-col overflow-hidden rounded-[10px] border border-swiss-light bg-surface-primary">
-              <button
-                onClick={() => navigate(study.route)}
-                className="case-study-fan-image group block w-full shrink-0 overflow-hidden rounded-none text-left focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
-                aria-label={`View ${study.title} case study`}
-              >
-                <img
-                  src={study.image}
-                  alt={`${study.title} - ${study.company} case study`}
-                  className="case-study-card-image h-full w-full object-cover"
-                />
-              </button>
-              <div className="flex flex-1 flex-col p-5 sm:p-6">
-                <div className="space-y-3">
-                  <h3 className="text-case-study-title text-text-primary !font-bold">{study.title}</h3>
-                  {study.company && <p className="text-case-study-label text-accent-blue font-medium">{study.company}</p>}
-                </div>
-
-                <button
-                  onClick={() => navigate(study.route)}
-                  className="mt-auto inline-flex items-center gap-2 pt-6 text-body font-medium text-text-primary transition-colors duration-200 hover:text-accent-blue focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
-                  aria-label={`View ${study.title} case study`}
-                >
-                  <span>{study.id === 4 ? "View Examples" : "View Case Study"}</span>
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            </article></div>)}
+      </div>
+      <div
+        ref={trackRef}
+        id="case-study-track"
+        className={`case-study-track${isDragging ? " is-dragging" : ""}`}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Product and leadership case studies"
+        tabIndex={0}
+        onScroll={() => { if (animationFrame.current === null) updateControls(); }}
+        onWheel={cancelAnimation}
+        onKeyDown={(event) => {
+          drag.current.moved = false;
+          if (event.target !== event.currentTarget || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return;
+          if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+            event.preventDefault(); moveTo(nearestIndex() + (event.key === "ArrowRight" ? 1 : -1));
+          } else if (event.key === "Home" || event.key === "End") {
+            event.preventDefault(); moveTo(event.key === "Home" ? 0 : caseStudies.length - 1);
+          }
+        }}
+        onPointerDown={(event) => {
+          cancelAnimation();
+          if (event.pointerType !== "mouse" || event.button !== 0) return;
+          drag.current = { startX: event.clientX, startScroll: event.currentTarget.scrollLeft, active: true, moved: false };
+        }}
+        onPointerMove={(event) => {
+          if (!drag.current.active) return;
+          const delta = event.clientX - drag.current.startX;
+          if (!drag.current.moved && Math.abs(delta) < 8) return;
+          drag.current.moved = true;
+          setIsDragging(true);
+          event.currentTarget.style.scrollSnapType = "none";
+          event.currentTarget.setPointerCapture(event.pointerId);
+          event.currentTarget.scrollLeft = drag.current.startScroll - delta;
+        }}
+        onPointerUp={finishDrag}
+        onPointerCancel={finishDrag}
+        onLostPointerCapture={finishDrag}
+        onPointerLeave={() => { if (!drag.current.moved) drag.current.active = false; }}
+        onDragStart={(event) => event.preventDefault()}
+        onClickCapture={(event) => {
+          if (drag.current.moved) { event.preventDefault(); event.stopPropagation(); drag.current.moved = false; }
+        }}
+      >
+        {caseStudies.map((study, index) => <article key={study.id} className="case-study-slide" aria-roledescription="slide" aria-label={`${index + 1} of ${caseStudies.length}: ${study.company || "Leadership"}`}>
+          <Link to={study.route} className="case-study-slide-image" aria-label={`View ${study.title} case study`} draggable={false}>
+            <img src={study.image} alt={`${study.company || "Design leadership"} case study`} className="case-study-card-image" draggable={false} loading="lazy" />
+          </Link>
+          <div className="case-study-slide-copy">
+            {study.company && <p className="text-case-study-label text-accent-blue font-medium">{study.company}</p>}
+            <h3 className="text-case-study-title text-text-primary !font-bold">{study.title}</h3>
+            <p className="text-body text-text-secondary">{study.summary}</p>
+            <Link to={study.route} className="case-study-slide-link text-body font-medium" aria-label={`View ${study.title} case study`}>
+              {study.id === 4 ? "View Examples" : "View Case Study"}<ArrowRight size={18} aria-hidden="true" />
+            </Link>
           </div>
-          <div className="case-study-fan-selectors" role="group" aria-label="Choose a case study to bring forward">
-            {caseStudies.map((study, index) => <button
-              key={study.id}
-              type="button"
-              className="case-study-fan-selector text-body"
-              aria-pressed={(activeIndex ?? 0) === index}
-              aria-controls={`case-study-card-${study.id}`}
-              onPointerEnter={(event) => { if (event.pointerType === "mouse") previewCard(index); }}
-              onFocus={() => { clearHover(); setFocusedIndex(index); }}
-              onBlur={() => setFocusedIndex(null)}
-              onClick={() => { clearHover(); setSelectedIndex(index); }}
-            >{study.company || "Leadership"}</button>)}
-          </div>
-        </div>
+        </article>)}
+      </div>
+      <div className="case-study-gallery-controls" role="group" aria-label="Case study carousel navigation">
+        <button type="button" className="case-study-gallery-arrow" aria-label="Previous case study" aria-controls="case-study-track" disabled={!canGoBack} onClick={() => moveTo(nearestIndex() - 1)}><ChevronLeft size={22} aria-hidden="true" /></button>
+        <button type="button" className="case-study-gallery-arrow" aria-label="Next case study" aria-controls="case-study-track" disabled={!canGoForward} onClick={() => moveTo(nearestIndex() + 1)}><ChevronRight size={22} aria-hidden="true" /></button>
       </div>
     </section>;
 };
