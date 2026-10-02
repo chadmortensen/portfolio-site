@@ -603,8 +603,8 @@ h4 {
 .case-study-slide {
   display: grid;
   grid-template-columns: 44% 56%;
-  flex: 0 0 min(60rem, calc(100% - 2rem));
-  min-height: 25rem;
+  flex: 0 0 min(45rem, calc(75% - 1.5rem));
+  min-height: 31.25rem;
   overflow: hidden;
   border: 1px solid hsl(var(--swiss-light));
   border-radius: 10px;
