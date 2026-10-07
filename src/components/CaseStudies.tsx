@@ -83,7 +83,7 @@ const CaseStudies = () => {
   const caseStudies = [{
     id: 1,
     summary: caseStudySummaries.brightside.card,
-    title: "Product Vision, Alignment and Coaching a Senior Designer to Lead",
+    title: "Product Vision, Alignment and Coaching a Senior Designer to be a Strategic Partner",
     company: "Brightside Health",
     duration: "6 weeks",
     teamSize: "8",
@@ -95,7 +95,7 @@ const CaseStudies = () => {
   {
     id: 2,
     summary: caseStudySummaries.etsy.card,
-    title: "Aligning Senior Fulfillment Leadership Around a Shared Vision and Design Principles",
+    title: "Aligning Senior Fulfillment Leadership Around a Shared Design Strategy",
     company: "Etsy",
     duration: "4 weeks",
     teamSize: "5",
@@ -119,7 +119,7 @@ const CaseStudies = () => {
     {
     id: 4,
     summary: caseStudySummaries.leadership.card,
-    title: "How I Lead High Performing Teams",
+    title: "How I Lead and Grow High Performing Teams",
     company: "",
     duration: "Ongoing",
     teamSize: "Various",

@@ -563,12 +563,13 @@ const Hero = () => {
             </button>
             <button
               onClick={scrollToAbout}
-              className="w-full rounded-[4rem] px-6 py-3 border border-swiss-charcoal bg-surface-primary/60 text-text-primary text-body backdrop-blur-xl backdrop-saturate-150 hover:bg-surface-primary/80 transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+              className="w-full rounded-[4rem] px-6 py-3 border bg-surface-primary/60 text-text-primary text-body backdrop-blur-xl backdrop-saturate-150 hover:bg-surface-primary/80 transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
               aria-label="More About Me: Chad Mortensen’s background and experience"
             >
               More About Me
             </button>
           </div>
+           
 
           <div className="mt-10 sm:mt-12">
             <button

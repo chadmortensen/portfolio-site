@@ -6,18 +6,12 @@
   "freezingTemperatureF": 40,
   "backgrounds": {
     "sunny": [
-      {
-        "src": "/img/hero-back-sunny1.jpg",
-        "textTheme": "dark",
-        "overlay": true,
-        "overlayIntensity": 0.7,
-        "overlayTheme": "light"
-      },
+      
       {
         "src": "/img/hero-back-sunny2.jpg",
         "textTheme": "dark",
         "overlay": true,
-        "overlayIntensity": 0.6,
+        "overlayIntensity": 0.7,
         "overlayTheme": "light"
       },
       {
