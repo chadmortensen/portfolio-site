@@ -8,6 +8,15 @@
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="preconnect" href="https://api.open-meteo.com" crossorigin>
+
+    <!-- Start the hero's Portland weather request while the app bundle downloads.
+         Hero.tsx reads window.__portlandWeather; keep this URL in sync with PORTLAND_WEATHER_URL there. -->
+    <script>
+      window.__portlandWeather = fetch("https://api.open-meteo.com/v1/forecast?latitude=45.5152&longitude=-122.6784&current=temperature_2m,weather_code,is_day&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=1")
+        .then(function (response) { return response.ok ? response.json() : null; })
+        .catch(function () { return null; });
+    </script>
     
     <!-- SEO Meta Tags -->
     <title>Chad Mortensen - Empathetic Design Leader | 25+ Years Experience</title>
@@ -22,11 +31,17 @@
     <meta property="og:title" content="Chad Mortensen - Empathetic Design Leader | 25+ Years Experience" />
     <meta property="og:description" content="Chad Mortensen is a product design leader with 25+ years of experience at Brightside Health, Etsy, and Walmart. Expert in UX/UI design, team leadership, and turning complex problems into meaningful outcomes." />
     <meta property="og:site_name" content="Chad Mortensen Portfolio" />
+    <meta property="og:image" content="https://uxtips.com/img/share-card.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Chad Mortensen, Product Design Leader. Portrait in a Pacific Northwest forest." />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://uxtips.com" />
     <meta property="twitter:title" content="Chad Mortensen - Empathetic Design Leader | 25+ Years Experience" />
+    <meta name="twitter:image" content="https://uxtips.com/img/share-card.jpg" />
+    <meta name="twitter:image:alt" content="Chad Mortensen, Product Design Leader. Portrait in a Pacific Northwest forest." />
     <meta property="twitter:description" content="Chad Mortensen is a product design leader with 25+ years of experience at Brightside Health, Etsy, and Walmart. Expert in UX/UI design, team leadership, and turning complex problems into meaningful outcomes." />
 
     <!-- Structured Data -->
@@ -39,7 +54,6 @@
       "description": "Product design leader with 25+ years of experience turning complex problems into meaningful outcomes",
       "url": "https://uxtips.com",
       "email": "chadmor@gmail.com",
-      "telephone": "+15033470199",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Portland",

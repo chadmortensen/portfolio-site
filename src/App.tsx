@@ -5,8 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+// The homepage is loaded eagerly so the hero doesn't wait on a second chunk request.
+import Index from "./pages/Index";
 
-const Index = lazy(() => import("./pages/Index"));
 const CaseStudy1 = lazy(() => import("./pages/CaseStudy1"));
 const CaseStudy2 = lazy(() => import("./pages/CaseStudy2"));
 const CaseStudy3 = lazy(() => import("./pages/CaseStudy3"));

@@ -47,6 +47,33 @@ type WeatherBackgroundPreview = WeatherBackgroundEntry & {
 const PORTLAND_WEATHER_URL =
   "https://api.open-meteo.com/v1/forecast?latitude=45.5152&longitude=-122.6784&current=temperature_2m,weather_code,is_day&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=1";
 const PORTLAND_TIME_ZONE = "America/Los_Angeles";
+// If the weather hasn't arrived by then, choose a background from the time of day instead of waiting.
+const WEATHER_WAIT_MS = 1500;
+
+type PortlandWeatherResponse = {
+  current?: {
+    temperature_2m: number;
+    weather_code: number;
+    is_day: number;
+  };
+};
+
+declare global {
+  interface Window {
+    // Started early by an inline script in index.html so it runs in parallel with the JS download.
+    __portlandWeather?: Promise<PortlandWeatherResponse | null>;
+  }
+}
+
+const requestPortlandWeather = () => {
+  if (!window.__portlandWeather) {
+    window.__portlandWeather = fetch(PORTLAND_WEATHER_URL)
+      .then((response) => (response.ok ? response.json() : null))
+      .catch(() => null);
+  }
+
+  return window.__portlandWeather;
+};
 
 const FALLBACK_BACKGROUND: WeatherBackgroundEntry = {
   src: "/img/hero-back-sunny1.jpg",
@@ -120,6 +147,11 @@ const getPortlandGreeting = () => {
   }
 
   return "Good evening, I'm";
+};
+
+const getTimeOfDayDesignation = () => {
+  const hour = getPortlandHour();
+  return hour < 7 || hour >= 19 ? "night" : "sunny";
 };
 
 const getFallbackWeather = (): WeatherSummary => ({
@@ -335,6 +367,9 @@ const Hero = () => {
     },
   }), []);
   const [activeBackground, setActiveBackground] = useState<WeatherBackgroundEntry | null>(null);
+  // Chosen once per visit: the weather designation if it arrives quickly, otherwise a time-of-day guess.
+  // Locking it avoids swapping the photo after it has already appeared.
+  const [backgroundDesignation, setBackgroundDesignation] = useState<string | null>(null);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const previewEntries = useMemo(() => getPreviewEntries(backgroundConfig), [backgroundConfig]);
   const previewWeather = previewIndex !== null ? getWeatherPreview(previewEntries[previewIndex]?.designation) : null;
@@ -352,43 +387,44 @@ const Hero = () => {
   );
 
   useEffect(() => {
-    const controller = new AbortController();
+    let isMounted = true;
 
-    const loadWeather = async () => {
-      try {
-        const response = await fetch(PORTLAND_WEATHER_URL, {
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error("Unable to load Portland weather.");
-        }
-
-        const data = await response.json();
-        const temperature = Math.round(data.current.temperature_2m);
-        const condition = getWeatherCondition(
-          data.current.weather_code,
-          Boolean(data.current.is_day)
-        );
-
-        setWeather({
-          temperature,
-          condition,
-          isDay: Boolean(data.current.is_day),
-        });
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") {
-          return;
-        }
-
-        setWeather(getFallbackWeather());
+    requestPortlandWeather().then((data) => {
+      if (!isMounted) {
+        return;
       }
+
+      // On failure, leave weather unset: the bar shows fallback text and the
+      // background falls back to a time-of-day guess after WEATHER_WAIT_MS.
+      if (!data?.current) {
+        return;
+      }
+
+      const isDay = Boolean(data.current.is_day);
+      setWeather({
+        temperature: Math.round(data.current.temperature_2m),
+        condition: getWeatherCondition(data.current.weather_code, isDay),
+        isDay,
+      });
+    });
+
+    return () => {
+      isMounted = false;
     };
-
-    loadWeather();
-
-    return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (weatherDesignation) {
+      setBackgroundDesignation((current) => current ?? weatherDesignation);
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setBackgroundDesignation((current) => current ?? getTimeOfDayDesignation());
+    }, WEATHER_WAIT_MS);
+
+    return () => window.clearTimeout(timeout);
+  }, [weatherDesignation]);
 
   useEffect(() => {
     const greetingInterval = window.setInterval(() => {
@@ -399,12 +435,12 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    if (previewIndex !== null || !weatherDesignation) {
+    if (previewIndex !== null || !backgroundDesignation) {
       return;
     }
 
     let isMounted = true;
-    const candidates = getRotatedImageCandidates(backgroundConfig, weatherDesignation);
+    const candidates = getRotatedImageCandidates(backgroundConfig, backgroundDesignation);
 
     const applyFirstAvailableBackground = async () => {
       for (const candidate of candidates) {
@@ -428,7 +464,7 @@ const Hero = () => {
     return () => {
       isMounted = false;
     };
-  }, [backgroundConfig, previewIndex, weatherDesignation]);
+  }, [backgroundConfig, previewIndex, backgroundDesignation]);
 
   useEffect(() => {
     const shouldIgnoreShortcut = (target: EventTarget | null) => {
