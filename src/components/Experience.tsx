@@ -120,7 +120,7 @@ const Experience = () => {
           <div className="col-span-12 max-w-[950px] mx-auto space-y-12 sm:space-y-16">
             {experiences.map((experience, index) => (
               <div key={index} className="border-l-2 border-swiss-light pl-6 sm:pl-8 relative">
-                <div className="absolute -left-2 top-0 w-3 h-3 bg-accent-blue rounded-full"></div>
+                <div className="absolute left-[-1px] -translate-x-1/2 top-0 w-3 h-3 bg-accent-blue rounded-full"></div>
                 
                 <div className="space-y-4 sm:space-y-6">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
