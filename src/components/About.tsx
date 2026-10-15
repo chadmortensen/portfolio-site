@@ -48,9 +48,9 @@ const About = () => {
             />
             <img
               src="/img/chad-portrait.webp"
-              alt="Chad Mortensen smiling outdoors among evergreen trees."
-              width={799}
-              height={939}
+              alt="Chad Mortensen outdoors in a gray ball cap and patterned blue shirt."
+              width={461}
+              height={542}
               loading="lazy"
               decoding="async"
               className="about-personal-photo about-portrait-photo"
