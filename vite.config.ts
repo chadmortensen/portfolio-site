@@ -7,6 +7,13 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import {
+  OTHER_THEME,
+  THEME_GROUPS,
+  buildPublicData,
+  loadKnowledgeGraph,
+  updateKnowledgeGraphFile,
+} from "./scripts/chad-mapped.mjs";
 
 const editableCaseStudies = new Map([
   ["case-study-1", "baby-registry-revamp.mdx"],
@@ -101,6 +108,50 @@ const localMdxEditorApi = (): Plugin => ({
   },
 });
 
+// Local-only API behind /chad-mapped/edit. It reads the personal-knowledge-graph repo
+// (CHAD_MAPPED_KG_PATH, default ../personal-knowledge-graph) and writes publish state back to it.
+const localChadMappedApi = (): Plugin => ({
+  name: "local-chad-mapped-api",
+  apply: "serve",
+  configureServer(server) {
+    server.middlewares.use("/__chad-mapped", async (request, response) => {
+      if (!isLocalRequest(request)) {
+        sendResponse(response, 403, "The mind map editor is only available locally.");
+        return;
+      }
+
+      const json = (nodes: Record<string, unknown>[], publicData = buildPublicData(nodes)) =>
+        sendResponse(
+          response,
+          200,
+          JSON.stringify({ nodes, publicData, themes: [...Object.keys(THEME_GROUPS), OTHER_THEME] }),
+          "application/json; charset=utf-8",
+        );
+
+      try {
+        if (request.method === "GET") {
+          json(await loadKnowledgeGraph());
+          return;
+        }
+
+        if (request.method !== "PUT") {
+          response.setHeader("Allow", "GET, PUT");
+          sendResponse(response, 405, "Method not allowed.");
+          return;
+        }
+
+        const chunks: Buffer[] = [];
+        for await (const chunk of request) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+        const { id, ...update } = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+        const result = await updateKnowledgeGraphFile(String(id), update);
+        json(result.nodes, result.publicData);
+      } catch (error) {
+        sendResponse(response, 400, error instanceof Error ? error.message : "Unable to update the knowledge graph.");
+      }
+    });
+  },
+});
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
@@ -109,6 +160,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     localMdxEditorApi(),
+    localChadMappedApi(),
     mdx({
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
     }),

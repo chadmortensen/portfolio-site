@@ -38,6 +38,19 @@ The portfolio includes leadership work across:
 - **Walmart eCommerce** — Senior design leadership across fulfillment, grocery delivery, consumables, registry, and fashion
 - **Sam’s Club** — Mobile apps, in-store digital tools, and B2B experiences
 
+## Chad, mapped
+
+`/chad-mapped` is a theme map of stories from the private [personal-knowledge-graph](https://github.com/chadmortensen/personal-knowledge-graph) repo. The live page only reads `data/chad-mapped.json`, which holds the stories and practices marked `publish: approved` and only their public fields (`public_summary`, `public_result`, title, themes, companies, years, role and interview questions).
+
+To publish a story:
+
+1. Keep `personal-knowledge-graph` next to this repo (or set `CHAD_MAPPED_KG_PATH`).
+2. Run `npm run dev` and open `http://localhost:8080/chad-mapped/edit`. This editor only exists in local development.
+3. In the Private view, open a story, write its public summary and result, and choose **Publish**. That updates the story's markdown file and regenerates `data/chad-mapped.json`.
+4. Check the Public view, then commit both repos. The site deploys `data/chad-mapped.json` with the next build.
+
+`npm run export:chad-mapped` regenerates the JSON without the editor.
+
 ## Technology
 
 - React 18 and TypeScript
