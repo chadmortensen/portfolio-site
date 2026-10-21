@@ -25,6 +25,8 @@ type Edge = [string, string];
 const INK = new THREE.Color().setHSL(0, 0, 0.08);
 const NODE = new THREE.Color().setHSL(0, 0, 0.62);
 const LINE = new THREE.Color().setHSL(0, 0, 0.8);
+// Links between stories, themes and roles: dark enough to read from the zoomed-out view.
+const EDGE = new THREE.Color().setHSL(0, 0, 0.55);
 const ACCENT = new THREE.Color().setHSL(210 / 360, 0.8, 0.4);
 const HOME_DISTANCE = 640;
 const yearToY = (year: number) => (year - 2010) * 10;
@@ -251,7 +253,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     });
 
     const segments = (list: Edge[]) => new THREE.BufferGeometry().setFromPoints(list.flatMap(([a, b]) => [at(a), at(b)]));
-    const baseLines = new THREE.LineSegments(segments(edges), new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.9 }));
+    const baseLines = new THREE.LineSegments(segments(edges), new THREE.LineBasicMaterial({ color: EDGE, transparent: true, opacity: 0.9 }));
     const focusLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.8 }));
     world.add(baseLines, focusLines);
     scene.current = { camera, controls, spheres, nodeLabels, themeLabels, eraLabels, baseLines, focusLines };
