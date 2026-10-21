@@ -584,8 +584,9 @@ const Hero = () => {
               Chad Mortensen
             </h1>
             <div className="mx-auto h-[3px] w-[7rem] bg-black"></div>
-            <p className={`text-title2 mx-auto max-w-xl ${heroTextClass}`}>
-              I’m a product design leader who builds strong teams, shapes product strategy, and turns complex challenges into thoughtful experiences.
+            <p className={`text-title2 mx-auto max-w-xxl ${heroTextClass}`}>
+              Builds teams. Shapes strategy. Stays calm when it gets messy.<br />
+              Brightside Health, Etsy, Walmart
             </p>
           </div>
 
