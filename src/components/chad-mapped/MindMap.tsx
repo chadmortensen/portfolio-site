@@ -97,8 +97,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
   const sectors = useMemo(() => buildSectors(nodes, view, themes, showEmptyEras), [nodes, view, themes, showEmptyEras]);
   const { hubs, leaves, placeholders } = useRadialLayout(sectors);
-  // The 3D view clusters by theme and places companies along a time axis.
-  const groupView: View = view === "3d" ? "theme" : view;
+  // The 3D view groups by theme pills or by a role picked on its timeline.
+  const groupView: View = view === "3d" ? (ERAS.some((e) => e.key === group) ? "career" : "theme") : view;
 
   useEffect(() => {
     if (selected && !byId.has(selected)) setSelected(null);
@@ -369,6 +369,31 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
         </div>
         {note}
       </div>
+
+      {view === "3d" && nodes.length > 0 && (
+        <nav className={`cm-card cm-timeline${active ? " has-panel" : ""}`} aria-label="Career timeline">
+          {ERAS.map((era) => {
+            const count = nodes.filter((n) => inGroup("career", era.key, n)).length;
+            const lit = group === era.key || Boolean(selectedNode?.companies.includes(era.key));
+            return (
+              <button
+                key={era.key}
+                type="button"
+                style={{ flexGrow: era.end - era.start }}
+                className={lit ? "is-lit" : undefined}
+                aria-pressed={group === era.key}
+                disabled={!count}
+                title={count ? `${count} ${count === 1 ? "entry" : "entries"}` : "No stories yet"}
+                onClick={() => toggleGroup(era.key)}
+              >
+                <span className="cm-timeline-bar" />
+                {era.key}
+                <small>{era.years}</small>
+              </button>
+            );
+          })}
+        </nav>
+      )}
 
       {(showSvg || view === "3d") && (
         <div className="cm-zoom">

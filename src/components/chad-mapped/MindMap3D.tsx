@@ -131,6 +131,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     baseLines: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
     focusLines: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
   } | null>(null);
+  // What the animation loop eases toward: which story is pulled forward, and how much the rest fades.
+  const goal = useRef<{ selected: string | null; focus: Set<string> | null }>({ selected: null, focus: null });
 
   useImperativeHandle(ref, () => ({
     zoom(factor) {
@@ -172,7 +174,9 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     controls.autoRotateSpeed = 0.5;
     controls.minDistance = 160;
     controls.maxDistance = 1400;
-    controls.addEventListener("start", () => (controls.autoRotate = false));
+    let rotate = !reduceMotion;
+    controls.addEventListener("start", () => (rotate = false));
+    const ease = reduceMotion ? 1 : 0.12;
 
     const at = (id: string) => {
       const p = points.get(id)!;
@@ -186,13 +190,18 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     );
     axis.computeLineDistances();
     world.add(axis);
+    // Everything that fades away while one story is pulled forward.
+    const scenery: [THREE.Material, number][] = [[axis.material, 1]];
     [1995, 2005, 2015, 2025].forEach((year) => {
       const tick = new CSS2DObject(label("cm-3d-year", String(year)));
       tick.position.set(0, yearToY(year), 0);
       world.add(tick);
     });
     const helix = new THREE.CatmullRomCurve3(ERAS.map((e) => at(`era:${e.key}`)));
-    world.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(helix.getPoints(160)), new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.5 })));
+    const helixLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(helix.getPoints(160)), new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.5 }));
+    world.add(helixLine);
+    scenery.push([helixLine.material, 0.5]);
+    axis.material.transparent = true;
 
     const sphereGeometry = new THREE.SphereGeometry(1, 20, 14);
     const spheres = new Map<string, THREE.Mesh<THREE.SphereGeometry, THREE.MeshLambertMaterial>>();
@@ -202,6 +211,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       mesh.scale.setScalar(5);
       mesh.position.copy(at(`era:${era.key}`));
       world.add(mesh);
+      scenery.push([mesh.material, 1]);
       const el = label("cm-3d-era", era.label, era.years);
       const obj = new CSS2DObject(el);
       obj.position.copy(mesh.position).add(new THREE.Vector3(0, -14, 0));
@@ -221,6 +231,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       themeLabels.set(theme, el);
     });
     const nodeLabels = new Map<string, HTMLElement>();
+    const labelObjects = new Map<string, CSS2DObject>();
     nodes.forEach((n) => {
       const mesh = new THREE.Mesh(sphereGeometry, new THREE.MeshLambertMaterial({ color: NODE, transparent: true }));
       mesh.scale.setScalar(4.5);
@@ -233,12 +244,14 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       obj.position.copy(mesh.position).add(new THREE.Vector3(0, 9, 0));
       world.add(obj);
       nodeLabels.set(n.id, el);
+      labelObjects.set(n.id, obj);
     });
 
     const segments = (list: Edge[]) => new THREE.BufferGeometry().setFromPoints(list.flatMap(([a, b]) => [at(a), at(b)]));
     const baseLines = new THREE.LineSegments(segments(edges), new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.9 }));
     const focusLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.8 }));
     world.add(baseLines, focusLines);
+    scenery.push([focusLines.material, 0.8]);
     scene.current = { camera, controls, spheres, nodeLabels, themeLabels, eraLabels, baseLines, focusLines };
 
     // Shift the scene left when the details card takes the right side of a wide screen.
@@ -268,7 +281,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       const rect = renderer.domElement.getBoundingClientRect();
       const pointer = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects([...spheres.values()])[0];
+      const hit = raycaster.intersectObjects([...spheres.values()].filter((m) => m.visible))[0];
       const id = hit?.object.userData.id as string | undefined;
       if (id) handlers.current.onSelect(handlers.current.selected === id ? null : id);
       else handlers.current.onClear();
@@ -277,7 +290,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       const rect = renderer.domElement.getBoundingClientRect();
       const pointer = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
       raycaster.setFromCamera(pointer, camera);
-      const id = raycaster.intersectObjects([...spheres.values()])[0]?.object.userData.id as string | undefined;
+      const id = raycaster.intersectObjects([...spheres.values()].filter((m) => m.visible))[0]?.object.userData.id as string | undefined;
       labels.domElement.style.cursor = id ? "pointer" : "grab";
       nodeLabels.forEach((el, key) => el.classList.toggle("is-hover", key === id));
     };
@@ -285,8 +298,28 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     labels.domElement.addEventListener("pointerup", onUp);
     labels.domElement.addEventListener("pointermove", onMove);
 
+    const front = new THREE.Vector3();
+    const goalPosition = new THREE.Vector3();
     let frame = 0;
     const tick = () => {
+      const { selected: solo, focus: lit } = goal.current;
+      host.classList.toggle("is-solo", Boolean(solo));
+      controls.autoRotate = rotate && !solo;
+      // The selected story moves to a point between the camera and the center of the view.
+      front.copy(camera.position).sub(controls.target).multiplyScalar(0.4).add(controls.target);
+      spheres.forEach((mesh, id) => {
+        const on = !lit || lit.has(id);
+        const opacity = solo ? (id === solo ? 1 : 0) : on ? 1 : 0.15;
+        const size = id === solo ? 8 : lit && on ? 5.5 : 4.5;
+        goalPosition.copy(id === solo ? front : at(id));
+        mesh.position.lerp(goalPosition, ease);
+        mesh.scale.setScalar(mesh.scale.x + (size - mesh.scale.x) * ease);
+        mesh.material.opacity += (opacity - mesh.material.opacity) * ease;
+        mesh.visible = mesh.material.opacity > 0.02;
+        labelObjects.get(id)!.position.copy(mesh.position).add(new THREE.Vector3(0, mesh.scale.x + 5, 0));
+      });
+      scenery.forEach(([material, base]) => (material.opacity += ((solo ? 0 : base) - material.opacity) * ease));
+      baseLines.material.opacity += ((solo ? 0 : lit ? 0.25 : 0.9) - baseLines.material.opacity) * ease;
       controls.update();
       renderer.render(world, camera);
       labels.render(world, camera);
@@ -314,20 +347,18 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
   useEffect(() => {
     const s = scene.current;
     if (!s) return;
-    s.spheres.forEach((mesh, id) => {
-      const on = !focus || focus.has(id);
-      mesh.material.color.copy(id === selected ? ACCENT : focus && on ? INK : NODE);
-      mesh.material.opacity = on ? 1 : 0.15;
-      mesh.scale.setScalar(id === selected ? 7 : focus && on ? 5.5 : 4.5);
+    goal.current = { selected, focus };
+    s.spheres.forEach((mesh, id) => mesh.material.color.copy(id === selected ? ACCENT : focus?.has(id) ? INK : NODE));
+    const showAll = !selected && focus && focus.size <= 14;
+    s.nodeLabels.forEach((el, id) => {
+      el.classList.toggle("is-on", Boolean(id === selected || (showAll && focus.has(id))));
+      el.classList.toggle("is-sel", id === selected);
     });
-    const showAll = focus && focus.size <= 14;
-    s.nodeLabels.forEach((el, id) => el.classList.toggle("is-on", Boolean(id === selected || (showAll && focus.has(id)))));
     s.themeLabels.forEach((el, theme) => {
       el.classList.toggle("is-on", theme === group);
       el.classList.toggle("is-dim", Boolean(focus && !nodes.some((n) => focus.has(n.id) && n.themes.includes(theme))));
     });
     s.eraLabels.forEach((el, key) => el.classList.toggle("is-dim", Boolean(focus && !nodes.some((n) => focus.has(n.id) && n.companies.includes(key)))));
-    s.baseLines.material.opacity = focus ? 0.25 : 0.9;
     const lit = focus ? edges.filter(([a, b]) => (selected ? a === selected || b === selected : focus.has(a) || focus.has(b))) : [];
     s.focusLines.geometry.dispose();
     s.focusLines.geometry = new THREE.BufferGeometry().setFromPoints(
