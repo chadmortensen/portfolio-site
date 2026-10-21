@@ -26,7 +26,7 @@ const INK = new THREE.Color().setHSL(0, 0, 0.08);
 const NODE = new THREE.Color().setHSL(0, 0, 0.62);
 const LINE = new THREE.Color().setHSL(0, 0, 0.8);
 const ACCENT = new THREE.Color().setHSL(210 / 360, 0.8, 0.4);
-const HOME_DISTANCE = 560;
+const HOME_DISTANCE = 640;
 const yearToY = (year: number) => (year - 2010) * 10;
 
 /** Companies sit on a helix that rises with time; stories and themes settle around them. */
@@ -131,8 +131,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     baseLines: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
     focusLines: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
   } | null>(null);
-  // What the animation loop eases toward: which story is pulled forward, and how much the rest fades.
-  const goal = useRef<{ selected: string | null; focus: Set<string> | null }>({ selected: null, focus: null });
+  // What the animation loop eases toward: the branch in focus, and where the camera frames it.
+  const goal = useRef<{ selected: string | null; focus: Set<string> | null; frame: { target: THREE.Vector3; distance: number } | null }>({ selected: null, focus: null, frame: null });
 
   useImperativeHandle(ref, () => ({
     zoom(factor) {
@@ -145,8 +145,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     reset() {
       const s = scene.current;
       if (!s) return;
-      s.controls.target.set(0, 20, 0);
-      s.camera.position.set(0, 60, HOME_DISTANCE);
+      s.controls.target.set(0, -10, 0);
+      s.camera.position.set(0, 30, HOME_DISTANCE);
     },
   }));
 
@@ -166,16 +166,20 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     sun.position.set(200, 300, 400);
     world.add(sun);
     const camera = new THREE.PerspectiveCamera(45, 1, 1, 5000);
-    camera.position.set(0, 60, HOME_DISTANCE);
+    camera.position.set(0, 30, HOME_DISTANCE);
     const controls = new OrbitControls(camera, labels.domElement);
-    controls.target.set(0, 20, 0);
+    controls.target.set(0, -10, 0);
     controls.enableDamping = true;
     controls.autoRotate = !reduceMotion;
     controls.autoRotateSpeed = 0.5;
     controls.minDistance = 160;
     controls.maxDistance = 1400;
     let rotate = !reduceMotion;
-    controls.addEventListener("start", () => (rotate = false));
+    let flying: { target: THREE.Vector3; distance: number } | null = null;
+    controls.addEventListener("start", () => {
+      rotate = false;
+      flying = null;
+    });
     const ease = reduceMotion ? 1 : 0.12;
 
     const at = (id: string) => {
@@ -190,28 +194,27 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     );
     axis.computeLineDistances();
     world.add(axis);
-    // Everything that fades away while one story is pulled forward.
-    const scenery: [THREE.Material, number][] = [[axis.material, 1]];
+    axis.material.transparent = true;
     [1995, 2005, 2015, 2025].forEach((year) => {
       const tick = new CSS2DObject(label("cm-3d-year", String(year)));
       tick.position.set(0, yearToY(year), 0);
       world.add(tick);
     });
     const helix = new THREE.CatmullRomCurve3(ERAS.map((e) => at(`era:${e.key}`)));
-    const helixLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(helix.getPoints(160)), new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.5 }));
-    world.add(helixLine);
-    scenery.push([helixLine.material, 0.5]);
-    axis.material.transparent = true;
+    // The roles thread: a solid tube so it reads as the spine of the map.
+    const thread = new THREE.Mesh(new THREE.TubeGeometry(helix, 240, 1.6, 10, false), new THREE.MeshLambertMaterial({ color: INK, transparent: true }));
+    world.add(thread);
 
     const sphereGeometry = new THREE.SphereGeometry(1, 20, 14);
     const spheres = new Map<string, THREE.Mesh<THREE.SphereGeometry, THREE.MeshLambertMaterial>>();
     const eraLabels = new Map<string, HTMLElement>();
+    const eraMeshes = new Map<string, THREE.Mesh<THREE.SphereGeometry, THREE.MeshLambertMaterial>>();
     ERAS.forEach((era) => {
       const mesh = new THREE.Mesh(sphereGeometry, new THREE.MeshLambertMaterial({ color: INK, transparent: true }));
       mesh.scale.setScalar(5);
       mesh.position.copy(at(`era:${era.key}`));
       world.add(mesh);
-      scenery.push([mesh.material, 1]);
+      eraMeshes.set(era.key, mesh);
       const el = label("cm-3d-era", era.label, era.years);
       const obj = new CSS2DObject(el);
       obj.position.copy(mesh.position).add(new THREE.Vector3(0, -14, 0));
@@ -251,7 +254,6 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     const baseLines = new THREE.LineSegments(segments(edges), new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.9 }));
     const focusLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.8 }));
     world.add(baseLines, focusLines);
-    scenery.push([focusLines.material, 0.8]);
     scene.current = { camera, controls, spheres, nodeLabels, themeLabels, eraLabels, baseLines, focusLines };
 
     // Shift the scene left when the details card takes the right side of a wide screen.
@@ -298,28 +300,38 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     labels.domElement.addEventListener("pointerup", onUp);
     labels.domElement.addEventListener("pointermove", onMove);
 
-    const front = new THREE.Vector3();
-    const goalPosition = new THREE.Vector3();
+    const home = { target: controls.target.clone(), position: camera.position.clone() };
+    let framed: object | null = null;
+    const desired = new THREE.Vector3();
+    const fade = (material: THREE.Material, to: number) => (material.opacity += (to - material.opacity) * ease);
     let frame = 0;
     const tick = () => {
-      const { selected: solo, focus: lit } = goal.current;
-      host.classList.toggle("is-solo", Boolean(solo));
-      controls.autoRotate = rotate && !solo;
-      // The selected story moves to a point between the camera and the center of the view.
-      front.copy(camera.position).sub(controls.target).multiplyScalar(0.4).add(controls.target);
+      const { selected: picked, focus: lit, frame: view } = goal.current;
+      // Fly to a new branch, or back to where the visitor was before focusing.
+      if (view !== framed) {
+        if (view && !framed) { home.target.copy(controls.target); home.position.copy(camera.position); }
+        flying = view ?? { target: home.target.clone(), distance: home.position.distanceTo(home.target) };
+        framed = view;
+      }
+      controls.autoRotate = rotate && !lit;
+      if (flying) {
+        controls.target.lerp(flying.target, ease);
+        desired.copy(camera.position).sub(controls.target).setLength(flying.distance).add(controls.target);
+        camera.position.lerp(desired, ease);
+        if (controls.target.distanceTo(flying.target) < 0.5 && Math.abs(camera.position.distanceTo(controls.target) - flying.distance) < 1) flying = null;
+      }
       spheres.forEach((mesh, id) => {
         const on = !lit || lit.has(id);
-        const opacity = solo ? (id === solo ? 1 : 0) : on ? 1 : 0.15;
-        const size = id === solo ? 8 : lit && on ? 5.5 : 4.5;
-        goalPosition.copy(id === solo ? front : at(id));
-        mesh.position.lerp(goalPosition, ease);
+        const size = id === picked ? 7 : lit && on ? 5.5 : 4.5;
         mesh.scale.setScalar(mesh.scale.x + (size - mesh.scale.x) * ease);
-        mesh.material.opacity += (opacity - mesh.material.opacity) * ease;
+        fade(mesh.material, on ? 1 : 0.07);
         mesh.visible = mesh.material.opacity > 0.02;
         labelObjects.get(id)!.position.copy(mesh.position).add(new THREE.Vector3(0, mesh.scale.x + 5, 0));
       });
-      scenery.forEach(([material, base]) => (material.opacity += ((solo ? 0 : base) - material.opacity) * ease));
-      baseLines.material.opacity += ((solo ? 0 : lit ? 0.25 : 0.9) - baseLines.material.opacity) * ease;
+      eraMeshes.forEach((mesh, key) => fade(mesh.material, !lit || nodes.some((n) => lit.has(n.id) && n.companies.includes(key)) ? 1 : 0.25));
+      fade(thread.material, lit ? 0.45 : 1);
+      fade(axis.material, lit ? 0.3 : 1);
+      fade(baseLines.material, lit ? 0.07 : 0.9);
       controls.update();
       renderer.render(world, camera);
       labels.render(world, camera);
@@ -347,9 +359,20 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
   useEffect(() => {
     const s = scene.current;
     if (!s) return;
-    goal.current = { selected, focus };
+    // Frame the branch: the focused stories plus the selected story's themes and roles.
+    let frame = null;
+    if (focus) {
+      const ids = [...focus];
+      const pick = selected ? nodes.find((n) => n.id === selected) : undefined;
+      if (pick) ids.push(...pick.themes.map((t) => `theme:${t}`), ...pick.companies.map((c) => `era:${c}`));
+      const spots = ids.map((id) => points.get(id)).filter(Boolean).map((p) => new THREE.Vector3(p!.x, p!.y, p!.z));
+      const box = new THREE.Box3().setFromPoints(spots);
+      const sphere = box.getBoundingSphere(new THREE.Sphere());
+      frame = { target: sphere.center, distance: Math.min(1100, Math.max(200, sphere.radius * 3)) };
+    }
+    goal.current = { selected, focus, frame };
     s.spheres.forEach((mesh, id) => mesh.material.color.copy(id === selected ? ACCENT : focus?.has(id) ? INK : NODE));
-    const showAll = !selected && focus && focus.size <= 14;
+    const showAll = focus && focus.size <= 14;
     s.nodeLabels.forEach((el, id) => {
       el.classList.toggle("is-on", Boolean(id === selected || (showAll && focus.has(id))));
       el.classList.toggle("is-sel", id === selected);

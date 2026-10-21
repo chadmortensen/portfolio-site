@@ -192,9 +192,9 @@
 .chad-mapped .cm-3d-labels .is-dim { opacity: 0.25; }
 .cm-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--cm-muted); }
 
-/* 3D: a selected story comes forward and everything else fades out */
+/* 3D: the focused branch stays sharp while the rest fades back */
 .cm-3d-labels > div { transition: opacity 0.4s; }
-.cm-3d.is-solo .cm-3d-era, .cm-3d.is-solo .cm-3d-theme, .cm-3d.is-solo .cm-3d-year, .cm-3d.is-solo .cm-3d-label:not(.is-sel) { opacity: 0 !important; pointer-events: none !important; }
+.chad-mapped .cm-3d-labels .is-dim { opacity: 0.12; }
 .cm-3d-label.is-sel { font-size: 14px; font-weight: 600; }
 
 /* 3D: role timeline along the bottom */
