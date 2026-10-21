@@ -189,12 +189,10 @@
 .cm-3d-year { font-size: 10px; color: var(--cm-muted); }
 .cm-3d-label { font-size: 11px; color: var(--cm-ink); white-space: nowrap; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff; display: none; }
 .cm-3d-label.is-on, .cm-3d-label.is-hover { display: block; }
-.chad-mapped .cm-3d-labels .is-dim { opacity: 0.25; }
 .cm-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--cm-muted); }
 
 /* 3D: the focused branch stays sharp while the rest fades back */
 .cm-3d-labels > div { transition: opacity 0.4s; }
-.chad-mapped .cm-3d-labels .is-dim { opacity: 0.12; }
 .cm-3d-label.is-sel { font-size: 14px; font-weight: 600; }
 
 /* 3D: role timeline along the bottom */
@@ -223,3 +221,5 @@
 @media (min-width: 761px) and (max-width: 1100px) {
   .cm-timeline.has-panel { display: none; }
 }
+.chad-mapped .cm-3d-labels .is-dim { opacity: 0; pointer-events: none; }
+.cm-3d.is-focus .cm-3d-year { opacity: 0; }

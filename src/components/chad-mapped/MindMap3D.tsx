@@ -132,7 +132,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     focusLines: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
   } | null>(null);
   // What the animation loop eases toward: the branch in focus, and where the camera frames it.
-  const goal = useRef<{ selected: string | null; focus: Set<string> | null; frame: { target: THREE.Vector3; distance: number } | null }>({ selected: null, focus: null, frame: null });
+  const goal = useRef<{ selected: string | null; focus: Set<string> | null; frame: { target: THREE.Vector3; distance: number } | null; eras: Set<string> }>({ selected: null, focus: null, frame: null, eras: new Set() });
 
   useImperativeHandle(ref, () => ({
     zoom(factor) {
@@ -202,7 +202,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     });
     const helix = new THREE.CatmullRomCurve3(ERAS.map((e) => at(`era:${e.key}`)));
     // The roles thread: a solid tube so it reads as the spine of the map.
-    const thread = new THREE.Mesh(new THREE.TubeGeometry(helix, 240, 1.6, 10, false), new THREE.MeshLambertMaterial({ color: INK, transparent: true }));
+    const thread = new THREE.Mesh(new THREE.TubeGeometry(helix, 240, 0.8, 8, false), new THREE.MeshLambertMaterial({ color: INK, transparent: true }));
     world.add(thread);
 
     const sphereGeometry = new THREE.SphereGeometry(1, 20, 14);
@@ -226,7 +226,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       const el = label("cm-3d-theme", theme);
       el.setAttribute("role", "button");
       el.tabIndex = 0;
-      el.addEventListener("click", () => handlers.current.onGroup(theme));
+      el.dataset.theme = theme;
       el.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && handlers.current.onGroup(theme));
       const obj = new CSS2DObject(el);
       obj.position.copy(at(`theme:${theme}`));
@@ -279,7 +279,9 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     const onUp = (e: PointerEvent) => {
       if (!down || Math.abs(e.clientX - down.x) + Math.abs(e.clientY - down.y) > 5) return;
       down = null;
-      if ((e.target as HTMLElement).closest(".cm-3d-theme")) return;
+      // Orbit controls capture the pointer, so find the theme pill under it by position.
+      const pill = document.elementsFromPoint(e.clientX, e.clientY).find((el) => el instanceof HTMLElement && el.dataset.theme) as HTMLElement | undefined;
+      if (pill && !pill.classList.contains("is-dim")) return handlers.current.onGroup(pill.dataset.theme!);
       const rect = renderer.domElement.getBoundingClientRect();
       const pointer = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
       raycaster.setFromCamera(pointer, camera);
@@ -324,14 +326,19 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
         const on = !lit || lit.has(id);
         const size = id === picked ? 7 : lit && on ? 5.5 : 4.5;
         mesh.scale.setScalar(mesh.scale.x + (size - mesh.scale.x) * ease);
-        fade(mesh.material, on ? 1 : 0.07);
+        fade(mesh.material, on ? 1 : 0);
         mesh.visible = mesh.material.opacity > 0.02;
         labelObjects.get(id)!.position.copy(mesh.position).add(new THREE.Vector3(0, mesh.scale.x + 5, 0));
       });
-      eraMeshes.forEach((mesh, key) => fade(mesh.material, !lit || nodes.some((n) => lit.has(n.id) && n.companies.includes(key)) ? 1 : 0.25));
-      fade(thread.material, lit ? 0.45 : 1);
-      fade(axis.material, lit ? 0.3 : 1);
-      fade(baseLines.material, lit ? 0.07 : 0.9);
+      // Outside the focused branch everything fades away, the roles thread included.
+      eraMeshes.forEach((mesh, key) => {
+        fade(mesh.material, !lit || goal.current.eras.has(key) ? 1 : 0);
+        mesh.visible = mesh.material.opacity > 0.02;
+      });
+      fade(thread.material, lit ? 0 : 1);
+      fade(axis.material, lit ? 0 : 1);
+      fade(baseLines.material, lit ? 0 : 0.9);
+      thread.visible = thread.material.opacity > 0.02;
       controls.update();
       renderer.render(world, camera);
       labels.render(world, camera);
@@ -360,17 +367,22 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     const s = scene.current;
     if (!s) return;
     // Frame the branch: the focused stories plus the selected story's themes and roles.
+    const pick = selected ? nodes.find((n) => n.id === selected) : undefined;
     let frame = null;
     if (focus) {
       const ids = [...focus];
-      const pick = selected ? nodes.find((n) => n.id === selected) : undefined;
+      if (group) ids.push(`theme:${group}`);
       if (pick) ids.push(...pick.themes.map((t) => `theme:${t}`), ...pick.companies.map((c) => `era:${c}`));
       const spots = ids.map((id) => points.get(id)).filter(Boolean).map((p) => new THREE.Vector3(p!.x, p!.y, p!.z));
       const box = new THREE.Box3().setFromPoints(spots);
       const sphere = box.getBoundingSphere(new THREE.Sphere());
       frame = { target: sphere.center, distance: Math.min(1100, Math.max(200, sphere.radius * 3)) };
     }
-    goal.current = { selected, focus, frame };
+    // The themes and roles that stay in view with the branch.
+    const keepThemes = new Set(pick ? pick.themes : group ? [group] : []);
+    const keepEras = new Set(pick ? pick.companies : group && ERAS.some((e) => e.key === group) ? [group] : nodes.filter((n) => focus?.has(n.id)).flatMap((n) => n.companies));
+    goal.current = { selected, focus, frame, eras: keepEras };
+    hostRef.current?.classList.toggle("is-focus", Boolean(focus));
     s.spheres.forEach((mesh, id) => mesh.material.color.copy(id === selected ? ACCENT : focus?.has(id) ? INK : NODE));
     const showAll = focus && focus.size <= 14;
     s.nodeLabels.forEach((el, id) => {
@@ -379,10 +391,13 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     });
     s.themeLabels.forEach((el, theme) => {
       el.classList.toggle("is-on", theme === group);
-      el.classList.toggle("is-dim", Boolean(focus && !nodes.some((n) => focus.has(n.id) && n.themes.includes(theme))));
+      el.classList.toggle("is-dim", Boolean(focus && !keepThemes.has(theme)));
     });
-    s.eraLabels.forEach((el, key) => el.classList.toggle("is-dim", Boolean(focus && !nodes.some((n) => focus.has(n.id) && n.companies.includes(key)))));
-    const lit = focus ? edges.filter(([a, b]) => (selected ? a === selected || b === selected : focus.has(a) || focus.has(b))) : [];
+    s.eraLabels.forEach((el, key) => el.classList.toggle("is-dim", Boolean(focus && !keepEras.has(key))));
+    // Only lines whose both ends stay in view, so nothing trails off into faded space.
+    const shown = (id: string) =>
+      Boolean(focus?.has(id)) || (id.startsWith("theme:") && keepThemes.has(id.slice(6))) || (id.startsWith("era:") && keepEras.has(id.slice(4)));
+    const lit = focus ? edges.filter(([a, b]) => (selected ? a === selected || b === selected : focus.has(a) || focus.has(b)) && shown(a) && shown(b)) : [];
     s.focusLines.geometry.dispose();
     s.focusLines.geometry = new THREE.BufferGeometry().setFromPoints(
       lit.flatMap(([a, b]) => [a, b].map((id) => { const p = points.get(id)!; return new THREE.Vector3(p.x, p.y, p.z); })),

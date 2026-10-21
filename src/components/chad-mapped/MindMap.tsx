@@ -115,10 +115,11 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
 
   const groupNodes = useMemo(() => (group ? nodes.filter((n) => inGroup(groupView, group, n)) : []), [group, groupView, nodes]);
   const focus = useMemo(() => {
+    // In 3D a selected story always shows its own branch, even when picked from a theme or role.
+    if (selected && (view === "3d" || !group)) return new Set([selected, ...relatedOf(selected)]);
     if (group) return new Set(groupNodes.map((n) => n.id));
-    if (selected) return new Set([selected, ...relatedOf(selected)]);
     return null;
-  }, [group, groupNodes, selected, relatedOf]);
+  }, [group, groupNodes, selected, relatedOf, view]);
 
   const select = useCallback(
     (id: string | null) => {
