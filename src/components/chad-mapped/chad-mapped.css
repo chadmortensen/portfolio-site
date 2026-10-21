@@ -167,3 +167,28 @@
 .cm-house dd { margin: 0; }
 .cm-mono { font-family: ui-monospace, Menlo, monospace; font-size: 0.78rem; word-break: break-all; }
 .cm-house ul li, .cm-house ul li::marker { color: var(--cm-muted); }
+
+/* Career view placeholders */
+.cm-edge.is-empty { stroke-dasharray: 3 4; }
+.cm-placeholder circle { fill: none; stroke: var(--cm-muted); stroke-dasharray: 2 3; }
+.cm-placeholder text { font-size: 11px; font-style: italic; fill: var(--cm-muted); }
+
+/* 3D view */
+.cm-3d { position: absolute; inset: 0; }
+.cm-3d canvas { display: block; }
+.cm-3d-labels { position: absolute; inset: 0; cursor: grab; touch-action: none; }
+.cm-3d-labels > div { pointer-events: none; }
+.cm-3d-labels > .cm-3d-theme { pointer-events: auto; }
+.cm-3d-era { font-size: 12px; font-weight: 600; color: var(--cm-ink); text-align: center; line-height: 1.2; text-shadow: 0 0 4px #fff, 0 0 4px #fff; }
+.cm-3d-era small { display: block; font-size: 10px; font-weight: 400; color: var(--cm-muted); }
+.cm-3d-theme {
+  font-size: 12px; font-weight: 600; color: var(--cm-ink); background: hsl(var(--surface-primary));
+  border: 1px solid var(--cm-ink); border-radius: 9999px; padding: 0.2rem 0.65rem; cursor: pointer; white-space: nowrap;
+}
+.cm-3d-theme.is-on { background: var(--cm-accent); border-color: var(--cm-accent); color: hsl(var(--surface-primary)); }
+.cm-3d-theme:focus-visible { outline: 2px solid var(--cm-accent); outline-offset: 2px; }
+.cm-3d-year { font-size: 10px; color: var(--cm-muted); }
+.cm-3d-label { font-size: 11px; color: var(--cm-ink); white-space: nowrap; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff; display: none; }
+.cm-3d-label.is-on, .cm-3d-label.is-hover { display: block; }
+.chad-mapped .cm-3d-labels .is-dim { opacity: 0.25; }
+.cm-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--cm-muted); }
