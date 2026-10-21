@@ -4,7 +4,7 @@
  */
 export const MAP_3D = {
   /** "horizontal": roles run left to right, oldest first. "helix": roles spiral up a vertical axis. */
-  shape: "horizontal" as "horizontal" | "helix",
+  shape: "helix" as "horizontal" | "helix",
   /** Horizontal shape: "even" gives every role the same room; "years" spaces roles by when they started. */
   spacing: "even" as "even" | "years",
   /** Room per role ("even") or per year ("years") along the thread. */
@@ -15,7 +15,7 @@ export const MAP_3D = {
   /** Show the dashed year line (helix shape only). */
   showYearAxis: false,
   /** Slowly spin the map until the visitor drags it. */
-  autoRotate: false,
+  autoRotate: true,
 
   thread: { color: "hsl(0, 0%, 8%)", thickness: 0.8 },
   roles: { color: "hsl(0, 0%, 8%)", size: 5 },
