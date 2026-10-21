@@ -161,6 +161,7 @@ const ChadMappedEditor = () => {
         ) : (
           <MindMap
             key="private"
+            showEmptyEras
             nodes={data.nodes}
             themes={data.themes}
             title="Chad, mapped"

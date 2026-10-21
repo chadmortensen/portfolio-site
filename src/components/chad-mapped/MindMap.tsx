@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { Maximize2, Minus, Plus, X } from "lucide-react";
 import { nodeMeta, type MapNode } from "./types";
+import { ACROSS_ROLES, ERAS, eraOf, groupLabel, inGroup, type View } from "./groups";
+import type { MindMap3DHandle } from "./MindMap3D";
 import "./chad-mapped.css";
+
+// three.js only loads when someone opens the 3D view.
+const MindMap3D = lazy(() => import("./MindMap3D"));
 
 type Layout = "map" | "list";
 type ViewBox = { x: number; y: number; w: number; h: number };
@@ -15,53 +20,85 @@ type MindMapProps<T extends MapNode> = {
   note?: ReactNode;
   intro: ReactNode;
   empty?: ReactNode;
+  /** Show eras with nothing in them yet (useful privately, not on the public page). */
+  showEmptyEras?: boolean;
   renderDetail: (node: T, related: T[], select: (id: string) => void) => ReactNode;
 };
+
+type Sector = { key: string; label: string; sub: string; items: MapNode[] };
 
 const R_HUB = 200;
 const R_LEAF = 370;
 const MAP_W = 1420;
 const MAP_H = 1360;
+const VIEW_LABELS: Record<View, string> = { theme: "Themes", career: "Career", "3d": "3D" };
 
 const truncate = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
 const polar = (r: number, a: number): [number, number] => [r * Math.cos(a), r * Math.sin(a)];
+const byYear = (a: MapNode, b: MapNode) => (a.years[0] ?? 0) - (b.years[0] ?? 0);
 
-function useRadialLayout(nodes: MapNode[], themes: string[]) {
+function buildSectors(nodes: MapNode[], view: View, themes: string[], showEmptyEras: boolean): Sector[] {
+  if (view === "career") {
+    const eras = ERAS.map((e) => ({ key: e.key, label: e.label, sub: e.years, items: nodes.filter((n) => eraOf(n) === e.key).sort(byYear) }));
+    const across = { key: ACROSS_ROLES, label: ACROSS_ROLES, sub: "practices & themes", items: nodes.filter((n) => eraOf(n) === ACROSS_ROLES) };
+    return [...eras, across].filter((s) => s.items.length || (showEmptyEras && s.key !== ACROSS_ROLES));
+  }
+  return themes
+    .map((theme) => {
+      const items = nodes.filter((n) => n.themes[0] === theme).sort(byYear);
+      return { key: theme, label: theme, sub: String(items.length), items };
+    })
+    .filter((s) => s.items.length);
+}
+
+function useRadialLayout(sectors: Sector[]) {
   return useMemo(() => {
-    const sectors = themes
-      .map((theme) => ({
-        theme,
-        items: nodes.filter((n) => n.themes[0] === theme).sort((a, b) => (a.years[0] ?? 0) - (b.years[0] ?? 0)),
-      }))
-      .filter((s) => s.items.length);
     const weights = sectors.map((s) => Math.max(s.items.length, 2) + 0.7);
     const unit = (2 * Math.PI) / (weights.reduce((a, b) => a + b, 0) || 1);
     let start = -Math.PI / 2;
-    const hubs: { theme: string; x: number; y: number; count: number }[] = [];
+    const hubs: (Sector & { x: number; y: number })[] = [];
     const leaves: { node: MapNode; x: number; y: number; angle: number; hub: [number, number]; ctrl: [number, number] }[] = [];
+    const placeholders: { key: string; x: number; y: number; angle: number; hub: [number, number]; ctrl: [number, number] }[] = [];
     sectors.forEach((sector, i) => {
       const span = weights[i] * unit;
       const mid = start + span / 2;
       const hub = polar(i % 2 ? R_HUB + 62 : R_HUB - 10, mid);
-      hubs.push({ theme: sector.theme, x: hub[0], y: hub[1], count: sector.items.length });
+      const ctrl = polar((R_HUB + R_LEAF) / 2 - 10, mid);
+      hubs.push({ ...sector, x: hub[0], y: hub[1] });
       const inner = span - 0.7 * unit;
-      sector.items.forEach((node, j) => {
-        const angle = start + 0.35 * unit + ((j + 0.5) * inner) / sector.items.length;
+      const count = sector.items.length || 1;
+      const angleAt = (j: number) => start + 0.35 * unit + ((j + 0.5) * inner) / count;
+      if (!sector.items.length) {
+        const angle = angleAt(0);
         const [x, y] = polar(R_LEAF, angle);
-        leaves.push({ node, x, y, angle, hub, ctrl: polar((R_HUB + R_LEAF) / 2 - 10, mid) });
+        placeholders.push({ key: sector.key, x, y, angle, hub, ctrl });
+      }
+      sector.items.forEach((node, j) => {
+        const angle = angleAt(j);
+        const [x, y] = polar(R_LEAF, angle);
+        leaves.push({ node, x, y, angle, hub, ctrl });
       });
       start += span;
     });
-    return { hubs, leaves, sectors };
-  }, [nodes, themes]);
+    return { hubs, leaves, placeholders };
+  }, [sectors]);
 }
 
-export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, renderDetail }: MindMapProps<T>) {
+const labelTransform = (angle: number) => {
+  const flip = Math.cos(angle) < 0;
+  return { flip, deg: (angle * 180) / Math.PI + (flip ? 180 : 0) };
+};
+
+export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, showEmptyEras = false, renderDetail }: MindMapProps<T>) {
+  const [view, setView] = useState<View>("theme");
   const [layout, setLayout] = useState<Layout>(() => (typeof window !== "undefined" && window.innerWidth < 600 ? "list" : "map"));
   const [selected, setSelected] = useState<string | null>(null);
-  const [theme, setTheme] = useState<string | null>(null);
+  const [group, setGroup] = useState<string | null>(null);
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
-  const { hubs, leaves, sectors } = useRadialLayout(nodes, themes);
+  const sectors = useMemo(() => buildSectors(nodes, view, themes, showEmptyEras), [nodes, view, themes, showEmptyEras]);
+  const { hubs, leaves, placeholders } = useRadialLayout(sectors);
+  // The 3D view groups by theme pills or by a role picked on its timeline.
+  const groupView: View = view === "3d" ? (ERAS.some((e) => e.key === group) ? "career" : "theme") : view;
 
   useEffect(() => {
     if (selected && !byId.has(selected)) setSelected(null);
@@ -76,26 +113,33 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     [byId, nodes],
   );
 
+  const groupNodes = useMemo(() => (group ? nodes.filter((n) => inGroup(groupView, group, n)) : []), [group, groupView, nodes]);
   const focus = useMemo(() => {
-    if (theme) return new Set(nodes.filter((n) => n.themes.includes(theme)).map((n) => n.id));
-    if (selected) return new Set([selected, ...relatedOf(selected)]);
+    // In 3D a selected story always shows its own branch, even when picked from a theme or role.
+    if (selected && (view === "3d" || !group)) return new Set([selected, ...relatedOf(selected)]);
+    if (group) return new Set(groupNodes.map((n) => n.id));
     return null;
-  }, [theme, selected, nodes, relatedOf]);
+  }, [group, groupNodes, selected, relatedOf, view]);
 
   const select = useCallback(
     (id: string | null) => {
       setSelected(id);
-      if (id && theme && !byId.get(id)?.themes.includes(theme)) setTheme(null);
+      const node = id ? byId.get(id) : undefined;
+      if (node && group && !inGroup(groupView, group, node)) setGroup(null);
     },
-    [byId, theme],
+    [byId, group, groupView],
   );
-  const toggleTheme = (t: string) => {
-    setTheme((current) => (current === t ? null : t));
+  const toggleGroup = useCallback((key: string) => {
+    setGroup((current) => (current === key ? null : key));
     setSelected(null);
-  };
-  const close = () => {
+  }, []);
+  const close = useCallback(() => {
     setSelected(null);
-    setTheme(null);
+    setGroup(null);
+  }, []);
+  const changeView = (next: View) => {
+    setView(next);
+    setGroup(null);
   };
 
   /* keep the list clear of the floating title card on narrow screens */
@@ -111,6 +155,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
 
   /* pan and zoom */
   const svgRef = useRef<SVGSVGElement>(null);
+  const threeRef = useRef<MindMap3DHandle>(null);
   const fit = useCallback((): ViewBox => {
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -136,6 +181,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       return { x: nx - (nx - v.x) * k, y: ny - (ny - v.y) * k, w, h: v.h * k };
     });
 
+  const showSvg = view !== "3d" && layout === "map";
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
@@ -149,7 +195,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     };
     svg.addEventListener("wheel", onWheel, { passive: false });
     return () => svg.removeEventListener("wheel", onWheel);
-  }, [layout]);
+  }, [showSvg]);
 
   const onPointerDown = (e: PointerEvent<SVGSVGElement>) => {
     drag.current = { x: e.clientX, y: e.clientY, vb, moved: 0 };
@@ -175,7 +221,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     const leaf = hit.map((el) => el.closest?.("[data-leaf]")).find(Boolean) as HTMLElement | undefined;
     const hub = hit.map((el) => el.closest?.("[data-hub]")).find(Boolean) as HTMLElement | undefined;
     if (leaf) select(leaf.dataset.leaf === selected ? null : leaf.dataset.leaf!);
-    else if (hub) toggleTheme(hub.dataset.hub!);
+    else if (hub) toggleGroup(hub.dataset.hub!);
     else close();
   };
   const onKey = (e: KeyboardEvent, action: () => void) => {
@@ -186,10 +232,10 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   };
 
   const leafPos = useMemo(() => new Map(leaves.map((l) => [l.node.id, l])), [leaves]);
-  const chords = selected && !theme ? [...relatedOf(selected)].map((id) => [leafPos.get(selected), leafPos.get(id)] as const).filter(([a, b]) => a && b) : [];
+  const chords = selected && !group ? [...relatedOf(selected)].map((id) => [leafPos.get(selected), leafPos.get(id)] as const).filter(([a, b]) => a && b) : [];
   const selectedNode = selected ? byId.get(selected) : undefined;
-  const themeNodes = theme ? nodes.filter((n) => n.themes.includes(theme)) : [];
-  const active = Boolean(selectedNode || theme);
+  const active = Boolean(selectedNode || group);
+  const nodeDim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
 
   const itemButton = (node: T) => (
     <button key={node.id} type="button" className="cm-item" aria-current={node.id === selected || undefined} onClick={() => select(node.id)}>
@@ -200,27 +246,30 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
 
   return (
     <div className="chad-mapped" ref={rootRef}>
-      {layout === "map" ? (
+      {view === "3d" ? (
+        <Suspense fallback={<p className="cm-loading">Loading the 3D view…</p>}>
+          <MindMap3D ref={threeRef} nodes={nodes} themes={themes} selected={selected} group={group} focus={focus} onSelect={select} onGroup={toggleGroup} onClear={close} />
+        </Suspense>
+      ) : layout === "map" ? (
         <svg
           ref={svgRef}
           className={`cm-svg${dragging ? " is-dragging" : ""}`}
           viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
           role="group"
-          aria-label="Mind map of themes and stories"
+          aria-label={view === "career" ? "Mind map of career eras and stories" : "Mind map of themes and stories"}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
         >
           <g>
             {hubs.map((h) => (
-              <path key={h.theme} className="cm-edge" d={`M0 0L${h.x} ${h.y}`} />
+              <path key={h.key} className="cm-edge" d={`M0 0L${h.x} ${h.y}`} />
             ))}
             {leaves.map((l) => (
-              <path
-                key={l.node.id}
-                className={`cm-edge${focus && !focus.has(l.node.id) ? " is-dim" : ""}`}
-                d={`M${l.hub[0]} ${l.hub[1]}Q${l.ctrl[0]} ${l.ctrl[1]} ${l.x} ${l.y}`}
-              />
+              <path key={l.node.id} className={`cm-edge${nodeDim(l.node.id)}`} d={`M${l.hub[0]} ${l.hub[1]}Q${l.ctrl[0]} ${l.ctrl[1]} ${l.x} ${l.y}`} />
+            ))}
+            {placeholders.map((p) => (
+              <path key={p.key} className={`cm-edge is-empty${focus ? " is-dim" : ""}`} d={`M${p.hub[0]} ${p.hub[1]}Q${p.ctrl[0]} ${p.ctrl[1]} ${p.x} ${p.y}`} />
             ))}
           </g>
           <g>
@@ -229,14 +278,21 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             ))}
           </g>
           <g>
+            {placeholders.map((p) => {
+              const { flip, deg } = labelTransform(p.angle);
+              return (
+                <g key={p.key} className={`cm-placeholder${focus ? " is-dim" : ""}`} transform={`translate(${p.x} ${p.y})`}>
+                  <circle r={5} />
+                  <text transform={`rotate(${deg})`} x={flip ? -12 : 12} dy={4} textAnchor={flip ? "end" : "start"}>No stories yet</text>
+                </g>
+              );
+            })}
             {leaves.map((l) => {
-              const flip = Math.cos(l.angle) < 0;
-              const deg = (l.angle * 180) / Math.PI + (flip ? 180 : 0);
-              const cls = ["cm-leaf", focus && !focus.has(l.node.id) ? "is-dim" : "", l.node.id === selected ? "is-selected" : ""].join(" ");
+              const { flip, deg } = labelTransform(l.angle);
               return (
                 <g
                   key={l.node.id}
-                  className={cls}
+                  className={`cm-leaf${nodeDim(l.node.id)}${l.node.id === selected ? " is-selected" : ""}`}
                   data-leaf={l.node.id}
                   transform={`translate(${l.x} ${l.y})`}
                   tabIndex={0}
@@ -254,22 +310,22 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           </g>
           <g>
             {hubs.map((h) => {
-              const width = h.theme.length * 7.8 + 30;
-              const dim = focus && !nodes.some((n) => focus.has(n.id) && n.themes.includes(h.theme));
+              const width = Math.max(h.label.length * 7.8, h.sub.length * 6.2) + 30;
+              const dim = focus && !nodes.some((n) => focus.has(n.id) && inGroup(view, h.key, n));
               return (
                 <g
-                  key={h.theme}
-                  className={`cm-hub${theme === h.theme ? " is-on" : ""}${dim ? " is-dim" : ""}`}
-                  data-hub={h.theme}
+                  key={h.key}
+                  className={`cm-hub${group === h.key ? " is-on" : ""}${dim ? " is-dim" : ""}`}
+                  data-hub={h.key}
                   transform={`translate(${h.x} ${h.y})`}
                   tabIndex={0}
                   role="button"
-                  aria-label={`Theme: ${h.theme}`}
-                  onKeyDown={(e) => onKey(e, () => toggleTheme(h.theme))}
+                  aria-label={`${view === "career" ? "Era" : "Theme"}: ${h.label}`}
+                  onKeyDown={(e) => onKey(e, () => toggleGroup(h.key))}
                 >
                   <rect x={-width / 2} y={-20} width={width} height={40} rx={10} />
-                  <text textAnchor="middle" y={-1}>{h.theme}</text>
-                  <text className="cm-count" textAnchor="middle" y={13}>{h.count}</text>
+                  <text textAnchor="middle" y={-1}>{h.label}</text>
+                  <text className="cm-count" textAnchor="middle" y={13}>{h.sub}</text>
                 </g>
               );
             })}
@@ -282,12 +338,12 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       ) : (
         <div className={`cm-list${active ? " has-panel" : ""}`}>
           {sectors.map((s) => (
-            <section key={s.theme}>
+            <section key={s.key}>
               <h2>
-                {s.theme}
-                <span>{s.items.length}</span>
+                {s.label}
+                <span>{view === "career" ? s.sub : s.items.length}</span>
               </h2>
-              {(s.items as T[]).map(itemButton)}
+              {s.items.length ? (s.items as T[]).map(itemButton) : <p className="cm-muted cm-small">No stories yet</p>}
             </section>
           ))}
         </div>
@@ -300,19 +356,51 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
         </div>
         <div className="cm-controls">
           {controls}
-          <div className="cm-seg" role="group" aria-label="Layout">
-            <button type="button" aria-pressed={layout === "map"} onClick={() => setLayout("map")}>Map</button>
-            <button type="button" aria-pressed={layout === "list"} onClick={() => setLayout("list")}>List</button>
+          <div className="cm-seg" role="group" aria-label="View">
+            {(Object.keys(VIEW_LABELS) as View[]).map((v) => (
+              <button key={v} type="button" aria-pressed={view === v} onClick={() => changeView(v)}>{VIEW_LABELS[v]}</button>
+            ))}
           </div>
+          {view !== "3d" && (
+            <div className="cm-seg" role="group" aria-label="Layout">
+              <button type="button" aria-pressed={layout === "map"} onClick={() => setLayout("map")}>Map</button>
+              <button type="button" aria-pressed={layout === "list"} onClick={() => setLayout("list")}>List</button>
+            </div>
+          )}
         </div>
         {note}
       </div>
 
-      {layout === "map" && (
+      {view === "3d" && nodes.length > 0 && (
+        <nav className={`cm-card cm-timeline${active ? " has-panel" : ""}`} aria-label="Career timeline">
+          {ERAS.map((era) => {
+            const count = nodes.filter((n) => inGroup("career", era.key, n)).length;
+            const lit = group === era.key || Boolean(selectedNode?.companies.includes(era.key));
+            return (
+              <button
+                key={era.key}
+                type="button"
+                style={{ flexGrow: era.end - era.start }}
+                className={lit ? "is-lit" : undefined}
+                aria-pressed={group === era.key}
+                disabled={!count}
+                title={count ? `${count} ${count === 1 ? "entry" : "entries"}` : "No stories yet"}
+                onClick={() => toggleGroup(era.key)}
+              >
+                <span className="cm-timeline-bar" />
+                {era.key}
+                <small>{era.years}</small>
+              </button>
+            );
+          })}
+        </nav>
+      )}
+
+      {(showSvg || view === "3d") && (
         <div className="cm-zoom">
-          <button type="button" aria-label="Zoom in" onClick={() => zoom(0.8)}><Plus size={16} /></button>
-          <button type="button" aria-label="Zoom out" onClick={() => zoom(1.25)}><Minus size={16} /></button>
-          <button type="button" aria-label="Fit map to screen" onClick={() => setVb(fit())}><Maximize2 size={15} /></button>
+          <button type="button" aria-label="Zoom in" onClick={() => (view === "3d" ? threeRef.current?.zoom(0.8) : zoom(0.8))}><Plus size={16} /></button>
+          <button type="button" aria-label="Zoom out" onClick={() => (view === "3d" ? threeRef.current?.zoom(1.25) : zoom(1.25))}><Minus size={16} /></button>
+          <button type="button" aria-label="Fit map to screen" onClick={() => (view === "3d" ? threeRef.current?.reset() : setVb(fit()))}><Maximize2 size={15} /></button>
         </div>
       )}
 
@@ -325,12 +413,13 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             renderDetail(selectedNode, [...relatedOf(selectedNode.id)].map((id) => byId.get(id)!).filter(Boolean), select)
           ) : (
             <>
-              <p className="cm-eyebrow">Theme</p>
-              <h2>{theme}</h2>
+              <p className="cm-eyebrow">{groupView === "career" ? `Era${ERAS.find((e) => e.key === group) ? ` · ${ERAS.find((e) => e.key === group)!.years}` : ""}` : "Theme"}</p>
+              <h2>{groupLabel(groupView, group!)}</h2>
               <p className="cm-muted">
-                {themeNodes.length} {themeNodes.length === 1 ? "entry" : "entries"} across {new Set(themeNodes.flatMap((n) => n.companies)).size} companies.
+                {groupNodes.length} {groupNodes.length === 1 ? "entry" : "entries"}
+                {groupView === "theme" ? ` across ${new Set(groupNodes.flatMap((n) => n.companies)).size} companies.` : "."}
               </p>
-              <div>{themeNodes.map(itemButton)}</div>
+              <div>{(groupNodes as T[]).map(itemButton)}</div>
             </>
           )}
         </aside>
