@@ -267,7 +267,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                   aria-label={`Theme: ${h.theme}`}
                   onKeyDown={(e) => onKey(e, () => toggleTheme(h.theme))}
                 >
-                  <rect x={-width / 2} y={-20} width={width} height={40} />
+                  <rect x={-width / 2} y={-20} width={width} height={40} rx={10} />
                   <text textAnchor="middle" y={-1}>{h.theme}</text>
                   <text className="cm-count" textAnchor="middle" y={13}>{h.count}</text>
                 </g>
