@@ -533,6 +533,7 @@ section.hero-photo-bg--overlay::after {
 .text-case-study-label { font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
 .text-case-study-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
 .text-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
+.text-nav { font-size: 1rem; font-weight: 400; line-height: 1.6; }
 .text-caption { font-size: 0.875rem; font-weight: 400; line-height: 1.5; }
 
 /* Android-specific typography adjustments */

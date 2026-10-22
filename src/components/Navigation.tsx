@@ -79,7 +79,7 @@ const Navigation = () => {
             {navItems.map((item) => (
               item.label === "Case Studies" ? (
                 <DropdownMenu key={item.href}>
-                  <DropdownMenuTrigger className="text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap flex items-center space-x-1 rounded px-2 py-1">
+                  <DropdownMenuTrigger className="text-nav text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap flex items-center space-x-1 rounded px-2 py-1">
                     <span>{item.label}</span>
                     <ChevronDown size={14} />
                     <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
@@ -106,7 +106,7 @@ const Navigation = () => {
                 <button
                   key={item.href}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-body text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap rounded px-1 py-1"
+                  className="text-nav text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap rounded px-1 py-1"
                 >
                   {item.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-blue group-hover:w-full transition-all duration-300"></span>
@@ -137,7 +137,7 @@ const Navigation = () => {
                   <div key={item.href} className="space-y-2">
                     <button
                       onClick={() => scrollToSection(item.href)}
-                      className="text-left text-body text-text-secondary hover:text-text-primary transition-colors duration-200 rounded px-2 py-1"
+                      className="text-left text-nav text-text-secondary hover:text-text-primary transition-colors duration-200 rounded px-2 py-1"
                     >
                       {item.label}
                     </button>
@@ -157,7 +157,7 @@ const Navigation = () => {
                   <button
                     key={item.href}
                     onClick={() => scrollToSection(item.href)}
-                    className="text-left text-body text-text-secondary hover:text-text-primary transition-colors duration-200 rounded px-2 py-1"
+                    className="text-left text-nav text-text-secondary hover:text-text-primary transition-colors duration-200 rounded px-2 py-1"
                   >
                     {item.label}
                   </button>
