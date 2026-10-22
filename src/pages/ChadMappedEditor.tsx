@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Navigation from "@/components/Navigation";
 import { MindMap, RelatedList } from "@/components/chad-mapped/MindMap";
 import type { PrivateNode, PublicData } from "@/components/chad-mapped/types";
@@ -108,6 +108,9 @@ const ChadMappedEditor = () => {
     api().then(setData).catch((e) => setError(e instanceof Error ? e.message : String(e)));
   }, []);
 
+  // The career timeline stays in the repo as source material but stays off the maps.
+  const mapNodes = useMemo(() => data?.nodes.filter((n) => n.type !== "timeline") ?? [], [data]);
+
   const save = async (update: Update) => {
     setData(await api({ method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(update) }));
   };
@@ -162,7 +165,7 @@ const ChadMappedEditor = () => {
           <MindMap
             key="private"
             showEmptyEras
-            nodes={data.nodes}
+            nodes={mapNodes}
             themes={data.themes}
             title="Chad, mapped"
             subtitle="Private view of the personal knowledge graph."

@@ -4,6 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { CSS2DObject, CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 import type { MapNode } from "./types";
 import { ERAS } from "./groups";
+import { MAP_3D } from "./map3d.config";
 
 export type MindMap3DHandle = { zoom: (factor: number) => void; reset: () => void };
 
@@ -21,29 +22,46 @@ type Props = {
 type Point = { x: number; y: number; z: number; vx: number; vy: number; vz: number; fixed: boolean };
 type Edge = [string, string];
 
-// Site tokens: text-primary, a neutral node grey, swiss-light lines and accent-blue.
-const INK = new THREE.Color().setHSL(0, 0, 0.08);
-const NODE = new THREE.Color().setHSL(0, 0, 0.62);
+// Colors and sizes come from map3d.config.ts.
+const INK = new THREE.Color(MAP_3D.stories.focusedColor);
+const NODE = new THREE.Color(MAP_3D.stories.color);
 const LINE = new THREE.Color().setHSL(0, 0, 0.8);
-const ACCENT = new THREE.Color().setHSL(210 / 360, 0.8, 0.4);
-const HOME_DISTANCE = 640;
+const EDGE = new THREE.Color(MAP_3D.links.color);
+const ACCENT = new THREE.Color(MAP_3D.accent);
+const HOME_DISTANCE = MAP_3D.camera.distance;
+const HORIZONTAL = MAP_3D.shape === "horizontal";
 const yearToY = (year: number) => (year - 2010) * 10;
+const HOME_TARGET = HORIZONTAL ? new THREE.Vector3(0, 10, 0) : new THREE.Vector3(0, -10, 0);
+const HOME_CAMERA = HORIZONTAL ? new THREE.Vector3(0, 90, HOME_DISTANCE) : new THREE.Vector3(0, 30, HOME_DISTANCE);
 
-/** Companies sit on a helix that rises with time; stories and themes settle around them. */
+const roleX = (start: number, i: number) =>
+  MAP_3D.spacing === "even" ? (i - (ERAS.length - 1) / 2) * MAP_3D.roleGap : (start - 2010) * MAP_3D.yearSpacing;
+
+/** Where each role sits on the thread: left to right by year, or up a helix. */
+const rolePoint = (start: number, i: number): number[] => {
+  if (HORIZONTAL) return [roleX(start, i), 0, Math.sin(i * 1.3) * MAP_3D.wave];
+  const a = i * 0.95 + 0.4;
+  return [Math.cos(a) * 100, yearToY(start), Math.sin(a) * 100];
+};
+
+/** Roles sit on the thread; stories branch off their roles and themes settle around them. */
 function layout(nodes: MapNode[], themes: string[]) {
   let seed = 7;
   const random = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const points = new Map<string, Point>();
   const add = (id: string, [x, y, z]: number[], fixed = false) => points.set(id, { x, y, z, vx: 0, vy: 0, vz: 0, fixed });
   add("center", [0, 0, 0], true);
-  ERAS.forEach((era, i) => {
-    const a = i * 0.95 + 0.4;
-    add(`era:${era.key}`, [Math.cos(a) * 100, yearToY(era.start), Math.sin(a) * 100], true);
-  });
+  ERAS.forEach((era, i) => add(`era:${era.key}`, rolePoint(era.start, i), true));
   const usedThemes = themes.filter((t) => nodes.some((n) => n.themes.includes(t)));
   usedThemes.forEach((theme, i) => {
     const a = (i / usedThemes.length) * Math.PI * 2;
-    add(`theme:${theme}`, [Math.cos(a) * 200, (random() - 0.5) * 80, Math.sin(a) * 200]);
+    if (!HORIZONTAL) return add(`theme:${theme}`, [Math.cos(a) * 200, (random() - 0.5) * 80, Math.sin(a) * 200]);
+    // Themes start above and below the thread, near the years their stories come from.
+    const spots = nodes.filter((n) => n.themes.includes(theme)).flatMap((n) => ERAS.flatMap((e, j) => (n.companies.includes(e.key) ? [roleX(e.start, j)] : [])));
+    const x = spots.length ? spots.reduce((a, b) => a + b, 0) / spots.length : 0;
+    const anchor = [x, Math.cos(a) * MAP_3D.spread.theme, Math.sin(a) * MAP_3D.spread.theme * 0.6];
+    add(`anchor:${theme}`, anchor, true);
+    add(`theme:${theme}`, anchor);
   });
   nodes.forEach((n) => add(n.id, [(random() - 0.5) * 200, (random() - 0.5) * 200, (random() - 0.5) * 200]));
 
@@ -53,7 +71,7 @@ function layout(nodes: MapNode[], themes: string[]) {
   nodes.forEach((n) => {
     const eras = n.companies.filter((c) => points.has(`era:${c}`));
     (eras.length ? eras.map((c) => `era:${c}`) : ["center"]).forEach((target) => {
-      springs.push([n.id, target, 0.03, 34]);
+      springs.push([n.id, target, 0.03, MAP_3D.spread.story]);
       if (target !== "center") edges.push([n.id, target]);
     });
     n.themes.forEach((t, i) => {
@@ -67,7 +85,9 @@ function layout(nodes: MapNode[], themes: string[]) {
       edges.push([n.id, r]);
     });
   });
-  usedThemes.forEach((t) => springs.push([`theme:${t}`, "center", 0.004, 170]));
+  usedThemes.forEach((t) =>
+    springs.push(HORIZONTAL ? [`theme:${t}`, `anchor:${t}`, 0.01, 0] : [`theme:${t}`, "center", 0.004, MAP_3D.spread.theme]),
+  );
 
   const list = [...points.values()];
   for (let step = 0; step < 420; step++) {
@@ -145,8 +165,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     reset() {
       const s = scene.current;
       if (!s) return;
-      s.controls.target.set(0, -10, 0);
-      s.camera.position.set(0, 30, HOME_DISTANCE);
+      s.controls.target.copy(HOME_TARGET);
+      s.camera.position.copy(HOME_CAMERA);
     },
   }));
 
@@ -166,15 +186,15 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     sun.position.set(200, 300, 400);
     world.add(sun);
     const camera = new THREE.PerspectiveCamera(45, 1, 1, 5000);
-    camera.position.set(0, 30, HOME_DISTANCE);
+    camera.position.copy(HOME_CAMERA);
     const controls = new OrbitControls(camera, labels.domElement);
-    controls.target.set(0, -10, 0);
+    controls.target.copy(HOME_TARGET);
     controls.enableDamping = true;
-    controls.autoRotate = !reduceMotion;
+    controls.autoRotate = MAP_3D.autoRotate && !reduceMotion;
     controls.autoRotateSpeed = 0.5;
     controls.minDistance = 160;
     controls.maxDistance = 1400;
-    let rotate = !reduceMotion;
+    let rotate = MAP_3D.autoRotate && !reduceMotion;
     let flying: { target: THREE.Vector3; distance: number } | null = null;
     controls.addEventListener("start", () => {
       rotate = false;
@@ -187,7 +207,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       return new THREE.Vector3(p.x, p.y, p.z);
     };
 
-    // time axis
+    // dashed year line, for the helix shape
+    const showAxis = MAP_3D.showYearAxis && !HORIZONTAL;
     const axis = new THREE.Line(
       new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, yearToY(1993), 0), new THREE.Vector3(0, yearToY(2027), 0)]),
       new THREE.LineDashedMaterial({ color: LINE, dashSize: 4, gapSize: 4 }),
@@ -195,14 +216,15 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     axis.computeLineDistances();
     world.add(axis);
     axis.material.transparent = true;
-    [1995, 2005, 2015, 2025].forEach((year) => {
+    axis.visible = showAxis;
+    (showAxis ? [1995, 2005, 2015, 2025] : []).forEach((year) => {
       const tick = new CSS2DObject(label("cm-3d-year", String(year)));
       tick.position.set(0, yearToY(year), 0);
       world.add(tick);
     });
     const helix = new THREE.CatmullRomCurve3(ERAS.map((e) => at(`era:${e.key}`)));
     // The roles thread: a solid tube so it reads as the spine of the map.
-    const thread = new THREE.Mesh(new THREE.TubeGeometry(helix, 240, 0.8, 8, false), new THREE.MeshLambertMaterial({ color: INK, transparent: true }));
+    const thread = new THREE.Mesh(new THREE.TubeGeometry(helix, 240, MAP_3D.thread.thickness, 8, false), new THREE.MeshLambertMaterial({ color: MAP_3D.thread.color, transparent: true }));
     world.add(thread);
 
     const sphereGeometry = new THREE.SphereGeometry(1, 20, 14);
@@ -210,8 +232,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     const eraLabels = new Map<string, HTMLElement>();
     const eraMeshes = new Map<string, THREE.Mesh<THREE.SphereGeometry, THREE.MeshLambertMaterial>>();
     ERAS.forEach((era) => {
-      const mesh = new THREE.Mesh(sphereGeometry, new THREE.MeshLambertMaterial({ color: INK, transparent: true }));
-      mesh.scale.setScalar(5);
+      const mesh = new THREE.Mesh(sphereGeometry, new THREE.MeshLambertMaterial({ color: MAP_3D.roles.color, transparent: true }));
+      mesh.scale.setScalar(MAP_3D.roles.size);
       mesh.position.copy(at(`era:${era.key}`));
       world.add(mesh);
       eraMeshes.set(era.key, mesh);
@@ -237,7 +259,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     const labelObjects = new Map<string, CSS2DObject>();
     nodes.forEach((n) => {
       const mesh = new THREE.Mesh(sphereGeometry, new THREE.MeshLambertMaterial({ color: NODE, transparent: true }));
-      mesh.scale.setScalar(4.5);
+      mesh.scale.setScalar(MAP_3D.stories.size);
       mesh.position.copy(at(n.id));
       mesh.userData.id = n.id;
       world.add(mesh);
@@ -251,7 +273,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     });
 
     const segments = (list: Edge[]) => new THREE.BufferGeometry().setFromPoints(list.flatMap(([a, b]) => [at(a), at(b)]));
-    const baseLines = new THREE.LineSegments(segments(edges), new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.9 }));
+    const baseLines = new THREE.LineSegments(segments(edges), new THREE.LineBasicMaterial({ color: EDGE, transparent: true, opacity: MAP_3D.links.opacity }));
     const focusLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.8 }));
     world.add(baseLines, focusLines);
     scene.current = { camera, controls, spheres, nodeLabels, themeLabels, eraLabels, baseLines, focusLines };
@@ -324,7 +346,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       }
       spheres.forEach((mesh, id) => {
         const on = !lit || lit.has(id);
-        const size = id === picked ? 7 : lit && on ? 5.5 : 4.5;
+        const { size: base, focusedSize, selectedSize } = MAP_3D.stories;
+        const size = id === picked ? selectedSize : lit && on ? focusedSize : base;
         mesh.scale.setScalar(mesh.scale.x + (size - mesh.scale.x) * ease);
         fade(mesh.material, on ? 1 : 0);
         mesh.visible = mesh.material.opacity > 0.02;
@@ -337,7 +360,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       });
       fade(thread.material, lit ? 0 : 1);
       fade(axis.material, lit ? 0 : 1);
-      fade(baseLines.material, lit ? 0 : 0.9);
+      fade(baseLines.material, lit ? 0 : MAP_3D.links.opacity);
       thread.visible = thread.material.opacity > 0.02;
       controls.update();
       renderer.render(world, camera);
