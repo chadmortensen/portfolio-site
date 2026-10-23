@@ -327,7 +327,11 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     const home = { target: controls.target.clone(), position: camera.position.clone() };
     let framed: object | null = null;
     const desired = new THREE.Vector3();
-    const fade = (material: THREE.Material, to: number) => (material.opacity += (to - material.opacity) * ease);
+    // Ease toward the target, then snap, so faded things end fully gone rather than nearly gone.
+    const fade = (material: THREE.Material, to: number) => {
+      const next = material.opacity + (to - material.opacity) * ease;
+      material.opacity = Math.abs(to - next) < 0.01 ? to : next;
+    };
     let frame = 0;
     const tick = () => {
       const { selected: picked, focus: lit, frame: view } = goal.current;
@@ -350,18 +354,19 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
         const size = id === picked ? selectedSize : lit && on ? focusedSize : base;
         mesh.scale.setScalar(mesh.scale.x + (size - mesh.scale.x) * ease);
         fade(mesh.material, on ? 1 : 0);
-        mesh.visible = mesh.material.opacity > 0.02;
+        mesh.visible = mesh.material.opacity > 0;
         labelObjects.get(id)!.position.copy(mesh.position).add(new THREE.Vector3(0, mesh.scale.x + 5, 0));
       });
       // Outside the focused branch everything fades away, the roles thread included.
       eraMeshes.forEach((mesh, key) => {
         fade(mesh.material, !lit || goal.current.eras.has(key) ? 1 : 0);
-        mesh.visible = mesh.material.opacity > 0.02;
+        mesh.visible = mesh.material.opacity > 0;
       });
       fade(thread.material, lit ? 0 : 1);
       fade(axis.material, lit ? 0 : 1);
       fade(baseLines.material, lit ? 0 : MAP_3D.links.opacity);
-      thread.visible = thread.material.opacity > 0.02;
+      thread.visible = thread.material.opacity > 0;
+      baseLines.visible = baseLines.material.opacity > 0;
       controls.update();
       renderer.render(world, camera);
       labels.render(world, camera);
