@@ -90,7 +90,7 @@ const Experience = () => {
           <h2 className="text-headline text-text-primary mb-4">Experience</h2>
           <div className="h-[3px] w-[7rem] bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
-            25+ years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
+            Over 14 years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
           </p>
           
           <div className="mt-8 flex justify-center">

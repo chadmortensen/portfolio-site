@@ -14,7 +14,7 @@ import Navigation from "@/components/Navigation";
 
 const Index = () => {
   useEffect(() => {
-    document.title = "Chad Mortensen - Empathetic Design Leader | 25+ Years Experience";
+    document.title = "Chad Mortensen - Empathetic Design Leader";
   }, []);
   return (
     <div className="min-h-screen bg-white">
