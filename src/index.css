@@ -391,7 +391,7 @@ section.hero-photo-bg--overlay::after {
 }
 
 .hero-text-panel > * {
-  text-shadow: 0 1px 12px rgb(var(--hero-panel-rgb) / 0.5);
+  text-shadow: 0 1px 6px rgb(var(--hero-panel-rgb) / 0.5);
 }
 
 @media (max-width: 640px) {
