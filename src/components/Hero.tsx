@@ -522,6 +522,7 @@ const Hero = () => {
   }, [activeBackground, previewEntries, previewIndex]);
 
   const heroTextClass = activeBackground?.textTheme === "light" ? "text-[#FBF4EA]" : "text-text-primary";
+  const heroTextPanelClass = `hero-text-panel hero-text-panel--${activeBackground?.textTheme === "light" ? "light-text" : "dark-text"}`;
   const hasVideoBackground = activeBackground?.mediaType === "video";
   const heroSectionClass = `hero-photo-bg${activeBackground?.overlay ? " hero-photo-bg--overlay" : ""} min-h-screen bg-surface-secondary`;
   const heroStyle = activeBackground
@@ -576,16 +577,19 @@ const Hero = () => {
       </div>
       <div className="hero-content fade-in">
         <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col items-center justify-center px-4 pb-10 pt-28 text-center sm:px-6 lg:pt-32">
-          <div className="space-y-3 sm:space-y-4">
-            <p className={`text-title2 ${heroTextClass}`}>
+          <div className={`space-y-3 sm:space-y-4 ${heroTextPanelClass} ${heroTextClass}`}>
+            <p className="text-title2">
               {heroGreeting}
             </p>
-            <h1 className={`text-display ${heroTextClass}`}>
+            <h1 className="text-display">
               Chad Mortensen
             </h1>
-            <div className="mx-auto h-[3px] w-[7rem] bg-black"></div>
-            <p className={`text-title2 mx-auto max-w-xxl ${heroTextClass}`}>
-              Builds teams. Shapes strategy. Stays calm when it gets messy.<br />
+            <div className="mx-auto h-[3px] w-[7rem] bg-current"></div>
+            <p className="hero-subhead mx-auto max-w-xxl">
+              Builds teams. Shapes strategy.<br />
+              Stays calm when it gets messy.
+            </p>
+            <p className="hero-companies">
               Brightside Health, Etsy, Walmart
             </p>
           </div>
