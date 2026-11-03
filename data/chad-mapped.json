@@ -11,5 +11,31 @@
     "AI in practice",
     "Other notes"
   ],
-  "nodes": []
+  "nodes": [
+    {
+      "id": "brightside-coaching-designer-strategic-vision",
+      "title": "Coaching a designer to turn incremental work into a long-term vision",
+      "type": "story",
+      "companies": [
+        "Brightside"
+      ],
+      "years": [
+        2023,
+        2025
+      ],
+      "role": "Director / Head of Product Design",
+      "themes": [
+        "Growing designers",
+        "Vision & clarity"
+      ],
+      "summary": "The designer was thinking near term and I helped to see the opportunity to step up and be a strategic design partner.",
+      "result": "A long term vision that aligned the teams roadmap and created a more comprehensive solution to near a near term project",
+      "answers": [
+        "Tell me about a time you coached a designer to think more strategically.",
+        "How do you help designers grow beyond execution?",
+        "How do you keep a motivated designer engaged when the roadmap is incremental?"
+      ],
+      "related": []
+    }
+  ]
 }
