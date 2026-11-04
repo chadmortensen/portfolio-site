@@ -133,7 +133,7 @@
 }
 .cm-list.has-panel { padding-right: calc(var(--cm-panel) + 2 * var(--cm-gap)); }
 .cm-list h2 { font-size: 1.2rem; margin: 0 0 0.3rem; display: flex; justify-content: space-between; gap: 0.5rem; }
-.cm-list h2 span { font-family: Inter, system-ui, sans-serif; font-size: 0.75rem; color: var(--cm-muted); }
+.cm-list h2 span { font-family: Outfit, system-ui, sans-serif; font-size: 0.75rem; color: var(--cm-muted); }
 
 @media (min-width: 761px) {
   .cm-list { padding-left: calc(24rem + 2 * var(--cm-gap)); padding-top: calc(var(--cm-nav) + var(--cm-gap)); }
