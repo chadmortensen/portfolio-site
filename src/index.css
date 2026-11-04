@@ -89,6 +89,11 @@
   line-height: 1.6;
 }
 
+.portfolio-mdx-editor-content li,
+.prose.case-study-mdx-content li {
+  font-size: 1.1rem;
+}
+
 .portfolio-mdx-editor-content img,
 .prose.case-study-mdx-content img {
   margin-top: 0;
@@ -223,7 +228,7 @@ main article figure figcaption p {
     @apply bg-surface-primary text-text-primary;
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   /* Enhanced Focus Indicators for Accessibility */
@@ -489,7 +494,7 @@ section.hero-photo-bg--overlay::after {
 }
 
 .prose p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
 }
 
 .prose strong {
@@ -578,7 +583,7 @@ section.hero-photo-bg--overlay::after {
 .text-case-study-label { font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
 .text-case-study-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
 .text-body { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
-.text-nav { font-size: 1rem; font-weight: 400; line-height: 1.6; }
+.text-nav { font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
 .text-caption { font-size: 0.875rem; font-weight: 400; line-height: 1.5; }
 
 /* Android-specific typography adjustments */

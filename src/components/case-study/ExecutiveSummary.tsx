@@ -12,8 +12,8 @@ export const ExecutiveSummary = ({ overview, contribution, scope, outcome }: Exe
     <dl className="mt-8 grid gap-6 md:grid-cols-3">
       {[['My contribution', contribution], ['Scope', scope], ['Outcome', outcome]].map(([label, value]) => (
         <div key={label}>
-          <dt className="mb-2 text-base font-medium text-text-primary">{label}</dt>
-          <dd className="text-base leading-relaxed text-text-secondary">{value}</dd>
+          <dt className="mb-2 text-[1.1rem] font-medium text-text-primary">{label}</dt>
+          <dd className="text-[1.1rem] leading-relaxed text-text-secondary">{value}</dd>
         </div>
       ))}
     </dl>
