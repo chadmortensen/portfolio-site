@@ -28,12 +28,141 @@
         "Growing designers",
         "Vision & clarity"
       ],
-      "summary": "The designer was thinking near term and I helped to see the opportunity to step up and be a strategic design partner.",
-      "result": "A long term vision that aligned the teams roadmap and created a more comprehensive solution to near a near term project",
+      "summary": "The designer was focused on near-term work, and I helped him see the chance to step up as a strategic design partner.",
+      "result": "A long-term vision that aligned the team's roadmap and turned a near-term project into a more complete solution. He was later promoted to lead designer.",
       "answers": [
         "Tell me about a time you coached a designer to think more strategically.",
         "How do you help designers grow beyond execution?",
         "How do you keep a motivated designer engaged when the roadmap is incremental?"
+      ],
+      "related": [
+        "brightside-intake-trust-reframe"
+      ]
+    },
+    {
+      "id": "brightside-intake-trust-reframe",
+      "title": "Reframing Brightside's intake around trust, not just conversion",
+      "type": "story",
+      "companies": [
+        "Brightside"
+      ],
+      "years": [
+        2023,
+        2025
+      ],
+      "role": "Director / Head of Product Design",
+      "themes": [
+        "Vision & clarity",
+        "Research & testing"
+      ],
+      "summary": "Brightside's intake had 180 screens and took most people about an hour. The research showed that people seeking mental health care arrived anxious and unsure, and that feeling was a bigger barrier than the screens themselves. I helped reframe the work around trust and built a vision for a modular intake that felt supportive.",
+      "result": "The team started asking how to make people feel supported while they signed up. The CEO asked when we could build it, and the vision shaped the Growth team's next roadmap.",
+      "answers": [
+        "Tell me about a time you reframed a problem.",
+        "How do you use data and research to set direction?",
+        "Tell me about a vision you pitched to leadership."
+      ],
+      "related": [
+        "brightside-coaching-designer-strategic-vision"
+      ]
+    },
+    {
+      "id": "brightside-redefining-velocity-with-engineering",
+      "title": "Redefining velocity with engineering",
+      "type": "story",
+      "companies": [
+        "Brightside"
+      ],
+      "years": [
+        2023,
+        2025
+      ],
+      "role": "Director / Head of Product Design",
+      "themes": [
+        "Cross-functional partnership",
+        "Design quality & practice"
+      ],
+      "summary": "Engineering wanted more velocity, while designers were seeing shortcuts and more quality issues. I asked our engineering director what velocity meant to him. It turned out he wanted earlier confidence that work was on track, which designers wanted too.",
+      "result": "We tied velocity to shared customer outcomes and made quality a shared principle. Designers stopped raising concerns about shortcuts, and trust between design and engineering grew.",
+      "answers": [
+        "Tell me about a time you disagreed with engineering.",
+        "How do you balance speed and quality?",
+        "How do you partner with engineering?"
+      ],
+      "related": []
+    },
+    {
+      "id": "etsy-adaptive-search-buy-in",
+      "title": "Getting buy-in for adaptive search in a finance-driven culture",
+      "type": "story",
+      "companies": [
+        "Etsy"
+      ],
+      "years": [
+        2022
+      ],
+      "role": "Director of Product Design, Fulfillment, Search & Ads",
+      "themes": [
+        "Vision & clarity",
+        "Aligning leaders"
+      ],
+      "summary": "Etsy's search roadmap was full of small optimization experiments with no long-term direction. Using existing research, I made the case for an adaptive search experience that could work differently for jewelry, furniture and gifts. I also worked out a way to free one squad from its near-term revenue target.",
+      "result": "Senior leaders aligned, and a squad was dedicated to adaptive search.",
+      "answers": [
+        "Share an example of a challenge you've faced as a design leader.",
+        "Tell me about a time you got buy-in for work without a near-term financial return.",
+        "How do you balance discovery work with business targets?"
+      ],
+      "related": []
+    },
+    {
+      "id": "etsy-fulfillment-vision-workshop",
+      "title": "Aligning Etsy leadership on a fulfillment vision",
+      "type": "story",
+      "companies": [
+        "Etsy"
+      ],
+      "years": [
+        2021
+      ],
+      "role": "Director of Product Design, Fulfillment",
+      "themes": [
+        "Vision & clarity",
+        "Aligning leaders",
+        "Growing designers"
+      ],
+      "summary": "Etsy's fulfillment squads didn't understand the larger strategy, and the industry benchmark was warehouse-speed delivery that independent sellers could never match. I led a three-day workshop where product, engineering, research and business leaders set a shared vision and principles.",
+      "result": "Leaders aligned on a vision built on clear, trustworthy delivery expectations. Seven or eight squads used the principles to guide their roadmaps, and our leadership approval score rose in the next engagement survey.",
+      "answers": [
+        "Tell me about a time you created a vision or strategy for your team.",
+        "Tell me about a time you aligned senior stakeholders with different priorities.",
+        "How do you bring clarity to an ambiguous problem space?"
+      ],
+      "related": []
+    },
+    {
+      "id": "walmart-baby-registry-redesign",
+      "title": "Redesigning Walmart's baby registry in one quarter",
+      "type": "story",
+      "companies": [
+        "Walmart"
+      ],
+      "years": [
+        2019,
+        2020
+      ],
+      "role": "Sr. Manager II, Routine Consumables and Baby Registry",
+      "themes": [
+        "Calm under pressure",
+        "Design quality & practice",
+        "Research & testing"
+      ],
+      "summary": "Walmart's redesigned baby registry wasn't working. A chatbot pre-filled each registry, and parents felt it took away the fun of choosing. We had one quarter to fix it. I grew the team from one designer to five, and we went back to the research and gave parents a choice in how much help they got.",
+      "result": "Launched on time on iOS, Android and web. Quality registry creations rose 28% year over year, and curation rose 20% against a 10% goal.",
+      "answers": [
+        "How do you drive design forward?",
+        "Tell me about a project delivered under a tight deadline.",
+        "How do you keep a team motivated under pressure without compromising quality?"
       ],
       "related": []
     }
