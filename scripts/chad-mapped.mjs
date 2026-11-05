@@ -24,7 +24,7 @@ export const THEME_GROUPS = {
   "Aligning leaders": ["aligning-leadership", "managing-up", "strategic-partnership", "being-proactive", "prioritization"],
   "Cross-functional partnership": ["engineering-partnership", "clinical-partnership", "partnerships", "cross-functional-partnership"],
   "Research & testing": ["research-partnership", "experimentation", "optimization-and-testing"],
-  "Design quality & practice": ["elevating-design-quality", "building-a-design-practice", "accessibility", "privacy-by-design"],
+  "Design quality & practice": ["elevating-design-quality", "building-a-design-practice", "accessibility", "privacy-by-design", "design-systems"],
   "Honest expectations": ["honest-expectations"],
   "Calm under pressure": ["calm-under-pressure", "motivating-under-pressure", "leading-through-crisis", "conflict-resolution"],
   "AI in practice": ["ai-in-practice", "ai-in-product"],
