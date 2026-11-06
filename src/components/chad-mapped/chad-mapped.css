@@ -266,4 +266,5 @@
 }
 .cm-back:hover, .cm-close:hover { color: var(--cm-ink); }
 .cm-back:focus-visible, .cm-close:focus-visible { outline: 2px solid var(--cm-accent); outline-offset: 1px; }
-.cm-detail.has-back > .cm-eyebrow:first-of-type { padding-left: 2.75rem; min-height: 2rem; margin-top: -0.75rem; display: flex; align-items: center; }
+.cm-detail > .cm-eyebrow:first-of-type { min-height: 2rem; margin-top: -1rem; display: flex; align-items: center; line-height: 1; }
+.cm-detail.has-back > .cm-eyebrow:first-of-type { padding-left: 2.75rem; }
