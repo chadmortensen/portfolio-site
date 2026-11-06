@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const Experience = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { theme, hits, total, strip } = useCareerStrip();
+  const { theme, strip } = useCareerStrip();
   
   const experiences = [
     {
@@ -107,9 +107,6 @@ const Experience = () => {
           </p>
 
           <div className="mt-10 mx-auto max-w-[1040px]">{strip}</div>
-          <p className="text-caption text-text-secondary mt-2">
-            {theme ? `${hits} of ${total} stories and practices` : "\u00a0"}
-          </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild>

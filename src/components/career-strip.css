@@ -1,17 +1,19 @@
-/* Home page career timeline: role boxes whose right side narrows into the line, as in the map's Career view. */
+/* Home page career timeline: role boxes whose right side narrows into the line, as in the map's Career view.
+   It draws in from Visitalk to Brightside: each box wipes in, its neck traces into the line, then the line runs on to the next role. */
 .cs {
   --cs-ink: hsl(var(--text-primary));
   --cs-muted: hsl(var(--text-secondary));
   --cs-accent: hsl(var(--accent-blue));
   --cs-paper: hsl(var(--surface-primary));
+  --cs-step: 650ms;
   width: 100%;
-  min-height: 4rem;
 }
 .cs-roles { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; }
-.cs-role { flex: 1 0 auto; display: flex; min-width: 0; }
+.cs-role { flex: 1 1 0; display: flex; min-width: 0; }
+.cs-role:last-child { flex: 0 0 auto; }
 .cs-link { display: flex; align-items: center; width: 100%; height: 4rem; color: inherit; text-decoration: none; outline: none; }
 
-.cs-box { display: flex; flex: none; height: 44px; transition: opacity 0.45s ease; transition-delay: calc(var(--cs-i) * 240ms); }
+.cs-box { display: flex; flex: none; height: 44px; }
 .cs-box-body {
   display: flex; flex-direction: column; justify-content: center; text-align: left;
   padding: 0 2px 0 12px; background: var(--cs-paper);
@@ -22,53 +24,43 @@
 .cs-years { font-size: 11.5px; line-height: 1.3; color: var(--cs-muted); white-space: nowrap; }
 .cs-neck { display: block; width: 18px; height: 44px; }
 .cs-neck-fill { fill: var(--cs-paper); transition: fill 0.2s ease; }
-.cs-neck-line { fill: none; stroke: var(--cs-ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.cs-neck-line { fill: none; stroke: var(--cs-ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-dasharray: 1; }
 .cs-link:hover .cs-box-body { background: hsl(var(--surface-secondary)); }
 .cs-link:hover .cs-neck-fill { fill: hsl(var(--surface-secondary)); }
-.cs-link:focus-visible .cs-box-body, .cs-link:focus-visible .cs-across-label { outline: 2px solid var(--cs-accent); outline-offset: 3px; }
+.cs-link:focus-visible .cs-box-body { outline: 2px solid var(--cs-accent); outline-offset: 3px; }
 
-.cs-across-label { flex: none; padding: 0 8px 0 4px; font-size: 11.5px; color: var(--cs-muted); white-space: nowrap; transition: opacity 0.45s ease; transition-delay: calc(var(--cs-i) * 240ms); }
-
-/* The run after each role: its line, with that role's stories kept clear of the next box. */
-.cs-run { position: relative; flex: 1 1 auto; min-width: 2rem; height: 44px; padding: 0 20px 0 10px; }
+/* The line from one role to the next; the last role ends in a short tail. */
+.cs-run { position: relative; flex: 1 1 auto; min-width: 1.5rem; height: 44px; }
+.cs-role:last-child .cs-run { flex: 0 0 2rem; }
 .cs-run::before {
-  content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 0.75px); height: 1.5px; background: var(--cs-ink);
-  transform-origin: left center; transition: transform 0.24s linear; transition-delay: calc(var(--cs-i) * 240ms + 120ms);
+  content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 0.75px); height: 1.5px;
+  background: var(--cs-ink); transform-origin: left center;
 }
-.cs-role:last-child .cs-run { padding-right: 6px; }
-.is-across .cs-run::before { background: repeating-linear-gradient(to right, var(--cs-ink) 0 4px, transparent 4px 8px); }
-.cs-dots { position: relative; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 4px 5px; height: 100%; }
-.cs-dot {
-  width: 9px; height: 9px; border-radius: 50%; background: var(--cs-ink); border: 1.5px solid var(--cs-ink);
-  transition: background-color 0.6s ease, border-color 0.6s ease, opacity 0.6s ease;
-}
-.is-across .cs-dot { background: var(--cs-paper); }
-.cs.has-theme .cs-dot:not(.is-on) { opacity: 0.22; }
-.cs-dot.is-on { border-color: var(--cs-accent); background: var(--cs-accent); }
-.is-across .cs-dot.is-on { background: var(--cs-paper); }
+.cs-role:last-child .cs-run::before { background: linear-gradient(to right, var(--cs-ink), transparent); }
 
-/* Draw-in: hidden until the strip scrolls into view, only for visitors who allow motion. */
 @media (prefers-reduced-motion: no-preference) {
-  .cs:not(.is-drawn) .cs-box, .cs:not(.is-drawn) .cs-across-label { opacity: 0; }
+  .cs-box-body { transition: clip-path 0.35s ease-out, background-color 0.2s ease; transition-delay: calc(var(--cs-i) * var(--cs-step)), 0s; }
+  .cs-neck-fill { transition: opacity 0.2s ease, fill 0.2s ease; transition-delay: calc(var(--cs-i) * var(--cs-step) + 300ms), 0s; }
+  .cs-neck-line { transition: stroke-dashoffset 0.15s linear; transition-delay: calc(var(--cs-i) * var(--cs-step) + 300ms); }
+  .cs-run::before { transition: transform 0.3s ease-in-out; transition-delay: calc(var(--cs-i) * var(--cs-step) + 420ms); }
+
+  .cs:not(.is-drawn) .cs-box-body { clip-path: inset(-3px 100% -3px -3px); }
+  .cs:not(.is-drawn) .cs-neck-fill { opacity: 0; }
+  .cs:not(.is-drawn) .cs-neck-line { stroke-dashoffset: 1; }
   .cs:not(.is-drawn) .cs-run::before { transform: scaleX(0); }
-  .cs:not(.is-drawn) .cs-dot { opacity: 0; }
-  .cs.is-drawn .cs-dot { transition-delay: calc(var(--cs-roles) * 240ms + var(--cs-d) * 35ms), calc(var(--cs-roles) * 240ms + var(--cs-d) * 35ms), calc(var(--cs-roles) * 240ms + var(--cs-d) * 35ms); }
-  .cs.is-cycling .cs-dot { transition-delay: 0s; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cs-box, .cs-across-label, .cs-run::before, .cs-dot { transition: none; }
+  .cs.is-drawn .cs-box-body { clip-path: inset(-3px -3px -3px -3px); }
 }
 
-/* Phones: roles run down the page, each with its stories to the right. */
+/* Phones: roles run down the page, each drawing its line across. */
 @media (max-width: 639px) {
   .cs-roles { flex-direction: column; align-items: stretch; gap: 2px; }
+  .cs-role, .cs-role:last-child { flex: none; }
   .cs-link { height: 3.25rem; }
   .cs-box-body { width: 6.5rem; }
-  .cs-across-label { width: calc(6.5rem + 18px); padding-left: 12px; }
-  .cs-dots { justify-content: flex-start; }
+  .cs-role:last-child .cs-run { flex: 1 1 auto; }
 }
 
-/* The theme word in the Experience heading fades up each time it changes. */
+/* The theme word in the heading fades up each time it changes. */
 .cs-theme { display: inline-block; }
 @media (prefers-reduced-motion: no-preference) {
   .cs-theme { animation: cs-theme-in 0.45s ease; }
