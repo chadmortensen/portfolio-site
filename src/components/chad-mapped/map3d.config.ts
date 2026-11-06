@@ -18,8 +18,8 @@ export const MAP_3D = {
   autoRotate: true,
 
   thread: { color: "hsl(0, 0%, 8%)", thickness: 0.8 },
-  roles: { color: "hsl(0, 0%, 8%)", size: 5 },
-  stories: { color: "hsl(0, 0%, 62%)", focusedColor: "hsl(0, 0%, 8%)", size: 4.5, focusedSize: 5.5, selectedSize: 7 },
+  roles: { color: "hsl(0, 0%, 8%)", size: 3 },
+  stories: { color: "hsl(0, 0%, 62%)", focusedColor: "hsl(0, 0%, 8%)", size: 3.5, focusedSize: 3.5, selectedSize: 5 },
   /** Lines between stories, themes and roles. */
   links: { color: "hsl(0, 0%, 55%)", opacity: 0.9 },
   /** Selected story and the lines of the branch in focus. */
