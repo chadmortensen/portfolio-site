@@ -173,7 +173,7 @@ const labelTransform = (angle: number) => {
 };
 
 export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, showEmptyEras = false, renderDetail }: MindMapProps<T>) {
-  const [view, setView] = useState<View>("theme");
+  const [view, setView] = useState<View>("career");
   const [layout, setLayout] = useState<Layout>(() => (typeof window !== "undefined" && window.innerWidth < 600 ? "list" : "map"));
   const [selected, setSelected] = useState<string | null>(null);
   const [group, setGroup] = useState<string | null>(null);
