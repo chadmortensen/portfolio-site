@@ -153,6 +153,8 @@
   .cm-zoom { left: auto; right: var(--cm-gap); }
   .cm-list.has-panel { padding-right: var(--cm-gap); }
 
+  .chad-mapped { background-image: none; background-color: hsl(var(--surface-primary)); } /* plain background on phones */
+
   /* Phones: no title card, just a bar of view and layout switches under the navigation. */
   .cm-top {
     top: calc(var(--cm-nav) + env(safe-area-inset-top, 0px)); left: 0; right: 0; width: auto;
