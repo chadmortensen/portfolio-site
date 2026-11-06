@@ -34,7 +34,8 @@ const About = () => {
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-6">
+        {/* Photos are hidden on phones to keep the section short. */}
+        <div className="hidden md:block col-span-12 lg:col-span-6">
           <div className="about-photo-frame">
             <div className="about-photo-collage">
             <img

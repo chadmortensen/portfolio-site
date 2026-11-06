@@ -396,7 +396,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   );
 
   return (
-    <div className="chad-mapped" ref={rootRef}>
+    <div className={`chad-mapped${active && nodes.length ? " has-details" : ""}`} ref={rootRef}>
       {view === "3d" ? (
         <Suspense fallback={<p className="cm-loading">Loading the 3D view…</p>}>
           <MindMap3D ref={threeRef} nodes={nodes} themes={themes} selected={selected} group={group} focus={focus} onSelect={select} onGroup={toggleGroup} onClear={close} onUserZoom={() => setZoomed3d(true)} />
@@ -507,7 +507,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       )}
 
       <div className="cm-card cm-top" ref={topRef}>
-        <div>
+        <div className="cm-heading">
           <h1>{title}</h1>
           <p className="cm-sub">{subtitle}</p>
         </div>
@@ -525,7 +525,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             </div>
           )}
         </div>
-        {note}
+        {note && <div className="cm-top-note">{note}</div>}
       </div>
 
       {view === "3d" && nodes.length > 0 && (
@@ -578,7 +578,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       {!nodes.length && empty ? (
         <div className="cm-card cm-detail cm-intro">{empty}</div>
       ) : active ? (
-        <aside className={`cm-card cm-detail${canGoBack ? " has-back" : ""}${selectedNode ? "" : " is-group"}`} aria-live="polite">
+        <aside className={`cm-card cm-detail${canGoBack ? " has-back" : ""}${selectedNode ? "" : " is-group"}`} aria-live="polite" aria-label="Details">
           <div className="cm-panel-nav">
             {canGoBack && (
               <button type="button" className="cm-back" aria-label={backLabel} title={backLabel} onClick={back}><ArrowLeft size={16} /></button>

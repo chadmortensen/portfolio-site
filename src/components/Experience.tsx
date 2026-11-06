@@ -107,7 +107,8 @@ const Experience = () => {
             30 years in design, 14 leading teams. That doesn't fit in a few case studies and a two-page résumé, so I'm trying something else: mapping the stories behind the work.
           </p>
 
-          <div className="mt-10 mx-auto max-w-[1040px]">{strip}</div>
+          {/* The timeline graphic is left off phones; the buttons below lead to the map. */}
+          <div className="hidden md:block mt-10 mx-auto max-w-[1040px]">{strip}</div>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild>
