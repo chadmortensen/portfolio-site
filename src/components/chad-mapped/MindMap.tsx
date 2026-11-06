@@ -23,6 +23,9 @@ type MindMapProps<T extends MapNode> = {
   /** Show eras with nothing in them yet (useful privately, not on the public page). */
   showEmptyEras?: boolean;
   renderDetail: (node: T, related: T[], select: (id: string) => void) => ReactNode;
+  /** Open on a view with a role or theme already picked, e.g. from a home page link. */
+  initialView?: View;
+  initialGroup?: string | null;
 };
 
 type Sector = { key: string; label: string; sub: string; items: MapNode[] };
@@ -172,11 +175,11 @@ const labelTransform = (angle: number) => {
   return { flip, deg: (angle * 180) / Math.PI + (flip ? 180 : 0) };
 };
 
-export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, showEmptyEras = false, renderDetail }: MindMapProps<T>) {
-  const [view, setView] = useState<View>("career");
+export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, showEmptyEras = false, renderDetail, initialView = "career", initialGroup = null }: MindMapProps<T>) {
+  const [view, setView] = useState<View>(initialView);
   const [layout, setLayout] = useState<Layout>(() => (typeof window !== "undefined" && window.innerWidth < 600 ? "list" : "map"));
   const [selected, setSelected] = useState<string | null>(null);
-  const [group, setGroup] = useState<string | null>(null);
+  const [group, setGroup] = useState<string | null>(initialGroup);
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
   const sectors = useMemo(() => buildSectors(nodes, view, themes, showEmptyEras), [nodes, view, themes, showEmptyEras]);
   const { hubs, leaves, placeholders } = useRadialLayout(sectors);

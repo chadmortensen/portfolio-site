@@ -15,13 +15,12 @@ const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const navItems = [
+  // Sections scroll on the home page; items with a route open their own page.
+  const navItems: { href: string; label: string; route?: string }[] = [
     { href: "#home", label: "Home" },
-    { href: "#case-studies", label: "Case Studies" },
+    { href: "#case-studies", label: "Work" },
+    { href: "#career-map", label: "Career map", route: "/chad-mapped" },
     { href: "#about", label: "About" },
-    { href: "#leadership", label: "Leadership" },
-    { href: "#value", label: "Value" },
-    { href: "#experience", label: "Experience" },
     { href: "#contact", label: "Contact" }
   ];
 
@@ -44,8 +43,13 @@ const Navigation = () => {
     return () => window.cancelAnimationFrame(animationFrame);
   }, [location.pathname, location.hash]);
 
-  const scrollToSection = (href: string) => {
+  const scrollToSection = (href: string, route?: string) => {
     setIsOpen(false);
+
+    if (route) {
+      navigate(route);
+      return;
+    }
 
     if (location.pathname !== "/") {
       navigate(`/${href}`);
@@ -77,7 +81,7 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 lg:space-x-8">
             {navItems.map((item) => (
-              item.label === "Case Studies" ? (
+              item.label === "Work" ? (
                 <DropdownMenu key={item.href}>
                   <DropdownMenuTrigger className="text-nav text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap flex items-center space-x-1 rounded px-2 py-1">
                     <span>{item.label}</span>
@@ -105,7 +109,8 @@ const Navigation = () => {
               ) : (
                 <button
                   key={item.href}
-                  onClick={() => scrollToSection(item.href)}
+                  onClick={() => scrollToSection(item.href, item.route)}
+                  aria-current={item.route && location.pathname === item.route ? "page" : undefined}
                   className="text-nav text-text-secondary hover:text-text-primary transition-colors duration-200 relative group whitespace-nowrap rounded px-1 py-1"
                 >
                   {item.label}
@@ -133,7 +138,7 @@ const Navigation = () => {
           <div id="mobile-navigation" className="md:hidden mt-6 pb-6 border-t border-swiss-light">
             <div className="flex flex-col space-y-4 pt-6">
               {navItems.map((item) => (
-                item.label === "Case Studies" ? (
+                item.label === "Work" ? (
                   <div key={item.href} className="space-y-2">
                     <button
                       onClick={() => scrollToSection(item.href)}
@@ -156,7 +161,8 @@ const Navigation = () => {
                 ) : (
                   <button
                     key={item.href}
-                    onClick={() => scrollToSection(item.href)}
+                    onClick={() => scrollToSection(item.href, item.route)}
+                    aria-current={item.route && location.pathname === item.route ? "page" : undefined}
                     className="text-left text-nav text-text-secondary hover:text-text-primary transition-colors duration-200 rounded px-2 py-1"
                   >
                     {item.label}
