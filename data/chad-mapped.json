@@ -13,6 +13,30 @@
   ],
   "nodes": [
     {
+      "id": "brightside-analytics-assistant-gpt",
+      "title": "Building an analytics assistant so designers and PMs could self-serve",
+      "type": "story",
+      "companies": [
+        "Brightside"
+      ],
+      "years": [
+        2023,
+        2025
+      ],
+      "role": "Director / Head of Product Design",
+      "themes": [
+        "AI in practice"
+      ],
+      "summary": "Brightside's analytics tools were powerful, but most designers and PMs avoided them because they felt too technical. I built a custom GPT that knew our tools, event definitions and data schema, and gave step-by-step instructions for building dashboards and pulling metrics.",
+      "result": "The product and design team used it and said they would keep using it. It was an early example of AI changing how we worked, alongside what we built.",
+      "answers": [
+        "Tell me about a time you took initiative.",
+        "How do you use AI in your work?",
+        "How have you helped your team work more independently?"
+      ],
+      "related": []
+    },
+    {
       "id": "brightside-coaching-designer-strategic-vision",
       "title": "Coaching a designer to turn incremental work into a long-term vision",
       "type": "story",
@@ -34,6 +58,60 @@
         "Tell me about a time you coached a designer to think more strategically.",
         "How do you help designers grow beyond execution?",
         "How do you keep a motivated designer engaged when the roadmap is incremental?"
+      ],
+      "related": [
+        "brightside-intake-trust-reframe"
+      ]
+    },
+    {
+      "id": "brightside-deferred-medical-history-experiment",
+      "title": "Testing a shorter signup by deferring medical history",
+      "type": "story",
+      "companies": [
+        "Brightside"
+      ],
+      "years": [
+        2023,
+        2025
+      ],
+      "role": "Director / Head of Product Design",
+      "themes": [
+        "Research & testing",
+        "Cross-functional partnership"
+      ],
+      "summary": "Brightside's Growth team wanted a shorter signup, but 120 of the 180 intake screens were medical history that therapists needed before a first session. I helped the squad designer set up an experiment with his product team and clinical leaders that moved those questions until after signup.",
+      "result": "Conversion rose slightly, which wasn't enough to justify the extra work for therapists, so the change wasn't kept. The pilot built trust with clinical leadership and made later changes easier to explore.",
+      "answers": [
+        "Tell me about an experiment that didn't work.",
+        "How do you validate assumptions early?",
+        "How do you balance business goals with other stakeholders' needs?"
+      ],
+      "related": [
+        "brightside-intake-trust-reframe"
+      ]
+    },
+    {
+      "id": "brightside-intake-terminology",
+      "title": "Adding in-the-moment help to Brightside's signup",
+      "type": "story",
+      "companies": [
+        "Brightside"
+      ],
+      "years": [
+        2023,
+        2025
+      ],
+      "role": "Director / Head of Product Design",
+      "themes": [
+        "Research & testing",
+        "Vision & clarity"
+      ],
+      "summary": "Funnel data showed people dropping off at one step of Brightside's signup. Interviews revealed why: many people didn't know the difference between a psychiatrist and a therapist. I led the team that added answers and FAQs right inside the flow at that step.",
+      "result": "The pattern spread to other hard decisions in signup, and completion improved by roughly 10 to 15% at the high-friction steps.",
+      "answers": [
+        "How do you use data to inform design?",
+        "How do you combine quantitative and qualitative research?",
+        "How do you design for complex or high-stakes decisions?"
       ],
       "related": [
         "brightside-intake-trust-reframe"
@@ -63,7 +141,9 @@
         "Tell me about a vision you pitched to leadership."
       ],
       "related": [
-        "brightside-coaching-designer-strategic-vision"
+        "brightside-coaching-designer-strategic-vision",
+        "brightside-deferred-medical-history-experiment",
+        "brightside-intake-terminology"
       ]
     },
     {
@@ -92,6 +172,31 @@
       "related": []
     },
     {
+      "id": "brightside-research-waiver-legal",
+      "title": "Turning a call with a blind user into a privacy-safe research framework",
+      "type": "story",
+      "companies": [
+        "Brightside"
+      ],
+      "years": [
+        2023,
+        2025
+      ],
+      "role": "Director / Head of Product Design",
+      "themes": [
+        "Research & testing",
+        "Design quality & practice"
+      ],
+      "summary": "A blind user raised a question about Brightside's website, so I called him to learn how he used it. Because any follow-up research could expose private health information, the call led me to work with legal on a research waiver and a framework for future studies.",
+      "result": "The issues he described went to the team that owned those areas, and Brightside had a privacy-safe way to run research with members going forward.",
+      "answers": [
+        "Describe a time legal pushed back on a design or feature.",
+        "How do you work with legal and compliance?",
+        "How do you approach accessibility?"
+      ],
+      "related": []
+    },
+    {
       "id": "etsy-adaptive-search-buy-in",
       "title": "Getting buy-in for adaptive search in a finance-driven culture",
       "type": "story",
@@ -113,7 +218,87 @@
         "Tell me about a time you got buy-in for work without a near-term financial return.",
         "How do you balance discovery work with business targets?"
       ],
+      "related": [
+        "etsy-expanded-scope-strategic-partnership"
+      ]
+    },
+    {
+      "id": "etsy-coaching-manager-critique-conflict",
+      "title": "Coaching a new manager through a critique conflict",
+      "type": "story",
+      "companies": [
+        "Etsy"
+      ],
+      "years": [
+        2021,
+        2023
+      ],
+      "role": "Director of Product Design",
+      "themes": [
+        "Growing designers",
+        "Calm under pressure"
+      ],
+      "summary": "In a critique, a staff designer gave a junior designer blunt feedback and left her feeling shut down. His manager was new to managing and asked me for help. I coached the manager to address it quickly by naming the behavior, its impact and what to try next time.",
+      "result": "The designer took the feedback well, apologized and changed his approach in later critiques. The new manager applied the same approach later on.",
+      "answers": [
+        "Tell me about a time you dealt with a difficult situation with a direct report.",
+        "How do you give difficult feedback?",
+        "How do you support new managers?"
+      ],
       "related": []
+    },
+    {
+      "id": "etsy-delivery-estimate-ranges",
+      "title": "Reframing delivery estimates around honest expectations",
+      "type": "story",
+      "companies": [
+        "Etsy"
+      ],
+      "years": [
+        2021,
+        2023
+      ],
+      "role": "Director of Product Design, Fulfillment",
+      "themes": [
+        "Honest expectations",
+        "Cross-functional partnership"
+      ],
+      "summary": "Etsy buyers were used to exact delivery dates from Amazon, but sellers ship from home on their own schedules, so engineering couldn't calculate an exact date reliably. I helped the squad shift the question to how we could set honest expectations within those limits.",
+      "result": "We shipped a delivery range with plain language about why handmade items take longer, and kept narrowing the range over time.",
+      "answers": [
+        "Tell me about a time engineering constraints changed your approach.",
+        "How do you partner with engineering?",
+        "Tell me about a time you reframed a problem."
+      ],
+      "related": [
+        "etsy-fulfillment-vision-workshop"
+      ]
+    },
+    {
+      "id": "etsy-expanded-scope-strategic-partnership",
+      "title": "Shifting from day-to-day support to strategic partnership after my scope grew",
+      "type": "story",
+      "companies": [
+        "Etsy"
+      ],
+      "years": [
+        2021,
+        2023
+      ],
+      "role": "Director of Product Design, Fulfillment, Search & Ads",
+      "themes": [
+        "Aligning leaders"
+      ],
+      "summary": "When my scope at Etsy grew from Fulfillment to include Search and Ads, I stayed too focused on day-to-day team needs. My product partner wanted more strategic partnership from me. I added a layer of foresight to how I worked with my partners, picking the highest-impact places where I could help and being selective about where I leaned in.",
+      "result": "I spent more time with partners on planning, resourcing and long-term strategy, which led to the adaptive search work. The same feedback didn't come up in my next annual review.",
+      "answers": [
+        "Tell me about a time you failed.",
+        "What is an area you are working to grow in?",
+        "Tell me about feedback you received and how you acted on it."
+      ],
+      "related": [
+        "etsy-adaptive-search-buy-in"
+      ]
     },
     {
       "id": "etsy-fulfillment-vision-workshop",
@@ -165,6 +350,34 @@
         "How do you keep a team motivated under pressure without compromising quality?"
       ],
       "related": []
+    },
+    {
+      "id": "walmart-unified-cart-fulfillment",
+      "title": "Untangling shipping and pickup in Walmart's combined shopping experience",
+      "type": "story",
+      "companies": [
+        "Walmart"
+      ],
+      "years": [
+        2020,
+        2021
+      ],
+      "role": "Sr. Manager II, Head of Design for Fulfillment",
+      "themes": [
+        "Cross-functional partnership",
+        "Vision & clarity",
+        "Honest expectations"
+      ],
+      "summary": "When Walmart combined its shipping and grocery experiences, shoppers could add an item and only learn in the cart that it would ship next week instead of arriving with tomorrow's groceries. My Fulfillment design team worked with business partners on the root cause and designed a way for shoppers to see and switch how each item reached them.",
+      "result": "The cart design was finished and in development when I left for Etsy, and the source-level fix was still being worked through with business partners.",
+      "answers": [
+        "How do you partner with engineering?",
+        "Tell me about a complex design problem you solved.",
+        "How do you design across operational and technical constraints?"
+      ],
+      "related": [
+        "etsy-delivery-estimate-ranges"
+      ]
     }
   ]
 }
