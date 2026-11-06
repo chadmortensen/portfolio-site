@@ -12,7 +12,7 @@ export const ERAS: Era[] = [
   { key: "Vegas.com", title: "Manager", label: "Vegas.com", years: "2004–12", start: 2004, end: 2012 },
   { key: "Walmart", title: "Group Manager", label: "Walmart", years: "2012–21", start: 2012, end: 2021 },
   { key: "Etsy", title: "Director", label: "Etsy", years: "2021–23", start: 2021, end: 2023 },
-  { key: "Brightside", title: "Director", label: "Brightside Health", years: "2023–25", start: 2023, end: 2025 },
+  { key: "Brightside", title: "Director / Head of Design", label: "Brightside Health", years: "2023–25", start: 2023, end: 2025 },
 ];
 export const ACROSS_ROLES = "Across roles";
 
