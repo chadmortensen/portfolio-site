@@ -232,8 +232,10 @@
 .cm-3d.is-focus .cm-3d-year { opacity: 0; }
 
 /* Career view: horizontal timeline */
-.cm-tl-axis { fill: none; stroke: var(--cm-ink); stroke-width: 1.5; }
-.cm-tl-axis.is-across { stroke: var(--cm-muted); stroke-dasharray: 2 5; }
+/* each role owns one segment of the axis; the gaps show where one ends and the next begins */
+.cm-tl-seg { fill: none; stroke: var(--cm-ink); stroke-width: 4; stroke-linecap: round; cursor: pointer; }
+.cm-tl-seg.is-on { stroke: var(--cm-accent); }
+.cm-tl-seg.is-across { stroke: var(--cm-muted); stroke-width: 2; stroke-dasharray: 2 6; }
 .cm-tl .cm-hub.is-across rect { stroke-dasharray: 4 3; }
 .cm-tl .cm-leaf text { font-size: 13px; }
 .cm-tl .cm-leaf .cm-edge { stroke: var(--cm-node); stroke-width: 1; }

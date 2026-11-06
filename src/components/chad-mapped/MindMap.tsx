@@ -90,8 +90,11 @@ const TL_SAME_SIDE = 225; // room for a label before the next stem on the same s
 const TL_STEMS = [96, 178]; // stem lengths, alternated per side so the branches stagger
 const TL_CHARS = 27;
 const TL_LINE = 15;
+const TL_YEAR = 100; // axis width per year in a role
+const TL_LABEL = 210; // room after the last stem for its label
+const TL_GAP = 26; // between role segments
 
-type TimelineRole = Sector & { x: number; w: number; across: boolean };
+type TimelineRole = Sector & { x: number; w: number; across: boolean; start: number; end: number };
 type TimelineStory = { node: MapNode; x: number; y: number; lines: string[] };
 type TimelinePlaceholder = { key: string; x: number; y: number };
 
@@ -122,7 +125,6 @@ function useTimelineLayout(sectors: Sector[]) {
     const turns = [0, 0];
     let cursor = 0;
     let side = 0;
-    let solidEnd = 0;
     const place = (from: number) => {
       const x = Math.max(from, lastOnSide[side] + TL_SAME_SIDE);
       lastOnSide[side] = x;
@@ -133,26 +135,39 @@ function useTimelineLayout(sectors: Sector[]) {
     };
     sectors.forEach((sector) => {
       const across = sector.key === ACROSS_ROLES;
-      if (across) cursor += 70;
+      if (across) cursor += 50;
+      const era = ERAS.find((e) => e.key === sector.key);
       const w = Math.max(sector.label.length * 7.8, sector.sub.length * 6.2) + 30;
-      roles.push({ ...sector, x: cursor + w / 2, w, across });
-      let x = cursor + w + 46;
+      const segStart = cursor;
+      roles.push({ ...sector, x: segStart + 14 + w / 2, w, across, start: segStart, end: segStart });
+      // A role is as wide as its tenure, or wider when its stories need the room.
+      const first = segStart + 14 + w + 44;
+      const count = Math.max(sector.items.length, 1);
+      const minWidth = first - segStart + (count - 1) * TL_STEP + TL_LABEL;
+      const width = Math.max(minWidth, era ? (era.end - era.start || 1) * TL_YEAR : 0);
+      const step = count > 1 ? Math.max(TL_STEP, (width - (first - segStart) - TL_LABEL) / (count - 1)) : 0;
+      let last = first;
       if (!sector.items.length) {
-        placeholders.push({ key: sector.key, ...place(x) });
-        x = lastOnSide[1 - side] + TL_STEP;
+        const at = place(first);
+        placeholders.push({ key: sector.key, ...at });
+        last = at.x;
       }
-      sector.items.forEach((node) => {
-        const at = place(x);
+      // When the role is at its true length, stories sit at the year they started; otherwise they spread evenly.
+      const timed = era && width > minWidth;
+      sector.items.forEach((node, i) => {
+        const year = node.years[0];
+        const target = timed && year ? segStart + (year - era.start + 0.5) * TL_YEAR : first + i * step;
+        const at = place(Math.max(target, first, i ? last + TL_STEP : first));
         stories.push({ node, ...at, lines: wrapTitle(node.title) });
-        x = at.x + TL_STEP;
+        last = at.x;
       });
-      const end = Math.max(x - TL_STEP + 40, cursor + w);
-      if (!across) solidEnd = end;
-      cursor = end + 30;
+      const segEnd = Math.max(segStart + width, last + TL_LABEL);
+      roles[roles.length - 1].end = segEnd;
+      cursor = segEnd + TL_GAP;
     });
-    const maxX = Math.max(cursor, ...stories.map((s) => s.x + 200));
+    const maxX = cursor - TL_GAP;
     const reach = TL_STEMS[TL_STEMS.length - 1];
-    return { roles, stories, placeholders, solidEnd, bounds: { minX: -40, maxX: maxX + 40, minY: -reach - 30, maxY: reach + 3 * TL_LINE + 40 } };
+    return { roles, stories, placeholders, bounds: { minX: -40, maxX: maxX + 40, minY: -reach - 30, maxY: reach + 3 * TL_LINE + 40 } };
   }, [sectors]);
 }
 
@@ -589,13 +604,19 @@ type TimelineMapProps = {
 };
 
 function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, toggleGroup }: TimelineMapProps) {
-  const { roles, stories, placeholders, solidEnd } = layout;
+  const { roles, stories, placeholders } = layout;
   const dim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
-  const across = roles.find((r) => r.across);
+  const roleDim = (key: string) => Boolean(focus && !nodes.some((n) => focus.has(n.id) && inGroup("career", key, n)));
   return (
     <g className="cm-tl">
-      <path className="cm-tl-axis" d={`M${roles[0] ? roles[0].x - roles[0].w / 2 - 30 : 0} 0H${solidEnd}`} />
-      {across && <path className="cm-tl-axis is-across" d={`M${solidEnd} 0H${layout.bounds.maxX - 40}`} />}
+      {roles.map((r) => (
+        <path
+          key={r.key}
+          className={`cm-tl-seg${group === r.key ? " is-on" : ""}${r.across ? " is-across" : ""}${roleDim(r.key) ? " is-dim" : ""}`}
+          data-hub={r.key}
+          d={`M${r.start} 0H${r.end}`}
+        />
+      ))}
       {placeholders.map((p) => (
         <g key={p.key} className={`cm-placeholder${focus ? " is-dim" : ""}`}>
           <path className="cm-edge is-empty" d={`M${p.x} 0V${p.y}`} />
@@ -623,7 +644,7 @@ function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, tog
         );
       })}
       {roles.map((r) => {
-        const isDim = focus && !nodes.some((n) => focus.has(n.id) && inGroup("career", r.key, n));
+        const isDim = roleDim(r.key);
         return (
           <g
             key={r.key}
