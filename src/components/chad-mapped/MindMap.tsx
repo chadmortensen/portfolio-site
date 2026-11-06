@@ -1,5 +1,5 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
-import { X, ZoomIn, ZoomOut } from "lucide-react";
+import { ArrowLeft, X, ZoomIn, ZoomOut } from "lucide-react";
 import { formatYears, nodeMeta, type MapNode } from "./types";
 import { ACROSS_ROLES, ERAS, eraOf, groupLabel, inGroup, type View } from "./groups";
 import type { MindMap3DHandle } from "./MindMap3D";
@@ -540,8 +540,14 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       {!nodes.length && empty ? (
         <div className="cm-card cm-detail cm-intro">{empty}</div>
       ) : active ? (
-        <aside className="cm-card cm-detail" aria-live="polite">
-          <button type="button" className="cm-close" aria-label="Close details" onClick={close}><X size={16} /></button>
+        <aside className={`cm-card cm-detail${selectedNode && group ? " has-back" : ""}`} aria-live="polite">
+          <div className="cm-panel-nav">
+            {selectedNode && group && (
+              // Opened from a role or theme list: step back up to that list.
+              <button type="button" className="cm-back" aria-label={`Back to ${groupLabel(groupView, group)}`} title={`Back to ${groupLabel(groupView, group)}`} onClick={() => setSelected(null)}><ArrowLeft size={16} /></button>
+            )}
+            <button type="button" className="cm-close" aria-label="Close details" onClick={close}><X size={16} /></button>
+          </div>
           {selectedNode ? (
             renderDetail(selectedNode, [...relatedOf(selectedNode.id)].map((id) => byId.get(id)!).filter(Boolean), select)
           ) : (

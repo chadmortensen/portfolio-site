@@ -251,3 +251,19 @@
 .cm-tl .cm-tl-year { font-size: 11px; fill: var(--cm-muted); font-weight: 400; }
 .cm-tl-hit { fill: transparent; }
 .cm-tl .cm-placeholder text { font-size: 11px; }
+
+/* Detail panel: back (when opened from a list) on the left, close on the right */
+.cm-panel-nav {
+  position: sticky; top: 0; z-index: 1; display: flex; justify-content: flex-end; align-items: center;
+  margin: -0.25rem 0 -2.25rem 0; height: 2rem; pointer-events: none;
+}
+.cm-panel-nav button { pointer-events: auto; }
+.cm-panel-nav .cm-close { position: static; margin: 0; }
+.cm-back {
+  width: 2rem; height: 2rem; display: grid; place-items: center; margin-right: auto;
+  background: hsl(var(--surface-primary)); border: 1px solid var(--cm-line); color: var(--cm-muted);
+  border-radius: 9999px;
+}
+.cm-back:hover, .cm-close:hover { color: var(--cm-ink); }
+.cm-back:focus-visible, .cm-close:focus-visible { outline: 2px solid var(--cm-accent); outline-offset: 1px; }
+.cm-detail.has-back > .cm-eyebrow:first-of-type { padding-left: 2.75rem; min-height: 2rem; margin-top: -0.75rem; display: flex; align-items: center; }
