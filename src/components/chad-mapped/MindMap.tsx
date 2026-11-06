@@ -247,7 +247,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       // Fit the timeline's height, start it beside the title card, and let people pan along it.
       const { minX, minY, maxY } = timeline.bounds;
       const nav = 72;
-      const s = Math.max(0.8, (maxY - minY) / Math.max(h - nav - 120, 320));
+      // Opens one zoom-out step (1.25×) wider than a snug fit, so more of the timeline shows at once.
+      const s = 1.25 * Math.max(0.8, (maxY - minY) / Math.max(h - nav - 120, 320));
       const left = w > 760 ? 420 : 16;
       return { x: minX - left * s, y: -(nav + (h - nav) / 2) * s + ((maxY + minY) / 2), w: w * s, h: h * s };
     }
