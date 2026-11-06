@@ -205,7 +205,9 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     return null;
   }, [group, groupNodes, selected, relatedOf, view]);
 
-  const select = useCallback(
+  // Steps taken inside the detail panel (a list item or a related link), so its back button can retrace them.
+  const [history, setHistory] = useState<{ selected: string | null; group: string | null }[]>([]);
+  const show = useCallback(
     (id: string | null) => {
       setSelected(id);
       const node = id ? byId.get(id) : undefined;
@@ -213,15 +215,43 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     },
     [byId, group, groupView],
   );
+  /** Picking something on the map (or the list layout) starts a fresh panel history. */
+  const select = useCallback(
+    (id: string | null) => {
+      setHistory([]);
+      show(id);
+    },
+    [show],
+  );
+  /** Following a link inside the panel remembers where it came from. */
+  const panelSelect = useCallback(
+    (id: string) => {
+      if (id === selected) return;
+      setHistory((h) => [...h, { selected, group }]);
+      show(id);
+    },
+    [show, selected, group],
+  );
+  const back = useCallback(() => {
+    const prev = history[history.length - 1];
+    if (prev) {
+      setHistory(history.slice(0, -1));
+      setSelected(prev.selected);
+      setGroup(prev.group);
+    } else setSelected(null); // a story picked on the map while its role or theme was open
+  }, [history]);
   const toggleGroup = useCallback((key: string) => {
+    setHistory([]);
     setGroup((current) => (current === key ? null : key));
     setSelected(null);
   }, []);
   const close = useCallback(() => {
+    setHistory([]);
     setSelected(null);
     setGroup(null);
   }, []);
   const changeView = (next: View) => {
+    setHistory([]);
     setView(next);
     setGroup(null);
   };
@@ -348,10 +378,13 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   const chords = selected && !group && view !== "career" ? [...relatedOf(selected)].map((id) => [leafPos.get(selected), leafPos.get(id)] as const).filter(([a, b]) => a && b) : [];
   const selectedNode = selected ? byId.get(selected) : undefined;
   const active = Boolean(selectedNode || group);
+  const canGoBack = history.length > 0 || Boolean(selectedNode && group);
+  const backTo = history.length ? history[history.length - 1] : { selected: null, group };
+  const backLabel = `Back to ${backTo.selected ? (byId.get(backTo.selected)?.title ?? "previous") : backTo.group ? groupLabel(ERAS.some((e) => e.key === backTo.group) ? "career" : "theme", backTo.group) : "previous"}`;
   const nodeDim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
 
-  const itemButton = (node: T) => (
-    <button key={node.id} type="button" className="cm-item" aria-current={node.id === selected || undefined} onClick={() => select(node.id)}>
+  const itemButton = (node: T, inPanel = false) => (
+    <button key={node.id} type="button" className="cm-item" aria-current={node.id === selected || undefined} onClick={() => (inPanel ? panelSelect(node.id) : select(node.id))}>
       {node.title}
       <small>{nodeMeta(node)}</small>
     </button>
@@ -462,7 +495,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                 {s.label}
                 <span>{view === "career" ? s.sub : s.items.length}</span>
               </h2>
-              {s.items.length ? (s.items as T[]).map(itemButton) : <p className="cm-muted cm-small">No stories yet</p>}
+              {s.items.length ? (s.items as T[]).map((n) => itemButton(n)) : <p className="cm-muted cm-small">No stories yet</p>}
             </section>
           ))}
         </div>
@@ -540,16 +573,15 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       {!nodes.length && empty ? (
         <div className="cm-card cm-detail cm-intro">{empty}</div>
       ) : active ? (
-        <aside className={`cm-card cm-detail${selectedNode && group ? " has-back" : ""}${selectedNode ? "" : " is-group"}`} aria-live="polite">
+        <aside className={`cm-card cm-detail${canGoBack ? " has-back" : ""}${selectedNode ? "" : " is-group"}`} aria-live="polite">
           <div className="cm-panel-nav">
-            {selectedNode && group && (
-              // Opened from a role or theme list: step back up to that list.
-              <button type="button" className="cm-back" aria-label={`Back to ${groupLabel(groupView, group)}`} title={`Back to ${groupLabel(groupView, group)}`} onClick={() => setSelected(null)}><ArrowLeft size={16} /></button>
+            {canGoBack && (
+              <button type="button" className="cm-back" aria-label={backLabel} title={backLabel} onClick={back}><ArrowLeft size={16} /></button>
             )}
             <button type="button" className="cm-close" aria-label="Close details" onClick={close}><X size={16} /></button>
           </div>
           {selectedNode ? (
-            renderDetail(selectedNode, [...relatedOf(selectedNode.id)].map((id) => byId.get(id)!).filter(Boolean), select)
+            renderDetail(selectedNode, [...relatedOf(selectedNode.id)].map((id) => byId.get(id)!).filter(Boolean), panelSelect)
           ) : (
             <>
               <p className="cm-eyebrow">{groupView === "career" ? eraEyebrow(view, ERAS.find((e) => e.key === group)) : "Theme"}</p>
@@ -558,7 +590,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                 {groupNodes.length} {groupNodes.length === 1 ? "entry" : "entries"}
                 {groupView === "theme" ? ` across ${new Set(groupNodes.flatMap((n) => n.companies)).size} companies.` : "."}
               </p>
-              <div>{(groupNodes as T[]).map(itemButton)}</div>
+              <div>{(groupNodes as T[]).map((n) => itemButton(n, true))}</div>
             </>
           )}
         </aside>
