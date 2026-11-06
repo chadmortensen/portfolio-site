@@ -90,11 +90,12 @@ const TL_SAME_SIDE = 225; // room for a label before the next stem on the same s
 const TL_STEMS = [96, 178]; // stem lengths, alternated per side so the branches stagger
 const TL_CHARS = 27;
 const TL_LINE = 15;
-const TL_YEAR = 100; // axis width per year in a role
+const TL_NECK = 72; // where the label box narrows into the line
+const TL_BOX = 38; // half the label box height
 const TL_LABEL = 210; // room after the last stem for its label
 const TL_GAP = 26; // between role segments
 
-type TimelineRole = Sector & { x: number; w: number; across: boolean; start: number; end: number };
+type TimelineRole = Sector & { title: string; years: string; x: number; w: number; across: boolean; start: number; end: number };
 type TimelineStory = { node: MapNode; x: number; y: number; lines: string[] };
 type TimelinePlaceholder = { key: string; x: number; y: number };
 
@@ -137,31 +138,26 @@ function useTimelineLayout(sectors: Sector[]) {
       const across = sector.key === ACROSS_ROLES;
       if (across) cursor += 50;
       const era = ERAS.find((e) => e.key === sector.key);
-      const w = Math.max(sector.label.length * 7.8, sector.sub.length * 6.2) + 30;
+      const title = era?.title ?? "";
+      const years = era ? `${era.start}–${era.end}` : sector.sub;
+      // The label box is sized to its longest line; its right side narrows into the role's line.
+      const w = Math.max(sector.label.length * 8.6, title.length * 7, years.length * 6.6) + 32;
       const segStart = cursor;
-      roles.push({ ...sector, x: segStart + 14 + w / 2, w, across, start: segStart, end: segStart });
-      // A role is as wide as its tenure, or wider when its stories need the room.
-      const first = segStart + 14 + w + 44;
-      const count = Math.max(sector.items.length, 1);
-      const minWidth = first - segStart + (count - 1) * TL_STEP + TL_LABEL;
-      const width = Math.max(minWidth, era ? (era.end - era.start || 1) * TL_YEAR : 0);
-      const step = count > 1 ? Math.max(TL_STEP, (width - (first - segStart) - TL_LABEL) / (count - 1)) : 0;
+      roles.push({ ...sector, title, years, x: segStart, w, across, start: segStart + w + TL_NECK, end: segStart });
+      // Each role is as long as its stories need.
+      const first = segStart + w + TL_NECK + 36;
       let last = first;
       if (!sector.items.length) {
         const at = place(first);
         placeholders.push({ key: sector.key, ...at });
         last = at.x;
       }
-      // When the role is at its true length, stories sit at the year they started; otherwise they spread evenly.
-      const timed = era && width > minWidth;
       sector.items.forEach((node, i) => {
-        const year = node.years[0];
-        const target = timed && year ? segStart + (year - era.start + 0.5) * TL_YEAR : first + i * step;
-        const at = place(Math.max(target, first, i ? last + TL_STEP : first));
+        const at = place(i ? last + TL_STEP : first);
         stories.push({ node, ...at, lines: wrapTitle(node.title) });
         last = at.x;
       });
-      const segEnd = Math.max(segStart + width, last + TL_LABEL);
+      const segEnd = last + TL_LABEL;
       roles[roles.length - 1].end = segEnd;
       cursor = segEnd + TL_GAP;
     });
@@ -549,7 +545,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             renderDetail(selectedNode, [...relatedOf(selectedNode.id)].map((id) => byId.get(id)!).filter(Boolean), select)
           ) : (
             <>
-              <p className="cm-eyebrow">{groupView === "career" ? `${view === "3d" ? "Era" : "Role"}${ERAS.find((e) => e.key === group) ? ` · ${ERAS.find((e) => e.key === group)!.years}` : ""}` : "Theme"}</p>
+              <p className="cm-eyebrow">{groupView === "career" ? eraEyebrow(view, ERAS.find((e) => e.key === group)) : "Theme"}</p>
               <h2>{groupLabel(groupView, group!)}</h2>
               <p className="cm-muted">
                 {groupNodes.length} {groupNodes.length === 1 ? "entry" : "entries"}
@@ -603,6 +599,23 @@ type TimelineMapProps = {
   toggleGroup: (key: string) => void;
 };
 
+const eraEyebrow = (view: View, era?: (typeof ERAS)[number]) => {
+  if (!era) return view === "3d" ? "Era" : "Role";
+  return view === "3d" ? `Era · ${era.years}` : `${era.title ?? "Role"} · ${era.start}–${era.end}`;
+};
+
+/** A rounded box whose top and bottom edges curve in and meet the timeline at the right. */
+function roleShape(w: number) {
+  const h = TL_BOX;
+  const r = 12;
+  const n = TL_NECK;
+  return [
+    `M${w} ${-h}H${r}Q0 ${-h} 0 ${-h + r}V${h - r}Q0 ${h} ${r} ${h}H${w}`,
+    `C${w + n * 0.6} ${h} ${w + n * 0.35} 0 ${w + n} 0`,
+    `C${w + n * 0.35} 0 ${w + n * 0.6} ${-h} ${w} ${-h}Z`,
+  ].join("");
+}
+
 function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, toggleGroup }: TimelineMapProps) {
   const { roles, stories, placeholders } = layout;
   const dim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
@@ -653,12 +666,13 @@ function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, tog
             transform={`translate(${r.x} 0)`}
             tabIndex={0}
             role="button"
-            aria-label={`${r.across ? "Group" : "Role"}: ${r.label}, ${r.sub}`}
+            aria-label={`${r.across ? "Group" : "Role"}: ${[r.label, r.title, r.years].filter(Boolean).join(", ")}`}
             onKeyDown={(e) => onKey(e, () => toggleGroup(r.key))}
           >
-            <rect x={-r.w / 2} y={-20} width={r.w} height={40} rx={10} />
-            <text textAnchor="middle" y={-1}>{r.label}</text>
-            <text className="cm-count" textAnchor="middle" y={13}>{r.sub}</text>
+            <path d={roleShape(r.w)} />
+            <text className="cm-tl-company" x={18} y={r.title ? -9 : -1}>{r.label}</text>
+            {r.title && <text className="cm-tl-title" x={18} y={9}>{r.title}</text>}
+            <text className="cm-tl-years" x={18} y={r.title ? 25 : 16}>{r.years}</text>
           </g>
         );
       })}
