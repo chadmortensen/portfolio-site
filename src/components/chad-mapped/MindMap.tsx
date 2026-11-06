@@ -31,7 +31,7 @@ const R_HUB = 200;
 const R_LEAF = 370;
 const MAP_W = 1420;
 const MAP_H = 1360;
-const VIEW_LABELS: Record<View, string> = { theme: "Themes", career: "Career", "3d": "3D" };
+const VIEW_LABELS: Record<View, string> = { career: "Career", theme: "Themes", "3d": "3D" };
 
 const truncate = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
 const polar = (r: number, a: number): [number, number] => [r * Math.cos(a), r * Math.sin(a)];
