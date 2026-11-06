@@ -90,6 +90,7 @@ const Experience = () => {
     <section id="experience" className="py-16 sm:py-24 bg-surface-primary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
+          <p className="text-caption font-medium uppercase tracking-[0.08em] text-text-secondary mb-3">An experiment · work in progress</p>
           <h2 className="text-headline text-text-primary mb-4">
             <span className="sr-only">Experience: </span>
             Stories about{" "}
@@ -103,7 +104,7 @@ const Experience = () => {
           </h2>
           <div className="h-[3px] w-[7rem] bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
-            30 years in design, 14 leading teams, across health tech, eCommerce, and retail.
+            30 years in design, 14 leading teams. That doesn't fit in a few case studies and a two-page résumé, so I'm trying something else: mapping the stories behind the work.
           </p>
 
           <div className="mt-10 mx-auto max-w-[1040px]">{strip}</div>

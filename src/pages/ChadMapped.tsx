@@ -36,6 +36,7 @@ const ChadMapped = () => {
           themes={data.themes}
           title="Chad, mapped"
           subtitle="30 years in design, 14 leading teams, told through the stories behind the work."
+          note={<p className="cm-note">This started as an experiment. I add stories as I write them, so expect it to grow and change.</p>}
           intro={publicIntro(data.nodes.length)}
           empty={<p className="cm-muted">Stories are on their way. Check back soon.</p>}
           renderDetail={(node, related, select) => <PublicDetail node={node} related={related} select={select} />}
