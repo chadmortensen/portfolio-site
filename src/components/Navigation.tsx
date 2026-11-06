@@ -19,7 +19,6 @@ const Navigation = () => {
   const navItems: { href: string; label: string; route?: string }[] = [
     { href: "#home", label: "Home" },
     { href: "#case-studies", label: "Work" },
-    { href: "#career-map", label: "Career map", route: "/chad-mapped" },
     { href: "#about", label: "About" },
     { href: "#contact", label: "Contact" }
   ];
