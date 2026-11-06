@@ -36,10 +36,12 @@ const VIEW_LABELS: Record<View, string> = { career: "Career", theme: "Themes", "
 const truncate = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
 const polar = (r: number, a: number): [number, number] => [r * Math.cos(a), r * Math.sin(a)];
 const byYear = (a: MapNode, b: MapNode) => (a.years[0] ?? 0) - (b.years[0] ?? 0);
+const byYearDesc = (a: MapNode, b: MapNode) => byYear(b, a);
 
 function buildSectors(nodes: MapNode[], view: View, themes: string[], showEmptyEras: boolean): Sector[] {
   if (view === "career") {
-    const eras = ERAS.map((e) => ({ key: e.key, label: e.label, sub: e.years, items: nodes.filter((n) => eraOf(n) === e.key).sort(byYear) }));
+    // Most recent role first, working back in time; stories within a role run newest to oldest too.
+    const eras = [...ERAS].reverse().map((e) => ({ key: e.key, label: e.label, sub: e.years, items: nodes.filter((n) => eraOf(n) === e.key).sort(byYearDesc) }));
     const across = { key: ACROSS_ROLES, label: ACROSS_ROLES, sub: "practices & themes", items: nodes.filter((n) => eraOf(n) === ACROSS_ROLES) };
     return [...eras, across].filter((s) => s.items.length || (showEmptyEras && s.key !== ACROSS_ROLES));
   }
@@ -84,7 +86,7 @@ function useRadialLayout(sectors: Sector[]) {
   }, [sectors]);
 }
 
-/* Career view: roles sit on one horizontal axis, and their stories branch above and below it. */
+/* Career view: roles sit on one horizontal axis, newest on the left, and their stories branch above and below it. */
 const TL_STEP = 110; // between neighbouring stems (they alternate sides)
 const TL_SAME_SIDE = 225; // room for a label before the next stem on the same side
 const TL_STEMS = [96, 178]; // stem lengths, alternated per side so the branches stagger

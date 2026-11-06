@@ -37,7 +37,7 @@ export const publicIntro = (count: number) => (view: View) => {
     <>
       <p className="cm-eyebrow">How to read this</p>
       {view === "career" ? (
-        <p>My roles run left to right, oldest first, with {stories} branching off them. Pick a role or a story to read it, and scroll or drag to move along.</p>
+        <p>My roles run left to right, most recent first, with {stories} branching off them. Pick a role or a story to read it, and scroll or drag to move along.</p>
       ) : (
         <p>
           Each branch is a theme that runs through my work, with {stories} beneath. Pick a theme or a story to read
