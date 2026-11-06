@@ -1,5 +1,5 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
-import { Maximize2, Minus, Plus, X } from "lucide-react";
+import { X, ZoomIn, ZoomOut } from "lucide-react";
 import { nodeMeta, type MapNode } from "./types";
 import { ACROSS_ROLES, ERAS, eraOf, groupLabel, inGroup, type View } from "./groups";
 import type { MindMap3DHandle } from "./MindMap3D";
@@ -397,10 +397,10 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       )}
 
       {(showSvg || view === "3d") && (
-        <div className="cm-zoom">
-          <button type="button" aria-label="Zoom in" onClick={() => (view === "3d" ? threeRef.current?.zoom(0.8) : zoom(0.8))}><Plus size={16} /></button>
-          <button type="button" aria-label="Zoom out" onClick={() => (view === "3d" ? threeRef.current?.zoom(1.25) : zoom(1.25))}><Minus size={16} /></button>
-          <button type="button" aria-label="Fit map to screen" onClick={() => (view === "3d" ? threeRef.current?.reset() : setVb(fit()))}><Maximize2 size={15} /></button>
+        <div className="cm-zoom" role="group" aria-label="Zoom">
+          <button type="button" aria-label="Zoom out" title="Zoom out" onClick={() => (view === "3d" ? threeRef.current?.zoom(1.25) : zoom(1.25))}><ZoomOut size={20} strokeWidth={2.25} /></button>
+          <button type="button" aria-label="Reset zoom" title="Reset zoom" onClick={() => (view === "3d" ? threeRef.current?.reset() : setVb(fit()))}><ZoomReset /></button>
+          <button type="button" aria-label="Zoom in" title="Zoom in" onClick={() => (view === "3d" ? threeRef.current?.zoom(0.8) : zoom(0.8))}><ZoomIn size={20} strokeWidth={2.25} /></button>
         </div>
       )}
 
@@ -442,5 +442,16 @@ export function RelatedList<T extends MapNode>({ related, select }: { related: T
         </button>
       ))}
     </div>
+  );
+}
+
+/* Magnifier with a "1", drawn on lucide's 24px grid to match ZoomIn and ZoomOut. */
+function ZoomReset() {
+  return (
+    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.25} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+      <path d="M9.6 8.6 11.4 7.4V14.6" />
+    </svg>
   );
 }
