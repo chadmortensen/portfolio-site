@@ -20,7 +20,7 @@ const ChadMapped = () => {
           nodes={data.nodes}
           themes={data.themes}
           title="Chad, mapped"
-          subtitle="Thirty years of design leadership, organized by the themes that run through it."
+          subtitle="Thirty years in design, laid out role by role and theme by theme."
           intro={publicIntro(data.nodes.length)}
           empty={<p className="cm-muted">Stories are on their way. Check back soon.</p>}
           renderDetail={(node, related, select) => <PublicDetail node={node} related={related} select={select} />}
