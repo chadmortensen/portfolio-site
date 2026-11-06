@@ -230,3 +230,13 @@
 }
 .chad-mapped .cm-3d-labels .is-dim { opacity: 0; pointer-events: none; }
 .cm-3d.is-focus .cm-3d-year { opacity: 0; }
+
+/* Career view: horizontal timeline */
+.cm-tl-axis { fill: none; stroke: var(--cm-ink); stroke-width: 1.5; }
+.cm-tl-axis.is-across { stroke: var(--cm-muted); stroke-dasharray: 2 5; }
+.cm-tl .cm-hub.is-across rect { stroke-dasharray: 4 3; }
+.cm-tl .cm-leaf text { font-size: 13px; }
+.cm-tl .cm-leaf .cm-edge { stroke: var(--cm-node); stroke-width: 1; }
+.cm-tl .cm-tl-year { font-size: 11px; fill: var(--cm-muted); font-weight: 400; }
+.cm-tl-hit { fill: transparent; }
+.cm-tl .cm-placeholder text { font-size: 11px; }

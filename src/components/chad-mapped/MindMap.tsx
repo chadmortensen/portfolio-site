@@ -1,6 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { X, ZoomIn, ZoomOut } from "lucide-react";
-import { nodeMeta, type MapNode } from "./types";
+import { formatYears, nodeMeta, type MapNode } from "./types";
 import { ACROSS_ROLES, ERAS, eraOf, groupLabel, inGroup, type View } from "./groups";
 import type { MindMap3DHandle } from "./MindMap3D";
 import "./chad-mapped.css";
@@ -18,7 +18,7 @@ type MindMapProps<T extends MapNode> = {
   subtitle: string;
   controls?: ReactNode;
   note?: ReactNode;
-  intro: ReactNode;
+  intro: ReactNode | ((view: View) => ReactNode);
   empty?: ReactNode;
   /** Show eras with nothing in them yet (useful privately, not on the public page). */
   showEmptyEras?: boolean;
@@ -84,6 +84,78 @@ function useRadialLayout(sectors: Sector[]) {
   }, [sectors]);
 }
 
+/* Career view: roles sit on one horizontal axis, and their stories branch above and below it. */
+const TL_STEP = 110; // between neighbouring stems (they alternate sides)
+const TL_SAME_SIDE = 225; // room for a label before the next stem on the same side
+const TL_STEMS = [96, 178]; // stem lengths, alternated per side so the branches stagger
+const TL_CHARS = 27;
+const TL_LINE = 15;
+
+type TimelineRole = Sector & { x: number; w: number; across: boolean };
+type TimelineStory = { node: MapNode; x: number; y: number; lines: string[] };
+type TimelinePlaceholder = { key: string; x: number; y: number };
+
+function wrapTitle(text: string, max = TL_CHARS, rows = 3) {
+  const lines: string[] = [];
+  let line = "";
+  for (const word of text.split(/\s+/)) {
+    if (line && (line + " " + word).length > max) {
+      lines.push(line);
+      line = word;
+    } else line = line ? `${line} ${word}` : word;
+  }
+  if (line) lines.push(line);
+  if (lines.length > rows) {
+    lines.length = rows;
+    const last = lines[rows - 1];
+    lines[rows - 1] = last.length < max ? `${last}…` : truncate(last, max);
+  }
+  return lines;
+}
+
+function useTimelineLayout(sectors: Sector[]) {
+  return useMemo(() => {
+    const roles: TimelineRole[] = [];
+    const stories: TimelineStory[] = [];
+    const placeholders: TimelinePlaceholder[] = [];
+    const lastOnSide = [-Infinity, -Infinity]; // [above, below]
+    const turns = [0, 0];
+    let cursor = 0;
+    let side = 0;
+    let solidEnd = 0;
+    const place = (from: number) => {
+      const x = Math.max(from, lastOnSide[side] + TL_SAME_SIDE);
+      lastOnSide[side] = x;
+      const length = TL_STEMS[turns[side]++ % TL_STEMS.length];
+      const y = side === 0 ? -length : length;
+      side = 1 - side;
+      return { x, y };
+    };
+    sectors.forEach((sector) => {
+      const across = sector.key === ACROSS_ROLES;
+      if (across) cursor += 70;
+      const w = Math.max(sector.label.length * 7.8, sector.sub.length * 6.2) + 30;
+      roles.push({ ...sector, x: cursor + w / 2, w, across });
+      let x = cursor + w + 46;
+      if (!sector.items.length) {
+        placeholders.push({ key: sector.key, ...place(x) });
+        x = lastOnSide[1 - side] + TL_STEP;
+      }
+      sector.items.forEach((node) => {
+        const at = place(x);
+        stories.push({ node, ...at, lines: wrapTitle(node.title) });
+        x = at.x + TL_STEP;
+      });
+      const end = Math.max(x - TL_STEP + 40, cursor + w);
+      if (!across) solidEnd = end;
+      cursor = end + 30;
+    });
+    const maxX = Math.max(cursor, ...stories.map((s) => s.x + 200));
+    const reach = TL_STEMS[TL_STEMS.length - 1];
+    return { roles, stories, placeholders, solidEnd, bounds: { minX: -40, maxX: maxX + 40, minY: -reach - 30, maxY: reach + 3 * TL_LINE + 40 } };
+  }, [sectors]);
+}
+
 const labelTransform = (angle: number) => {
   const flip = Math.cos(angle) < 0;
   return { flip, deg: (angle * 180) / Math.PI + (flip ? 180 : 0) };
@@ -97,6 +169,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
   const sectors = useMemo(() => buildSectors(nodes, view, themes, showEmptyEras), [nodes, view, themes, showEmptyEras]);
   const { hubs, leaves, placeholders } = useRadialLayout(sectors);
+  const timeline = useTimelineLayout(sectors);
   // The 3D view groups by theme pills or by a role picked on its timeline.
   const groupView: View = view === "3d" ? (ERAS.some((e) => e.key === group) ? "career" : "theme") : view;
 
@@ -159,16 +232,25 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   const fit = useCallback((): ViewBox => {
     const w = window.innerWidth;
     const h = window.innerHeight;
+    if (view === "career") {
+      // Fit the timeline's height, start it beside the title card, and let people pan along it.
+      const { minX, minY, maxY } = timeline.bounds;
+      const nav = 72;
+      const s = Math.max(0.8, (maxY - minY) / Math.max(h - nav - 120, 320));
+      const left = w > 760 ? 420 : 16;
+      return { x: minX - left * s, y: -(nav + (h - nav) / 2) * s + ((maxY + minY) / 2), w: w * s, h: h * s };
+    }
     const free = w - (w > 1100 ? 400 : 0);
     const s = Math.max(MAP_W / Math.max(free, 720), MAP_H / h);
     return { x: (-free * s) / 2, y: (-h * s) / 2 - 50, w: w * s, h: h * s };
-  }, []);
+  }, [view, timeline.bounds]);
   const [vb, setVb] = useState<ViewBox>(() => (typeof window === "undefined" ? { x: -710, y: -680, w: MAP_W, h: MAP_H } : fit()));
   useEffect(() => {
     const onResize = () => {
       setVb(fit());
       setZoomed2d(false);
     };
+    onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, [fit]);
@@ -183,7 +265,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     setVb((v) => {
       const nx = cx ?? v.x + v.w / 2;
       const ny = cy ?? v.y + v.h / 2;
-      const w = Math.min(Math.max(v.w * factor, 300), 2800);
+      const w = Math.min(Math.max(v.w * factor, 300), view === "career" ? Math.max(2800, timeline.bounds.maxX * 1.2) : 2800);
       const k = w / v.w;
       return { x: nx - (nx - v.x) * k, y: ny - (ny - v.y) * k, w, h: v.h * k };
     });
@@ -195,6 +277,16 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     if (!svg) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
+      if (view === "career" && !e.ctrlKey) {
+        // The timeline reads left to right, so scrolling moves along it; pinch (or ctrl + scroll) zooms.
+        const rect = svg.getBoundingClientRect();
+        setVb((v) => {
+          const s = Math.max(v.w / rect.width, v.h / rect.height);
+          const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+          return { ...v, x: v.x + delta * s };
+        });
+        return;
+      }
       const point = svg.createSVGPoint();
       point.x = e.clientX;
       point.y = e.clientY;
@@ -203,7 +295,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     };
     svg.addEventListener("wheel", onWheel, { passive: false });
     return () => svg.removeEventListener("wheel", onWheel);
-  }, [showSvg]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- zoom only reads state setters
+  }, [showSvg, view, timeline.bounds]);
 
   const onPointerDown = (e: PointerEvent<SVGSVGElement>) => {
     drag.current = { x: e.clientX, y: e.clientY, vb, moved: 0 };
@@ -240,7 +333,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   };
 
   const leafPos = useMemo(() => new Map(leaves.map((l) => [l.node.id, l])), [leaves]);
-  const chords = selected && !group ? [...relatedOf(selected)].map((id) => [leafPos.get(selected), leafPos.get(id)] as const).filter(([a, b]) => a && b) : [];
+  const chords = selected && !group && view !== "career" ? [...relatedOf(selected)].map((id) => [leafPos.get(selected), leafPos.get(id)] as const).filter(([a, b]) => a && b) : [];
   const selectedNode = selected ? byId.get(selected) : undefined;
   const active = Boolean(selectedNode || group);
   const nodeDim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
@@ -269,6 +362,10 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
         >
+          {view === "career" ? (
+            <TimelineMap layout={timeline} nodes={nodes} focus={focus} selected={selected} group={group} onKey={onKey} select={select} toggleGroup={toggleGroup} />
+          ) : (
+          <>
           <g>
             {hubs.map((h) => (
               <path key={h.key} className="cm-edge" d={`M0 0L${h.x} ${h.y}`} />
@@ -328,7 +425,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                   transform={`translate(${h.x} ${h.y})`}
                   tabIndex={0}
                   role="button"
-                  aria-label={`${view === "career" ? "Era" : "Theme"}: ${h.label}`}
+                  aria-label={`Theme: ${h.label}`}
                   onKeyDown={(e) => onKey(e, () => toggleGroup(h.key))}
                 >
                   <rect x={-width / 2} y={-20} width={width} height={40} rx={10} />
@@ -342,6 +439,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             <circle r={46} />
             <text textAnchor="middle" y={6}>Chad</text>
           </g>
+          </>
+          )}
         </svg>
       ) : (
         <div className={`cm-list${active ? " has-panel" : ""}`}>
@@ -435,7 +534,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             renderDetail(selectedNode, [...relatedOf(selectedNode.id)].map((id) => byId.get(id)!).filter(Boolean), select)
           ) : (
             <>
-              <p className="cm-eyebrow">{groupView === "career" ? `Era${ERAS.find((e) => e.key === group) ? ` · ${ERAS.find((e) => e.key === group)!.years}` : ""}` : "Theme"}</p>
+              <p className="cm-eyebrow">{groupView === "career" ? `${view === "3d" ? "Era" : "Role"}${ERAS.find((e) => e.key === group) ? ` · ${ERAS.find((e) => e.key === group)!.years}` : ""}` : "Theme"}</p>
               <h2>{groupLabel(groupView, group!)}</h2>
               <p className="cm-muted">
                 {groupNodes.length} {groupNodes.length === 1 ? "entry" : "entries"}
@@ -446,7 +545,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           )}
         </aside>
       ) : (
-        <div className="cm-card cm-detail cm-intro">{intro}</div>
+        <div className="cm-card cm-detail cm-intro">{typeof intro === "function" ? intro(view) : intro}</div>
       )}
     </div>
   );
@@ -475,5 +574,73 @@ function ZoomReset() {
       <path d="m21 21-4.3-4.3" />
       <path d="M9.6 8.6 11.4 7.4V14.6" />
     </svg>
+  );
+}
+
+type TimelineMapProps = {
+  layout: ReturnType<typeof useTimelineLayout>;
+  nodes: MapNode[];
+  focus: Set<string> | null;
+  selected: string | null;
+  group: string | null;
+  onKey: (e: KeyboardEvent, action: () => void) => void;
+  select: (id: string) => void;
+  toggleGroup: (key: string) => void;
+};
+
+function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, toggleGroup }: TimelineMapProps) {
+  const { roles, stories, placeholders, solidEnd } = layout;
+  const dim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
+  const across = roles.find((r) => r.across);
+  return (
+    <g className="cm-tl">
+      <path className="cm-tl-axis" d={`M${roles[0] ? roles[0].x - roles[0].w / 2 - 30 : 0} 0H${solidEnd}`} />
+      {across && <path className="cm-tl-axis is-across" d={`M${solidEnd} 0H${layout.bounds.maxX - 40}`} />}
+      {placeholders.map((p) => (
+        <g key={p.key} className={`cm-placeholder${focus ? " is-dim" : ""}`}>
+          <path className="cm-edge is-empty" d={`M${p.x} 0V${p.y}`} />
+          <circle cx={p.x} cy={p.y} r={5} />
+          <text x={p.x + 12} y={p.y + 4}>No stories yet</text>
+        </g>
+      ))}
+      {stories.map((s) => {
+        const isSel = s.node.id === selected;
+        const up = s.y < 0;
+        const textY = s.y + 4;
+        return (
+          <g key={s.node.id} className={`cm-leaf${dim(s.node.id)}${isSel ? " is-selected" : ""}`} data-leaf={s.node.id} tabIndex={0} role="button" aria-label={s.node.title} onKeyDown={(e) => onKey(e, () => select(s.node.id))}>
+            <path className="cm-edge" d={`M${s.x} ${up ? -4 : 4}V${s.y}`} />
+            <circle cx={s.x} cy={s.y} r={isSel ? 8 : 6} />
+            <text x={s.x + 13} y={textY}>
+              {s.lines.map((line, i) => (
+                <tspan key={i} x={s.x + 13} dy={i ? TL_LINE : 0}>{line}</tspan>
+              ))}
+              <tspan className="cm-tl-year" x={s.x + 13} dy={TL_LINE}>{formatYears(s.node.years) || "Across roles"}</tspan>
+            </text>
+            {/* a wider, invisible target so the whole label is easy to click */}
+            <rect className="cm-tl-hit" x={s.x - 10} y={s.y - 12} width={210} height={(s.lines.length + 1) * TL_LINE + 14} />
+          </g>
+        );
+      })}
+      {roles.map((r) => {
+        const isDim = focus && !nodes.some((n) => focus.has(n.id) && inGroup("career", r.key, n));
+        return (
+          <g
+            key={r.key}
+            className={`cm-hub${group === r.key ? " is-on" : ""}${isDim ? " is-dim" : ""}${r.across ? " is-across" : ""}`}
+            data-hub={r.key}
+            transform={`translate(${r.x} 0)`}
+            tabIndex={0}
+            role="button"
+            aria-label={`${r.across ? "Group" : "Role"}: ${r.label}, ${r.sub}`}
+            onKeyDown={(e) => onKey(e, () => toggleGroup(r.key))}
+          >
+            <rect x={-r.w / 2} y={-20} width={r.w} height={40} rx={10} />
+            <text textAnchor="middle" y={-1}>{r.label}</text>
+            <text className="cm-count" textAnchor="middle" y={13}>{r.sub}</text>
+          </g>
+        );
+      })}
+    </g>
   );
 }

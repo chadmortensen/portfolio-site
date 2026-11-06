@@ -1,3 +1,4 @@
+import type { View } from "./groups";
 import { RelatedList } from "./MindMap";
 import { nodeMeta, type PublicNode } from "./types";
 
@@ -30,13 +31,19 @@ export function PublicDetail({ node, related, select }: { node: PublicNode; rela
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const publicIntro = (count: number) => (
-  <>
-    <p className="cm-eyebrow">How to read this</p>
-    <p>
-      Each branch is a theme that runs through my work, with {count} {count === 1 ? "story" : "stories"} beneath. Pick a theme or a story to read
-      it, and drag to move around.
-    </p>
-  </>
-);
-
+export const publicIntro = (count: number) => (view: View) => {
+  const stories = `${count} ${count === 1 ? "story" : "stories"}`;
+  return (
+    <>
+      <p className="cm-eyebrow">How to read this</p>
+      {view === "career" ? (
+        <p>My roles run left to right, oldest first, with {stories} branching off them. Pick a role or a story to read it, and scroll or drag to move along.</p>
+      ) : (
+        <p>
+          Each branch is a theme that runs through my work, with {stories} beneath. Pick a theme or a story to read
+          it, and drag to move around.
+        </p>
+      )}
+    </>
+  );
+};
