@@ -165,14 +165,21 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   }, []);
   const [vb, setVb] = useState<ViewBox>(() => (typeof window === "undefined" ? { x: -710, y: -680, w: MAP_W, h: MAP_H } : fit()));
   useEffect(() => {
-    const onResize = () => setVb(fit());
+    const onResize = () => {
+      setVb(fit());
+      setZoomed2d(false);
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, [fit]);
   const drag = useRef<{ x: number; y: number; vb: ViewBox; moved: number } | null>(null);
   const [dragging, setDragging] = useState(false);
 
-  const zoom = (factor: number, cx?: number, cy?: number) =>
+  // Reset stays dimmed until the visitor zooms; each view tracks its own.
+  const [zoomed2d, setZoomed2d] = useState(false);
+  const [zoomed3d, setZoomed3d] = useState(false);
+  const zoom = (factor: number, cx?: number, cy?: number) => {
+    setZoomed2d(true);
     setVb((v) => {
       const nx = cx ?? v.x + v.w / 2;
       const ny = cy ?? v.y + v.h / 2;
@@ -180,6 +187,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       const k = w / v.w;
       return { x: nx - (nx - v.x) * k, y: ny - (ny - v.y) * k, w, h: v.h * k };
     });
+  };
 
   const showSvg = view !== "3d" && layout === "map";
   useEffect(() => {
@@ -248,7 +256,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     <div className="chad-mapped" ref={rootRef}>
       {view === "3d" ? (
         <Suspense fallback={<p className="cm-loading">Loading the 3D view…</p>}>
-          <MindMap3D ref={threeRef} nodes={nodes} themes={themes} selected={selected} group={group} focus={focus} onSelect={select} onGroup={toggleGroup} onClear={close} />
+          <MindMap3D ref={threeRef} nodes={nodes} themes={themes} selected={selected} group={group} focus={focus} onSelect={select} onGroup={toggleGroup} onClear={close} onUserZoom={() => setZoomed3d(true)} />
         </Suspense>
       ) : layout === "map" ? (
         <svg
@@ -398,9 +406,23 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
 
       {(showSvg || view === "3d") && (
         <div className="cm-zoom" role="group" aria-label="Zoom">
-          <button type="button" aria-label="Zoom out" title="Zoom out" onClick={() => (view === "3d" ? threeRef.current?.zoom(1.25) : zoom(1.25))}><ZoomOut size={20} strokeWidth={2.25} /></button>
-          <button type="button" aria-label="Reset zoom" title="Reset zoom" onClick={() => (view === "3d" ? threeRef.current?.reset() : setVb(fit()))}><ZoomReset /></button>
-          <button type="button" aria-label="Zoom in" title="Zoom in" onClick={() => (view === "3d" ? threeRef.current?.zoom(0.8) : zoom(0.8))}><ZoomIn size={20} strokeWidth={2.25} /></button>
+          <button type="button" aria-label="Zoom out" title="Zoom out" onClick={() => (view === "3d" ? (threeRef.current?.zoom(1.25), setZoomed3d(true)) : zoom(1.25))}><ZoomOut size={20} strokeWidth={2.25} /></button>
+          <button
+            type="button"
+            aria-label="Reset zoom"
+            title="Reset zoom"
+            disabled={view === "3d" ? !zoomed3d : !zoomed2d}
+            onClick={() => {
+              if (view === "3d") {
+                threeRef.current?.reset();
+                setZoomed3d(false);
+              } else {
+                setVb(fit());
+                setZoomed2d(false);
+              }
+            }}
+          ><ZoomReset /></button>
+          <button type="button" aria-label="Zoom in" title="Zoom in" onClick={() => (view === "3d" ? (threeRef.current?.zoom(0.8), setZoomed3d(true)) : zoom(0.8))}><ZoomIn size={20} strokeWidth={2.25} /></button>
         </div>
       )}
 

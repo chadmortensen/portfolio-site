@@ -17,6 +17,8 @@ type Props = {
   onSelect: (id: string | null) => void;
   onGroup: (key: string) => void;
   onClear: () => void;
+  /** Called when the visitor zooms with the wheel, trackpad or a pinch. */
+  onUserZoom?: () => void;
 };
 
 type Point = { x: number; y: number; z: number; vx: number; vy: number; vz: number; fixed: boolean };
@@ -136,11 +138,11 @@ const label = (className: string, text: string, sub?: string) => {
   return el;
 };
 
-const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes, themes, selected, group, focus, onSelect, onGroup, onClear }, ref) {
+const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes, themes, selected, group, focus, onSelect, onGroup, onClear, onUserZoom }, ref) {
   const hostRef = useRef<HTMLDivElement>(null);
   const { points, edges, usedThemes } = useMemo(() => layout(nodes, themes), [nodes, themes]);
-  const handlers = useRef({ onSelect, onGroup, onClear, selected });
-  handlers.current = { onSelect, onGroup, onClear, selected };
+  const handlers = useRef({ onSelect, onGroup, onClear, onUserZoom, selected });
+  handlers.current = { onSelect, onGroup, onClear, onUserZoom, selected };
   const scene = useRef<{
     camera: THREE.PerspectiveCamera;
     controls: OrbitControls;
@@ -323,6 +325,10 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     labels.domElement.addEventListener("pointerdown", onDown);
     labels.domElement.addEventListener("pointerup", onUp);
     labels.domElement.addEventListener("pointermove", onMove);
+    const onWheel = () => handlers.current.onUserZoom?.();
+    const onTouch = (e: TouchEvent) => e.touches.length > 1 && handlers.current.onUserZoom?.();
+    labels.domElement.addEventListener("wheel", onWheel, { passive: true });
+    labels.domElement.addEventListener("touchstart", onTouch, { passive: true });
 
     const home = { target: controls.target.clone(), position: camera.position.clone() };
     let framed: object | null = null;
