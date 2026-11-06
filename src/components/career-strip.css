@@ -1,5 +1,5 @@
 /* Home page career timeline: role boxes whose right side narrows into the line, as in the map's Career view.
-   It draws in from Visitalk to Brightside: each box wipes in, its neck traces into the line, then the line runs on to the next role. */
+   It draws in from Brightside (most recent, left) back to Visitalk: each box wipes in, its neck traces into the line, then the line runs on to the next role. */
 .cs {
   --cs-ink: hsl(var(--text-primary));
   --cs-muted: hsl(var(--text-secondary));

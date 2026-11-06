@@ -12,8 +12,8 @@ const ROLE_STEP_MS = 650;
 const MIN_THEME_SIZE = 3;
 const SKIP_THEMES = new Set(["Other notes"]);
 
-/** The roles on the timeline: the ones with a title on the map, Visitalk onward. */
-const ROLES = ERAS.filter((e) => e.title).map((e) => ({
+/** The roles on the timeline: the ones with a title on the map, most recent first, back to Visitalk. */
+const ROLES = ERAS.filter((e) => e.title).reverse().map((e) => ({
   key: e.key,
   title: e.title!,
   years: e.years.replace(/^(\d{4})–(\d{2})(\d{2})$/, "$1–$3"),
