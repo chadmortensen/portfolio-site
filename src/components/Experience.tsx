@@ -1,9 +1,12 @@
 import { Briefcase, Calendar, CircleMinus, CirclePlus } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { mapLink, useCareerStrip } from "@/components/CareerStrip";
 import { Button } from "@/components/ui/button";
 
 const Experience = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { theme, strip } = useCareerStrip();
   
   const experiences = [
     {
@@ -87,28 +90,43 @@ const Experience = () => {
     <section id="experience" className="py-16 sm:py-24 bg-surface-primary">
       <div className="swiss-grid fade-in">
         <div className="col-span-12 text-center mb-12 sm:mb-16">
-          <h2 className="text-headline text-text-primary mb-4">Experience</h2>
+          <p className="text-caption font-medium uppercase tracking-[0.08em] text-text-secondary mb-3">An experiment · work in progress</p>
+          <h2 className="text-headline text-text-primary mb-4">
+            <span className="sr-only">Experience: </span>
+            Stories about{" "}
+            {theme ? (
+              <Link key={theme} to={mapLink("theme", theme)} className="cs-theme text-accent-blue underline-offset-4 hover:underline">
+                {theme.toLowerCase()}
+              </Link>
+            ) : (
+              <span>the work</span>
+            )}
+          </h2>
           <div className="h-[3px] w-[7rem] bg-accent-orange mx-auto mb-6"></div>
           <p className="text-body text-text-secondary max-w-3xl mx-auto px-4">
-            Over 14 years of design leadership across health tech, eCommerce, and retail, driving meaningful outcomes through human-centered design.
+            30 years in design, 14 leading teams. That doesn't fit in a few case studies and a two-page résumé, so I'm trying something else: mapping the stories behind the work.
           </p>
-          
-          <div className="mt-8 flex justify-center">
+
+          <div className="mt-10 mx-auto max-w-[1040px]">{strip}</div>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button asChild>
+              <Link to="/chad-mapped">Explore the career map</Link>
+            </Button>
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
-              variant="default"
-              className="flex items-center gap-2"
+              variant="secondary"
+              className="border"
               aria-expanded={isExpanded}
-              aria-label={isExpanded ? "Hide Experience details" : "View Experience details"}
             >
               {isExpanded ? (
                 <>
-                  Hide Experience
+                  Hide résumé
                   <CircleMinus size={16} className="-mr-[0.2rem]" />
                 </>
               ) : (
                 <>
-                  View Experience
+                  Résumé view
                   <CirclePlus size={16} className="-mr-[0.2rem]" />
                 </>
               )}

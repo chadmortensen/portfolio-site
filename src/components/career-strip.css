@@ -1,0 +1,68 @@
+/* Home page career timeline: role boxes whose right side narrows into the line, as in the map's Career view.
+   It draws in from Brightside (most recent, left) back to Visitalk: each box wipes in, its neck traces into the line, then the line runs on to the next role. */
+.cs {
+  --cs-ink: hsl(var(--text-primary));
+  --cs-muted: hsl(var(--text-secondary));
+  --cs-accent: hsl(var(--accent-blue));
+  --cs-paper: hsl(var(--surface-primary));
+  --cs-step: 650ms;
+  width: 100%;
+}
+.cs-roles { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; }
+.cs-role { flex: 1 1 auto; display: flex; min-width: 0; } /* equal growth on top of each box's own width keeps the lines between roles the same length */
+.cs-role:last-child { flex: 0 0 auto; }
+.cs-link { display: flex; align-items: center; width: 100%; height: 4rem; color: inherit; text-decoration: none; outline: none; }
+
+.cs-box { display: flex; flex: none; height: 44px; }
+.cs-box-body {
+  display: flex; flex-direction: column; justify-content: center; text-align: left;
+  padding: 0 2px 0 12px; background: var(--cs-paper);
+  border: 1.5px solid var(--cs-ink); border-right: 0; border-radius: 12px 0 0 12px;
+  transition: background-color 0.2s ease;
+}
+.cs-company { font-size: 13px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+.cs-years { font-size: 11.5px; line-height: 1.3; color: var(--cs-muted); white-space: nowrap; }
+.cs-neck { display: block; width: 18px; height: 44px; }
+.cs-neck-fill { fill: var(--cs-paper); transition: fill 0.2s ease; }
+.cs-neck-line { fill: none; stroke: var(--cs-ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-dasharray: 1; }
+.cs-link:hover .cs-box-body { background: hsl(var(--surface-secondary)); }
+.cs-link:hover .cs-neck-fill { fill: hsl(var(--surface-secondary)); }
+.cs-link:focus-visible .cs-box-body { outline: 2px solid var(--cs-accent); outline-offset: 3px; }
+
+/* The line from one role to the next; the last role ends in a short tail. */
+.cs-run { position: relative; flex: 1 1 auto; min-width: 1.5rem; height: 44px; }
+.cs-role:last-child .cs-run { flex: 0 0 2rem; }
+.cs-run::before {
+  content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 0.75px); height: 1.5px;
+  background: var(--cs-ink); transform-origin: left center;
+}
+.cs-role:last-child .cs-run::before { background: linear-gradient(to right, var(--cs-ink), transparent); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .cs-box-body { transition: clip-path 0.35s ease-out, background-color 0.2s ease; transition-delay: calc(var(--cs-i) * var(--cs-step)), 0s; }
+  .cs-neck-fill { transition: opacity 0.2s ease, fill 0.2s ease; transition-delay: calc(var(--cs-i) * var(--cs-step) + 300ms), 0s; }
+  .cs-neck-line { transition: stroke-dashoffset 0.15s linear; transition-delay: calc(var(--cs-i) * var(--cs-step) + 300ms); }
+  .cs-run::before { transition: transform 0.3s ease-in-out; transition-delay: calc(var(--cs-i) * var(--cs-step) + 420ms); }
+
+  .cs:not(.is-drawn) .cs-box-body { clip-path: inset(-3px 100% -3px -3px); }
+  .cs:not(.is-drawn) .cs-neck-fill { opacity: 0; }
+  .cs:not(.is-drawn) .cs-neck-line { stroke-dashoffset: 1; }
+  .cs:not(.is-drawn) .cs-run::before { transform: scaleX(0); }
+  .cs.is-drawn .cs-box-body { clip-path: inset(-3px -3px -3px -3px); }
+}
+
+/* Phones: roles run down the page, each drawing its line across. */
+@media (max-width: 639px) {
+  .cs-roles { flex-direction: column; align-items: stretch; gap: 2px; }
+  .cs-role, .cs-role:last-child { flex: none; }
+  .cs-link { height: 3.25rem; }
+  .cs-box-body { width: 6.5rem; }
+  .cs-role:last-child .cs-run { flex: 1 1 auto; }
+}
+
+/* The theme word in the heading fades up each time it changes. */
+.cs-theme { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .cs-theme { animation: cs-theme-in 0.45s ease; }
+}
+@keyframes cs-theme-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
