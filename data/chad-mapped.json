@@ -13,6 +13,163 @@
   ],
   "nodes": [
     {
+      "id": "actionable-north-star-vision",
+      "title": "Making north-star vision work actionable",
+      "type": "practice",
+      "companies": [
+        "Walmart",
+        "Etsy",
+        "Brightside"
+      ],
+      "years": [],
+      "role": "",
+      "themes": [
+        "Vision & clarity",
+        "Aligning leaders"
+      ],
+      "summary": "I make vision work actionable by grounding it in research, building it with design, product, engineering and business partners, and making it concrete with narratives, prototypes and journey maps. Then I turn it into a backlog teams can build from.",
+      "result": "At Etsy, seven or eight squads used the fulfillment vision to guide their roadmaps. At Brightside, the intake vision shaped the Growth team's next six months.",
+      "answers": [
+        "How do you create a vision for your team?",
+        "How do you make sure vision work doesn't sit on a shelf?",
+        "How do you balance long-term vision with near-term delivery?"
+      ],
+      "related": [
+        "etsy-fulfillment-vision-workshop",
+        "etsy-adaptive-search-buy-in",
+        "brightside-intake-trust-reframe",
+        "brightside-coaching-designer-strategic-vision"
+      ]
+    },
+    {
+      "id": "career-framework-and-growth-plans",
+      "title": "Career frameworks and growth plans for designers",
+      "type": "practice",
+      "companies": [
+        "Vegas.com",
+        "Etsy",
+        "Brightside"
+      ],
+      "years": [],
+      "role": "",
+      "themes": [
+        "Growing designers"
+      ],
+      "summary": "I build career frameworks so designers know what good looks like at the next level. At Brightside I built a matrix from Etsy's ladder and other industry frameworks, aligned it with HR, and used it in one-on-ones to create a growth plan with each designer.",
+      "result": "Designers had clear expectations that matched the wider industry, and one senior designer used his plan to grow into a lead designer role.",
+      "answers": [
+        "How do you grow designers on your team?",
+        "How do you set expectations for different levels?",
+        "How do you approach career development and promotions?"
+      ],
+      "related": [
+        "brightside-coaching-designer-strategic-vision"
+      ]
+    },
+    {
+      "id": "elevating-design-quality",
+      "title": "Elevating design quality",
+      "type": "practice",
+      "companies": [
+        "Walmart",
+        "Brightside"
+      ],
+      "years": [],
+      "role": "",
+      "themes": [
+        "Design quality & practice",
+        "Growing designers",
+        "Cross-functional partnership"
+      ],
+      "summary": "I raise design quality by naming the ambition level, which I call mild, medium or spicy, and by building quality into how the team works. When I joined Brightside there was no repeatable critique or design review process, so I introduced a structured weekly design critique where designers gave each other feedback and I probed the rationale and looked for connections across teams. I also push for starting low fidelity, connecting the design system to code and making quality a shared goal with engineering.",
+      "result": "The baby registry launched on time with its polish intact. At Brightside, design review became a regular ritual, the work grew more cohesive across teams, and designer complaints about engineering shortcuts stopped.",
+      "answers": [
+        "How do you define and raise the quality bar?",
+        "How do you balance speed and quality?",
+        "How do you run design critique?"
+      ],
+      "related": [
+        "walmart-baby-registry-redesign",
+        "brightside-redefining-velocity-with-engineering",
+        "brightside-coaching-designer-strategic-vision"
+      ]
+    },
+    {
+      "id": "experimentation-and-testing",
+      "title": "Experimentation and multivariate testing",
+      "type": "practice",
+      "companies": [
+        "Vegas.com"
+      ],
+      "years": [],
+      "role": "",
+      "themes": [
+        "Research & testing"
+      ],
+      "summary": "At Vegas.com, experimentation was part of how we designed and built across the whole site, at a time when few companies tested this way. Working with SiteSpect, we ran tests on top of the live code, looking for friction points and comparing up to six versions against each other in different combinations. I led the designers and the optimization analyst who built the tests, checked the analytics and analyzed the results, and I pushed for continual testing as a company-wide practice.",
+      "result": "Optimizations raised click-through and buy-through rates. Even with years of usability experience, we were often surprised by which version won, which taught me to test my assumptions about what people will do. I've kept that habit in every role since.",
+      "answers": [
+        "How do you use data or experimentation in design?",
+        "Tell me about your experience with A/B testing.",
+        "How do you validate a design decision?"
+      ],
+      "related": []
+    },
+    {
+      "id": "prioritization-frameworks",
+      "title": "Prioritization frameworks",
+      "type": "practice",
+      "companies": [
+        "Walmart",
+        "Etsy",
+        "Brightside"
+      ],
+      "years": [],
+      "role": "",
+      "themes": [
+        "Aligning leaders"
+      ],
+      "summary": "When everything feels important, I start from the outcomes teams share, use principles as the tiebreaker and use simple scoring like RICE. Design's role is to raise confidence in risky bets with quick research or prototypes before teams commit.",
+      "result": "At Walmart this narrowed 70 ideas to four focus areas in a single quarter. At Etsy, shared outcomes settled a dispute between infrastructure and features, and principles guided seven or eight squads.",
+      "answers": [
+        "How do you prioritize when everything feels important?",
+        "How do you resolve conflicting priorities between design, product and engineering?",
+        "What prioritization frameworks do you use?"
+      ],
+      "related": [
+        "walmart-baby-registry-redesign",
+        "etsy-fulfillment-vision-workshop",
+        "etsy-outcome-roadmap-infra-vs-features"
+      ]
+    },
+    {
+      "id": "research-backed-design-principles",
+      "title": "Research-backed design principles",
+      "type": "practice",
+      "companies": [
+        "Walmart",
+        "Etsy"
+      ],
+      "years": [],
+      "role": "",
+      "themes": [
+        "Vision & clarity",
+        "Research & testing",
+        "Growing designers"
+      ],
+      "summary": "I distill research into a short set of evergreen principles tied to the business strategy, then use them in ideation and whenever tradeoffs come up. At Walmart Fashion they covered fit, identity and showing clothes in detail; at Etsy they set fulfillment priorities.",
+      "result": "Teams spent less time on subjective debate and more on what customers valued, and seven or eight Etsy squads used the principles to guide their roadmaps.",
+      "answers": [
+        "How do you keep a team aligned when decisions get hard?",
+        "How do you make research actionable?",
+        "How do you avoid designing for edge cases or personal opinions?"
+      ],
+      "related": [
+        "walmart-baby-registry-redesign",
+        "etsy-fulfillment-vision-workshop"
+      ]
+    },
+    {
       "id": "brightside-analytics-assistant-gpt",
       "title": "Building an analytics assistant so designers and PMs could self-serve",
       "type": "story",
@@ -60,7 +217,10 @@
         "How do you keep a motivated designer engaged when the roadmap is incremental?"
       ],
       "related": [
-        "brightside-intake-trust-reframe"
+        "actionable-north-star-vision",
+        "elevating-design-quality",
+        "brightside-intake-trust-reframe",
+        "career-framework-and-growth-plans"
       ]
     },
     {
@@ -141,6 +301,8 @@
         "Tell me about a vision you pitched to leadership."
       ],
       "related": [
+        "actionable-north-star-vision",
+        "elevating-design-quality",
         "brightside-coaching-designer-strategic-vision",
         "brightside-deferred-medical-history-experiment",
         "brightside-intake-terminology"
@@ -169,7 +331,9 @@
         "How do you balance speed and quality?",
         "How do you partner with engineering?"
       ],
-      "related": []
+      "related": [
+        "elevating-design-quality"
+      ]
     },
     {
       "id": "brightside-research-waiver-legal",
@@ -219,6 +383,7 @@
         "How do you balance discovery work with business targets?"
       ],
       "related": [
+        "actionable-north-star-vision",
         "etsy-expanded-scope-strategic-partnership"
       ]
     },
@@ -323,6 +488,114 @@
         "Tell me about a time you aligned senior stakeholders with different priorities.",
         "How do you bring clarity to an ambiguous problem space?"
       ],
+      "related": [
+        "research-backed-design-principles",
+        "actionable-north-star-vision",
+        "prioritization-frameworks"
+      ]
+    },
+    {
+      "id": "etsy-outcome-roadmap-infra-vs-features",
+      "title": "Seeing shared outcomes align competing priorities at Etsy",
+      "type": "story",
+      "companies": [
+        "Etsy"
+      ],
+      "years": [
+        2021,
+        2023
+      ],
+      "role": "Director of Product Design – Fulfillment, Search & Ads",
+      "themes": [
+        "Aligning leaders",
+        "Cross-functional partnership",
+        "Calm under pressure"
+      ],
+      "summary": "On Etsy's Fulfillment team, engineering wanted to invest in infrastructure while product pushed for buyer-facing features. Working through it with my cross-functional partners and the senior manager on my team, we reframed our objectives around shared customer outcomes like on-time delivery, which made room for both.",
+      "result": "The roadmap aligned to those outcomes and the teams worked together more closely. It showed me firsthand how shared outcomes can bring several priorities into line.",
+      "answers": [
+        "How do you resolve conflicting priorities between design, product and engineering?",
+        "Tell me about a time you helped partners agree on a roadmap.",
+        "How do you balance tech debt and infrastructure against customer features?"
+      ],
+      "related": [
+        "prioritization-frameworks",
+        "etsy-fulfillment-vision-workshop"
+      ]
+    },
+    {
+      "id": "succeed-ibuilder-guided-shop-setup",
+      "title": "Guided shop setup with theme packs for first-time sellers at Succeed",
+      "type": "story",
+      "companies": [
+        "Succeed"
+      ],
+      "years": [
+        2002,
+        2003
+      ],
+      "role": "Senior Interactive Designer / Usability Specialist",
+      "themes": [
+        "Design quality & practice"
+      ],
+      "summary": "Succeed's iBuilder helped first-time sellers start an online shop in the early 2000s, when most people were far less comfortable online than they are today. I designed a wizard that built each shop's brand as people answered questions, with theme packs of colors, fonts and imagery and manual options for anyone who wanted more control.",
+      "result": "New sellers could get to a branded shop quickly without design skills, using the same shared-system idea I later used at Vegas.com.",
+      "answers": [
+        "Tell me about designing onboarding for new or non-technical users.",
+        "How do you balance flexibility and simplicity?",
+        "Tell me about a time you designed for customization."
+      ],
+      "related": [
+        "vegas-com-white-label-booking-sites"
+      ]
+    },
+    {
+      "id": "vegas-com-white-label-booking-sites",
+      "title": "Designing white-label travel booking sites on one engine",
+      "type": "story",
+      "companies": [
+        "Vegas.com"
+      ],
+      "years": [
+        2007,
+        2008
+      ],
+      "role": "Sr. Designer, User Experience",
+      "themes": [
+        "Design quality & practice",
+        "Cross-functional partnership"
+      ],
+      "summary": "Around 2007, Vegas.com's booking engine also powered white-label sites for the Palms, LasVegas.com, NewOrleans.com and Mexico.com. I designed them so search, filtering and booking worked the same everywhere, while each site got its own colors, fonts and imagery to match its destination.",
+      "result": "Engineers maintained one code base and one backend for several branded travel sites, an early version of what a themeable design system does today.",
+      "answers": [
+        "Tell me about a time you designed for scale or reuse.",
+        "Have you worked on a design system or a multi-brand product?",
+        "How do you balance brand expression with consistency?"
+      ],
+      "related": []
+    },
+    {
+      "id": "visitalk-click-to-call-directory",
+      "title": "Turning video calling into \"find a name, click call\" at visitalk",
+      "type": "story",
+      "companies": [
+        "Visitalk"
+      ],
+      "years": [
+        1999,
+        2000
+      ],
+      "role": "Senior Web Designer",
+      "themes": [
+        "Vision & clarity"
+      ],
+      "summary": "Around 1999, starting a video call meant finding someone's IP address and typing it into an app like NetMeeting. At visitalk, an internet telephony startup, I was one of a few designers who turned that into a directory where you found a person by name and clicked call.",
+      "result": "A multi-step technical process became one click, and I've been hiding technical complexity behind simple actions ever since.",
+      "answers": [
+        "Tell me about a time you simplified a complex experience.",
+        "What's the earliest product work you're proud of?",
+        "How do you design for non-technical users?"
+      ],
       "related": []
     },
     {
@@ -349,7 +622,11 @@
         "Tell me about a project delivered under a tight deadline.",
         "How do you keep a team motivated under pressure without compromising quality?"
       ],
-      "related": []
+      "related": [
+        "research-backed-design-principles",
+        "elevating-design-quality",
+        "prioritization-frameworks"
+      ]
     },
     {
       "id": "walmart-unified-cart-fulfillment",
