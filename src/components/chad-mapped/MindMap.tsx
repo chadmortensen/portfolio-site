@@ -540,7 +540,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       {!nodes.length && empty ? (
         <div className="cm-card cm-detail cm-intro">{empty}</div>
       ) : active ? (
-        <aside className={`cm-card cm-detail${selectedNode && group ? " has-back" : ""}`} aria-live="polite">
+        <aside className={`cm-card cm-detail${selectedNode && group ? " has-back" : ""}${selectedNode ? "" : " is-group"}`} aria-live="polite">
           <div className="cm-panel-nav">
             {selectedNode && group && (
               // Opened from a role or theme list: step back up to that list.

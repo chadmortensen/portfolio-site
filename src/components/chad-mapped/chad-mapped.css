@@ -268,3 +268,6 @@
 .cm-back:focus-visible, .cm-close:focus-visible { outline: 2px solid var(--cm-accent); outline-offset: 1px; }
 .cm-detail > .cm-eyebrow:first-of-type { min-height: 2rem; margin-top: -1rem; display: flex; align-items: center; line-height: 1; }
 .cm-detail.has-back > .cm-eyebrow:first-of-type { padding-left: 2.75rem; }
+/* Role or theme list: keep the eyebrow, name and count together */
+.cm-detail.is-group > h2 { margin-top: -0.6rem; }
+.cm-detail.is-group > h2 + p { margin-top: -0.7rem; }
