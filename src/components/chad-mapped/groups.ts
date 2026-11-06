@@ -27,6 +27,6 @@ export const eraOf = (node: MapNode) => {
 export const groupLabel = (view: View, key: string) =>
   view === "career" ? (ERAS.find((e) => e.key === key)?.label ?? key) : key;
 
-/** Whether a node belongs to a theme (any of its themes) or an era. */
+/** Whether a node belongs to a theme (any of its themes) or an era. Practices stay under "Across roles", not each company they touched. */
 export const inGroup = (view: View, key: string, node: MapNode) =>
-  view === "career" ? eraOf(node) === key || node.companies.includes(key) : node.themes.includes(key);
+  view === "career" ? eraOf(node) === key : node.themes.includes(key);
