@@ -76,14 +76,21 @@
   left: calc(var(--cm-gap) + env(safe-area-inset-left, 0px));
   bottom: calc(var(--cm-gap) + env(safe-area-inset-bottom, 0px));
   display: flex;
-  gap: 0.25rem;
+  align-items: center;
+  padding: 0.3rem 0.4rem;
+  background: hsl(var(--surface-primary));
+  border: 1px solid var(--cm-line);
+  border-radius: 9999px;
+  box-shadow: 0 4px 16px hsl(0 0% 0% / 0.06);
 }
 .cm-zoom button {
-  width: 2.25rem; height: 2.25rem; display: grid; place-items: center;
-  background: hsl(var(--surface-primary)); border: 1px solid var(--cm-line); color: var(--cm-ink);
-  border-radius: var(--cm-radius-sm);
+  width: 2.5rem; height: 2.25rem; display: grid; place-items: center;
+  background: transparent; border: 0; color: var(--cm-ink);
+  border-radius: 9999px;
 }
-.cm-zoom button:hover { border-color: var(--cm-ink); }
+.cm-zoom button:hover:not(:disabled) { background: var(--cm-faint); }
+.cm-zoom button:disabled { opacity: 0.3; cursor: default; }
+.cm-zoom button:focus-visible { outline: 2px solid var(--cm-accent); outline-offset: 1px; }
 
 .cm-detail {
   top: calc(var(--cm-nav) + var(--cm-gap) + env(safe-area-inset-top, 0px));
@@ -197,7 +204,7 @@
 
 /* 3D: role timeline along the bottom */
 .cm-timeline {
-  left: calc(var(--cm-gap) + 8.5rem + env(safe-area-inset-left, 0px));
+  left: calc(2 * var(--cm-gap) + 8.5rem + env(safe-area-inset-left, 0px));
   right: calc(19rem + 2 * var(--cm-gap) + env(safe-area-inset-right, 0px));
   bottom: calc(var(--cm-gap) + env(safe-area-inset-bottom, 0px));
   display: flex; gap: 0.25rem; padding: 0.6rem 0.75rem 0.55rem; overflow-x: auto;
@@ -216,7 +223,7 @@
 .cm-timeline button:disabled { color: var(--cm-muted); font-weight: 400; cursor: default; }
 .cm-timeline button:disabled .cm-timeline-bar { background: repeating-linear-gradient(90deg, var(--cm-line) 0 4px, transparent 4px 7px); }
 @media (max-width: 760px) {
-  .cm-timeline, .cm-timeline.has-panel { left: var(--cm-gap); right: var(--cm-gap); bottom: calc(2 * var(--cm-gap) + 2.25rem + env(safe-area-inset-bottom, 0px)); }
+  .cm-timeline, .cm-timeline.has-panel { left: var(--cm-gap); right: var(--cm-gap); bottom: calc(2 * var(--cm-gap) + 3rem + env(safe-area-inset-bottom, 0px)); }
 }
 @media (min-width: 761px) and (max-width: 1100px) {
   .cm-timeline.has-panel { display: none; }
