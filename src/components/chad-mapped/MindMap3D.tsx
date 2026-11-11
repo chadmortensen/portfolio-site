@@ -78,7 +78,7 @@ function spreadLabels(items: Spaced[], camera: THREE.Camera, width: number, heig
 /** How far behind the point of focus a label sits, from 0 (in front) to 1 (well behind), for depth of field. */
 const depthOf = (obj: THREE.Object3D, camera: THREE.Camera, focusDistance: number) => {
   const d = obj.position.distanceTo(camera.position) - focusDistance;
-  return Math.min(Math.max((d - 40) / 360, 0), 1);
+  return Math.min(Math.max((d - MAP_3D.depth.blurStart) / MAP_3D.depth.blurRange, 0), 1);
 };
 
 type Point = { x: number; y: number; z: number; vx: number; vy: number; vz: number; fixed: boolean };
@@ -103,7 +103,7 @@ const roleX = (start: number, i: number) =>
 const rolePoint = (start: number, i: number): number[] => {
   if (HORIZONTAL) return [roleX(start, i), 0, Math.sin(i * 1.3) * MAP_3D.wave];
   const a = i * 0.95 + 0.4;
-  return [Math.cos(a) * 100, yearToY(start), Math.sin(a) * 100];
+  return [Math.cos(a) * MAP_3D.helixRadius, yearToY(start), Math.sin(a) * MAP_3D.helixRadius];
 };
 
 /** Roles sit on the thread; stories branch off their roles and themes settle around them. */
@@ -117,7 +117,7 @@ function layout(nodes: MapNode[], themes: string[]) {
   const usedThemes = themes.filter((t) => nodes.some((n) => n.themes.includes(t)));
   usedThemes.forEach((theme, i) => {
     const a = (i / usedThemes.length) * Math.PI * 2;
-    if (!HORIZONTAL) return add(`theme:${theme}`, [Math.cos(a) * 200, (random() - 0.5) * 80, Math.sin(a) * 200]);
+    if (!HORIZONTAL) return add(`theme:${theme}`, [Math.cos(a) * MAP_3D.spread.theme * 1.2, (random() - 0.5) * 120, Math.sin(a) * MAP_3D.spread.theme * 1.2]);
     // Themes start above and below the thread, near the years their stories come from.
     const spots = nodes.filter((n) => n.themes.includes(theme)).flatMap((n) => ERAS.flatMap((e, j) => (n.companies.includes(e.key) ? [roleX(e.start, j)] : [])));
     const x = spots.length ? spots.reduce((a, b) => a + b, 0) / spots.length : 0;
@@ -125,7 +125,7 @@ function layout(nodes: MapNode[], themes: string[]) {
     add(`anchor:${theme}`, anchor, true);
     add(`theme:${theme}`, anchor);
   });
-  nodes.forEach((n) => add(n.id, [(random() - 0.5) * 200, (random() - 0.5) * 200, (random() - 0.5) * 200]));
+  nodes.forEach((n) => add(n.id, [(random() - 0.5) * 300, (random() - 0.5) * 300, (random() - 0.5) * 300]));
 
   const springs: [string, string, number, number][] = [];
   const edges: Edge[] = [];
@@ -138,7 +138,7 @@ function layout(nodes: MapNode[], themes: string[]) {
     });
     n.themes.forEach((t, i) => {
       if (!points.has(`theme:${t}`)) return;
-      springs.push([n.id, `theme:${t}`, i ? 0.008 : 0.02, 40]);
+      springs.push([n.id, `theme:${t}`, i ? 0.008 : 0.02, MAP_3D.spread.storyToTheme]);
       edges.push([n.id, `theme:${t}`]);
     });
     n.related.forEach((r) => {
@@ -229,7 +229,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       const s = scene.current;
       if (!s) return;
       const offset = s.camera.position.clone().sub(s.controls.target);
-      offset.setLength(Math.min(1400, Math.max(160, offset.length() * factor)));
+      offset.setLength(Math.min(1800, Math.max(160, offset.length() * factor)));
       s.camera.position.copy(s.controls.target).add(offset);
     },
     reset() {
@@ -266,7 +266,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     controls.autoRotate = MAP_3D.autoRotate && !reduceMotion;
     controls.autoRotateSpeed = 0;
     controls.minDistance = 160;
-    controls.maxDistance = 1400;
+    controls.maxDistance = 1800;
     let rotate = MAP_3D.autoRotate && !reduceMotion;
     let flying: { target: THREE.Vector3; distance: number } | null = null;
     // After a while without input, the map starts drifting again.
@@ -468,8 +468,8 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
           const key = depth.toFixed(2);
           if (el.dataset.depth === key) return;
           el.dataset.depth = key;
-          el.style.setProperty("--depth-o", String(1 - depth * 0.55));
-          el.style.setProperty("--depth-b", `${(depth * 1.4).toFixed(2)}px`);
+          el.style.setProperty("--depth-o", String(1 - depth * 0.7));
+          el.style.setProperty("--depth-b", `${(depth * MAP_3D.depth.maxBlur).toFixed(2)}px`);
         });
       }
       spreadLabels(spaced, camera, host.clientWidth, host.clientHeight);
