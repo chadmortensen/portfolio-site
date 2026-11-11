@@ -468,7 +468,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
           const key = depth.toFixed(2);
           if (el.dataset.depth === key) return;
           el.dataset.depth = key;
-          el.style.setProperty("--depth-o", String(1 - depth * 0.7));
+          el.style.setProperty("--depth-o", String(1 - depth * 0.55));
           el.style.setProperty("--depth-b", `${(depth * MAP_3D.depth.maxBlur).toFixed(2)}px`);
         });
       }

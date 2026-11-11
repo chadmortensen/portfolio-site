@@ -59,19 +59,19 @@ function buildSectors(nodes: MapNode[], view: View, themes: string[], showEmptyE
 }
 
 /* Themes view: themes branch left and right of the centre, and their stories stack in columns with level labels. */
-const BR_HUB_OUT = 330; // outer edge of the theme boxes, either side of the centre
-const BR_LEAF_X = 380; // story dots
-const BR_CHARS = 24;
-const BR_CHAR_W = 7.9; // average width of a 15px label character
-const BR_LINE = 18;
-const BR_ROW_GAP = 12; // between stories in one theme
+const BR_HUB_OUT = 290; // outer edge of the theme boxes, either side of the centre
+const BR_LEAF_X = 330; // story dots
+const BR_CHARS = 38;
+const BR_CHAR_W = 7.2; // average width of a 14px label character
+const BR_LINE = 17;
+const BR_ROW_GAP = 10; // between stories in one theme
 const BR_GROUP_GAP = 30; // between themes on the same side
 const BR_HUB_H = 44; // a theme needs at least this much height for its box
 
 type BranchHub = Sector & { x: number; y: number; w: number; dir: 1 | -1 };
 type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; lines: string[]; hub: BranchHub };
 
-const hubWidth = (label: string, sub: string) => Math.max(label.length * 8.4, sub.length * 6.6) + 30;
+const hubWidth = (label: string, sub: string) => Math.max(label.length * 7.7, sub.length * 6.6) + 28;
 
 function useBranchLayout(sectors: Sector[]) {
   return useMemo(() => {

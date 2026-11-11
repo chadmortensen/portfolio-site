@@ -34,13 +34,13 @@ export const MAP_3D = {
     fog: true,
     fogColor: "hsl(36, 45%, 98%)",
     /** Distances past the point of focus where the fog starts and where it hides things completely. */
-    fogStart: -120,
-    fogEnd: 420,
+    fogStart: -100,
+    fogEnd: 620,
     blurLabels: true,
     /** Labels start to blur this far behind the point of focus, and reach full blur this much further back. */
     blurStart: 0,
-    blurRange: 260,
-    maxBlur: 2.4,
+    blurRange: 340,
+    maxBlur: 1.5,
     /** Seconds without input before the map starts drifting again. */
     resumeDriftAfter: 8,
   },
