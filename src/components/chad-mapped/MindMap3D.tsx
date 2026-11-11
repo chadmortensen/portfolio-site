@@ -21,6 +21,66 @@ type Props = {
   onUserZoom?: () => void;
 };
 
+type Spaced = { el: HTMLElement; obj: CSS2DObject; weight: number; story?: boolean; ox?: number; oy?: number; size?: { key: string; w: number; h: number } };
+
+/**
+ * Nudge overlapping labels apart on screen. Positions are worked out fresh each frame from zero, so the result is
+ * stable, and each label eases toward its spot so nothing jumps.
+ */
+function spreadLabels(items: Spaced[], camera: THREE.Camera, width: number, height: number) {
+  const v = new THREE.Vector3();
+  const boxes: { item: Spaced; x: number; y: number; w: number; h: number; dx: number; dy: number }[] = [];
+  for (const item of items) {
+    const { el, obj } = item;
+    const hidden = obj.element.style.display === "none" || el.classList.contains("is-dim") || (item.story && !el.classList.contains("is-on") && !el.classList.contains("is-hover"));
+    if (hidden) {
+      item.ox = item.oy = 0;
+      if (el.style.transform) el.style.transform = "";
+      continue;
+    }
+    // Sizes only change with a label's text or state, so measure them once per change.
+    const key = el.className;
+    if (item.size?.key !== key) item.size = { key, w: el.offsetWidth, h: el.offsetHeight };
+    v.copy(obj.position).project(camera);
+    boxes.push({ item, x: ((v.x + 1) / 2) * width, y: ((1 - v.y) / 2) * height, w: item.size.w + 6, h: item.size.h + 4, dx: 0, dy: 0 });
+  }
+  for (let pass = 0; pass < 6; pass++) {
+    for (let i = 0; i < boxes.length; i++) {
+      for (let j = i + 1; j < boxes.length; j++) {
+        const a = boxes[i];
+        const b = boxes[j];
+        const gx = (b.x + b.dx) - (a.x + a.dx);
+        const gy = (b.y + b.dy) - (a.y + a.dy);
+        const ox = (a.w + b.w) / 2 - Math.abs(gx);
+        const oy = (a.h + b.h) / 2 - Math.abs(gy);
+        if (ox <= 0 || oy <= 0) continue;
+        const total = a.item.weight + b.item.weight;
+        // Labels are wide and short, so moving up or down is usually the smaller step.
+        if (oy <= ox) {
+          const s = gy < 0 || (gy === 0 && i > j) ? -1 : 1;
+          a.dy -= (s * oy * a.item.weight) / total;
+          b.dy += (s * oy * b.item.weight) / total;
+        } else {
+          const s = gx < 0 ? -1 : 1;
+          a.dx -= (s * ox * a.item.weight) / total;
+          b.dx += (s * ox * b.item.weight) / total;
+        }
+      }
+    }
+  }
+  for (const { item, dx, dy } of boxes) {
+    item.ox = (item.ox ?? 0) + (dx - (item.ox ?? 0)) * 0.25;
+    item.oy = (item.oy ?? 0) + (dy - (item.oy ?? 0)) * 0.25;
+    item.el.style.transform = Math.abs(item.ox) + Math.abs(item.oy) < 0.3 ? "" : `translate(${item.ox.toFixed(1)}px, ${item.oy.toFixed(1)}px)`;
+  }
+}
+
+/** How far behind the point of focus a label sits, from 0 (in front) to 1 (well behind), for depth of field. */
+const depthOf = (obj: THREE.Object3D, camera: THREE.Camera, focusDistance: number) => {
+  const d = obj.position.distanceTo(camera.position) - focusDistance;
+  return Math.min(Math.max((d - 40) / 360, 0), 1);
+};
+
 type Point = { x: number; y: number; z: number; vx: number; vy: number; vz: number; fixed: boolean };
 type Edge = [string, string];
 
@@ -126,6 +186,14 @@ function layout(nodes: MapNode[], themes: string[]) {
   return { points, edges, usedThemes };
 }
 
+/** Each label sits in a slot: CSS2DRenderer positions the slot, and we nudge the label inside it apart from its neighbours. */
+const slotted = (el: HTMLElement) => {
+  const slot = document.createElement("div");
+  slot.className = "cm-3d-slot";
+  slot.appendChild(el);
+  return new CSS2DObject(slot);
+};
+
 const label = (className: string, text: string, sub?: string) => {
   const el = document.createElement("div");
   el.className = className;
@@ -183,6 +251,9 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     host.appendChild(labels.domElement);
 
     const world = new THREE.Scene();
+    // Fog fades whatever sits far behind the point of focus into the page background, for depth.
+    const fog = new THREE.Fog(MAP_3D.depth.fogColor, 400, 1200);
+    world.fog = MAP_3D.depth.fog ? fog : null;
     world.add(new THREE.AmbientLight(0xffffff, 1.6));
     const sun = new THREE.DirectionalLight(0xffffff, 1.2);
     sun.position.set(200, 300, 400);
@@ -193,15 +264,19 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     controls.target.copy(HOME_TARGET);
     controls.enableDamping = true;
     controls.autoRotate = MAP_3D.autoRotate && !reduceMotion;
-    controls.autoRotateSpeed = 0.5;
+    controls.autoRotateSpeed = 0;
     controls.minDistance = 160;
     controls.maxDistance = 1400;
     let rotate = MAP_3D.autoRotate && !reduceMotion;
     let flying: { target: THREE.Vector3; distance: number } | null = null;
+    // After a while without input, the map starts drifting again.
+    let lastInput = performance.now();
     controls.addEventListener("start", () => {
       rotate = false;
       flying = null;
+      lastInput = performance.now();
     });
+    controls.addEventListener("end", () => (lastInput = performance.now()));
     const ease = reduceMotion ? 1 : 0.12;
 
     const at = (id: string) => {
@@ -220,7 +295,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     axis.material.transparent = true;
     axis.visible = showAxis;
     (showAxis ? [1995, 2005, 2015, 2025] : []).forEach((year) => {
-      const tick = new CSS2DObject(label("cm-3d-year", String(year)));
+      const tick = slotted(label("cm-3d-year", String(year)));
       tick.position.set(0, yearToY(year), 0);
       world.add(tick);
     });
@@ -232,6 +307,7 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
     const sphereGeometry = new THREE.SphereGeometry(1, 20, 14);
     const spheres = new Map<string, THREE.Mesh<THREE.SphereGeometry, THREE.MeshLambertMaterial>>();
     const eraLabels = new Map<string, HTMLElement>();
+    const spaced: Spaced[] = [];
     const eraMeshes = new Map<string, THREE.Mesh<THREE.SphereGeometry, THREE.MeshLambertMaterial>>();
     ERAS.forEach((era) => {
       const mesh = new THREE.Mesh(sphereGeometry, new THREE.MeshLambertMaterial({ color: MAP_3D.roles.color, transparent: true }));
@@ -240,10 +316,11 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       world.add(mesh);
       eraMeshes.set(era.key, mesh);
       const el = label("cm-3d-era", era.label, era.years);
-      const obj = new CSS2DObject(el);
+      const obj = slotted(el);
       obj.position.copy(mesh.position).add(new THREE.Vector3(0, -14, 0));
       world.add(obj);
       eraLabels.set(era.key, el);
+      spaced.push({ el, obj, weight: 0.35 });
     });
     const themeLabels = new Map<string, HTMLElement>();
     usedThemes.forEach((theme) => {
@@ -252,10 +329,11 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       el.tabIndex = 0;
       el.dataset.theme = theme;
       el.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && handlers.current.onGroup(theme));
-      const obj = new CSS2DObject(el);
+      const obj = slotted(el);
       obj.position.copy(at(`theme:${theme}`));
       world.add(obj);
       themeLabels.set(theme, el);
+      spaced.push({ el, obj, weight: 1 });
     });
     const nodeLabels = new Map<string, HTMLElement>();
     const labelObjects = new Map<string, CSS2DObject>();
@@ -267,11 +345,12 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       world.add(mesh);
       spheres.set(n.id, mesh);
       const el = label("cm-3d-label", n.title.length > 42 ? `${n.title.slice(0, 41).trimEnd()}…` : n.title);
-      const obj = new CSS2DObject(el);
+      const obj = slotted(el);
       obj.position.copy(mesh.position).add(new THREE.Vector3(0, 9, 0));
       world.add(obj);
       nodeLabels.set(n.id, el);
       labelObjects.set(n.id, obj);
+      spaced.push({ el, obj, weight: 1, story: true });
     });
 
     const segments = (list: Edge[]) => new THREE.BufferGeometry().setFromPoints(list.flatMap(([a, b]) => [at(a), at(b)]));
@@ -347,7 +426,10 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
         flying = view ?? { target: home.target.clone(), distance: home.position.distanceTo(home.target) };
         framed = view;
       }
+      if (!rotate && MAP_3D.autoRotate && !reduceMotion && !lit && performance.now() - lastInput > MAP_3D.depth.resumeDriftAfter * 1000) rotate = true;
       controls.autoRotate = rotate && !lit;
+      // Ease into the drift rather than starting at full speed.
+      controls.autoRotateSpeed += ((controls.autoRotate ? 0.5 : 0) - controls.autoRotateSpeed) * 0.02;
       if (flying) {
         controls.target.lerp(flying.target, ease);
         desired.copy(camera.position).sub(controls.target).setLength(flying.distance).add(controls.target);
@@ -374,8 +456,23 @@ const MindMap3D = forwardRef<MindMap3DHandle, Props>(function MindMap3D({ nodes,
       thread.visible = thread.material.opacity > 0;
       baseLines.visible = baseLines.material.opacity > 0;
       controls.update();
+      const focusDistance = camera.position.distanceTo(controls.target);
+      fog.near = focusDistance + MAP_3D.depth.fogStart;
+      fog.far = focusDistance + MAP_3D.depth.fogEnd;
       renderer.render(world, camera);
       labels.render(world, camera);
+      // Labels behind the point of focus soften and blur a little, like a shallow depth of field.
+      if (MAP_3D.depth.blurLabels) {
+        spaced.forEach(({ el, obj }) => {
+          const depth = el.classList.contains("is-sel") ? 0 : depthOf(obj, camera, focusDistance);
+          const key = depth.toFixed(2);
+          if (el.dataset.depth === key) return;
+          el.dataset.depth = key;
+          el.style.setProperty("--depth-o", String(1 - depth * 0.55));
+          el.style.setProperty("--depth-b", `${(depth * 1.4).toFixed(2)}px`);
+        });
+      }
+      spreadLabels(spaced, camera, host.clientWidth, host.clientHeight);
       frame = requestAnimationFrame(tick);
     };
     tick();

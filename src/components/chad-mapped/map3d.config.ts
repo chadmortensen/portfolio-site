@@ -27,5 +27,16 @@ export const MAP_3D = {
 
   /** How far stories sit from their role, and themes from the thread. */
   spread: { story: 34, theme: 170 },
+  /** Depth: fog fades what sits far behind the point of focus, and labels back there soften and blur slightly. */
+  depth: {
+    fog: true,
+    fogColor: "hsl(36, 45%, 98%)",
+    /** Distances past the point of focus where the fog starts and where it hides things completely. */
+    fogStart: -80,
+    fogEnd: 700,
+    blurLabels: true,
+    /** Seconds without input before the map starts drifting again. */
+    resumeDriftAfter: 8,
+  },
   camera: { distance: 720 },
 };

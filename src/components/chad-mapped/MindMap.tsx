@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
+import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { ArrowLeft, X, ZoomIn, ZoomOut } from "lucide-react";
 import { formatYears, nodeMeta, type MapNode } from "./types";
 import { ACROSS_ROLES, ERAS, eraOf, groupLabel, inGroup, type View } from "./groups";
@@ -30,14 +30,16 @@ type MindMapProps<T extends MapNode> = {
 
 type Sector = { key: string; label: string; sub: string; items: MapNode[] };
 
-const R_HUB = 200;
-const R_LEAF = 370;
-const MAP_W = 1420;
-const MAP_H = 1360;
 const VIEW_LABELS: Record<View, string> = { career: "Career", theme: "Themes", "3d": "3D" };
 
+type Dot = { x: number; y: number; d: number };
+const MORPH_MS = 750;
+const ENTER_MS = 2800;
+const prefersReducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/** Entrance delay for one element, read by the CSS animations. */
+const delay = (seconds: number) => ({ "--d": `${seconds.toFixed(2)}s` }) as CSSProperties;
+
 const truncate = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
-const polar = (r: number, a: number): [number, number] => [r * Math.cos(a), r * Math.sin(a)];
 const byYear = (a: MapNode, b: MapNode) => (a.years[0] ?? 0) - (b.years[0] ?? 0);
 const byYearDesc = (a: MapNode, b: MapNode) => byYear(b, a);
 
@@ -56,38 +58,75 @@ function buildSectors(nodes: MapNode[], view: View, themes: string[], showEmptyE
     .filter((s) => s.items.length);
 }
 
-function useRadialLayout(sectors: Sector[]) {
+/* Themes view: themes branch left and right of the centre, and their stories stack in columns with level labels. */
+const BR_HUB_OUT = 330; // outer edge of the theme boxes, either side of the centre
+const BR_LEAF_X = 380; // story dots
+const BR_CHARS = 24;
+const BR_CHAR_W = 7.9; // average width of a 15px label character
+const BR_LINE = 18;
+const BR_ROW_GAP = 12; // between stories in one theme
+const BR_GROUP_GAP = 30; // between themes on the same side
+const BR_HUB_H = 44; // a theme needs at least this much height for its box
+
+type BranchHub = Sector & { x: number; y: number; w: number; dir: 1 | -1 };
+type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; lines: string[]; hub: BranchHub };
+
+const hubWidth = (label: string, sub: string) => Math.max(label.length * 8.4, sub.length * 6.6) + 30;
+
+function useBranchLayout(sectors: Sector[]) {
   return useMemo(() => {
-    const weights = sectors.map((s) => Math.max(s.items.length, 2) + 0.7);
-    const unit = (2 * Math.PI) / (weights.reduce((a, b) => a + b, 0) || 1);
-    let start = -Math.PI / 2;
-    const hubs: (Sector & { x: number; y: number })[] = [];
-    const leaves: { node: MapNode; x: number; y: number; angle: number; hub: [number, number]; ctrl: [number, number] }[] = [];
-    const placeholders: { key: string; x: number; y: number; angle: number; hub: [number, number]; ctrl: [number, number] }[] = [];
-    sectors.forEach((sector, i) => {
-      const span = weights[i] * unit;
-      const mid = start + span / 2;
-      const hub = polar(i % 2 ? R_HUB + 62 : R_HUB - 10, mid);
-      const ctrl = polar((R_HUB + R_LEAF) / 2 - 10, mid);
-      hubs.push({ ...sector, x: hub[0], y: hub[1] });
-      const inner = span - 0.7 * unit;
-      const count = sector.items.length || 1;
-      const angleAt = (j: number) => start + 0.35 * unit + ((j + 0.5) * inner) / count;
-      if (!sector.items.length) {
-        const angle = angleAt(0);
-        const [x, y] = polar(R_LEAF, angle);
-        placeholders.push({ key: sector.key, x, y, angle, hub, ctrl });
-      }
-      sector.items.forEach((node, j) => {
-        const angle = angleAt(j);
-        const [x, y] = polar(R_LEAF, angle);
-        leaves.push({ node, x, y, angle, hub, ctrl });
-      });
-      start += span;
+    const groups = sectors.map((sector) => {
+      const lines = sector.items.map((n) => wrapTitle(n.title, BR_CHARS, 3));
+      const raw = lines.reduce((sum, l) => sum + l.length * BR_LINE + BR_ROW_GAP, 0) - BR_ROW_GAP;
+      return { sector, lines, raw, h: Math.max(raw, BR_HUB_H) };
     });
-    return { hubs, leaves, placeholders };
+    // Balance the two columns: the tallest themes are placed first, each on the shorter side, then each column
+    // keeps the usual theme order from top to bottom.
+    const sides: (typeof groups)[] = [[], []];
+    const heights = [0, 0];
+    [...groups].sort((a, b) => b.h - a.h).forEach((g) => {
+      const side = heights[0] <= heights[1] ? 0 : 1;
+      sides[side].push(g);
+      heights[side] += g.h + BR_GROUP_GAP;
+    });
+    sides.forEach((column) => column.sort((a, b) => groups.indexOf(a) - groups.indexOf(b)));
+    const hubs: BranchHub[] = [];
+    const leaves: BranchLeaf[] = [];
+    sides.forEach((column, si) => {
+      const dir = si ? -1 : 1;
+      let y = -(heights[si] - BR_GROUP_GAP) / 2;
+      column.forEach(({ sector, lines, raw, h }) => {
+        const w = hubWidth(sector.label, sector.sub);
+        const hub: BranchHub = { ...sector, x: dir * (BR_HUB_OUT - w / 2), y: y + h / 2, w, dir };
+        hubs.push(hub);
+        let row = y + (h - raw) / 2;
+        sector.items.forEach((node, j) => {
+          const height = lines[j].length * BR_LINE;
+          leaves.push({ node, x: dir * BR_LEAF_X, y: row + height / 2 - BR_LINE / 2 + 4, dir, lines: lines[j], hub });
+          row += height + BR_ROW_GAP;
+        });
+        y += h + BR_GROUP_GAP;
+      });
+    });
+    const reach = BR_LEAF_X + 14 + BR_CHARS * BR_CHAR_W;
+    const half = Math.max(...heights, 0) / 2;
+    return { hubs, leaves, bounds: { minX: -reach, maxX: reach, minY: -half - 20, maxY: half + 20 } };
   }, [sectors]);
 }
+
+/** Related stories: an arc that bows in toward the themes within a column, or swings through the middle between columns. */
+const chord = (a: { x: number; y: number; dir: number }, b: { x: number; y: number; dir: number }) => {
+  const midY = (a.y + b.y) / 2;
+  const cx = a.dir === b.dir ? a.x - a.dir * (40 + Math.abs(a.y - b.y) * 0.45) : 0;
+  const cy = a.dir === b.dir ? midY : midY * 0.4;
+  return `M${a.x} ${a.y}Q${cx} ${cy} ${b.x} ${b.y}`;
+};
+
+/** A curve that leaves `from` and arrives at `to` travelling sideways, like a mind-map branch. */
+const branch = ([x1, y1]: [number, number], [x2, y2]: [number, number]) => {
+  const mid = (x1 + x2) / 2;
+  return `M${x1} ${y1}C${mid} ${y1} ${mid} ${y2} ${x2} ${y2}`;
+};
 
 /* Career view: roles sit on one horizontal axis, newest on the left, and their stories branch above and below it. */
 const TL_STEP = 110; // between neighbouring stems (they alternate sides)
@@ -172,20 +211,19 @@ function useTimelineLayout(sectors: Sector[]) {
   }, [sectors]);
 }
 
-const labelTransform = (angle: number) => {
-  const flip = Math.cos(angle) < 0;
-  return { flip, deg: (angle * 180) / Math.PI + (flip ? 180 : 0) };
-};
-
 export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, showEmptyEras = false, renderDetail, initialView = "career", initialGroup = null }: MindMapProps<T>) {
   const [view, setView] = useState<View>(initialView);
   const [layout, setLayout] = useState<Layout>(() => (typeof window !== "undefined" && window.innerWidth < 600 ? "list" : "map"));
   const [selected, setSelected] = useState<string | null>(null);
   const [group, setGroup] = useState<string | null>(initialGroup);
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
-  const sectors = useMemo(() => buildSectors(nodes, view, themes, showEmptyEras), [nodes, view, themes, showEmptyEras]);
-  const { hubs, leaves, placeholders } = useRadialLayout(sectors);
-  const timeline = useTimelineLayout(sectors);
+  // Both 2D layouts are always worked out, so a view switch can frame the next view and morph into it.
+  const careerSectors = useMemo(() => buildSectors(nodes, "career", themes, showEmptyEras), [nodes, themes, showEmptyEras]);
+  const themeSectors = useMemo(() => buildSectors(nodes, "theme", themes, showEmptyEras), [nodes, themes, showEmptyEras]);
+  const sectors = view === "career" ? careerSectors : themeSectors;
+  const timeline = useTimelineLayout(careerSectors);
+  const branches = useBranchLayout(themeSectors);
+  const { hubs, leaves } = branches;
   // The 3D view groups by theme pills or by a role picked on its timeline.
   const groupView: View = view === "3d" ? (ERAS.some((e) => e.key === group) ? "career" : "theme") : view;
 
@@ -256,9 +294,17 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     setGroup(null);
   }, []);
   const changeView = (next: View) => {
+    if (next === view) return;
+    const morphing = layout === "map" && view !== "3d" && next !== "3d" && !prefersReducedMotion();
+    if (morphing) morphFrom.current = measureDots();
+    else if (next !== "3d") enter();
     setHistory([]);
     setView(next);
     setGroup(null);
+    if (next !== "3d" && typeof window !== "undefined") {
+      setVb(fitFor(next));
+      setZoomed2d(false);
+    }
   };
 
   /* keep the list clear of the floating title card on narrow screens */
@@ -275,10 +321,10 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   /* pan and zoom */
   const svgRef = useRef<SVGSVGElement>(null);
   const threeRef = useRef<MindMap3DHandle>(null);
-  const fit = useCallback((): ViewBox => {
+  const fitFor = useCallback((v: View): ViewBox => {
     const w = window.innerWidth;
     const h = window.innerHeight;
-    if (view === "career") {
+    if (v === "career") {
       // Fit the timeline's height, start it beside the title card, and let people pan along it.
       const { minX, minY, maxY } = timeline.bounds;
       const nav = 72;
@@ -287,11 +333,20 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       const left = w > 760 ? 420 : 16;
       return { x: minX - left * s, y: -(nav + (h - nav) / 2) * s + ((maxY + minY) / 2), w: w * s, h: h * s };
     }
-    const free = w - (w > 1100 ? 400 : 0);
-    const s = Math.max(MAP_W / Math.max(free, 720), MAP_H / h);
-    return { x: (-free * s) / 2, y: (-h * s) / 2 - 50, w: w * s, h: h * s };
-  }, [view, timeline.bounds]);
-  const [vb, setVb] = useState<ViewBox>(() => (typeof window === "undefined" ? { x: -710, y: -680, w: MAP_W, h: MAP_H } : fit()));
+    // Themes: centre the branches in the space beside the title card, below the navigation.
+    const { minX, maxX, minY, maxY } = branches.bounds;
+    const nav = 72;
+    const left = w > 760 ? 432 : 0;
+    const top = w > 760 ? nav : nav + 56;
+    const freeW = Math.max(w - left - 16, 320);
+    const freeH = Math.max(h - top - 40, 320);
+    const s = Math.max((maxX - minX + 60) / freeW, (maxY - minY + 60) / freeH, 0.6);
+    const cx = left + freeW / 2;
+    const cy = top + freeH / 2;
+    return { x: (minX + maxX) / 2 - cx * s, y: (minY + maxY) / 2 - cy * s, w: w * s, h: h * s };
+  }, [timeline.bounds, branches.bounds]);
+  const fit = useCallback(() => fitFor(view), [fitFor, view]);
+  const [vb, setVb] = useState<ViewBox>(() => (typeof window === "undefined" ? { x: -800, y: -450, w: 1600, h: 900 } : fit()));
   useEffect(() => {
     const onResize = () => {
       setVb(fit());
@@ -387,6 +442,62 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   const backTo = history.length ? history[history.length - 1] : { selected: null, group };
   const backLabel = `Back to ${backTo.selected ? (byId.get(backTo.selected)?.title ?? "previous") : backTo.group ? groupLabel(ERAS.some((e) => e.key === backTo.group) ? "career" : "theme", backTo.group) : "previous"}`;
   const nodeDim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
+  const hubDim = (key: string) => Boolean(focus && !nodes.some((n) => focus.has(n.id) && inGroup("theme", key, n)));
+
+  /* Morph: switching between Career and Themes slides each story dot from its old spot to its new one. */
+  const morphFrom = useRef<Map<string, Dot> | null>(null);
+  const [morph, setMorph] = useState<{ id: string; from: Dot; to: Dot }[] | null>(null);
+  const morphRef = useRef<HTMLDivElement>(null);
+  function measureDots() {
+    const out = new Map<string, Dot>();
+    svgRef.current?.querySelectorAll<SVGGElement>("[data-leaf]").forEach((g) => {
+      const circle = g.querySelector("circle");
+      if (!circle) return;
+      const r = circle.getBoundingClientRect();
+      out.set(g.dataset.leaf!, { x: r.left + r.width / 2, y: r.top + r.height / 2, d: r.width });
+    });
+    return out;
+  }
+  useLayoutEffect(() => {
+    const from = morphFrom.current;
+    morphFrom.current = null;
+    if (!from) return;
+    const list = [...measureDots()].flatMap(([id, to]) => {
+      const start = from.get(id);
+      return start ? [{ id, from: start, to }] : [];
+    });
+    setMorph(list.length ? list : null);
+  }, [view]);
+  useLayoutEffect(() => {
+    if (!morph) return;
+    const dots = [...(morphRef.current?.children ?? [])] as HTMLElement[];
+    const animations = dots.map((el, i) => {
+      const { from, to } = morph[i];
+      return el.animate(
+        [{ transform: `translate(${from.x}px, ${from.y}px) scale(${from.d / to.d})` }, { transform: `translate(${to.x}px, ${to.y}px) scale(1)` }],
+        { duration: MORPH_MS, delay: i * 12, easing: "cubic-bezier(0.65, 0, 0.35, 1)", fill: "both" },
+      );
+    });
+    let cancelled = false;
+    Promise.all(animations.map((a) => a.finished))
+      .then(() => !cancelled && setMorph(null))
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+      animations.forEach((a) => a.cancel());
+    };
+  }, [morph]);
+
+  /* Entrance: the map draws itself in when the page opens, or when a view appears without a morph. */
+  const [entering, setEntering] = useState(() => (prefersReducedMotion() ? 0 : 1)); // a count, so each entrance restarts the timer
+  function enter() {
+    if (!prefersReducedMotion()) setEntering((n) => n + 1);
+  }
+  useEffect(() => {
+    if (!entering) return;
+    const t = window.setTimeout(() => setEntering(0), ENTER_MS);
+    return () => window.clearTimeout(t);
+  }, [entering]);
 
   const itemButton = (node: T, inPanel = false) => (
     <button key={node.id} type="button" className="cm-item" aria-current={node.id === selected || undefined} onClick={() => (inPanel ? panelSelect(node.id) : select(node.id))}>
@@ -396,7 +507,14 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   );
 
   return (
-    <div className={`chad-mapped${active && nodes.length ? " has-details" : ""}`} ref={rootRef}>
+    <div className={`chad-mapped${active && nodes.length ? " has-details" : ""}${entering ? " is-entering" : ""}${morph ? " is-morphing" : ""}`} ref={rootRef}>
+      {morph && (
+        <div className="cm-morph" ref={morphRef} aria-hidden="true">
+          {morph.map((m) => (
+            <span key={m.id} className={`${m.id === selected ? "is-selected" : ""}${nodeDim(m.id)}`} style={{ width: m.to.d, height: m.to.d, marginLeft: -m.to.d / 2, marginTop: -m.to.d / 2 }} />
+          ))}
+        </div>
+      )}
       {view === "3d" ? (
         <Suspense fallback={<p className="cm-loading">Loading the 3D view…</p>}>
           <MindMap3D ref={threeRef} nodes={nodes} themes={themes} selected={selected} group={group} focus={focus} onSelect={select} onGroup={toggleGroup} onClear={close} onUserZoom={() => setZoomed3d(true)} />
@@ -417,76 +535,67 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           ) : (
           <>
           <g>
-            {hubs.map((h) => (
-              <path key={h.key} className="cm-edge" d={`M0 0L${h.x} ${h.y}`} />
+            {hubs.map((h, i) => (
+              <path key={h.key} className={`cm-edge cm-trunk${hubDim(h.key) ? " is-dim" : ""}`} pathLength={1} style={delay(0.15 + i * 0.07)} d={branch([h.dir * 36, 0], [h.x - (h.dir * h.w) / 2, h.y])} />
             ))}
-            {leaves.map((l) => (
-              <path key={l.node.id} className={`cm-edge${nodeDim(l.node.id)}`} d={`M${l.hub[0]} ${l.hub[1]}Q${l.ctrl[0]} ${l.ctrl[1]} ${l.x} ${l.y}`} />
-            ))}
-            {placeholders.map((p) => (
-              <path key={p.key} className={`cm-edge is-empty${focus ? " is-dim" : ""}`} d={`M${p.hub[0]} ${p.hub[1]}Q${p.ctrl[0]} ${p.ctrl[1]} ${p.x} ${p.y}`} />
+            {leaves.map((l, i) => (
+              <path key={l.node.id} className={`cm-edge cm-twig${nodeDim(l.node.id)}`} pathLength={1} style={delay(0.55 + i * 0.035)} d={branch([l.hub.x + (l.dir * l.hub.w) / 2, l.hub.y], [l.x, l.y])} />
             ))}
           </g>
           <g>
             {chords.map(([a, b]) => (
-              <path key={b!.node.id} className="cm-chord" d={`M${a!.x} ${a!.y}Q${(a!.x + b!.x) * 0.18} ${(a!.y + b!.y) * 0.18} ${b!.x} ${b!.y}`} />
+              <path key={b!.node.id} className="cm-chord" d={chord(a!, b!)} />
             ))}
           </g>
           <g>
-            {placeholders.map((p) => {
-              const { flip, deg } = labelTransform(p.angle);
-              return (
-                <g key={p.key} className={`cm-placeholder${focus ? " is-dim" : ""}`} transform={`translate(${p.x} ${p.y})`}>
-                  <circle r={5} />
-                  <text transform={`rotate(${deg})`} x={flip ? -12 : 12} dy={4} textAnchor={flip ? "end" : "start"}>No stories yet</text>
-                </g>
-              );
-            })}
-            {leaves.map((l) => {
-              const { flip, deg } = labelTransform(l.angle);
+            {leaves.map((l, i) => {
+              const isSel = l.node.id === selected;
+              const tx = l.x + l.dir * 14;
+              const ty = l.y + 4 - ((l.lines.length - 1) * BR_LINE) / 2;
               return (
                 <g
                   key={l.node.id}
-                  className={`cm-leaf${nodeDim(l.node.id)}${l.node.id === selected ? " is-selected" : ""}`}
+                  className={`cm-leaf cm-br-leaf${nodeDim(l.node.id)}${isSel ? " is-selected" : ""}`}
                   data-leaf={l.node.id}
-                  transform={`translate(${l.x} ${l.y})`}
+                  style={delay(0.8 + i * 0.035)}
                   tabIndex={0}
                   role="button"
                   aria-label={l.node.title}
                   onKeyDown={(e) => onKey(e, () => select(l.node.id))}
                 >
-                  <circle r={l.node.id === selected ? 9 : 6.5} />
-                  <text transform={`rotate(${deg})`} x={flip ? -14 : 14} dy={4} textAnchor={flip ? "end" : "start"}>
-                    {truncate(l.node.title, 46)}
+                  <circle cx={l.x} cy={l.y} r={isSel ? 8 : 6} />
+                  <text x={tx} y={ty} textAnchor={l.dir > 0 ? "start" : "end"}>
+                    {l.lines.map((line, j) => (
+                      <tspan key={j} x={tx} dy={j ? BR_LINE : 0}>{line}</tspan>
+                    ))}
                   </text>
+                  {/* a wider, invisible target so the whole label is easy to click */}
+                  <rect className="cm-tl-hit" x={l.dir > 0 ? l.x - 10 : l.x - 14 - BR_CHARS * BR_CHAR_W} y={ty - 14} width={BR_CHARS * BR_CHAR_W + 24} height={l.lines.length * BR_LINE + 12} />
                 </g>
               );
             })}
           </g>
           <g>
-            {hubs.map((h) => {
-              const width = Math.max(h.label.length * 7.8, h.sub.length * 6.2) + 30;
-              const dim = focus && !nodes.some((n) => focus.has(n.id) && inGroup(view, h.key, n));
-              return (
-                <g
-                  key={h.key}
-                  className={`cm-hub${group === h.key ? " is-on" : ""}${dim ? " is-dim" : ""}`}
-                  data-hub={h.key}
-                  transform={`translate(${h.x} ${h.y})`}
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`Theme: ${h.label}`}
-                  onKeyDown={(e) => onKey(e, () => toggleGroup(h.key))}
-                >
-                  <rect x={-width / 2} y={-20} width={width} height={40} rx={10} />
-                  <text textAnchor="middle" y={-1}>{h.label}</text>
-                  <text className="cm-count" textAnchor="middle" y={13}>{h.sub}</text>
-                </g>
-              );
-            })}
+            {hubs.map((h, i) => (
+              <g
+                key={h.key}
+                className={`cm-hub cm-br-hub${group === h.key ? " is-on" : ""}${hubDim(h.key) ? " is-dim" : ""}`}
+                data-hub={h.key}
+                style={delay(0.3 + i * 0.07)}
+                transform={`translate(${h.x} ${h.y})`}
+                tabIndex={0}
+                role="button"
+                aria-label={`Theme: ${h.label}`}
+                onKeyDown={(e) => onKey(e, () => toggleGroup(h.key))}
+              >
+                <rect x={-h.w / 2} y={-22} width={h.w} height={44} rx={11} />
+                <text textAnchor="middle" y={-1}>{h.label}</text>
+                <text className="cm-count" textAnchor="middle" y={14}>{h.sub}</text>
+              </g>
+            ))}
           </g>
           <g className="cm-me">
-            <circle r={46} />
+            <circle r={36} />
             <text textAnchor="middle" y={6}>Chad</text>
           </g>
           </>
@@ -520,7 +629,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           </div>
           {view !== "3d" && (
             <div className="cm-seg" role="group" aria-label="Layout">
-              <button type="button" aria-pressed={layout === "map"} onClick={() => setLayout("map")}>Map</button>
+              <button type="button" aria-pressed={layout === "map"} onClick={() => { if (layout !== "map") enter(); setLayout("map"); }}>Map</button>
               <button type="button" aria-pressed={layout === "list"} onClick={() => setLayout("list")}>List</button>
             </div>
           )}
@@ -664,6 +773,8 @@ function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, tog
   const { roles, stories, placeholders } = layout;
   const dim = (id: string) => (focus && !focus.has(id) ? " is-dim" : "");
   const roleDim = (key: string) => Boolean(focus && !nodes.some((n) => focus.has(n.id) && inGroup("career", key, n)));
+  // The entrance runs left to right: things further along the line start a little later.
+  const at = (x: number) => delay(0.1 + (Math.min(Math.max(x, 0), 2600) / 2600) * 1.3);
   return (
     <g className="cm-tl">
       {roles.map((r) => (
@@ -672,6 +783,8 @@ function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, tog
           className={`cm-tl-seg${group === r.key ? " is-on" : ""}${r.across ? " is-across" : ""}${roleDim(r.key) ? " is-dim" : ""}`}
           data-hub={r.key}
           d={`M${r.start} 0H${r.end}`}
+          pathLength={r.across ? undefined : 1}
+          style={at(r.start)}
         />
       ))}
       {placeholders.map((p) => (
@@ -686,7 +799,7 @@ function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, tog
         const up = s.y < 0;
         const textY = s.y + 4;
         return (
-          <g key={s.node.id} className={`cm-leaf${dim(s.node.id)}${isSel ? " is-selected" : ""}`} data-leaf={s.node.id} tabIndex={0} role="button" aria-label={s.node.title} onKeyDown={(e) => onKey(e, () => select(s.node.id))}>
+          <g key={s.node.id} className={`cm-leaf${up ? " is-up" : ""}${dim(s.node.id)}${isSel ? " is-selected" : ""}`} style={at(s.x - 60)} data-leaf={s.node.id} tabIndex={0} role="button" aria-label={s.node.title} onKeyDown={(e) => onKey(e, () => select(s.node.id))}>
             <path className="cm-edge" d={`M${s.x} ${up ? -4 : 4}V${s.y}`} />
             <circle cx={s.x} cy={s.y} r={isSel ? 8 : 6} />
             <text x={s.x + 13} y={textY}>
@@ -707,6 +820,7 @@ function TimelineMap({ layout, nodes, focus, selected, group, onKey, select, tog
             key={r.key}
             className={`cm-hub${group === r.key ? " is-on" : ""}${isDim ? " is-dim" : ""}${r.across ? " is-across" : ""}`}
             data-hub={r.key}
+            style={at(r.x - 40)}
             transform={`translate(${r.x} 0)`}
             tabIndex={0}
             role="button"
