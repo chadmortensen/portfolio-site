@@ -12,6 +12,8 @@ export const MAP_3D = {
   yearSpacing: 12,
   /** How far the horizontal thread weaves front to back, for depth. 0 makes it a straight line. */
   wave: 28,
+  /** How far the spiral sits from its centre line. Wider puts more of the map in front of and behind the focus. */
+  helixRadius: 170,
   /** Show the dashed year line (helix shape only). */
   showYearAxis: false,
   /** Slowly spin the map until the visitor drags it. */
@@ -26,6 +28,21 @@ export const MAP_3D = {
   accent: "hsl(210, 80%, 40%)",
 
   /** How far stories sit from their role, and themes from the thread. */
-  spread: { story: 34, theme: 170 },
-  camera: { distance: 720 },
+  spread: { story: 55, theme: 260, storyToTheme: 70 },
+  /** Depth: fog fades what sits far behind the point of focus, and labels back there soften and blur slightly. */
+  depth: {
+    fog: true,
+    fogColor: "hsl(36, 45%, 98%)",
+    /** Distances past the point of focus where the fog starts and where it hides things completely. */
+    fogStart: -100,
+    fogEnd: 620,
+    blurLabels: true,
+    /** Labels start to blur this far behind the point of focus, and reach full blur this much further back. */
+    blurStart: 0,
+    blurRange: 340,
+    maxBlur: 1.5,
+    /** Seconds without input before the map starts drifting again. */
+    resumeDriftAfter: 8,
+  },
+  camera: { distance: 900 },
 };

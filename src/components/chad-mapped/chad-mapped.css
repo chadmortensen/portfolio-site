@@ -206,8 +206,9 @@
 .cm-3d { position: absolute; inset: 0; }
 .cm-3d canvas { display: block; }
 .cm-3d-labels { position: absolute; inset: 0; cursor: grab; touch-action: none; }
-.cm-3d-labels > div { pointer-events: none; }
-.cm-3d-labels > .cm-3d-theme { pointer-events: auto; }
+.cm-3d-slot { pointer-events: none; }
+.cm-3d-slot > div { opacity: var(--depth-o, 1); filter: blur(var(--depth-b, 0px)); }
+.cm-3d-slot > .cm-3d-theme { pointer-events: auto; }
 .cm-3d-era { font-size: 12px; font-weight: 600; color: var(--cm-ink); text-align: center; line-height: 1.2; text-shadow: 0 0 4px #fff, 0 0 4px #fff; }
 .cm-3d-era small { display: block; font-size: 10px; font-weight: 400; color: var(--cm-muted); }
 .cm-3d-theme {
@@ -222,7 +223,7 @@
 .cm-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--cm-muted); }
 
 /* 3D: the focused branch stays sharp while the rest fades back */
-.cm-3d-labels > div { transition: opacity 0.4s; }
+.cm-3d-slot > div { transition: opacity 0.4s; }
 .cm-3d-label.is-sel { font-size: 14px; font-weight: 600; }
 
 /* 3D: role timeline along the bottom */
@@ -294,3 +295,49 @@
 /* Role or theme list: keep the eyebrow, name and count together */
 .cm-detail.is-group > h2 { margin-top: -0.6rem; }
 .cm-detail.is-group > h2 + p { margin-top: -0.7rem; }
+
+/* Themes view: branches curve out to columns of level story labels */
+.cm-br-leaf text { font-size: 14px; }
+.cm-br-hub text { font-size: 13.5px; }
+.cm-br-hub .cm-count { font-size: 11px; }
+.cm-trunk { stroke: var(--cm-node); stroke-width: 1.3; }
+.cm-twig { stroke-width: 1.1; }
+
+/* Morph between Career and Themes: dots travel on their own layer while the new view fades in around them */
+.cm-morph { position: fixed; inset: 0; z-index: 30; pointer-events: none; }
+.cm-morph span {
+  position: absolute; left: 0; top: 0; border-radius: 9999px; box-sizing: content-box;
+  background: var(--cm-node); box-shadow: 0 0 0 2px hsl(var(--surface-primary));
+}
+.cm-morph span.is-selected { background: var(--cm-accent); }
+.cm-morph span.is-dim { opacity: 0.16; }
+.is-morphing .cm-svg .cm-leaf circle { opacity: 0; }
+.is-morphing .cm-svg > g > g, .is-morphing .cm-svg > g > path, .is-morphing .cm-leaf text, .is-morphing .cm-leaf .cm-edge {
+  animation: cm-fade-in 0.45s 0.4s both;
+}
+.is-morphing .cm-svg .cm-hub, .is-morphing .cm-svg .cm-me { animation: cm-fade-in 0.4s 0.25s both; }
+
+/* Entrance: lines draw in, stems grow out of the line, then dots and labels appear */
+@keyframes cm-fade-in { from { opacity: 0; } }
+@keyframes cm-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes cm-grow { from { transform: scale(1, 0); } }
+@keyframes cm-pop { from { transform: scale(0); } }
+@keyframes cm-rise { from { opacity: 0; transform: translateY(4px); } }
+.is-entering .cm-tl-seg:not(.is-across) { stroke-dasharray: 1; animation: cm-draw 0.7s var(--d, 0s) cubic-bezier(0.4, 0, 0.2, 1) both; }
+.is-entering .cm-tl-seg.is-across { animation: cm-fade-in 0.6s var(--d, 0s) both; }
+.is-entering .cm-tl .cm-hub { animation: cm-fade-in 0.5s var(--d, 0s) both; }
+.is-entering .cm-tl .cm-leaf .cm-edge {
+  transform-box: fill-box; transform-origin: 50% 0;
+  animation: cm-grow 0.4s calc(var(--d, 0s) + 0.2s) cubic-bezier(0.2, 0, 0, 1) both;
+}
+.is-entering .cm-tl .cm-leaf.is-up .cm-edge { transform-origin: 50% 100%; }
+.is-entering .cm-leaf circle { transform-box: fill-box; transform-origin: center; animation: cm-pop 0.3s calc(var(--d, 0s) + 0.5s) cubic-bezier(0.3, 1.4, 0.6, 1) both; }
+.is-entering .cm-leaf text { animation: cm-rise 0.4s calc(var(--d, 0s) + 0.55s) both; }
+.is-entering .cm-me { animation: cm-fade-in 0.4s both; }
+.is-entering .cm-trunk, .is-entering .cm-twig { stroke-dasharray: 1; animation: cm-draw 0.55s var(--d, 0s) cubic-bezier(0.4, 0, 0.2, 1) both; }
+.is-entering .cm-svg > g > .cm-hub { animation: cm-fade-in 0.4s var(--d, 0s) both; }
+.is-entering .cm-br-leaf circle { animation-delay: var(--d, 0s); }
+.is-entering .cm-br-leaf text { animation-delay: calc(var(--d, 0s) + 0.05s); }
+@media (prefers-reduced-motion: reduce) {
+  .chad-mapped *, .cm-morph span { animation: none !important; }
+}
