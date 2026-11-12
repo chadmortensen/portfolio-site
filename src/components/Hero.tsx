@@ -576,7 +576,7 @@ const Hero = () => {
         </div>
       </div>
       <div className="hero-content fade-in">
-        <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col items-center justify-center px-4 pb-10 pt-28 text-center sm:px-6 lg:pt-32">
+        <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-4 pb-10 pt-28 text-center sm:px-6 lg:pt-32">
           <div className={`space-y-3 sm:space-y-4 ${heroTextPanelClass} ${heroTextClass}`}>
             <p className="text-title2">
               {heroGreeting}
@@ -586,8 +586,9 @@ const Hero = () => {
             </h1>
             <div className="mx-auto h-[3px] w-[7rem] bg-current"></div>
             <p className="hero-subhead mx-auto max-w-xxl">
-              Builds teams. Shapes strategy.<br />
-              Stays calm when it gets messy.
+              I build teams. Ship products. <br />
+              Stay calm when it gets messy.
+              <span className="hero-aside">Let's be real, it always gets a little messy.</span>
             </p>
             <p className="hero-companies">
               Brightside Health, Etsy, Walmart

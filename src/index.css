@@ -360,6 +360,16 @@ section.hero-photo-bg--overlay::after {
   line-height: 1.3;
 }
 
+.hero-aside {
+  display: block;
+  margin-top: 0.5em;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  opacity: 0.75;
+}
+
 .hero-companies {
   font-size: 1.2rem;
   font-weight: 500;
@@ -369,6 +379,7 @@ section.hero-photo-bg--overlay::after {
 @media (min-width: 768px) {
   .hero-subhead { font-size: 3rem; line-height: 1.15; }
   .hero-companies { font-size: 1.6rem; }
+  .hero-aside { font-size: 1.5rem; }
 }
 
 /* Soft scrim behind the text block, tinted opposite the text color */
