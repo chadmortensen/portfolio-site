@@ -64,8 +64,6 @@ const BR_LEAF_X = 330; // story dots
 const BR_CHARS = 38;
 const BR_CHAR_W = 7.2; // average width of a 14px label character
 const BR_LINE = 17;
-const BR_ROW_GAP = 10; // between stories in one theme
-const BR_GROUP_GAP = 30; // between themes on the same side
 const BR_HUB_H = 44; // a theme needs at least this much height for its box
 
 type BranchHub = Sector & { x: number; y: number; w: number; dir: 1 | -1 };
@@ -73,17 +71,46 @@ type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; lines: str
 const BR_DOT_STEP = 17; // between the dots of a closed theme
 
 /** How much the Themes view shows at once. TEMP: switchable from the URL while options are compared. */
-type ThemeMode = "full" | "quiet" | "demand";
+type ThemeMode = "full" | "quiet" | "demand" | "short" | "roomy";
+/* TEMP: draft short labels for the "short" option; these would move into the story data. */
+const SHORT: Record<string, string> = {
+  "actionable-north-star-vision": "Actionable north-star vision",
+  "career-framework-and-growth-plans": "Career frameworks",
+  "elevating-design-quality": "Elevating design quality",
+  "experimentation-and-testing": "Experimentation and testing",
+  "prioritization-frameworks": "Prioritization frameworks",
+  "research-backed-design-principles": "Research-backed principles",
+  "brightside-analytics-assistant-gpt": "Self-serve analytics assistant",
+  "brightside-coaching-designer-strategic-vision": "Coaching toward a long-term vision",
+  "brightside-deferred-medical-history-experiment": "Shorter signup experiment",
+  "brightside-intake-terminology": "In-the-moment signup help",
+  "brightside-intake-trust-reframe": "Intake built around trust",
+  "brightside-redefining-velocity-with-engineering": "Redefining velocity",
+  "brightside-research-waiver-legal": "Privacy-safe research framework",
+  "etsy-adaptive-search-buy-in": "Buy-in for adaptive search",
+  "etsy-coaching-manager-critique-conflict": "Coaching through a critique conflict",
+  "etsy-delivery-estimate-ranges": "Honest delivery estimates",
+  "etsy-expanded-scope-strategic-partnership": "From support to strategic partner",
+  "etsy-fulfillment-vision-workshop": "Etsy fulfillment vision",
+  "etsy-outcome-roadmap-infra-vs-features": "Aligning on shared outcomes",
+  "succeed-ibuilder-guided-shop-setup": "Guided shop setup",
+  "vegas-com-white-label-booking-sites": "White-label booking sites",
+  "visitalk-click-to-call-directory": "Find a name, click call",
+  "walmart-baby-registry-redesign": "Baby registry in one quarter",
+  "walmart-unified-cart-fulfillment": "Untangling shipping and pickup",
+};
 const THEME_MODE: ThemeMode = ((typeof window !== "undefined" && new URLSearchParams(window.location.search).get("t")) || "full") as ThemeMode;
 
 const hubWidth = (label: string, sub: string) => Math.max(label.length * 7.7, sub.length * 6.6) + 28;
 
 function useBranchLayout(sectors: Sector[], openKey: string | null) {
   return useMemo(() => {
-    const chars = THEME_MODE === "quiet" ? 44 : BR_CHARS;
+    const chars = THEME_MODE === "quiet" ? 44 : THEME_MODE === "short" ? 34 : BR_CHARS;
+    const BR_ROW_GAP = THEME_MODE === "short" ? 19 : THEME_MODE === "roomy" ? 24 : 10;
+    const BR_GROUP_GAP = THEME_MODE === "short" ? 44 : THEME_MODE === "roomy" ? 56 : 30;
     const groups = sectors.map((sector) => {
       const open = THEME_MODE !== "demand" || sector.key === openKey;
-      const lines = sector.items.map((n) => wrapTitle(n.title, chars, THEME_MODE === "quiet" ? 1 : 3));
+      const lines = sector.items.map((n) => (THEME_MODE === "short" ? [SHORT[n.id] ?? truncate(n.title, chars)] : wrapTitle(n.title, chars, THEME_MODE === "quiet" ? 1 : 3)));
       const raw = lines.reduce((sum, l) => sum + l.length * BR_LINE + BR_ROW_GAP, 0) - BR_ROW_GAP;
       return { sector, lines, raw, open, full: Math.max(raw, BR_HUB_H), h: open ? Math.max(raw, BR_HUB_H) : BR_HUB_H };
     });
@@ -359,9 +386,11 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     const top = w > 760 ? nav : nav + 56;
     const freeW = Math.max(w - left - 16, 320);
     const freeH = Math.max(h - top - 40, 320);
-    const s = Math.max((maxX - minX + 60) / freeW, (maxY - minY + 60) / freeH, 0.6);
+    const s = THEME_MODE === "roomy" ? Math.max((maxX - minX + 60) / freeW, 0.9) : Math.max((maxX - minX + 60) / freeW, (maxY - minY + 60) / freeH, 0.6);
     const cx = left + freeW / 2;
     const cy = top + freeH / 2;
+    // Roomy: taller than the window, so it opens at the top and scrolls down.
+    if (THEME_MODE === "roomy" && (maxY - minY + 60) / s > freeH) return { x: (minX + maxX) / 2 - cx * s, y: minY - 30 - top * s, w: w * s, h: h * s };
     return { x: (minX + maxX) / 2 - cx * s, y: (minY + maxY) / 2 - cy * s, w: w * s, h: h * s };
   }, [timeline.bounds, branches.bounds]);
   const fit = useCallback(() => fitFor(view), [fitFor, view]);
@@ -398,6 +427,11 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     if (!svg) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
+      if (view === "theme" && THEME_MODE === "roomy" && !e.ctrlKey) {
+        const rect = svg.getBoundingClientRect();
+        setVb((v) => ({ ...v, y: v.y + e.deltaY * Math.max(v.w / rect.width, v.h / rect.height) }));
+        return;
+      }
       if (view === "career" && !e.ctrlKey) {
         // The timeline reads left to right, so scrolling moves along it; pinch (or ctrl + scroll) zooms.
         const rect = svg.getBoundingClientRect();
