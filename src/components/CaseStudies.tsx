@@ -183,7 +183,7 @@ const CaseStudies = () => {
         }}
       >
         {caseStudies.map((study, index) => <article key={study.id} className="case-study-slide" aria-roledescription="slide" aria-label={`${index + 1} of ${caseStudies.length}: ${study.company || "Leadership"}`}>
-          <Link to={study.route} className="case-study-slide-image" aria-label={`View ${study.title} case study`} draggable={false}>
+          <Link to={study.route} className="case-study-slide-image" tabIndex={-1} aria-hidden="true" draggable={false}>
             <img src={study.image} alt={`${study.company || "Design leadership"} case study`} className="case-study-card-image" draggable={false} loading="lazy" />
           </Link>
           <div className="case-study-slide-copy">

@@ -694,6 +694,13 @@ h4 {
   transition: color 180ms ease;
 }
 .case-study-slide-link:hover { color: hsl(var(--accent-blue)); }
+/* Whole card is clickable: the "View" link stretches over the card */
+.case-study-slide { position: relative; transition: box-shadow 180ms ease, border-color 180ms ease; }
+.case-study-slide-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.case-study-slide:hover { border-color: hsl(var(--swiss-gray) / 0.5); box-shadow: 0 12px 28px hsl(var(--swiss-charcoal) / 0.12); }
+.case-study-slide:hover .case-study-slide-link { color: hsl(var(--accent-blue)); }
+.case-study-slide-link:focus-visible { outline: none; }
+.case-study-slide:has(.case-study-slide-link:focus-visible) { outline: 2px solid hsl(var(--accent-blue)); outline-offset: 2px; }
 .case-study-slide-image:focus-visible { outline-offset: -4px; }
 
 .case-study-gallery-controls {
@@ -734,7 +741,7 @@ h4 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .case-study-slide-link, .case-study-gallery-arrow { transition: none; }
+  .case-study-slide, .case-study-slide-link, .case-study-gallery-arrow { transition: none; }
 }
 
 .about-photo-frame {
