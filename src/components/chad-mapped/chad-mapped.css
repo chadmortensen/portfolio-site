@@ -335,9 +335,16 @@
 .is-entering .cm-leaf text { animation: cm-rise 0.4s calc(var(--d, 0s) + 0.55s) both; }
 .is-entering .cm-me { animation: cm-fade-in 0.4s both; }
 .is-entering .cm-trunk, .is-entering .cm-twig { stroke-dasharray: 1; animation: cm-draw 0.55s var(--d, 0s) cubic-bezier(0.4, 0, 0.2, 1) both; }
-.is-entering .cm-svg > g > .cm-hub { animation: cm-fade-in 0.4s var(--d, 0s) both; }
+.is-entering .cm-br .cm-hub { animation: cm-fade-in 0.4s var(--d, 0s) both; }
 .is-entering .cm-br-leaf circle { animation-delay: var(--d, 0s); }
 .is-entering .cm-br-leaf text { animation-delay: calc(var(--d, 0s) + 0.05s); }
 @media (prefers-reduced-motion: reduce) {
   .chad-mapped *, .cm-morph span { animation: none !important; }
 }
+
+/* Themes view, calmer options (TEMP while compared) */
+.cm-br-leaf.is-closed text { display: none; font-size: 13px; font-weight: 600; paint-order: stroke; stroke: hsl(var(--surface-primary)); stroke-width: 5px; stroke-linejoin: round; }
+.cm-br-leaf.is-closed:hover text, .cm-br-leaf.is-closed:focus-visible text { display: block; }
+.cm-br.is-quiet .cm-br-leaf text { fill: var(--cm-muted); font-size: 13.5px; }
+.cm-br.is-quiet .cm-br-leaf:hover text, .cm-br.is-quiet .cm-br-leaf.is-selected text { fill: var(--cm-ink); font-weight: 400; }
+.cm-br.is-quiet .cm-twig { stroke: var(--cm-faint); }

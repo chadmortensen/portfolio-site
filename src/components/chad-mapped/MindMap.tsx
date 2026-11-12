@@ -69,24 +69,34 @@ const BR_GROUP_GAP = 30; // between themes on the same side
 const BR_HUB_H = 44; // a theme needs at least this much height for its box
 
 type BranchHub = Sector & { x: number; y: number; w: number; dir: 1 | -1 };
-type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; lines: string[]; hub: BranchHub };
+type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; lines: string[]; hub: BranchHub; open: boolean };
+const BR_DOT_STEP = 17; // between the dots of a closed theme
+
+/** How much the Themes view shows at once. TEMP: switchable from the URL while options are compared. */
+type ThemeMode = "full" | "quiet" | "demand";
+const THEME_MODE: ThemeMode = ((typeof window !== "undefined" && new URLSearchParams(window.location.search).get("t")) || "full") as ThemeMode;
 
 const hubWidth = (label: string, sub: string) => Math.max(label.length * 7.7, sub.length * 6.6) + 28;
 
-function useBranchLayout(sectors: Sector[]) {
+function useBranchLayout(sectors: Sector[], openKey: string | null) {
   return useMemo(() => {
+    const chars = THEME_MODE === "quiet" ? 44 : BR_CHARS;
     const groups = sectors.map((sector) => {
-      const lines = sector.items.map((n) => wrapTitle(n.title, BR_CHARS, 3));
+      const open = THEME_MODE !== "demand" || sector.key === openKey;
+      const lines = sector.items.map((n) => wrapTitle(n.title, chars, THEME_MODE === "quiet" ? 1 : 3));
       const raw = lines.reduce((sum, l) => sum + l.length * BR_LINE + BR_ROW_GAP, 0) - BR_ROW_GAP;
-      return { sector, lines, raw, h: Math.max(raw, BR_HUB_H) };
+      return { sector, lines, raw, open, full: Math.max(raw, BR_HUB_H), h: open ? Math.max(raw, BR_HUB_H) : BR_HUB_H };
     });
     // Balance the two columns: the tallest themes are placed first, each on the shorter side, then each column
     // keeps the usual theme order from top to bottom.
     const sides: (typeof groups)[] = [[], []];
     const heights = [0, 0];
-    [...groups].sort((a, b) => b.h - a.h).forEach((g) => {
-      const side = heights[0] <= heights[1] ? 0 : 1;
+    // Balanced on the themes' full heights, so a theme never changes sides when it opens.
+    const weights = [0, 0];
+    [...groups].sort((a, b) => b.full - a.full).forEach((g) => {
+      const side = weights[0] <= weights[1] ? 0 : 1;
       sides[side].push(g);
+      weights[side] += g.full + BR_GROUP_GAP;
       heights[side] += g.h + BR_GROUP_GAP;
     });
     sides.forEach((column) => column.sort((a, b) => groups.indexOf(a) - groups.indexOf(b)));
@@ -95,23 +105,31 @@ function useBranchLayout(sectors: Sector[]) {
     sides.forEach((column, si) => {
       const dir = si ? -1 : 1;
       let y = -(heights[si] - BR_GROUP_GAP) / 2;
-      column.forEach(({ sector, lines, raw, h }) => {
+      column.forEach(({ sector, lines, raw, h, open }) => {
         const w = hubWidth(sector.label, sector.sub);
         const hub: BranchHub = { ...sector, x: dir * (BR_HUB_OUT - w / 2), y: y + h / 2, w, dir };
         hubs.push(hub);
         let row = y + (h - raw) / 2;
         sector.items.forEach((node, j) => {
+          if (!open) {
+            // A closed theme keeps its stories as a short row of dots beside it.
+            leaves.push({ node, x: dir * (BR_HUB_OUT + 20 + j * BR_DOT_STEP), y: hub.y, dir, lines: [truncate(node.title, 48)], hub, open });
+            return;
+          }
           const height = lines[j].length * BR_LINE;
-          leaves.push({ node, x: dir * BR_LEAF_X, y: row + height / 2 - BR_LINE / 2 + 4, dir, lines: lines[j], hub });
+          leaves.push({ node, x: dir * BR_LEAF_X, y: row + height / 2 - BR_LINE / 2 + 4, dir, lines: lines[j], hub, open });
           row += height + BR_ROW_GAP;
         });
         y += h + BR_GROUP_GAP;
       });
     });
-    const reach = BR_LEAF_X + 14 + BR_CHARS * BR_CHAR_W;
-    const half = Math.max(...heights, 0) / 2;
-    return { hubs, leaves, bounds: { minX: -reach, maxX: reach, minY: -half - 20, maxY: half + 20 } };
-  }, [sectors]);
+    const reach = BR_LEAF_X + 14 + chars * BR_CHAR_W;
+    // Framed for the tallest state (the biggest theme open), so opening a theme never moves the camera.
+    const grow = sides.map((column) => Math.max(0, ...column.map((g) => g.full - BR_HUB_H)));
+    const closed = sides.map((column) => column.length * (BR_HUB_H + BR_GROUP_GAP));
+    const half = THEME_MODE === "demand" ? Math.max(closed[0] + grow[0], closed[1] + grow[1]) / 2 : Math.max(...heights, 0) / 2;
+    return { hubs, leaves, chars, bounds: { minX: -reach, maxX: reach, minY: -half - 20, maxY: half + 20 } };
+  }, [sectors, openKey]);
 }
 
 /** Related stories: an arc that bows in toward the themes within a column, or swings through the middle between columns. */
@@ -222,7 +240,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   const themeSectors = useMemo(() => buildSectors(nodes, "theme", themes, showEmptyEras), [nodes, themes, showEmptyEras]);
   const sectors = view === "career" ? careerSectors : themeSectors;
   const timeline = useTimelineLayout(careerSectors);
-  const branches = useBranchLayout(themeSectors);
+  const openTheme = group && themes.includes(group) ? group : (selected && byId.get(selected)?.themes[0]) || null;
+  const branches = useBranchLayout(themeSectors, openTheme);
   const { hubs, leaves } = branches;
   // The 3D view groups by theme pills or by a role picked on its timeline.
   const groupView: View = view === "3d" ? (ERAS.some((e) => e.key === group) ? "career" : "theme") : view;
@@ -533,12 +552,12 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           {view === "career" ? (
             <TimelineMap layout={timeline} nodes={nodes} focus={focus} selected={selected} group={group} onKey={onKey} select={select} toggleGroup={toggleGroup} />
           ) : (
-          <>
+          <g className={`cm-br is-${THEME_MODE}`}>
           <g>
             {hubs.map((h, i) => (
               <path key={h.key} className={`cm-edge cm-trunk${hubDim(h.key) ? " is-dim" : ""}`} pathLength={1} style={delay(0.15 + i * 0.07)} d={branch([h.dir * 36, 0], [h.x - (h.dir * h.w) / 2, h.y])} />
             ))}
-            {leaves.map((l, i) => (
+            {leaves.filter((l) => l.open).map((l, i) => (
               <path key={l.node.id} className={`cm-edge cm-twig${nodeDim(l.node.id)}`} pathLength={1} style={delay(0.55 + i * 0.035)} d={branch([l.hub.x + (l.dir * l.hub.w) / 2, l.hub.y], [l.x, l.y])} />
             ))}
           </g>
@@ -550,12 +569,13 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           <g>
             {leaves.map((l, i) => {
               const isSel = l.node.id === selected;
-              const tx = l.x + l.dir * 14;
-              const ty = l.y + 4 - ((l.lines.length - 1) * BR_LINE) / 2;
+              const tx = l.open ? l.x + l.dir * 14 : l.x - l.dir * 6;
+              const ty = l.open ? l.y + 4 - ((l.lines.length - 1) * BR_LINE) / 2 : l.y - 16;
+              const labelW = branches.chars * BR_CHAR_W;
               return (
                 <g
                   key={l.node.id}
-                  className={`cm-leaf cm-br-leaf${nodeDim(l.node.id)}${isSel ? " is-selected" : ""}`}
+                  className={`cm-leaf cm-br-leaf${l.open ? "" : " is-closed"}${nodeDim(l.node.id)}${isSel ? " is-selected" : ""}`}
                   data-leaf={l.node.id}
                   style={delay(0.8 + i * 0.035)}
                   tabIndex={0}
@@ -570,7 +590,11 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                     ))}
                   </text>
                   {/* a wider, invisible target so the whole label is easy to click */}
-                  <rect className="cm-tl-hit" x={l.dir > 0 ? l.x - 10 : l.x - 14 - BR_CHARS * BR_CHAR_W} y={ty - 14} width={BR_CHARS * BR_CHAR_W + 24} height={l.lines.length * BR_LINE + 12} />
+                  {l.open ? (
+                    <rect className="cm-tl-hit" x={l.dir > 0 ? l.x - 10 : l.x - 14 - labelW} y={ty - 14} width={labelW + 24} height={l.lines.length * BR_LINE + 12} />
+                  ) : (
+                    <rect className="cm-tl-hit" x={l.x - BR_DOT_STEP / 2} y={l.y - 14} width={BR_DOT_STEP} height={28} />
+                  )}
                 </g>
               );
             })}
@@ -579,7 +603,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             {hubs.map((h, i) => (
               <g
                 key={h.key}
-                className={`cm-hub cm-br-hub${group === h.key ? " is-on" : ""}${hubDim(h.key) ? " is-dim" : ""}`}
+                className={`cm-hub cm-br-hub is-${THEME_MODE}${group === h.key ? " is-on" : ""}${hubDim(h.key) ? " is-dim" : ""}`}
                 data-hub={h.key}
                 style={delay(0.3 + i * 0.07)}
                 transform={`translate(${h.x} ${h.y})`}
@@ -589,8 +613,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                 onKeyDown={(e) => onKey(e, () => toggleGroup(h.key))}
               >
                 <rect x={-h.w / 2} y={-22} width={h.w} height={44} rx={11} />
-                <text textAnchor="middle" y={-1}>{h.label}</text>
-                <text className="cm-count" textAnchor="middle" y={14}>{h.sub}</text>
+                <text textAnchor="middle" y={THEME_MODE === "full" ? -1 : 5}>{h.label}</text>
+                {THEME_MODE === "full" && <text className="cm-count" textAnchor="middle" y={14}>{h.sub}</text>}
               </g>
             ))}
           </g>
@@ -598,7 +622,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             <circle r={36} />
             <text textAnchor="middle" y={6}>Chad</text>
           </g>
-          </>
+          </g>
           )}
         </svg>
       ) : (
