@@ -296,12 +296,12 @@
 .cm-detail.is-group > h2 { margin-top: -0.6rem; }
 .cm-detail.is-group > h2 + p { margin-top: -0.7rem; }
 
-/* Themes view: branches curve out to columns of level story labels */
-.cm-br-leaf text { font-size: 14px; }
+/* Themes view: branches curve out to staggered themes, each story one quiet line */
+.cm-br-leaf text { font-size: 15px; fill: var(--cm-muted); }
+.cm-br-leaf:hover text, .cm-br-leaf.is-selected text, .cm-br-leaf:focus-visible text { fill: var(--cm-ink); font-weight: 400; }
 .cm-br-hub text { font-size: 13.5px; }
-.cm-br-hub .cm-count { font-size: 11px; }
 .cm-trunk { stroke: var(--cm-node); stroke-width: 1.3; }
-.cm-twig { stroke-width: 1.1; }
+.cm-twig { stroke: var(--cm-faint); stroke-width: 1.2; }
 
 /* Morph between Career and Themes: dots travel on their own layer while the new view fades in around them */
 .cm-morph { position: fixed; inset: 0; z-index: 30; pointer-events: none; }
@@ -335,16 +335,9 @@
 .is-entering .cm-leaf text { animation: cm-rise 0.4s calc(var(--d, 0s) + 0.55s) both; }
 .is-entering .cm-me { animation: cm-fade-in 0.4s both; }
 .is-entering .cm-trunk, .is-entering .cm-twig { stroke-dasharray: 1; animation: cm-draw 0.55s var(--d, 0s) cubic-bezier(0.4, 0, 0.2, 1) both; }
-.is-entering .cm-br .cm-hub { animation: cm-fade-in 0.4s var(--d, 0s) both; }
+.is-entering .cm-svg > g > .cm-hub { animation: cm-fade-in 0.4s var(--d, 0s) both; }
 .is-entering .cm-br-leaf circle { animation-delay: var(--d, 0s); }
 .is-entering .cm-br-leaf text { animation-delay: calc(var(--d, 0s) + 0.05s); }
 @media (prefers-reduced-motion: reduce) {
   .chad-mapped *, .cm-morph span { animation: none !important; }
 }
-
-/* Themes view, calmer options (TEMP while compared) */
-.cm-br-leaf.is-closed text { display: none; font-size: 13px; font-weight: 600; paint-order: stroke; stroke: hsl(var(--surface-primary)); stroke-width: 5px; stroke-linejoin: round; }
-.cm-br-leaf.is-closed:hover text, .cm-br-leaf.is-closed:focus-visible text { display: block; }
-.cm-br.is-quiet .cm-br-leaf text { fill: var(--cm-muted); font-size: 13.5px; }
-.cm-br.is-quiet .cm-br-leaf:hover text, .cm-br.is-quiet .cm-br-leaf.is-selected text { fill: var(--cm-ink); font-weight: 400; }
-.cm-br.is-quiet .cm-twig { stroke: var(--cm-faint); }

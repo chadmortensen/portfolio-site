@@ -33,6 +33,7 @@ type Sector = { key: string; label: string; sub: string; items: MapNode[] };
 const VIEW_LABELS: Record<View, string> = { career: "Career", theme: "Themes", "3d": "3D" };
 
 type Dot = { x: number; y: number; d: number };
+const PANEL_CLEAR = 400; // px the Themes map slides left when the details panel opens over it
 const MORPH_MS = 750;
 const ENTER_MS = 2800;
 const prefersReducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -58,105 +59,64 @@ function buildSectors(nodes: MapNode[], view: View, themes: string[], showEmptyE
     .filter((s) => s.items.length);
 }
 
-/* Themes view: themes branch left and right of the centre, and their stories stack in columns with level labels. */
-const BR_HUB_OUT = 290; // outer edge of the theme boxes, either side of the centre
-const BR_LEAF_X = 330; // story dots
-const BR_CHARS = 38;
-const BR_CHAR_W = 7.2; // average width of a 14px label character
-const BR_LINE = 17;
-const BR_HUB_H = 44; // a theme needs at least this much height for its box
+/* Themes view: themes branch left and right of the centre, staggered in and out, and each story is one quiet line. */
+const BR_HUB_OUT = 280; // outer edge of the nearer theme boxes, either side of the centre
+const BR_STAGGER = 100; // every other theme sits this much further out
+const BR_LEAF_GAP = 30; // from a theme box to its story dots
+const BR_CHARS = 40; // titles are cut to one line
+const BR_CHAR_W = 7.4; // average width of a 15px label character
+const BR_LINE = 19;
+const BR_ROW_GAP = 17; // between stories in one theme
+const BR_GROUP_GAP = 60; // between themes on the same side
+const BR_HUB_H = 40; // a theme needs at least this much height for its box
 
 type BranchHub = Sector & { x: number; y: number; w: number; dir: 1 | -1 };
-type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; lines: string[]; hub: BranchHub; open: boolean };
-const BR_DOT_STEP = 17; // between the dots of a closed theme
+type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; label: string; w: number; hub: BranchHub };
 
-/** How much the Themes view shows at once. TEMP: switchable from the URL while options are compared. */
-type ThemeMode = "full" | "quiet" | "demand" | "short" | "roomy";
-/* TEMP: draft short labels for the "short" option; these would move into the story data. */
-const SHORT: Record<string, string> = {
-  "actionable-north-star-vision": "Actionable north-star vision",
-  "career-framework-and-growth-plans": "Career frameworks",
-  "elevating-design-quality": "Elevating design quality",
-  "experimentation-and-testing": "Experimentation and testing",
-  "prioritization-frameworks": "Prioritization frameworks",
-  "research-backed-design-principles": "Research-backed principles",
-  "brightside-analytics-assistant-gpt": "Self-serve analytics assistant",
-  "brightside-coaching-designer-strategic-vision": "Coaching toward a long-term vision",
-  "brightside-deferred-medical-history-experiment": "Shorter signup experiment",
-  "brightside-intake-terminology": "In-the-moment signup help",
-  "brightside-intake-trust-reframe": "Intake built around trust",
-  "brightside-redefining-velocity-with-engineering": "Redefining velocity",
-  "brightside-research-waiver-legal": "Privacy-safe research framework",
-  "etsy-adaptive-search-buy-in": "Buy-in for adaptive search",
-  "etsy-coaching-manager-critique-conflict": "Coaching through a critique conflict",
-  "etsy-delivery-estimate-ranges": "Honest delivery estimates",
-  "etsy-expanded-scope-strategic-partnership": "From support to strategic partner",
-  "etsy-fulfillment-vision-workshop": "Etsy fulfillment vision",
-  "etsy-outcome-roadmap-infra-vs-features": "Aligning on shared outcomes",
-  "succeed-ibuilder-guided-shop-setup": "Guided shop setup",
-  "vegas-com-white-label-booking-sites": "White-label booking sites",
-  "visitalk-click-to-call-directory": "Find a name, click call",
-  "walmart-baby-registry-redesign": "Baby registry in one quarter",
-  "walmart-unified-cart-fulfillment": "Untangling shipping and pickup",
-};
-const THEME_MODE: ThemeMode = ((typeof window !== "undefined" && new URLSearchParams(window.location.search).get("t")) || "full") as ThemeMode;
+const hubWidth = (label: string) => label.length * 7.7 + 28;
 
-const hubWidth = (label: string, sub: string) => Math.max(label.length * 7.7, sub.length * 6.6) + 28;
-
-function useBranchLayout(sectors: Sector[], openKey: string | null) {
+function useBranchLayout(sectors: Sector[]) {
   return useMemo(() => {
-    const chars = THEME_MODE === "quiet" ? 44 : THEME_MODE === "short" ? 34 : BR_CHARS;
-    const BR_ROW_GAP = THEME_MODE === "short" ? 19 : THEME_MODE === "roomy" ? 24 : 10;
-    const BR_GROUP_GAP = THEME_MODE === "short" ? 44 : THEME_MODE === "roomy" ? 56 : 30;
     const groups = sectors.map((sector) => {
-      const open = THEME_MODE !== "demand" || sector.key === openKey;
-      const lines = sector.items.map((n) => (THEME_MODE === "short" ? [SHORT[n.id] ?? truncate(n.title, chars)] : wrapTitle(n.title, chars, THEME_MODE === "quiet" ? 1 : 3)));
-      const raw = lines.reduce((sum, l) => sum + l.length * BR_LINE + BR_ROW_GAP, 0) - BR_ROW_GAP;
-      return { sector, lines, raw, open, full: Math.max(raw, BR_HUB_H), h: open ? Math.max(raw, BR_HUB_H) : BR_HUB_H };
+      const raw = sector.items.length * (BR_LINE + BR_ROW_GAP) - BR_ROW_GAP;
+      return { sector, raw, h: Math.max(raw, BR_HUB_H) };
     });
     // Balance the two columns: the tallest themes are placed first, each on the shorter side, then each column
     // keeps the usual theme order from top to bottom.
     const sides: (typeof groups)[] = [[], []];
     const heights = [0, 0];
-    // Balanced on the themes' full heights, so a theme never changes sides when it opens.
-    const weights = [0, 0];
-    [...groups].sort((a, b) => b.full - a.full).forEach((g) => {
-      const side = weights[0] <= weights[1] ? 0 : 1;
+    [...groups].sort((a, b) => b.h - a.h).forEach((g) => {
+      const side = heights[0] <= heights[1] ? 0 : 1;
       sides[side].push(g);
-      weights[side] += g.full + BR_GROUP_GAP;
       heights[side] += g.h + BR_GROUP_GAP;
     });
     sides.forEach((column) => column.sort((a, b) => groups.indexOf(a) - groups.indexOf(b)));
     const hubs: BranchHub[] = [];
     const leaves: BranchLeaf[] = [];
+    let reach = 0;
     sides.forEach((column, si) => {
       const dir = si ? -1 : 1;
       let y = -(heights[si] - BR_GROUP_GAP) / 2;
-      column.forEach(({ sector, lines, raw, h, open }) => {
-        const w = hubWidth(sector.label, sector.sub);
-        const hub: BranchHub = { ...sector, x: dir * (BR_HUB_OUT - w / 2), y: y + h / 2, w, dir };
+      column.forEach(({ sector, raw, h }, j) => {
+        const w = hubWidth(sector.label);
+        // Neighbouring themes alternate between a nearer and a further position, the two sides out of step.
+        const out = BR_HUB_OUT + ((j + si) % 2 ? BR_STAGGER : 0);
+        const hub: BranchHub = { ...sector, x: dir * (out - w / 2), y: y + h / 2, w, dir };
         hubs.push(hub);
         let row = y + (h - raw) / 2;
-        sector.items.forEach((node, j) => {
-          if (!open) {
-            // A closed theme keeps its stories as a short row of dots beside it.
-            leaves.push({ node, x: dir * (BR_HUB_OUT + 20 + j * BR_DOT_STEP), y: hub.y, dir, lines: [truncate(node.title, 48)], hub, open });
-            return;
-          }
-          const height = lines[j].length * BR_LINE;
-          leaves.push({ node, x: dir * BR_LEAF_X, y: row + height / 2 - BR_LINE / 2 + 4, dir, lines: lines[j], hub, open });
-          row += height + BR_ROW_GAP;
+        sector.items.forEach((node) => {
+          const label = wrapTitle(node.title, BR_CHARS, 1)[0].replace(/[,;:]…$/, "…");
+          const labelW = label.length * BR_CHAR_W;
+          leaves.push({ node, x: dir * (out + BR_LEAF_GAP), y: row + BR_LINE / 2, dir, label, w: labelW, hub });
+          reach = Math.max(reach, out + BR_LEAF_GAP + 14 + labelW);
+          row += BR_LINE + BR_ROW_GAP;
         });
         y += h + BR_GROUP_GAP;
       });
     });
-    const reach = BR_LEAF_X + 14 + chars * BR_CHAR_W;
-    // Framed for the tallest state (the biggest theme open), so opening a theme never moves the camera.
-    const grow = sides.map((column) => Math.max(0, ...column.map((g) => g.full - BR_HUB_H)));
-    const closed = sides.map((column) => column.length * (BR_HUB_H + BR_GROUP_GAP));
-    const half = THEME_MODE === "demand" ? Math.max(closed[0] + grow[0], closed[1] + grow[1]) / 2 : Math.max(...heights, 0) / 2;
-    return { hubs, leaves, chars, bounds: { minX: -reach, maxX: reach, minY: -half - 20, maxY: half + 20 } };
-  }, [sectors, openKey]);
+    const half = Math.max(...heights, 0) / 2;
+    return { hubs, leaves, bounds: { minX: -reach, maxX: reach, minY: -half - 20, maxY: half + 20 } };
+  }, [sectors]);
 }
 
 /** Related stories: an arc that bows in toward the themes within a column, or swings through the middle between columns. */
@@ -267,8 +227,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   const themeSectors = useMemo(() => buildSectors(nodes, "theme", themes, showEmptyEras), [nodes, themes, showEmptyEras]);
   const sectors = view === "career" ? careerSectors : themeSectors;
   const timeline = useTimelineLayout(careerSectors);
-  const openTheme = group && themes.includes(group) ? group : (selected && byId.get(selected)?.themes[0]) || null;
-  const branches = useBranchLayout(themeSectors, openTheme);
+  const branches = useBranchLayout(themeSectors);
   const { hubs, leaves } = branches;
   // The 3D view groups by theme pills or by a role picked on its timeline.
   const groupView: View = view === "3d" ? (ERAS.some((e) => e.key === group) ? "career" : "theme") : view;
@@ -386,11 +345,9 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     const top = w > 760 ? nav : nav + 56;
     const freeW = Math.max(w - left - 16, 320);
     const freeH = Math.max(h - top - 40, 320);
-    const s = THEME_MODE === "roomy" ? Math.max((maxX - minX + 60) / freeW, 0.9) : Math.max((maxX - minX + 60) / freeW, (maxY - minY + 60) / freeH, 0.6);
+    const s = Math.max((maxX - minX + 60) / freeW, (maxY - minY + 60) / freeH, 0.6);
     const cx = left + freeW / 2;
     const cy = top + freeH / 2;
-    // Roomy: taller than the window, so it opens at the top and scrolls down.
-    if (THEME_MODE === "roomy" && (maxY - minY + 60) / s > freeH) return { x: (minX + maxX) / 2 - cx * s, y: minY - 30 - top * s, w: w * s, h: h * s };
     return { x: (minX + maxX) / 2 - cx * s, y: (minY + maxY) / 2 - cy * s, w: w * s, h: h * s };
   }, [timeline.bounds, branches.bounds]);
   const fit = useCallback(() => fitFor(view), [fitFor, view]);
@@ -427,11 +384,6 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     if (!svg) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      if (view === "theme" && THEME_MODE === "roomy" && !e.ctrlKey) {
-        const rect = svg.getBoundingClientRect();
-        setVb((v) => ({ ...v, y: v.y + e.deltaY * Math.max(v.w / rect.width, v.h / rect.height) }));
-        return;
-      }
       if (view === "career" && !e.ctrlKey) {
         // The timeline reads left to right, so scrolling moves along it; pinch (or ctrl + scroll) zooms.
         const rect = svg.getBoundingClientRect();
@@ -552,6 +504,31 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     return () => window.clearTimeout(t);
   }, [entering]);
 
+  /* Themes: when the details panel would cover the theme being read, the map slides left to clear it. */
+  const focusKey = view === "theme" ? (group ?? selectedNode?.themes[0]) : undefined;
+  const coveredByPanel = layout === "map" && hubs.find((h) => h.key === focusKey)?.dir === 1 && typeof window !== "undefined" && window.innerWidth > 760;
+  const [slide, setSlide] = useState(0); // 0 to 1
+  const slideRef = useRef(0);
+  useEffect(() => {
+    const to = coveredByPanel ? 1 : 0;
+    const from = slideRef.current;
+    if (from === to) return;
+    if (prefersReducedMotion()) {
+      slideRef.current = to;
+      setSlide(to);
+      return;
+    }
+    const t0 = performance.now();
+    let frame = requestAnimationFrame(function step(now) {
+      const k = Math.min((now - t0) / 350, 1);
+      slideRef.current = from + (to - from) * (1 - (1 - k) ** 3);
+      setSlide(slideRef.current);
+      if (k < 1) frame = requestAnimationFrame(step);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [coveredByPanel]);
+  const slideX = typeof window === "undefined" ? 0 : slide * PANEL_CLEAR * (vb.w / window.innerWidth);
+
   const itemButton = (node: T, inPanel = false) => (
     <button key={node.id} type="button" className="cm-item" aria-current={node.id === selected || undefined} onClick={() => (inPanel ? panelSelect(node.id) : select(node.id))}>
       {node.title}
@@ -576,7 +553,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
         <svg
           ref={svgRef}
           className={`cm-svg${dragging ? " is-dragging" : ""}`}
-          viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
+          viewBox={`${vb.x + slideX} ${vb.y} ${vb.w} ${vb.h}`}
           role="group"
           aria-label={view === "career" ? "Mind map of career eras and stories" : "Mind map of themes and stories"}
           onPointerDown={onPointerDown}
@@ -586,12 +563,12 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           {view === "career" ? (
             <TimelineMap layout={timeline} nodes={nodes} focus={focus} selected={selected} group={group} onKey={onKey} select={select} toggleGroup={toggleGroup} />
           ) : (
-          <g className={`cm-br is-${THEME_MODE}`}>
+          <>
           <g>
             {hubs.map((h, i) => (
               <path key={h.key} className={`cm-edge cm-trunk${hubDim(h.key) ? " is-dim" : ""}`} pathLength={1} style={delay(0.15 + i * 0.07)} d={branch([h.dir * 36, 0], [h.x - (h.dir * h.w) / 2, h.y])} />
             ))}
-            {leaves.filter((l) => l.open).map((l, i) => (
+            {leaves.map((l, i) => (
               <path key={l.node.id} className={`cm-edge cm-twig${nodeDim(l.node.id)}`} pathLength={1} style={delay(0.55 + i * 0.035)} d={branch([l.hub.x + (l.dir * l.hub.w) / 2, l.hub.y], [l.x, l.y])} />
             ))}
           </g>
@@ -603,13 +580,11 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           <g>
             {leaves.map((l, i) => {
               const isSel = l.node.id === selected;
-              const tx = l.open ? l.x + l.dir * 14 : l.x - l.dir * 6;
-              const ty = l.open ? l.y + 4 - ((l.lines.length - 1) * BR_LINE) / 2 : l.y - 16;
-              const labelW = branches.chars * BR_CHAR_W;
+              const tx = l.x + l.dir * 14;
               return (
                 <g
                   key={l.node.id}
-                  className={`cm-leaf cm-br-leaf${l.open ? "" : " is-closed"}${nodeDim(l.node.id)}${isSel ? " is-selected" : ""}`}
+                  className={`cm-leaf cm-br-leaf${nodeDim(l.node.id)}${isSel ? " is-selected" : ""}`}
                   data-leaf={l.node.id}
                   style={delay(0.8 + i * 0.035)}
                   tabIndex={0}
@@ -617,18 +592,11 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                   aria-label={l.node.title}
                   onKeyDown={(e) => onKey(e, () => select(l.node.id))}
                 >
+                  <title>{l.node.title}</title>
                   <circle cx={l.x} cy={l.y} r={isSel ? 8 : 6} />
-                  <text x={tx} y={ty} textAnchor={l.dir > 0 ? "start" : "end"}>
-                    {l.lines.map((line, j) => (
-                      <tspan key={j} x={tx} dy={j ? BR_LINE : 0}>{line}</tspan>
-                    ))}
-                  </text>
+                  <text x={tx} y={l.y + 5} textAnchor={l.dir > 0 ? "start" : "end"}>{l.label}</text>
                   {/* a wider, invisible target so the whole label is easy to click */}
-                  {l.open ? (
-                    <rect className="cm-tl-hit" x={l.dir > 0 ? l.x - 10 : l.x - 14 - labelW} y={ty - 14} width={labelW + 24} height={l.lines.length * BR_LINE + 12} />
-                  ) : (
-                    <rect className="cm-tl-hit" x={l.x - BR_DOT_STEP / 2} y={l.y - 14} width={BR_DOT_STEP} height={28} />
-                  )}
+                  <rect className="cm-tl-hit" x={l.dir > 0 ? l.x - 10 : l.x - 24 - l.w} y={l.y - (BR_LINE + BR_ROW_GAP) / 2} width={l.w + 34} height={BR_LINE + BR_ROW_GAP} />
                 </g>
               );
             })}
@@ -637,7 +605,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             {hubs.map((h, i) => (
               <g
                 key={h.key}
-                className={`cm-hub cm-br-hub is-${THEME_MODE}${group === h.key ? " is-on" : ""}${hubDim(h.key) ? " is-dim" : ""}`}
+                className={`cm-hub cm-br-hub${group === h.key ? " is-on" : ""}${hubDim(h.key) ? " is-dim" : ""}`}
                 data-hub={h.key}
                 style={delay(0.3 + i * 0.07)}
                 transform={`translate(${h.x} ${h.y})`}
@@ -646,9 +614,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                 aria-label={`Theme: ${h.label}`}
                 onKeyDown={(e) => onKey(e, () => toggleGroup(h.key))}
               >
-                <rect x={-h.w / 2} y={-22} width={h.w} height={44} rx={11} />
-                <text textAnchor="middle" y={THEME_MODE === "full" ? -1 : 5}>{h.label}</text>
-                {THEME_MODE === "full" && <text className="cm-count" textAnchor="middle" y={14}>{h.sub}</text>}
+                <rect x={-h.w / 2} y={-BR_HUB_H / 2} width={h.w} height={BR_HUB_H} rx={11} />
+                <text textAnchor="middle" y={5}>{h.label}</text>
               </g>
             ))}
           </g>
@@ -656,7 +623,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             <circle r={36} />
             <text textAnchor="middle" y={6}>Chad</text>
           </g>
-          </g>
+          </>
           )}
         </svg>
       ) : (
