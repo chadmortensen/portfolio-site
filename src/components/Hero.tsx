@@ -590,7 +590,7 @@ const Hero = () => {
               Stay calm when it gets messy.
               <span className="hero-aside">Let's be real, it always gets a little messy.</span>
             </p>
-            <p className="hero-companies">
+            <p className="hero-companies !mt-8 md:!mt-12">
               Brightside Health, Etsy, Walmart
             </p>
           </div>
