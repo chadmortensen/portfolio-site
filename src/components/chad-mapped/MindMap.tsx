@@ -33,6 +33,7 @@ type Sector = { key: string; label: string; sub: string; items: MapNode[] };
 const VIEW_LABELS: Record<View, string> = { career: "Career", theme: "Themes", "3d": "3D" };
 
 type Dot = { x: number; y: number; d: number };
+const PANEL_CLEAR = 400; // px the Themes map slides left when the details panel opens over it
 const MORPH_MS = 750;
 const ENTER_MS = 2800;
 const prefersReducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -58,27 +59,27 @@ function buildSectors(nodes: MapNode[], view: View, themes: string[], showEmptyE
     .filter((s) => s.items.length);
 }
 
-/* Themes view: themes branch left and right of the centre, and their stories stack in columns with level labels. */
-const BR_HUB_OUT = 290; // outer edge of the theme boxes, either side of the centre
-const BR_LEAF_X = 330; // story dots
-const BR_CHARS = 38;
-const BR_CHAR_W = 7.2; // average width of a 14px label character
-const BR_LINE = 17;
-const BR_ROW_GAP = 10; // between stories in one theme
-const BR_GROUP_GAP = 30; // between themes on the same side
-const BR_HUB_H = 44; // a theme needs at least this much height for its box
+/* Themes view: themes branch left and right of the centre, staggered in and out, and each story is one quiet line. */
+const BR_HUB_OUT = 280; // outer edge of the nearer theme boxes, either side of the centre
+const BR_STAGGER = 100; // every other theme sits this much further out
+const BR_LEAF_GAP = 30; // from a theme box to its story dots
+const BR_CHARS = 40; // titles are cut to one line
+const BR_CHAR_W = 7.4; // average width of a 15px label character
+const BR_LINE = 19;
+const BR_ROW_GAP = 17; // between stories in one theme
+const BR_GROUP_GAP = 60; // between themes on the same side
+const BR_HUB_H = 40; // a theme needs at least this much height for its box
 
 type BranchHub = Sector & { x: number; y: number; w: number; dir: 1 | -1 };
-type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; lines: string[]; hub: BranchHub };
+type BranchLeaf = { node: MapNode; x: number; y: number; dir: 1 | -1; label: string; w: number; hub: BranchHub };
 
-const hubWidth = (label: string, sub: string) => Math.max(label.length * 7.7, sub.length * 6.6) + 28;
+const hubWidth = (label: string) => label.length * 7.7 + 28;
 
 function useBranchLayout(sectors: Sector[]) {
   return useMemo(() => {
     const groups = sectors.map((sector) => {
-      const lines = sector.items.map((n) => wrapTitle(n.title, BR_CHARS, 3));
-      const raw = lines.reduce((sum, l) => sum + l.length * BR_LINE + BR_ROW_GAP, 0) - BR_ROW_GAP;
-      return { sector, lines, raw, h: Math.max(raw, BR_HUB_H) };
+      const raw = sector.items.length * (BR_LINE + BR_ROW_GAP) - BR_ROW_GAP;
+      return { sector, raw, h: Math.max(raw, BR_HUB_H) };
     });
     // Balance the two columns: the tallest themes are placed first, each on the shorter side, then each column
     // keeps the usual theme order from top to bottom.
@@ -92,23 +93,27 @@ function useBranchLayout(sectors: Sector[]) {
     sides.forEach((column) => column.sort((a, b) => groups.indexOf(a) - groups.indexOf(b)));
     const hubs: BranchHub[] = [];
     const leaves: BranchLeaf[] = [];
+    let reach = 0;
     sides.forEach((column, si) => {
       const dir = si ? -1 : 1;
       let y = -(heights[si] - BR_GROUP_GAP) / 2;
-      column.forEach(({ sector, lines, raw, h }) => {
-        const w = hubWidth(sector.label, sector.sub);
-        const hub: BranchHub = { ...sector, x: dir * (BR_HUB_OUT - w / 2), y: y + h / 2, w, dir };
+      column.forEach(({ sector, raw, h }, j) => {
+        const w = hubWidth(sector.label);
+        // Neighbouring themes alternate between a nearer and a further position, the two sides out of step.
+        const out = BR_HUB_OUT + ((j + si) % 2 ? BR_STAGGER : 0);
+        const hub: BranchHub = { ...sector, x: dir * (out - w / 2), y: y + h / 2, w, dir };
         hubs.push(hub);
         let row = y + (h - raw) / 2;
-        sector.items.forEach((node, j) => {
-          const height = lines[j].length * BR_LINE;
-          leaves.push({ node, x: dir * BR_LEAF_X, y: row + height / 2 - BR_LINE / 2 + 4, dir, lines: lines[j], hub });
-          row += height + BR_ROW_GAP;
+        sector.items.forEach((node) => {
+          const label = wrapTitle(node.title, BR_CHARS, 1)[0].replace(/[,;:]…$/, "…");
+          const labelW = label.length * BR_CHAR_W;
+          leaves.push({ node, x: dir * (out + BR_LEAF_GAP), y: row + BR_LINE / 2, dir, label, w: labelW, hub });
+          reach = Math.max(reach, out + BR_LEAF_GAP + 14 + labelW);
+          row += BR_LINE + BR_ROW_GAP;
         });
         y += h + BR_GROUP_GAP;
       });
     });
-    const reach = BR_LEAF_X + 14 + BR_CHARS * BR_CHAR_W;
     const half = Math.max(...heights, 0) / 2;
     return { hubs, leaves, bounds: { minX: -reach, maxX: reach, minY: -half - 20, maxY: half + 20 } };
   }, [sectors]);
@@ -499,6 +504,31 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     return () => window.clearTimeout(t);
   }, [entering]);
 
+  /* Themes: when the details panel would cover the theme being read, the map slides left to clear it. */
+  const focusKey = view === "theme" ? (group ?? selectedNode?.themes[0]) : undefined;
+  const coveredByPanel = layout === "map" && hubs.find((h) => h.key === focusKey)?.dir === 1 && typeof window !== "undefined" && window.innerWidth > 760;
+  const [slide, setSlide] = useState(0); // 0 to 1
+  const slideRef = useRef(0);
+  useEffect(() => {
+    const to = coveredByPanel ? 1 : 0;
+    const from = slideRef.current;
+    if (from === to) return;
+    if (prefersReducedMotion()) {
+      slideRef.current = to;
+      setSlide(to);
+      return;
+    }
+    const t0 = performance.now();
+    let frame = requestAnimationFrame(function step(now) {
+      const k = Math.min((now - t0) / 350, 1);
+      slideRef.current = from + (to - from) * (1 - (1 - k) ** 3);
+      setSlide(slideRef.current);
+      if (k < 1) frame = requestAnimationFrame(step);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [coveredByPanel]);
+  const slideX = typeof window === "undefined" ? 0 : slide * PANEL_CLEAR * (vb.w / window.innerWidth);
+
   const itemButton = (node: T, inPanel = false) => (
     <button key={node.id} type="button" className="cm-item" aria-current={node.id === selected || undefined} onClick={() => (inPanel ? panelSelect(node.id) : select(node.id))}>
       {node.title}
@@ -523,7 +553,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
         <svg
           ref={svgRef}
           className={`cm-svg${dragging ? " is-dragging" : ""}`}
-          viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
+          viewBox={`${vb.x + slideX} ${vb.y} ${vb.w} ${vb.h}`}
           role="group"
           aria-label={view === "career" ? "Mind map of career eras and stories" : "Mind map of themes and stories"}
           onPointerDown={onPointerDown}
@@ -551,7 +581,6 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             {leaves.map((l, i) => {
               const isSel = l.node.id === selected;
               const tx = l.x + l.dir * 14;
-              const ty = l.y + 4 - ((l.lines.length - 1) * BR_LINE) / 2;
               return (
                 <g
                   key={l.node.id}
@@ -563,14 +592,11 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                   aria-label={l.node.title}
                   onKeyDown={(e) => onKey(e, () => select(l.node.id))}
                 >
+                  <title>{l.node.title}</title>
                   <circle cx={l.x} cy={l.y} r={isSel ? 8 : 6} />
-                  <text x={tx} y={ty} textAnchor={l.dir > 0 ? "start" : "end"}>
-                    {l.lines.map((line, j) => (
-                      <tspan key={j} x={tx} dy={j ? BR_LINE : 0}>{line}</tspan>
-                    ))}
-                  </text>
+                  <text x={tx} y={l.y + 5} textAnchor={l.dir > 0 ? "start" : "end"}>{l.label}</text>
                   {/* a wider, invisible target so the whole label is easy to click */}
-                  <rect className="cm-tl-hit" x={l.dir > 0 ? l.x - 10 : l.x - 14 - BR_CHARS * BR_CHAR_W} y={ty - 14} width={BR_CHARS * BR_CHAR_W + 24} height={l.lines.length * BR_LINE + 12} />
+                  <rect className="cm-tl-hit" x={l.dir > 0 ? l.x - 10 : l.x - 24 - l.w} y={l.y - (BR_LINE + BR_ROW_GAP) / 2} width={l.w + 34} height={BR_LINE + BR_ROW_GAP} />
                 </g>
               );
             })}
@@ -588,9 +614,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
                 aria-label={`Theme: ${h.label}`}
                 onKeyDown={(e) => onKey(e, () => toggleGroup(h.key))}
               >
-                <rect x={-h.w / 2} y={-22} width={h.w} height={44} rx={11} />
-                <text textAnchor="middle" y={-1}>{h.label}</text>
-                <text className="cm-count" textAnchor="middle" y={14}>{h.sub}</text>
+                <rect x={-h.w / 2} y={-BR_HUB_H / 2} width={h.w} height={BR_HUB_H} rx={11} />
+                <text textAnchor="middle" y={5}>{h.label}</text>
               </g>
             ))}
           </g>
