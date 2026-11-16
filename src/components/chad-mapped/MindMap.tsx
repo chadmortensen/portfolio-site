@@ -1,7 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { ArrowLeft, X, ZoomIn, ZoomOut } from "lucide-react";
 import { formatYears, nodeMeta, type MapNode } from "./types";
-import { ACROSS_ROLES, ERAS, eraOf, groupLabel, inGroup, type View } from "./groups";
+import { ACROSS_ROLES, ERAS, eraOf, eraYears, groupLabel, inGroup, type View } from "./groups";
 import type { MindMap3DHandle } from "./MindMap3D";
 import "./chad-mapped.css";
 
@@ -188,7 +188,7 @@ function useTimelineLayout(sectors: Sector[]) {
       if (across) cursor += 50;
       const era = ERAS.find((e) => e.key === sector.key);
       const title = era?.title ?? "";
-      const years = era ? `${era.start}–${era.end}` : sector.sub;
+      const years = era ? eraYears(era) : sector.sub;
       // The label box is sized to its longest line; its right side narrows into the role's line.
       const w = Math.max(sector.label.length * 8.6, title.length * 7, years.length * 6.6) + 32;
       const segStart = cursor;
@@ -680,7 +680,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
               >
                 <span className="cm-timeline-bar" />
                 {era.key}
-                <small>{era.years}</small>
+                {era.years && <small>{era.years}</small>}
               </button>
             );
           })}
@@ -779,7 +779,9 @@ type TimelineMapProps = {
 
 const eraEyebrow = (view: View, era?: (typeof ERAS)[number]) => {
   if (!era) return view === "3d" ? "Era" : "Role";
-  return view === "3d" ? `Era · ${era.years}` : `${era.title ?? "Role"} · ${era.start}–${era.end}`;
+  const years = eraYears(era);
+  if (view === "3d") return years ? `Era · ${years}` : "Era";
+  return [era.title ?? "Role", years].filter(Boolean).join(" · ");
 };
 
 /** A rounded box whose top and bottom edges curve in and meet the timeline at the right. */

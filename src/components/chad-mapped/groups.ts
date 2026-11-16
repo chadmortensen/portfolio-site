@@ -2,36 +2,35 @@ import type { MapNode } from "./types";
 
 export type View = "theme" | "career" | "3d";
 
-export type Era = { key: string; title?: string; label: string; years: string; start: number; end: number; hidden?: boolean };
+export type Era = { key: string; title?: string; label: string; years: string; start: number; end: number; undated?: boolean };
 
 /**
- * Every role, oldest first. Roles marked `hidden` stay in the data but are left off the public site
- * (career map, home career strip, 3D view) so the site leads with the leadership years, Walmart onward.
- * Remove `hidden` from a role to bring it, and its stories, back.
+ * Every role, oldest first. Roles marked `undated` show without their years anywhere on the site
+ * (`years` is blanked below; `start`/`end` still set their order and length on the map), so the site
+ * doesn't add up to a total career length. Their stories lose their years too (see publicNodes).
  */
-export const ALL_ERAS: Era[] = [
-  { key: "SoftBank", label: "SoftBank", years: "1995–97", start: 1995, end: 1997, hidden: true },
-  { key: "iTravel", label: "iTravel Partners", years: "1997–99", start: 1997, end: 1999, hidden: true },
-  { key: "Visitalk", title: "Designer", label: "Visitalk", years: "1999–2001", start: 1999, end: 2001, hidden: true },
-  { key: "Succeed", title: "Sr. Designer", label: "Succeed Corp.", years: "2002–03", start: 2002, end: 2003, hidden: true },
-  { key: "Vegas.com", title: "Manager", label: "Vegas.com", years: "2004–12", start: 2004, end: 2012, hidden: true },
+const ALL_ERAS: Era[] = [
+  { key: "SoftBank", label: "SoftBank", years: "1995–97", start: 1995, end: 1997, undated: true },
+  { key: "iTravel", label: "iTravel Partners", years: "1997–99", start: 1997, end: 1999, undated: true },
+  { key: "Visitalk", title: "Designer", label: "Visitalk", years: "1999–2001", start: 1999, end: 2001, undated: true },
+  { key: "Succeed", title: "Sr. Designer", label: "Succeed Corp.", years: "2002–03", start: 2002, end: 2003, undated: true },
+  { key: "Vegas.com", title: "Manager", label: "Vegas.com", years: "2004–12", start: 2004, end: 2012, undated: true },
   { key: "Walmart", title: "Group Manager", label: "Walmart", years: "2012–21", start: 2012, end: 2021 },
   { key: "Etsy", title: "Director", label: "Etsy", years: "2021–23", start: 2021, end: 2023 },
   { key: "Brightside", title: "Director / Head of Design", label: "Brightside Health", years: "2023–25", start: 2023, end: 2025 },
 ];
 
-/** The roles shown on the site. */
-export const ERAS: Era[] = ALL_ERAS.filter((e) => !e.hidden);
-const HIDDEN_ROLES = new Set(ALL_ERAS.filter((e) => e.hidden).map((e) => e.key));
+/** Years before this are never shown, on roles or stories. */
+export const FIRST_DATED_YEAR = 2012;
 
-/**
- * The stories shown on the site: drops stories that only come from hidden roles, and takes hidden roles
- * off the company list of stories that span several roles.
- */
-export const visibleNodes = <T extends MapNode>(nodes: T[]): T[] =>
-  nodes
-    .filter((n) => !n.companies.length || n.companies.some((c) => !HIDDEN_ROLES.has(c)))
-    .map((n) => ({ ...n, companies: n.companies.filter((c) => !HIDDEN_ROLES.has(c)) }));
+export const ERAS: Era[] = ALL_ERAS.map((e) => (e.undated ? { ...e, years: "" } : e));
+
+/** "2012–2021", or "" for an undated role. */
+export const eraYears = (era: Era) => (era.undated ? "" : `${era.start}–${era.end}`);
+
+/** The stories as the site shows them: years before FIRST_DATED_YEAR are dropped. */
+export const publicNodes = <T extends MapNode>(nodes: T[]): T[] =>
+  nodes.map((n) => ({ ...n, years: n.years.filter((y) => y >= FIRST_DATED_YEAR) }));
 
 export const ACROSS_ROLES = "Across roles";
 

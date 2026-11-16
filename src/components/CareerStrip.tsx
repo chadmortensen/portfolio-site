@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import { ERAS, visibleNodes } from "@/components/chad-mapped/groups";
+import { ERAS } from "@/components/chad-mapped/groups";
 import type { PublicData } from "@/components/chad-mapped/types";
 import "./career-strip.css";
 
@@ -12,7 +12,7 @@ const ROLE_STEP_MS = 650;
 const MIN_THEME_SIZE = 3;
 const SKIP_THEMES = new Set(["Other notes"]);
 
-/** The roles on the timeline: the ones with a title on the map, most recent first, back to the oldest role that isn't hidden. */
+/** The roles on the timeline: the ones with a title on the map, most recent first, back to Visitalk. Older roles show no years. */
 const ROLES = ERAS.filter((e) => e.title).reverse().map((e) => ({
   key: e.key,
   title: e.title!,
@@ -34,7 +34,7 @@ function useThemes() {
   }, []);
   return useMemo(() => {
     if (!data) return [];
-    return data.themes.filter((t) => !SKIP_THEMES.has(t) && visibleNodes(data.nodes).filter((n) => n.themes.includes(t)).length >= MIN_THEME_SIZE);
+    return data.themes.filter((t) => !SKIP_THEMES.has(t) && data.nodes.filter((n) => n.themes.includes(t)).length >= MIN_THEME_SIZE);
   }, [data]);
 }
 
@@ -106,11 +106,11 @@ export function useCareerStrip() {
         <ol className="cs-roles" aria-label="Career timeline">
           {ROLES.map((r, i) => (
             <li key={r.key} className="cs-role" style={{ "--cs-i": i } as CSSProperties}>
-              <Link to={mapLink("role", r.key)} className="cs-link" aria-label={`${r.key}, ${r.title}, ${r.years}: see the stories from this role`}>
+              <Link to={mapLink("role", r.key)} className="cs-link" aria-label={`${[r.key, r.title, r.years].filter(Boolean).join(", ")}: see the stories from this role`}>
                 <span className="cs-box">
                   <span className="cs-box-body">
                     <span className="cs-company">{r.key}</span>
-                    <span className="cs-years">{r.years}</span>
+                    {r.years && <span className="cs-years">{r.years}</span>}
                   </span>
                   <Neck />
                 </span>

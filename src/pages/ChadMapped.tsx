@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ACROSS_ROLES, ERAS, visibleNodes } from "@/components/chad-mapped/groups";
+import { ACROSS_ROLES, ERAS, publicNodes } from "@/components/chad-mapped/groups";
 import Navigation from "@/components/Navigation";
 import { MindMap } from "@/components/chad-mapped/MindMap";
 import { PublicDetail, publicIntro } from "@/components/chad-mapped/PublicDetail";
@@ -8,8 +8,7 @@ import type { PublicData } from "@/components/chad-mapped/types";
 import publicData from "../../data/chad-mapped.json";
 
 const raw = publicData as PublicData;
-const nodes = visibleNodes(raw.nodes);
-const data: PublicData = { ...raw, nodes, themes: raw.themes.filter((t) => nodes.some((n) => n.themes.includes(t))) };
+const data: PublicData = { ...raw, nodes: publicNodes(raw.nodes) };
 
 /** Links from the home page land on a role (?role=Etsy) or a theme (?theme=Growing designers). */
 const useStartingPoint = () => {
