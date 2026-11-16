@@ -1,5 +1,6 @@
 
-import { Mail, Linkedin, Phone, MapPin } from "lucide-react";
+import { Mail, Linkedin, Phone, MapPin, FileText } from "lucide-react";
+import { RESUME_URL } from "@/lib/resume";
 
 const Contact = () => {
   return (
@@ -58,6 +59,17 @@ const Contact = () => {
               <div className="text-left">
                 {/* <h3 className="text-body text-text-primary font-medium mb-1">Location</h3> */}
                 <p className="text-body text-text-secondary">Portland, Oregon</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <div className="flex-shrink-0">
+                <FileText size={24} className="text-accent-blue" />
+              </div>
+              <div className="text-left">
+                <a href={RESUME_URL} target="_blank" rel="noopener" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
+                  Download my résumé (PDF)
+                </a>
               </div>
             </div>
           </div>

@@ -1,8 +1,9 @@
-import { Briefcase, Calendar, CircleMinus, CirclePlus } from "lucide-react";
+import { Briefcase, Calendar, CircleMinus, CirclePlus, Download } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { mapLink, useCareerStrip } from "@/components/CareerStrip";
 import { Button } from "@/components/ui/button";
+import { RESUME_URL } from "@/lib/resume";
 
 const Experience = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -131,6 +132,12 @@ const Experience = () => {
                   <CirclePlus size={16} className="-mr-[0.2rem]" />
                 </>
               )}
+            </Button>
+            <Button asChild variant="secondary" className="border">
+              <a href={RESUME_URL} target="_blank" rel="noopener" aria-label="Download résumé (PDF, opens in a new tab)">
+                Download PDF
+                <Download size={16} className="-mr-[0.2rem]" aria-hidden="true" />
+              </a>
             </Button>
           </div>
         </div>

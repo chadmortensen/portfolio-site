@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { navigateToSection } from "@/lib/section-navigation";
+import { RESUME_URL } from "@/lib/resume";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -166,6 +167,17 @@ const Navigation = () => {
             </button>
           )
         )}
+        <a
+          href={RESUME_URL}
+          target="_blank"
+          rel="noopener"
+          aria-label="Résumé (PDF, opens in a new tab)"
+          className={`${itemClass} text-[hsl(220_9%_46%)] hover:text-text-primary`}
+        >
+          {/* Icon only on narrow phones so the pill fits. */}
+          <span className="hidden min-[400px]:inline">Résumé</span>
+          <Download size={14} aria-hidden="true" />
+        </a>
       </div>
     </nav>
   );
