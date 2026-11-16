@@ -154,7 +154,7 @@ const ChadMappedEditor = () => {
             nodes={data.publicData.nodes}
             themes={data.publicData.themes}
             title="Chad, mapped"
-            subtitle="30 years in design, 14 leading teams, told through the stories behind the work."
+            subtitle="13+ years leading design teams, told through the stories behind the work."
             controls={controls}
             note={note}
             intro={publicIntro(data.publicData.nodes.length)}

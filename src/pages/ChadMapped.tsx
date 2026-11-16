@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ACROSS_ROLES, ERAS } from "@/components/chad-mapped/groups";
+import { ACROSS_ROLES, ERAS, visibleNodes } from "@/components/chad-mapped/groups";
 import Navigation from "@/components/Navigation";
 import { MindMap } from "@/components/chad-mapped/MindMap";
 import { PublicDetail, publicIntro } from "@/components/chad-mapped/PublicDetail";
 import type { PublicData } from "@/components/chad-mapped/types";
 import publicData from "../../data/chad-mapped.json";
 
-const data = publicData as PublicData;
+const raw = publicData as PublicData;
+const nodes = visibleNodes(raw.nodes);
+const data: PublicData = { ...raw, nodes, themes: raw.themes.filter((t) => nodes.some((n) => n.themes.includes(t))) };
 
 /** Links from the home page land on a role (?role=Etsy) or a theme (?theme=Growing designers). */
 const useStartingPoint = () => {
@@ -35,7 +37,7 @@ const ChadMapped = () => {
           initialGroup={start.group}
           themes={data.themes}
           title="Chad, mapped"
-          subtitle="30 years in design, 14 leading teams, told through the stories behind the work."
+          subtitle="13+ years leading design teams, told through the stories behind the work."
           note={<p className="cm-note">This started as an experiment. I add stories as I write them, so expect it to grow and change.</p>}
           intro={publicIntro(data.nodes.length)}
           empty={<p className="cm-muted">Stories are on their way. Check back soon.</p>}

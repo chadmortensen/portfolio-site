@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import { ERAS } from "@/components/chad-mapped/groups";
+import { ERAS, visibleNodes } from "@/components/chad-mapped/groups";
 import type { PublicData } from "@/components/chad-mapped/types";
 import "./career-strip.css";
 
@@ -12,7 +12,7 @@ const ROLE_STEP_MS = 650;
 const MIN_THEME_SIZE = 3;
 const SKIP_THEMES = new Set(["Other notes"]);
 
-/** The roles on the timeline: the ones with a title on the map, most recent first, back to Visitalk. */
+/** The roles on the timeline: the ones with a title on the map, most recent first, back to the oldest role that isn't hidden. */
 const ROLES = ERAS.filter((e) => e.title).reverse().map((e) => ({
   key: e.key,
   title: e.title!,
@@ -34,7 +34,7 @@ function useThemes() {
   }, []);
   return useMemo(() => {
     if (!data) return [];
-    return data.themes.filter((t) => !SKIP_THEMES.has(t) && data.nodes.filter((n) => n.themes.includes(t)).length >= MIN_THEME_SIZE);
+    return data.themes.filter((t) => !SKIP_THEMES.has(t) && visibleNodes(data.nodes).filter((n) => n.themes.includes(t)).length >= MIN_THEME_SIZE);
   }, [data]);
 }
 
