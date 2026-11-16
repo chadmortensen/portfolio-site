@@ -10,7 +10,7 @@ const Experience = () => {
   
   const experiences = [
     {
-      title: "Head of Product Design",
+      title: "Director of Product Design",
       company: "Brightside Health",
       period: "Aug 2023 - June 2025",
       location: "Portland, OR",
@@ -36,7 +36,7 @@ const Experience = () => {
       ]
     },
     {
-      title: "Senior Manager II",
+      title: "Group Design Manager",
       company: "Walmart eCommerce",
       period: "Oct 2016 - April 2021",
       location: "Portland, OR",
@@ -53,8 +53,8 @@ const Experience = () => {
           ]
         },
         {
-          title: "Routine Consumables",
-          period: "Oct 2016 - Feb 2020",
+          title: "Practice Area Head - Routine Consumables",
+          period: "March 2019 - Feb 2020",
           description: "Led a cross-functional design team focused on high-frequency consumables and registry experiences.",
           achievements: [
             "Conducted data-driven discovery and executed a complete rebuild of Walmart's baby registry product, resulting in increased engagement and improved UX",
@@ -62,8 +62,8 @@ const Experience = () => {
           ]
         },
         {
-          title: "Fashion",
-          period: "Oct 2016 - Feb 2020",
+          title: "Practice Area Head - Fashion",
+          period: "Oct 2016 - March 2019",
           description: "Directed design strategy for Walmart.com's fashion vertical, transforming how customers discover and shop for apparel.",
           achievements: [
             "Operated as a lean startup within Walmart, using customer insights, rapid experimentation, and iterative design to shape a modern fashion experience",
@@ -75,7 +75,7 @@ const Experience = () => {
     {
       title: "Sr. Manager - Mobile Apps",
       company: "Sam's Club",
-      period: "Oct 2013 - Oct 2016",
+      period: "Oct 2012 - Oct 2016",
       location: "Portland, OR",
       description: "Managed UX for Sam's Club iOS/Android apps, in-store digital tools, and B2B features.",
       achievements: [
