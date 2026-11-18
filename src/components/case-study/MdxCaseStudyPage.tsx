@@ -1,4 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { ExecutiveSummary } from "./ExecutiveSummary";
 import { cn } from "@/lib/utils";
 import {
@@ -43,6 +45,12 @@ type CaseStudyImageProps = {
   src: string;
   alt: string;
   heightPercent?: string;
+  /** Image width as a percent of its column, centered. */
+  widthPercent?: string | number;
+  /** Light border and soft shadow, for screenshots and diagrams. */
+  screenshot?: boolean;
+  /** "phone" wraps the image in a phone bezel instead of the plain outline. */
+  frame?: "phone";
 };
 
 type CaseStudyQuoteProps = {
@@ -112,13 +120,72 @@ const CaseStudyColumn = ({ side, children }: CaseStudyColumnProps) => (
   </div>
 );
 
-const CaseStudyImage = ({ src, alt, heightPercent }: CaseStudyImageProps) => (
+const CaseStudyImage = ({ src, alt, heightPercent, widthPercent, screenshot, frame }: CaseStudyImageProps) => (
   <CaseStudyImageView
     module={{
       type: "image",
-      content: { src, alt, heightPercent },
+      content: { src, alt, heightPercent, widthPercent, screenshot, frame },
     }}
   />
+);
+
+type CaseStudyLinkProps = {
+  to: string;
+  children: ReactNode;
+};
+
+/** A pill-shaped call to action that links into the site, such as a live product. */
+const CaseStudyLink = ({ to, children }: CaseStudyLinkProps) => (
+  <div className="not-prose my-8">
+    <Link to={to} className="case-study-cta">
+      {children}
+      <ArrowRight size={18} aria-hidden="true" />
+    </Link>
+  </div>
+);
+
+type CaseStudyVideoProps = {
+  src: string;
+  poster?: string;
+  alt: string;
+};
+
+/** A short screen recording that plays silently on a loop, styled like the case study screenshots. */
+const CaseStudyVideo = ({ src, poster, alt }: CaseStudyVideoProps) => {
+  const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  return (
+    <video
+      className="case-study-screenshot not-prose block w-full"
+      src={src}
+      poster={poster}
+      aria-label={alt}
+      autoPlay={!reduceMotion}
+      controls={reduceMotion}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+    />
+  );
+};
+
+type CaseStudyPhotoStackProps = {
+  photo: string;
+  photoAlt: string;
+  phone: string;
+  phoneAlt: string;
+};
+
+/** A photo tilted right with a phone mock-up overlapping its lower left, tilted left. */
+const CaseStudyPhotoStack = ({ photo, photoAlt, phone, phoneAlt }: CaseStudyPhotoStackProps) => (
+  <div className="case-study-photo-stack not-prose">
+    <div className="case-study-photo-stack-photo">
+      <CaseStudyImage src={photo} alt={photoAlt} screenshot />
+    </div>
+    <div className="case-study-photo-stack-phone">
+      <CaseStudyImage src={phone} alt={phoneAlt} frame="phone" />
+    </div>
+  </div>
 );
 
 const CaseStudyQuote = ({ title, variant = "default", children }: CaseStudyQuoteProps) => (
@@ -149,6 +216,9 @@ const mdxComponents = {
   CaseStudyColumns,
   CaseStudyColumn,
   CaseStudyImage,
+  CaseStudyPhotoStack,
+  CaseStudyVideo,
+  CaseStudyLink,
   CaseStudyQuote,
   CaseStudyTable,
 } as unknown as MdxComponents;

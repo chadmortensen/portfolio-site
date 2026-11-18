@@ -1,0 +1,292 @@
+---
+title: "Chad, mapped"
+subtitle: "An AI-native design process for telling a career beyond the résumé (2026)"
+---
+
+<ExecutiveSummary
+  overview="I used an AI-native design process to turn 13+ years of stories into an explorable career map, from interviews and synthesis through design decisions to a shipped, public experience."
+  contribution="Research planning, synthesis, information architecture, interface design decisions, and every product call, with AI agents as my research and build partners."
+  scope="About 20 hours across 13 working sessions · Desktop and mobile · Self-hosted on my existing site."
+  outcome="About 20 hours of work, against an estimated 180 to 260 hours the traditional way. The map has 24 public entries (18 stories and 6 practices) across 9 themes, is featured on my home page, and its source now powers my interview prep."
+/>
+
+<CaseStudySection title={"The Need"} subheader={"A career doesn't fit on two pages"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### The gap between a résumé and a case study
+
+      A résumé lists roles. A case study goes deep on a single project. Neither shows the patterns that run across a career, like how I handle ambiguity or grow people. Those patterns are what hiring managers want to understand, and they usually only come out over a long interview loop.
+
+      ### Two audiences, two depths
+
+      Recruiters skim. Hiring managers and interview panels want depth, but only on the things they care about. I wanted one experience that works for both.
+
+      ### The design problem
+
+      My framing question was: *How might we let someone understand how I lead in two minutes, or in twenty?* I landed on a map of the stories behind the work, which people can explore by theme or by role.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src={"/img/chad-mapped/home-strip.jpg"} alt={"The career strip on the home page, inviting visitors to explore the career map."} screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Research"} subheader={"Interviewing the subject"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### Primary research: interviews
+
+      I treated my own career like any other research subject. Over three rounds of voice interviews, an AI agent asked me questions, followed up where an answer was thin, and captured what I said. Each round started from the gaps the last one left open, the same way a research plan evolves as you learn.
+
+      <CaseStudyQuote title="From the interviews (lightly edited)">
+        **Agent:** You started by listening, then built clearer career paths and strengthened critique, reviews, and the design system. What changes did you notice in the team once those practices were in place?
+
+        **Me:** What I heard from the team was appreciation, and an understanding of where their careers were going and what was next. Also the difference between a senior designer and a staff designer, and the expectations of each. I built out a career matrix and more definition around roles and levels, which they didn't have before.
+      </CaseStudyQuote>
+
+      Each follow-up played back what I had said, then pushed from what I did toward what changed as a result.
+
+      ### Secondary research: an audit of what already existed
+
+      My stories were already scattered across an interview prep document, a 54-slide presentation, old chat exports, and an earlier résumé. Auditing that material worked like reviewing past research before starting new studies: it showed what I already knew and where the accounts disagreed.
+
+      ### Tracing every claim
+
+      Every claim links back to its source. Facts are kept separate from interpretation, and where two sources disagreed, I flagged the conflict so I could settle it. The public version would be read by people deciding whether to hire me, so it had to hold up.
+
+      ### Where AI changed the work
+
+      The agent handled the questioning, transcription and cross-checking between sources, so I could run far more research than I could have by hand.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src="/img/chad-mapped/research.png?v=3" alt="Sources flowing into a structured story file and a public story card" screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Synthesis"} subheader={"From raw accounts to insights"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### Structured stories
+
+      Raw interview accounts became structured stories using a situation, task, action, result format. Each one carries a confidence level and a list of open gaps, much like structured findings from a research study.
+
+      ### Affinity mapping into themes
+
+      Every story was tagged with the leadership themes it demonstrates. I then grouped dozens of tags into nine theme clusters, such as Vision & clarity, Growing designers, and Calm under pressure. Those clusters became the information architecture for the whole experience.
+
+      ### Gaps drive the next round
+
+      Anything marked as needing detail became an input to the next interview. Synthesis and research fed each other until the stories were solid enough to publish.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src="/img/chad-mapped/synthesis.png" alt="35 tags grouped into nine themes like an affinity board" screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Defining the Experience"} subheader={"Principles and a publishing model"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### Clear, calm, and on-system
+
+      Three principles guided the design. It had to be clear enough to understand at a glance and calm enough that the stories held the attention more than the visualization did. It also had to stay on-system, so it felt like part of my site.
+
+      ### Private by default
+
+      Nothing is public unless I approve it. Each story has a separate public summary, written for hiring managers, while my private notes, sources, and open questions stay out of view.
+
+      ### A simple way to publish
+
+      A local editor shows public and private views side by side and writes my decisions straight back to the source files. I published the stories in three batches and reviewed each one before it went live.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src={"/img/chad-mapped/editor.jpg"} alt={"The local publishing editor showing public and private views of the stories."} screenshot />
+
+      <CaseStudyLink to="/chad-mapped">Explore the live map</CaseStudyLink>
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Design Decisions"} subheader={"Choices made for the reader"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+
+      ### Less on screen, more on demand
+
+      I purposely reduced the density of information in the public view. Each story shows only its summary, its result, and the interview questions it helps answer. In the Themes view, story titles are a single quiet line with no counts competing for attention. When someone focuses on a story in 3D, everything outside its branch fades away completely, so no stray lines pull the eye.
+
+      ### Controls that explain themselves
+
+      I wanted every control to make sense without instructions. View switches are pill-shaped segmented controls. Zoom has three buttons: out, reset, and in. Reset stays dimmed until you've zoomed, so it only looks clickable when it does something. The back button retraces every step taken inside the panel, and the map opens on the Career view, the most familiar way into anyone's career.
+
+      ### Starting on paper
+
+      Some decisions started in my sketchbook. I drew the role label by hand, a rounded box with the company, title and years whose right side narrows into that role's line on the timeline, and gave the sketches to the AI to guide the build.
+  
+      ### Built on the site's design system
+
+      The map is built from the same design tokens as the rest of my site, with the same type, rounded corners, and accent color. Detail panels follow the same text styles as my case studies. The pill switch I designed for the map later became the site's main navigation.
+
+      ### Layout that respects the reader
+
+      When the details panel would cover the theme someone is reading, the map slides aside to keep it in view.
+
+      ### Responsive by design
+
+      I checked each view at phone width while designing it, so a phone gets the right amount of information and interaction instead of a shrunken desktop map. On a phone, a simple layout bar replaces the title card, details open in a full-height sheet, and decorative elements step back so reading comes first.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+
+      <CaseStudyVideo src={"/img/chad-mapped/map-story.mp4"} poster={"/img/chad-mapped/map-story-poster.jpg"} alt={"Screen recording: the Career timeline loads, a story is clicked, and its details panel opens."} />
+
+      <CaseStudyPhotoStack photo={"/img/chad-mapped/sketches.jpg"} photoAlt={"A sketchbook open on a desk with hand-drawn role labels: small Visitalk and Succeed boxes joined by a line, and two larger Etsy, Director, 2021-2023 boxes narrowing into a timeline."} phone={"/img/chad-mapped/mobile-iphone.png"} phoneAlt={"The career map on an iPhone, with a story open in a full-height details sheet."} />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Design and Prototype"} subheader={"Three ways to read a career"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### Career, Themes, and 3D
+
+      People come to a career with different questions, so the map offers three views of the same stories. Career lays roles along a timeline, most recent first, with stories branching from each role. Themes groups the stories by the nine leadership themes. 3D shows how everything connects, and selecting a story brings its whole branch into focus. A list view is there for anyone who just wants to scan.
+
+      ### Connected to the rest of the site
+
+      The career strip on my home page links straight into the map and opens it on a specific role or theme.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyVideo src={"/img/chad-mapped/map-views.mp4"} poster={"/img/chad-mapped/map-views-poster.jpg"} alt={"Screen recording: switching from the Career timeline to the Themes view and then the 3D view."} />
+
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Technical Architecture"} subheader={"Simple, self-hosted, no database"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### Markdown as the database
+
+      Every story and practice is a markdown file in a private repository. I chose this over a hosted database such as Supabase so that everything runs locally and on my current tech stack, with no external services, accounts, or keys to manage. Version control gives me a full history of every change for free.
+
+      ### Privacy built into the build
+
+      A small build step reads the stories and exports only the ones I've approved, and only their public fields. Drafts and source notes never leave my machine. The publishing editor runs only locally and is never deployed.
+
+      ### Static files, one source
+
+      The site is static files on my existing host, and the 3D view loads only when someone opens it. Because the content lives in plain, structured files, the same source powers the public map, the home page career strip, and my AI interview prep.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src="/img/chad-mapped/architecture.png?v=3" alt="Markdown files and a build step on my machine feeding static data on the site" screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Test and Iterate"} subheader={"Critique, compare, refine"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### Evolving the Career view
+
+      The Career view went through three versions: a radial layout, then a horizontal timeline, then a timeline where each role is sized by its stories rather than by how long I was there. I also reversed it to show the most recent role first, because that's what a hiring manager reads first.
+
+      ### Comparing options live
+
+      The agent's first pass at calming the Themes view didn't go far enough, so I had it build four alternatives behind a switch in the URL and flipped between them on the live map. I ran it like a team critique, with working options instead of static mockups.
+
+      ### Making the call
+
+      The deciding factor was layout. Before, the themes ran together as one long, complex list. Staggering them nearer to and further from the center, with more negative space between them, gave each theme its own clear group. I combined that with one quiet line per story and no counts.
+
+      ### Knowing when to pull back
+
+      I added depth and motion to make the map feel alive, then dialed them back when they started competing with the content.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src="/img/chad-mapped/themes-trial.png" alt="The Themes view as built, four trial options (quiet, on demand, short labels, roomy), and the shipped version combining quiet and roomy." screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"20 Hours, Not 5 Weeks"} subheader={"Designing with agents"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### What the time went to
+
+      The whole project took about 20 hours across 13 working sessions. Roughly 7.5 hours went to research and synthesis, 3 to the first build, 7 to publishing, the timeline, the home page, and mobile, and 1.5 to refinement.
+
+      ### Working in parallel
+
+      Research, design, code, and revisions happened side by side, often in the same session. I ran separate agent threads at the same time, each on its own piece of the work: one publishing stories, one on the zoom controls, one on the timeline, one on the home page, and one on mobile. My job was to set the intent, review, critique, and decide what to merge.
+
+      ### What AI did, and what I did
+
+      AI did the heavy lifting on transcription, cross-checking sources, drafting, layout code and the math behind the 3D view. I spent my time on the judgment calls: what to ask, what the answers meant, what goes public, and which version is better.
+
+      ### Compared with a traditional process
+
+      Using my own experience scoping projects like this, I estimate the same work would take a designer and a front-end engineer roughly 180 to 260 hours. That's about 9 to 13 times as long as it actually took.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src={"/img/chad-mapped/time-comparison.png?v=2"} alt={"Gantt-style comparison on one hours scale: the agentic build's interviewing, synthesis, design, code and revisions overlap within about 20 hours, while the traditional research, synthesis, design, build and review phases run in sequence to an estimated 180 to 260 hours."} screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"Outcomes and Reflection"} subheader={"An experiment that keeps growing"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      ### What shipped
+
+      Chad, mapped is live with 24 public entries, 18 stories and 6 practices, across nine themes. It works on desktop and mobile, it's featured on my home page, and the same content now powers my interview prep.
+
+      ### Personal reflection
+
+      This project changed how I think about running research and design with a team. The judgment still came from me, but everything around it moved much faster.
+
+      ### Even this case study
+
+      I made this case study the same way, outlining, drafting and building it into the site with agents. It took a fraction of the time my earlier case studies took by hand.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src="/img/chad-mapped/themes-view.jpg" alt="The Themes view of the live map" screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudySection title={"What's Next"} subheader={"From map to knowledge graph"}>
+  <CaseStudyColumns layout={"split"}>
+    <CaseStudyColumn side={"left"}>
+      The map is one view of a larger knowledge graph. Because the stories live in structured, source-grounded files, the same content can take other forms for other uses.
+
+      ### Ask the map
+
+      A recruiter or hiring manager could ask a question, such as "How does Chad handle disagreement on a team?", and get the most relevant stories back, with links into the map. Answers would draw only on approved, public content.
+
+      ### Views for other contexts
+
+      The same stories could be shaped for a slide deck, a printable one-pager, or a view matched to a specific job description.
+
+      ### Richer connections
+
+      Links between related stories, people and outcomes would let patterns across roles show up on their own. The map will also keep growing as I write new stories and hear from the people who use it.
+    </CaseStudyColumn>
+
+    <CaseStudyColumn side={"right"}>
+      <CaseStudyImage src="/img/chad-mapped/next.png?v=2" alt="Concept mock-up of asking the map a question and getting stories back" screenshot />
+    </CaseStudyColumn>
+  </CaseStudyColumns>
+</CaseStudySection>
+
+<CaseStudyLink to="/chad-mapped">Explore the live map</CaseStudyLink>

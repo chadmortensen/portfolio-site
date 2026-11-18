@@ -12,6 +12,7 @@ const CaseStudy1 = lazy(() => import("./pages/CaseStudy1"));
 const CaseStudy2 = lazy(() => import("./pages/CaseStudy2"));
 const CaseStudy3 = lazy(() => import("./pages/CaseStudy3"));
 const CaseStudy4 = lazy(() => import("./pages/CaseStudy4"));
+const CaseStudy5 = lazy(() => import("./pages/CaseStudy5"));
 const CaseStudy4Editor = import.meta.env.DEV
   ? lazy(() => import("./pages/CaseStudy4Editor"))
   : null;
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/case-study-2" element={<CaseStudy2 />} />
             <Route path="/case-study-3" element={<CaseStudy3 />} />
             <Route path="/case-study-4" element={<CaseStudy4 />} />
+            <Route path="/case-study-5" element={<CaseStudy5 />} />
             {CaseStudy4Editor && (
               <Route path="/:caseStudySlug/edit" element={<CaseStudy4Editor />} />
             )}

@@ -117,6 +117,18 @@ const CaseStudies = () => {
     route: "/case-study-1"
   },  
     {
+    id: 5,
+    summary: caseStudySummaries.chadMapped.card,
+    title: "Designing and Building an Interactive Career Map with AI in 20 Hours",
+    company: "Chad, mapped",
+    duration: "About 20 hours",
+    teamSize: "1 + AI agents",
+    image: "/img/case-chad-mapped.jpg",
+    challenge: "Show the depth of a career beyond what a résumé and a few case studies can hold.",
+    results: ["Interactive career map with Career, Themes and 3D views", "24 published stories and practices", "Self-hosted with no database"],
+    route: "/case-study-5"
+  },
+    {
     id: 4,
     summary: caseStudySummaries.leadership.card,
     title: "How I Lead and Grow High Performing Teams",

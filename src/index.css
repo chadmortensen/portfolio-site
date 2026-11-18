@@ -755,6 +755,56 @@ h4 {
   .case-study-track:not(.is-dragging) .case-study-slide:hover { transform: none; }
 }
 
+/* Case study images: same border and shadow as the home page case study cards. */
+.case-study-screenshot {
+  border: 1px solid hsl(var(--swiss-light));
+  border-radius: 10px;
+  box-shadow: 0 20px 40px -28px hsl(var(--swiss-charcoal) / 0.25);
+  margin-block: 1.5rem;
+}
+
+/* Phone mock-ups: the frame is part of the image, so the shadow follows its shape. */
+.case-study-phone {
+  filter: drop-shadow(0 14px 14px hsl(var(--swiss-charcoal) / 0.16));
+  margin-block: 1.5rem;
+}
+
+/* Photo tilted right, phone overlapping its lower left and tilted left. */
+.case-study-photo-stack {
+  position: relative;
+  padding: 1rem 0 30%;
+}
+.case-study-photo-stack-photo {
+  width: 64%;
+  margin-left: auto;
+  margin-right: 4%;
+  transform: rotate(5deg);
+}
+.case-study-photo-stack-phone {
+  position: absolute;
+  left: 8%;
+  bottom: 2%;
+  width: 33%;
+  z-index: 1;
+  transform: rotate(-7deg);
+}
+.case-study-photo-stack img { margin-block: 0; }
+
+/* Case study call to action, e.g. a link to a live product. */
+.case-study-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 9999px;
+  background: hsl(var(--text-primary));
+  color: hsl(var(--surface-primary));
+  font-weight: 500;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+.case-study-cta:hover { background: hsl(var(--accent-blue)); transform: translateY(-1px); }
+.case-study-cta:focus-visible { outline: 2px solid hsl(var(--accent-blue)); outline-offset: 3px; }
+
 .about-photo-frame {
   padding-block: 7% calc(32% + 150px);
 }

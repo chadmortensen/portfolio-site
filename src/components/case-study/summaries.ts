@@ -8,6 +8,9 @@ export const caseStudySummaries = {
   "walmart": {
     "card": "Secured a five-designer team and guided a rapid shift from pre-filled registries to an experience parents could make their own."
   },
+  "chadMapped": {
+    "card": "Turned AI-led interviews about my career into nine themes, then designed and built an interactive map of it in about 20 hours."
+  },
   "leadership": {
     "card": "Examples of securing design investment, developing people, and making quality a shared responsibility across teams."
   }

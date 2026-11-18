@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { CaseStudyModule, CaseStudySection, CaseStudySectionLayout } from "./types";
 
 type TextContent = { title?: string; text?: string };
-type ImageContent = { src?: string; alt?: string; heightPercent?: string | number };
+type ImageContent = { src?: string; alt?: string; heightPercent?: string | number; widthPercent?: string | number; screenshot?: boolean; frame?: "phone" };
 type ListContent = { title?: string; items?: string[] };
 type TableContent = { title?: string; headers?: string[]; rows?: string[][] };
 
@@ -33,12 +33,19 @@ export const CaseStudyText = ({ module }: { module: CaseStudyModule }) => {
 export const CaseStudyImage = ({ module }: { module: CaseStudyModule }) => {
   const content = asRecord(module.content) as ImageContent;
   if (!content.src) return null;
-  const heightStyle = content.heightPercent ? { height: `${content.heightPercent}vh`, objectFit: "contain" as const } : undefined;
+  const imageStyle = {
+    ...(content.heightPercent ? { height: `${content.heightPercent}vh`, objectFit: "contain" as const } : {}),
+    ...(content.widthPercent ? { width: `${content.widthPercent}%` } : {}),
+  };
+  const imageClass = cn(
+    "block w-full mx-auto cursor-zoom-in transition-opacity hover:opacity-90",
+    content.frame === "phone" ? "case-study-phone" : content.screenshot && "case-study-screenshot",
+  );
   return (
     <Dialog>
       <DialogTrigger asChild>
         <button type="button" className="block w-full text-left rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-4" aria-label={`Enlarge ${content.alt || "case study image"}`}>
-          <img src={content.src} alt={content.alt || "Case study visual"} className="w-full cursor-zoom-in transition-opacity hover:opacity-90" style={heightStyle} loading="lazy" decoding="async" />
+          <img src={content.src} alt={content.alt || "Case study visual"} className={imageClass} style={imageStyle} loading="lazy" decoding="async" />
         </button>
       </DialogTrigger>
       <DialogContent className="max-w-6xl w-full p-0 overflow-hidden" aria-describedby={undefined}>
