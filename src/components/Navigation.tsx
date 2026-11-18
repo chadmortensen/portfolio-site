@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ChevronDown, Download } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { ArrowRight, ChevronDown, Download } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { navigateToSection } from "@/lib/section-navigation";
 import { RESUME_URL } from "@/lib/resume";
 import {
@@ -20,12 +21,13 @@ const navItems: NavItem[] = [
   { href: "#contact", label: "Contact", sections: ["contact", "ux-tips"] },
 ];
 
+// Images match the home page case study carousel cards (CaseStudies.tsx).
 const caseStudies = [
-  { title: "Brightside Growth Vision", route: "/case-study-3" },
-  { title: "Etsy Fulfillment Vision", route: "/case-study-2" },
-  { title: "Walmart Registry Revamp", route: "/case-study-1" },
-  { title: "Chad, mapped", route: "/case-study-5" },
-  { title: "How I Lead", route: "/case-study-4" },
+  { title: "Brightside Growth Vision", route: "/case-study-3", image: "/img/case-brightside.jpg" },
+  { title: "Etsy Fulfillment Vision", route: "/case-study-2", image: "/img/case-etsy.jpg" },
+  { title: "Walmart Registry Revamp", route: "/case-study-1", image: "/img/case-walmart.jpg" },
+  { title: "Chad, mapped", route: "/case-study-5", image: "/img/case-chad-mapped.jpg" },
+  { title: "How I Lead", route: "/case-study-4", image: "/img/case-additional-projects.jpg" },
 ];
 
 const itemClass =
@@ -35,6 +37,7 @@ const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
+  const isMobile = useIsMobile();
   const [activeHref, setActiveHref] = useState<string | null>(isHome ? "#home" : null);
   const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
   const itemRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -134,27 +137,58 @@ const Navigation = () => {
                 <span>{item.label}</span>
                 <ChevronDown size={14} aria-hidden="true" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="center"
-                sideOffset={10}
-                className="rounded-2xl border border-swiss-light bg-surface-primary/95 p-1.5 shadow-lg backdrop-blur-xl"
-              >
-                {caseStudies.map((study) => (
+              {isMobile ? (
+                <DropdownMenuContent
+                  align="center"
+                  sideOffset={10}
+                  className="rounded-2xl border border-swiss-light bg-surface-primary/95 p-1.5 shadow-lg backdrop-blur-xl"
+                >
+                  {caseStudies.map((study) => (
+                    <DropdownMenuItem
+                      key={study.route}
+                      onClick={() => navigate(study.route)}
+                      className="cursor-pointer rounded-xl px-4 py-2.5 leading-relaxed text-text-secondary hover:bg-surface-secondary hover:text-text-primary"
+                    >
+                      {study.title}
+                    </DropdownMenuItem>
+                  ))}
                   <DropdownMenuItem
-                    key={study.route}
-                    onClick={() => navigate(study.route)}
+                    onClick={() => goToSection(item.href)}
                     className="cursor-pointer rounded-xl px-4 py-2.5 leading-relaxed text-text-secondary hover:bg-surface-secondary hover:text-text-primary"
                   >
-                    {study.title}
+                    View All Case Studies
                   </DropdownMenuItem>
-                ))}
-                <DropdownMenuItem
-                  onClick={() => goToSection(item.href)}
-                  className="cursor-pointer rounded-xl px-4 py-2.5 leading-relaxed text-text-secondary hover:bg-surface-secondary hover:text-text-primary"
+                </DropdownMenuContent>
+              ) : (
+                // Desktop: a small card per case study, styled like the home carousel cards.
+                <DropdownMenuContent
+                  align="center"
+                  sideOffset={10}
+                  collisionPadding={16}
+                  className="w-[min(48rem,calc(100vw-2rem))] rounded-2xl border border-swiss-light bg-surface-primary/95 p-4 shadow-lg backdrop-blur-xl"
                 >
-                  View All Case Studies
-                </DropdownMenuItem>
-              </DropdownMenuContent>
+                  <div className="grid grid-cols-3 gap-4">
+                    {caseStudies.map((study) => (
+                      <DropdownMenuItem key={study.route} asChild className="nav-case-card focus:bg-surface-primary focus:text-text-primary">
+                        <Link to={study.route}>
+                          <span className="nav-case-card-image">
+                            <img src={study.image} alt="" draggable={false} />
+                          </span>
+                          <span className="nav-case-card-title">{study.title}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                    {/* Fills the empty cell next to the fifth card. */}
+                    <DropdownMenuItem
+                      onClick={() => goToSection(item.href)}
+                      className="nav-case-card nav-case-card-all focus:bg-surface-secondary"
+                    >
+                      <span>View all case studies</span>
+                      <ArrowRight size={18} aria-hidden="true" />
+                    </DropdownMenuItem>
+                  </div>
+                </DropdownMenuContent>
+              )}
             </DropdownMenu>
           ) : (
             <button
