@@ -4,6 +4,7 @@
     "textTheme": "dark"
   },
   "freezingTemperatureF": 40,
+  "winterMonths": [11, 12, 1, 2, 3],
   "backgrounds": {
     "sunny": [
       
@@ -19,6 +20,29 @@
         "textTheme": "dark",
         "overlay": true,
         "overlayIntensity": 0.3,
+        "overlayTheme": "light"
+      }
+    ],
+    "sunnyWinter": [
+      {
+        "src": "/img/hero-back-sunny-winter1.jpg",
+        "textTheme": "dark",
+        "overlay": true,
+        "overlayIntensity": 0.5,
+        "overlayTheme": "light"
+      },
+      {
+        "src": "/img/hero-back-sunny-winter2.jpg",
+        "textTheme": "dark",
+        "overlay": true,
+        "overlayIntensity": 0.5,
+        "overlayTheme": "light"
+      },
+      {
+        "src": "/img/hero-back-sunny-winter3.jpg",
+        "textTheme": "dark",
+        "overlay": true,
+        "overlayIntensity": 0.6,
         "overlayTheme": "light"
       }
     ],

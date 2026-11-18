@@ -37,6 +37,8 @@ type WeatherBackgroundInput = string | WeatherBackgroundEntry;
 type WeatherBackgroundConfig = {
   fallback: WeatherBackgroundInput;
   freezingTemperatureF: number;
+  // Months (1-12, Portland time) when sunny days use the "sunnyWinter" photos.
+  winterMonths?: number[];
   backgrounds: Record<string, WeatherBackgroundInput[]>;
 };
 
@@ -135,6 +137,26 @@ const getPortlandHour = () => {
   return Number(formattedHour);
 };
 
+const getPortlandMonth = () => Number(
+  new Intl.DateTimeFormat("en-US", {
+    month: "numeric",
+    timeZone: PORTLAND_TIME_ZONE,
+  }).format(new Date())
+);
+
+const DEFAULT_WINTER_MONTHS = [11, 12, 1, 2, 3];
+
+// Sunny days from November to March use winter photos (bare trees, evergreens)
+// instead of the summer ones, when the config has any.
+const getSeasonalDesignation = (designation: string, config: WeatherBackgroundConfig) => {
+  if (designation !== "sunny" || !(config.backgrounds.sunnyWinter?.length)) {
+    return designation;
+  }
+
+  const winterMonths = config.winterMonths ?? DEFAULT_WINTER_MONTHS;
+  return winterMonths.includes(getPortlandMonth()) ? "sunnyWinter" : designation;
+};
+
 const getPortlandGreeting = () => {
   const hour = getPortlandHour();
 
@@ -178,6 +200,8 @@ const getWeatherPreview = (designation: string): WeatherSummary => {
       return { temperature: 34, condition: "snowy", isDay: true };
     case "freezing":
       return { temperature: 28, condition: "clear", isDay: true };
+    case "sunnyWinter":
+      return { temperature: 48, condition: "sunny", isDay: true };
     default:
       return { temperature: 78, condition: "sunny", isDay: true };
   }
@@ -278,7 +302,7 @@ const getRotatedImageCandidates = (
   const images = (config.backgrounds[designation] ?? [])
     .map((entry) => normalizeBackgroundEntry(entry, fallback.textTheme))
     .filter((entry) => Boolean(entry.src));
-  const fallbackImages = (config.backgrounds.sunny ?? [])
+  const fallbackImages = (config.backgrounds[getSeasonalDesignation("sunny", config)] ?? [])
     .map((entry) => normalizeBackgroundEntry(entry, fallback.textTheme))
     .filter((entry) => Boolean(entry.src));
   const candidates = [...images, ...fallbackImages, fallback, FALLBACK_BACKGROUND];
@@ -415,16 +439,16 @@ const Hero = () => {
 
   useEffect(() => {
     if (weatherDesignation) {
-      setBackgroundDesignation((current) => current ?? weatherDesignation);
+      setBackgroundDesignation((current) => current ?? getSeasonalDesignation(weatherDesignation, backgroundConfig));
       return;
     }
 
     const timeout = window.setTimeout(() => {
-      setBackgroundDesignation((current) => current ?? getTimeOfDayDesignation());
+      setBackgroundDesignation((current) => current ?? getSeasonalDesignation(getTimeOfDayDesignation(), backgroundConfig));
     }, WEATHER_WAIT_MS);
 
     return () => window.clearTimeout(timeout);
-  }, [weatherDesignation]);
+  }, [backgroundConfig, weatherDesignation]);
 
   useEffect(() => {
     const greetingInterval = window.setInterval(() => {
