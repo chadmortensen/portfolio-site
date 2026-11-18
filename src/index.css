@@ -776,11 +776,17 @@ h4 {
 .nav-case-card:focus-visible { outline: none; } /* highlight = lift + blue title */
 .nav-case-card-image { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: hsl(var(--surface-secondary)); }
 .nav-case-card-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
-.nav-case-card-title {
-  padding: 0.75rem 0.875rem 0.875rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+.nav-case-card-copy { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.75rem 0.875rem 0.875rem; }
+.nav-case-card-company {
+  font-size: 0.8rem;
+  font-weight: 500;
   line-height: 1.3;
+  color: hsl(var(--accent-blue));
+}
+.nav-case-card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
   color: hsl(var(--text-primary));
   transition: color 180ms ease;
 }

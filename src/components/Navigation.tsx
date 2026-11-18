@@ -22,12 +22,44 @@ const navItems: NavItem[] = [
 ];
 
 // Images match the home page case study carousel cards (CaseStudies.tsx).
+// Short titles feed the mobile list. Company labels, headlines and images match the
+// home page case study carousel cards (CaseStudies.tsx) and feed the desktop cards.
 const caseStudies = [
-  { title: "Brightside Growth Vision", route: "/case-study-3", image: "/img/case-brightside.jpg" },
-  { title: "Etsy Fulfillment Vision", route: "/case-study-2", image: "/img/case-etsy.jpg" },
-  { title: "Walmart Registry Revamp", route: "/case-study-1", image: "/img/case-walmart.jpg" },
-  { title: "Chad, mapped", route: "/case-study-5", image: "/img/case-chad-mapped.jpg" },
-  { title: "How I Lead", route: "/case-study-4", image: "/img/case-additional-projects.jpg" },
+  {
+    title: "Brightside Growth Vision",
+    company: "Brightside Health",
+    headline: "Product Vision, Alignment and Coaching a Senior Designer to be a Strategic Partner",
+    route: "/case-study-3",
+    image: "/img/case-brightside.jpg",
+  },
+  {
+    title: "Etsy Fulfillment Vision",
+    company: "Etsy",
+    headline: "Aligning Senior Fulfillment Leadership Around a Shared Design Strategy",
+    route: "/case-study-2",
+    image: "/img/case-etsy.jpg",
+  },
+  {
+    title: "Walmart Registry Revamp",
+    company: "Walmart",
+    headline: "Leading a Rapid Registry Turnaround That Increased Quality Creations by 28%",
+    route: "/case-study-1",
+    image: "/img/case-walmart.jpg",
+  },
+  {
+    title: "Chad, mapped",
+    company: "Chad, mapped",
+    headline: "Designing and Building an Interactive Career Map with AI in 20 Hours",
+    route: "/case-study-5",
+    image: "/img/case-chad-mapped.jpg",
+  },
+  {
+    title: "How I Lead",
+    company: "Leadership",
+    headline: "How I Lead and Grow High Performing Teams",
+    route: "/case-study-4",
+    image: "/img/case-additional-projects.jpg",
+  },
 ];
 
 const itemClass =
@@ -174,7 +206,10 @@ const Navigation = () => {
                           <span className="nav-case-card-image">
                             <img src={study.image} alt="" draggable={false} />
                           </span>
-                          <span className="nav-case-card-title">{study.title}</span>
+                          <span className="nav-case-card-copy">
+                            <span className="nav-case-card-company">{study.company}</span>
+                            <span className="nav-case-card-title">{study.headline}</span>
+                          </span>
                         </Link>
                       </DropdownMenuItem>
                     ))}
