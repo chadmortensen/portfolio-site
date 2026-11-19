@@ -77,6 +77,42 @@ const requestPortlandWeather = () => {
   return window.__portlandWeather;
 };
 
+// Hero layouts while we compare them:
+// - "classic": full-bleed photo behind the text
+// - "print": text on the page gradient, photo in a tilted white print on the right
+// Pick one with ?hero=classic|print, or press Shift+Up/Down on the page to switch.
+// The choice is remembered in this browser.
+type HeroLayout = "classic" | "print";
+const HERO_LAYOUTS: HeroLayout[] = ["classic", "print"];
+const DEFAULT_HERO_LAYOUT: HeroLayout = "print";
+const HERO_LAYOUT_STORAGE_KEY = "hero-layout";
+
+const isHeroLayout = (value: unknown): value is HeroLayout =>
+  HERO_LAYOUTS.includes(value as HeroLayout);
+
+// Earlier names for the framed layout while we were trying versions of it.
+const normalizeHeroLayout = (value: string | null) =>
+  value === "framed" || value === "polaroid" ? "print" : value;
+
+const getInitialHeroLayout = (): HeroLayout => {
+  try {
+    const fromUrl = normalizeHeroLayout(new URLSearchParams(window.location.search).get("hero"));
+    if (isHeroLayout(fromUrl)) {
+      window.localStorage.setItem(HERO_LAYOUT_STORAGE_KEY, fromUrl);
+      return fromUrl;
+    }
+
+    const stored = normalizeHeroLayout(window.localStorage.getItem(HERO_LAYOUT_STORAGE_KEY));
+    if (isHeroLayout(stored)) {
+      return stored;
+    }
+  } catch {
+    // Storage can be blocked (private mode); fall through to the default.
+  }
+
+  return DEFAULT_HERO_LAYOUT;
+};
+
 const FALLBACK_BACKGROUND: WeatherBackgroundEntry = {
   src: "/img/hero-back-sunny1.jpg",
   mediaType: "image",
@@ -380,6 +416,7 @@ const WeatherIcon = ({ condition, size = 48 }: { condition: string; size?: numbe
 
 const Hero = () => {
   const [weather, setWeather] = useState<WeatherSummary | null>(null);
+  const [heroLayout, setHeroLayout] = useState<HeroLayout>(getInitialHeroLayout);
   const [heroGreeting, setHeroGreeting] = useState(getPortlandGreeting);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const backgroundConfig = useMemo<WeatherBackgroundConfig>(() => ({
@@ -545,6 +582,65 @@ const Hero = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeBackground, previewEntries, previewIndex]);
 
+  useEffect(() => {
+    const handleLayoutKey = (event: KeyboardEvent) => {
+      if (!event.shiftKey || event.altKey || event.ctrlKey || event.metaKey || event.defaultPrevented) {
+        return;
+      }
+
+      const target = event.target;
+      if (target instanceof HTMLElement && (target.isContentEditable || target.closest("input, textarea, select, [role='textbox']"))) {
+        return;
+      }
+
+      if (event.key !== "ArrowUp" && event.key !== "ArrowDown") {
+        return;
+      }
+
+      event.preventDefault();
+      const step = event.key === "ArrowDown" ? 1 : -1;
+      setHeroLayout((current) => {
+        const next = HERO_LAYOUTS[(HERO_LAYOUTS.indexOf(current) + step + HERO_LAYOUTS.length) % HERO_LAYOUTS.length];
+        try {
+          window.localStorage.setItem(HERO_LAYOUT_STORAGE_KEY, next);
+        } catch {
+          // Ignore blocked storage; the toggle still works for this visit.
+        }
+        return next;
+      });
+    };
+
+    window.addEventListener("keydown", handleLayoutKey);
+    return () => window.removeEventListener("keydown", handleLayoutKey);
+  }, []);
+
+  // In the framed layout the page gradient runs from the top of the page through
+  // the case studies (see html.hero-framed-active in index.css).
+  useEffect(() => {
+    if (heroLayout === "classic") {
+      return;
+    }
+
+    const root = document.documentElement;
+    const caseStudies = document.getElementById("case-studies");
+    const updateGradientEnd = () => {
+      if (caseStudies) {
+        root.style.setProperty("--framed-gradient-end", `${caseStudies.offsetTop + caseStudies.offsetHeight}px`);
+      }
+    };
+
+    root.classList.add("hero-framed-active");
+    updateGradientEnd();
+    const observer = new ResizeObserver(updateGradientEnd);
+    observer.observe(document.body);
+
+    return () => {
+      observer.disconnect();
+      root.classList.remove("hero-framed-active");
+      root.style.removeProperty("--framed-gradient-end");
+    };
+  }, [heroLayout]);
+
   const heroTextClass = activeBackground?.textTheme === "light" ? "text-[#FBF4EA]" : "text-text-primary";
   const heroTextPanelClass = `hero-text-panel hero-text-panel--${activeBackground?.textTheme === "light" ? "light-text" : "dark-text"}`;
   const hasVideoBackground = activeBackground?.mediaType === "video";
@@ -568,6 +664,94 @@ const Hero = () => {
   const scrollToAbout = () => {
     navigateToSection("#about");
   };
+
+  const weatherLabel = `Current Portland weather: ${displayedWeather.temperature} degrees and ${displayedWeather.condition}`;
+  const weatherText = (
+    <p>
+      {displayedWeather.temperature}&deg; and <span className="capitalize">{displayedWeather.condition}</span> in Portland, OR
+    </p>
+  );
+  const heroSubhead = (
+    <>
+      I build teams. Ship products. <br />
+      Stay calm when it gets messy.
+      <span className="hero-aside">Let's be real, it always gets a little messy.</span>
+    </>
+  );
+  // Hero buttons use the site-wide .btn-shadow (a button-sized version of the case study card shadow).
+  const primaryButtonClass = "btn-shadow w-full rounded-[4rem] px-6 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2";
+  const secondaryButtonClass = "btn-shadow w-full rounded-[4rem] px-6 py-3 border border-swiss-light bg-surface-primary text-text-primary text-body transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2";
+
+  if (heroLayout !== "classic") {
+    const framedPhotoStyle = activeBackground && !hasVideoBackground
+      ? { backgroundImage: `url("${activeBackground.src}")` }
+      : undefined;
+
+    return (
+      <section id="home" className="hero-framed min-h-screen bg-surface-secondary">
+        <div className="hero-content fade-in hero-framed__grid">
+          <div className="hero-framed__copy text-text-primary">
+            <div className="space-y-3 sm:space-y-4">
+              <p className="text-title2">
+                {heroGreeting}
+              </p>
+              <h1 className="text-display">
+                Chad Mortensen
+              </h1>
+              <div className="h-[3px] w-[7rem] bg-current"></div>
+              <p className="hero-subhead">
+                {heroSubhead}
+              </p>
+              <p className="hero-companies !mt-8 md:!mt-12">
+                Brightside Health, Etsy, Walmart
+              </p>
+            </div>
+
+            <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row">
+              <button
+                onClick={() => navigateToSection("#case-studies")}
+                className={primaryButtonClass}
+                aria-label="View My Work: Chad Mortensen’s case studies and design work"
+              >
+                View My Work
+              </button>
+              <button
+                onClick={scrollToAbout}
+                className={secondaryButtonClass}
+                aria-label="More About Me: Chad Mortensen’s background and experience"
+              >
+                More About Me
+              </button>
+            </div>
+          </div>
+
+          <figure className="hero-print">
+            <div className="hero-print__paper">
+            <div className="hero-print__photo" style={framedPhotoStyle}>
+              {hasVideoBackground && (
+                <video
+                  key={activeBackground.src}
+                  ref={videoRef}
+                  className="hero-background-video"
+                  src={activeBackground.src}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+            <figcaption className="hero-print__caption" aria-label={weatherLabel}>
+              <WeatherIcon condition={displayedWeather.condition} size={20} />
+              {weatherText}
+            </figcaption>
+            </div>
+          </figure>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -622,14 +806,14 @@ const Hero = () => {
           <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center">
             <button
               onClick={() => navigateToSection("#case-studies")}
-              className="w-full rounded-[4rem] px-6 py-3 bg-text-primary text-surface-primary text-body hover:bg-swiss-gray transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+              className={primaryButtonClass}
               aria-label="View My Work: Chad Mortensen’s case studies and design work"
             >
               View My Work
             </button>
             <button
               onClick={scrollToAbout}
-              className="w-full rounded-[4rem] px-6 py-3 border bg-surface-primary/60 text-text-primary text-body backdrop-blur-xl backdrop-saturate-150 hover:bg-surface-primary/80 transition-all duration-200 focus:outline-2 focus:outline-accent-blue focus:outline-offset-2"
+              className={secondaryButtonClass}
               aria-label="More About Me: Chad Mortensen’s background and experience"
             >
               More About Me
