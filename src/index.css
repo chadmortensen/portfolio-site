@@ -514,7 +514,7 @@ html.hero-framed-active #main-content > #case-studies {
   background-color: #fefdfa;
   /* Same border and shadow as the case study cards (.case-study-slide). */
   border: 1px solid hsl(var(--swiss-light));
-  border-radius: 3px;
+  border-radius: 10px;
   box-shadow: 0 20px 40px -28px hsl(var(--swiss-charcoal) / 0.25);
 }
 
