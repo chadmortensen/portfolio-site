@@ -171,6 +171,7 @@ const Navigation = () => {
               </DropdownMenuTrigger>
               {isMobile ? (
                 <DropdownMenuContent
+                  data-track-section="nav"
                   align="center"
                   sideOffset={10}
                   className="rounded-2xl border border-swiss-light bg-surface-primary/95 p-1.5 shadow-lg backdrop-blur-xl"
@@ -179,6 +180,7 @@ const Navigation = () => {
                     <DropdownMenuItem
                       key={study.route}
                       onClick={() => navigate(study.route)}
+                      data-track-label={`Work menu: ${study.company}`}
                       className="cursor-pointer rounded-xl px-4 py-2.5 leading-relaxed text-text-secondary hover:bg-surface-secondary hover:text-text-primary"
                     >
                       {study.title}
@@ -194,6 +196,7 @@ const Navigation = () => {
               ) : (
                 // Desktop: a small card per case study, styled like the home carousel cards.
                 <DropdownMenuContent
+                  data-track-section="nav"
                   align="center"
                   sideOffset={10}
                   collisionPadding={16}
@@ -202,7 +205,7 @@ const Navigation = () => {
                   <div className="grid grid-cols-3 gap-4">
                     {caseStudies.map((study) => (
                       <DropdownMenuItem key={study.route} asChild className="nav-case-card focus:bg-surface-primary focus:text-text-primary">
-                        <Link to={study.route}>
+                        <Link to={study.route} data-track-label={`Work menu: ${study.company}`}>
                           <span className="nav-case-card-image">
                             <img src={study.image} alt="" draggable={false} />
                           </span>
@@ -242,6 +245,7 @@ const Navigation = () => {
           target="_blank"
           rel="noopener"
           aria-label="Résumé (PDF, opens in a new tab)"
+          data-track-label="Nav résumé PDF"
           className={`${itemClass} text-[hsl(220_9%_46%)] hover:text-text-primary`}
         >
           {/* Icon only on narrow phones so the pill fits. */}

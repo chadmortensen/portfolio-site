@@ -106,7 +106,7 @@ export function useCareerStrip() {
         <ol className="cs-roles" aria-label="Career timeline">
           {ROLES.map((r, i) => (
             <li key={r.key} className="cs-role" style={{ "--cs-i": i } as CSSProperties}>
-              <Link to={mapLink("role", r.key)} className="cs-link" aria-label={`${[r.key, r.title, r.years].filter(Boolean).join(", ")}: see the stories from this role`}>
+              <Link to={mapLink("role", r.key)} data-track-label={`Career strip: ${r.key}`} className="cs-link" aria-label={`${[r.key, r.title, r.years].filter(Boolean).join(", ")}: see the stories from this role`}>
                 <span className="cs-box">
                   <span className="cs-box-body">
                     <span className="cs-company">{r.key}</span>

@@ -96,7 +96,7 @@ const Experience = () => {
             <span className="sr-only">Experience: </span>
             Stories about{" "}
             {theme ? (
-              <Link key={theme} to={mapLink("theme", theme)} className="cs-theme text-accent-blue underline-offset-4 hover:underline">
+              <Link key={theme} to={mapLink("theme", theme)} data-track-label={`Experience theme: ${theme}`} className="cs-theme text-accent-blue underline-offset-4 hover:underline">
                 {theme.toLowerCase()}
               </Link>
             ) : (

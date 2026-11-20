@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { track } from "@/lib/analytics";
 import { useSearchParams } from "react-router-dom";
 import { ACROSS_ROLES, ERAS, publicNodes } from "@/components/chad-mapped/groups";
 import Navigation from "@/components/Navigation";
@@ -40,6 +41,7 @@ const ChadMapped = () => {
           note={<p className="cm-note">This started as an experiment. I add stories as I write them, so expect it to grow and change.</p>}
           intro={publicIntro(data.nodes.length)}
           empty={<p className="cm-muted">Stories are on their way. Check back soon.</p>}
+          onTrack={track}
           renderDetail={(node, related, select) => <PublicDetail node={node} related={related} select={select} />}
         />
       </main>

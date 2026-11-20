@@ -26,6 +26,8 @@ type MindMapProps<T extends MapNode> = {
   /** Open on a view with a role or theme already picked, e.g. from a home page link. */
   initialView?: View;
   initialGroup?: string | null;
+  /** Analytics hook for the public page: called with an event name and its parameters. */
+  onTrack?: (event: string, params: Record<string, string | number | boolean | undefined>) => void;
 };
 
 type Sector = { key: string; label: string; sub: string; items: MapNode[] };
@@ -216,12 +218,18 @@ function useTimelineLayout(sectors: Sector[]) {
   }, [sectors]);
 }
 
-export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, showEmptyEras = false, renderDetail, initialView = "career", initialGroup = null }: MindMapProps<T>) {
+export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, controls, note, intro, empty, showEmptyEras = false, renderDetail, initialView = "career", initialGroup = null, onTrack }: MindMapProps<T>) {
   const [view, setView] = useState<View>(initialView);
   const [layout, setLayout] = useState<Layout>(() => (typeof window !== "undefined" && window.innerWidth < 600 ? "list" : "map"));
   const [selected, setSelected] = useState<string | null>(null);
   const [group, setGroup] = useState<string | null>(initialGroup);
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
+  // Every event carries the view and layout it happened in.
+  const trackRef = useRef<(event: string, params?: Record<string, string | number | boolean | undefined>) => void>(() => {});
+  trackRef.current = (event, params = {}) => onTrack?.(event, { map_view: view, map_layout: view === "3d" ? "3d" : layout, ...params });
+  const emit = useCallback((event: string, params?: Record<string, string | number | boolean | undefined>) => trackRef.current(event, params), []);
+  const storyParams = useCallback((id: string, from: string) => ({ story_id: id, story_title: byId.get(id)?.title, open_from: from }), [byId]);
+  const isRole = (key: string) => key === ACROSS_ROLES || ERAS.some((e) => e.key === key);
   // Both 2D layouts are always worked out, so a view switch can frame the next view and morph into it.
   const careerSectors = useMemo(() => buildSectors(nodes, "career", themes, showEmptyEras), [nodes, themes, showEmptyEras]);
   const themeSectors = useMemo(() => buildSectors(nodes, "theme", themes, showEmptyEras), [nodes, themes, showEmptyEras]);
@@ -268,8 +276,9 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     (id: string | null) => {
       setHistory([]);
       show(id);
+      if (id) emit("map_story_open", storyParams(id, view === "3d" ? "3d" : layout));
     },
-    [show],
+    [show, emit, storyParams, view, layout],
   );
   /** Following a link inside the panel remembers where it came from. */
   const panelSelect = useCallback(
@@ -277,8 +286,9 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       if (id === selected) return;
       setHistory((h) => [...h, { selected, group }]);
       show(id);
+      emit("map_story_open", storyParams(id, "panel"));
     },
-    [show, selected, group],
+    [show, selected, group, emit, storyParams],
   );
   const back = useCallback(() => {
     const prev = history[history.length - 1];
@@ -287,19 +297,30 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       setSelected(prev.selected);
       setGroup(prev.group);
     } else setSelected(null); // a story picked on the map while its role or theme was open
-  }, [history]);
-  const toggleGroup = useCallback((key: string) => {
-    setHistory([]);
-    setGroup((current) => (current === key ? null : key));
-    setSelected(null);
-  }, []);
-  const close = useCallback(() => {
-    setHistory([]);
-    setSelected(null);
-    setGroup(null);
-  }, []);
+    emit("map_details_back");
+  }, [history, emit]);
+  const toggleGroup = useCallback(
+    (key: string) => {
+      setHistory([]);
+      setGroup((current) => (current === key ? null : key));
+      setSelected(null);
+      if (group !== key) emit("map_group_open", { group_type: isRole(key) ? "role" : "theme", group_name: key, open_from: view === "3d" ? "3d" : layout });
+    },
+    [group, emit, view, layout],
+  );
+  /** Closes the details panel: its close button, or a click on an empty part of the map. */
+  const close = useCallback(
+    (method: "button" | "background" = "background") => {
+      if (selected || group) emit("map_details_close", { close_method: method });
+      setHistory([]);
+      setSelected(null);
+      setGroup(null);
+    },
+    [selected, group, emit],
+  );
   const changeView = (next: View) => {
     if (next === view) return;
+    emit("map_view_change", { map_view: next, from_view: view });
     const morphing = layout === "map" && view !== "3d" && next !== "3d" && !prefersReducedMotion();
     if (morphing) morphFrom.current = measureDots();
     else if (next !== "3d") enter();
@@ -430,7 +451,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
     const hub = hit.map((el) => el.closest?.("[data-hub]")).find(Boolean) as HTMLElement | undefined;
     if (leaf) select(leaf.dataset.leaf === selected ? null : leaf.dataset.leaf!);
     else if (hub) toggleGroup(hub.dataset.hub!);
-    else close();
+    else close("background");
   };
   const onKey = (e: KeyboardEvent, action: () => void) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -537,7 +558,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
   );
 
   return (
-    <div className={`chad-mapped${active && nodes.length ? " has-details" : ""}${entering ? " is-entering" : ""}${morph ? " is-morphing" : ""}`} ref={rootRef}>
+    <div data-track-ignore className={`chad-mapped${active && nodes.length ? " has-details" : ""}${entering ? " is-entering" : ""}${morph ? " is-morphing" : ""}`} ref={rootRef}>
       {morph && (
         <div className="cm-morph" ref={morphRef} aria-hidden="true">
           {morph.map((m) => (
@@ -547,7 +568,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
       )}
       {view === "3d" ? (
         <Suspense fallback={<p className="cm-loading">Loading the 3D view…</p>}>
-          <MindMap3D ref={threeRef} nodes={nodes} themes={themes} selected={selected} group={group} focus={focus} onSelect={select} onGroup={toggleGroup} onClear={close} onUserZoom={() => setZoomed3d(true)} />
+          <MindMap3D ref={threeRef} nodes={nodes} themes={themes} selected={selected} group={group} focus={focus} onSelect={select} onGroup={toggleGroup} onClear={() => close("background")} onUserZoom={() => setZoomed3d(true)} />
         </Suspense>
       ) : layout === "map" ? (
         <svg
@@ -654,8 +675,8 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
           </div>
           {view !== "3d" && (
             <div className="cm-seg" role="group" aria-label="Layout">
-              <button type="button" aria-pressed={layout === "map"} onClick={() => { if (layout !== "map") enter(); setLayout("map"); }}>Map</button>
-              <button type="button" aria-pressed={layout === "list"} onClick={() => setLayout("list")}>List</button>
+              <button type="button" aria-pressed={layout === "map"} onClick={() => { if (layout === "map") return; enter(); setLayout("map"); emit("map_layout_change", { map_layout: "map" }); }}>Map</button>
+              <button type="button" aria-pressed={layout === "list"} onClick={() => { if (layout === "list") return; setLayout("list"); emit("map_layout_change", { map_layout: "list" }); }}>List</button>
             </div>
           )}
         </div>
@@ -689,13 +710,14 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
 
       {(showSvg || view === "3d") && (
         <div className="cm-zoom" role="group" aria-label="Zoom">
-          <button type="button" aria-label="Zoom out" title="Zoom out" onClick={() => (view === "3d" ? (threeRef.current?.zoom(1.25), setZoomed3d(true)) : zoom(1.25))}><ZoomOut size={20} strokeWidth={2.25} /></button>
+          <button type="button" aria-label="Zoom out" title="Zoom out" onClick={() => { emit("map_zoom", { zoom_action: "out" }); if (view === "3d") { threeRef.current?.zoom(1.25); setZoomed3d(true); } else zoom(1.25); }}><ZoomOut size={20} strokeWidth={2.25} /></button>
           <button
             type="button"
             aria-label="Reset zoom"
             title="Reset zoom"
             disabled={view === "3d" ? !zoomed3d : !zoomed2d}
             onClick={() => {
+              emit("map_zoom", { zoom_action: "reset" });
               if (view === "3d") {
                 threeRef.current?.reset();
                 setZoomed3d(false);
@@ -705,7 +727,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
               }
             }}
           ><ZoomReset /></button>
-          <button type="button" aria-label="Zoom in" title="Zoom in" onClick={() => (view === "3d" ? (threeRef.current?.zoom(0.8), setZoomed3d(true)) : zoom(0.8))}><ZoomIn size={20} strokeWidth={2.25} /></button>
+          <button type="button" aria-label="Zoom in" title="Zoom in" onClick={() => { emit("map_zoom", { zoom_action: "in" }); if (view === "3d") { threeRef.current?.zoom(0.8); setZoomed3d(true); } else zoom(0.8); }}><ZoomIn size={20} strokeWidth={2.25} /></button>
         </div>
       )}
 
@@ -717,7 +739,7 @@ export function MindMap<T extends MapNode>({ nodes, themes, title, subtitle, con
             {canGoBack && (
               <button type="button" className="cm-back" aria-label={backLabel} title={backLabel} onClick={back}><ArrowLeft size={16} /></button>
             )}
-            <button type="button" className="cm-close" aria-label="Close details" onClick={close}><X size={16} /></button>
+            <button type="button" className="cm-close" aria-label="Close details" onClick={() => close("button")}><X size={16} /></button>
           </div>
           {selectedNode ? (
             renderDetail(selectedNode, [...relatedOf(selectedNode.id)].map((id) => byId.get(id)!).filter(Boolean), panelSelect)

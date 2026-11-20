@@ -22,7 +22,7 @@ const Contact = () => {
               </div>
               <div className="text-left">
                 {/* <h3 className="text-body text-text-primary font-medium mb-1">Email</h3> */}
-                <a href="mailto:chadmor@gmail.com" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
+                <a href="mailto:chadmor@gmail.com" data-track-label="Contact: email" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
                   chadmor@gmail.com
                 </a>
               </div>
@@ -34,7 +34,7 @@ const Contact = () => {
               </div>
               <div className="text-left">
                 {/* <h3 className="text-body text-text-primary font-medium mb-1">LinkedIn</h3> */}
-                <a href="https://linkedin.com/in/chadmortensen" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
+                <a href="https://linkedin.com/in/chadmortensen" data-track-label="Contact: LinkedIn" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
                   linkedin.com/in/chadmortensen
                 </a>
               </div>
@@ -46,7 +46,7 @@ const Contact = () => {
               </div>
               <div className="text-left">
                 {/* <h3 className="text-body text-text-primary font-medium mb-1">Phone</h3> */}
-                <a href="tel:+15033470199" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
+                <a href="tel:+15033470199" data-track-label="Contact: phone" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
                   (503) 347-0199
                 </a>
               </div>
@@ -67,7 +67,7 @@ const Contact = () => {
                 <FileText size={24} className="text-accent-blue" />
               </div>
               <div className="text-left">
-                <a href={RESUME_URL} target="_blank" rel="noopener" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
+                <a href={RESUME_URL} target="_blank" rel="noopener" data-track-label="Contact: résumé PDF" className="text-body text-text-secondary hover:text-accent-blue transition-colors">
                   Download my résumé (PDF)
                 </a>
               </div>

@@ -195,14 +195,14 @@ const CaseStudies = () => {
         }}
       >
         {caseStudies.map((study, index) => <article key={study.id} className="case-study-slide" aria-roledescription="slide" aria-label={`${index + 1} of ${caseStudies.length}: ${study.company || "Leadership"}`}>
-          <Link to={study.route} className="case-study-slide-image" tabIndex={-1} aria-hidden="true" draggable={false}>
+          <Link to={study.route} data-track-label={`Case study card image: ${study.company || "Leadership"}`} className="case-study-slide-image" tabIndex={-1} aria-hidden="true" draggable={false}>
             <img src={study.image} alt={`${study.company || "Design leadership"} case study`} className="case-study-card-image" draggable={false} loading="lazy" />
           </Link>
           <div className="case-study-slide-copy">
             {study.company && <p className="text-case-study-label text-accent-blue font-medium">{study.company}</p>}
             <h3 className="text-case-study-title text-text-primary !font-bold">{study.title}</h3>
             <p className="text-body text-text-secondary">{study.summary}</p>
-            <Link to={study.route} className="case-study-slide-link text-body font-medium" aria-label={`View ${study.title} case study`}>
+            <Link to={study.route} data-track-label={`Case study card: ${study.company || "Leadership"}`} className="case-study-slide-link text-body font-medium" aria-label={`View ${study.title} case study`}>
               {study.id === 4 ? "View Examples" : "View Case Study"}<ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
