@@ -470,6 +470,22 @@ html.hero-framed-active #main-content > #case-studies {
   text-align: left;
 }
 
+/* Phones: the copy sits above the print, so it centers like the print does. */
+@media (max-width: 767px) {
+  .hero-framed__copy {
+    text-align: center;
+  }
+
+  .hero-framed__rule,
+  .hero-framed__actions {
+    margin-inline: auto;
+  }
+
+  .hero-framed__actions {
+    justify-content: center;
+  }
+}
+
 /* The print tilts as one piece: paper and the curled-corner shadows. */
 .hero-print {
   position: relative;

@@ -698,7 +698,7 @@ const Hero = () => {
               <h1 className="text-display">
                 Chad Mortensen
               </h1>
-              <div className="h-[3px] w-[7rem] bg-current"></div>
+              <div className="hero-framed__rule h-[3px] w-[7rem] bg-current"></div>
               <p className="hero-subhead">
                 {heroSubhead}
               </p>
@@ -707,7 +707,7 @@ const Hero = () => {
               </p>
             </div>
 
-            <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row">
+            <div className="hero-framed__actions mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:flex-row">
               <button
                 onClick={() => navigateToSection("#case-studies")}
                 className={primaryButtonClass}
