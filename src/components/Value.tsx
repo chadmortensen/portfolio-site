@@ -7,6 +7,10 @@ const Value = () => {
       description: "Strong collaboration with product, engineering, analytics, and research is foundational. I invest early and consistently in these relationships to ensure design is part of strategic decision-making, not an afterthought."
     },
     {
+      title: "Stay hands-on and close to the work",
+      description: "I build alongside my designers. I facilitate and participate in exploration to help move past blockers. That keeps me close to the work that matters, while also clarifying what the horizon is and where the team and company are headed."
+    },
+    {
       title: "Connect design to company strategy",
       description: "I help design teams zoom out. By aligning day-to-day efforts with broader business goals, I ensure we're focusing on what matters most, advocating for the right resourcing and investing in high-leverage work."
     },
@@ -21,10 +25,6 @@ const Value = () => {
     {
       title: "Contribute to org-wide design culture",
       description: "Beyond my direct team, I contribute to the broader design organization, leading or sponsoring initiatives around hiring, recognition, design thinking, and internal education that make the culture stronger and more inclusive."
-    },
-    {
-      title: "Elevate design quality",
-      description: "I raise the bar by championing user-centered practices, setting clear principles, and facilitating constructive feedback that sharpens outcomes. Through open collaboration and knowledge sharing, I help teams grow their craft while encouraging experimentation, new technologies, and fresh approaches to keep our design practice innovative and relevant."
     }
   ];
 
